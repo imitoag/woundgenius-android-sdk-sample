@@ -1,0 +1,257 @@
+<resources>
+    <string name="cm_square">%s cm\u00B2</string>
+    <string name="cm_square_label">Area (cm\u00B2)</string>
+    <string name="cm">%s cm</string>
+    <string name="mm">%s mm</string>
+    <string name="float_format_two_points">%.2f</string>
+    <string name="not_a_number">N/A</string>
+    <string name="blank"></string>
+
+    <string name="backend_version_is_outdated_title">Backend version is outdated</string>
+    <string name="backend_version_is_outdated_description">Please contact your IT support. Backend version is outdated and doesn’t support multiple wounds measurement feature.</string>
+
+    <string name="day_month_year_date_pattern">dd.MM.yyyy</string>
+    <string name="day_month_date_pattern">dd MMM</string>
+    <string name="year_pattern">yyyy</string>
+    <string name="time_pattern">HH:mm</string>
+
+    <string name="ok">OK</string>
+    <string name="support">\?</string>
+    <string name="url">URL</string>
+
+    <string name="choose_mode">Choose Mode</string>
+    <string name="server_address_restriction">Server address restriction</string>
+    <string name="mdm_full_keyboard_settings_description">Enable or disable full keyboard for Barcodes Manual Input</string>
+    <string name="mdm_full_keyboard_settings_title">fullKeyboardForBarcode</string>
+
+    <string name="markers_description_1">The best way to use imitoWound. It\'s fast and accurate.</string>
+    <string name="markers_description_2">Our calibration marker stickers are for single use and packed in small boxes that fits in your pocket. Your hospital can order them directly from imito AG</string>
+
+    <string name="ruler_title">Ruler or other object</string>
+    <string name="ruler_description_1">As alternative, you can use a ruler or any other physical object with known size. In this case, you will need to manually calibrate photo each time you make a measurement.</string>
+    <string name="ruler_description_2">Check out short tutorial video to see how it works.</string>
+
+    <string name="close_button_label">A%d</string>
+    <string name="close_button_area_label">A%d: %s cm\u00B2</string>
+
+    <string name="next">Next</string>
+
+    <string name="observation">{
+    \"covering\": \"Cover\",
+    \"none\": \"None\",
+    \"necrosis\": \"Necrosis\",
+    \"fibrin\": \"Fibrin\",
+    \"multi_selection_is_allowed\": \"Multi selection is allowed.\",
+    \"status\": \"Status\",
+    \"wound_bed\": \"Wound Bed\",
+    \"tendon\": \"Tendon\",
+    \"bone\": \"Bone\",
+    \"muscle\": \"Muscle\",
+    \"adipose_tissue\": \"Adipose Tissue\",
+    \"dermis\": \"Dermis\",
+    \"granulation\": \"Granulation\",
+    \"partial\": \"Partial\",
+    \"complete\": \"Complete\",
+    \"epithelialisation\": \"Epithelialisation\",
+    \"exudate\": \"Exudate quantity\",
+    \"moderate\": \"Moderate\",
+    \"strong\": \"Strong\",
+    \"nature_of_the_exudate\": \"Nature of the Exudate\",
+    \"clear\": \"Clear\",
+    \"bloody\": \"Bloody\",
+    \"green\": \"Green\",
+    \"brown\": \"Brown\",
+    \"yellow\": \"Yellow\",
+    \"edge\": \"Edge\",
+    \"intact\": \"Intact\",
+    \"redness\": \"Redness\",
+    \"oedematous\": \"Oedematous\",
+    \"macerated\": \"Macerated\",
+    \"livid\": \"Livid\",
+    \"necrotic\": \"Necrotic\",
+    \"scaly_hyperkeratotic\": \"Scaly, hyperkeratotic\",
+    \"surrounding_skin\": \"Surrounding Skin\",
+    \"dry\": \"Dry\",
+    \"scaly\": \"Scaly\",
+    \"cracked\": \"Cracked\",
+    \"humid\": \"Humid\",
+    \"signs_of_local_infection\": \"Signs of Local Infection\",
+    \"yes\": \"Yes\",
+    \"no\": \"No\",
+    \"odor\": \"Odor\",
+    \"pain_dressing_change\": \"Pain Dressing Change\",
+    \"select_value_1_to_10\": \"Select value from 0 to 10. Tap and drop to adjust.\",
+    \"add\": \"Add\",
+    \"pain_rest\": \"Pain Rest (Last 7 Days)\",
+    \"tunnel_pocket_fistula\": \"Tunnel\/Pocket\/Fistula\",
+    \"tunnel\": \"Tunnel\",
+    \"select\": \"Select\",
+    \"i_dont_know\": \"I don\'t know\",
+    \"depth_mm\": \"Depth, mm\",
+    \"pocket\": \"Pocket\",
+    \"fistula\": \"Fistula\",
+    \"therapy\": \"Therapy\",
+    \"debridement\": \"Debridement\",
+    \"mechanical\": \"Mechanical\",
+    \"surgical\": \"Surgical\",
+    \"ultrasound\": \"Ultrasound\",
+    \"autolytic\": \"Autolytic\",
+    \"enzymatic\": \"Enzymatic\",
+    \"biosurgery\": \"Biosurgery (maggots)\",
+    \"other\": \"Other\",
+    \"cleansing\": \"Cleansing\",
+    \"ringer_solution\": \"Ringer Solution\",
+    \"naCl_09\": \"NaCl 0.9%\",
+    \"polyhexanide\": \"Polyhexanide\",
+    \"octenidine\": \"Octenidine\",
+    \"wet_oxygen\": \"Nascent Oxygen\",
+    \"periwound_protection\": \"Periwound Protection\",
+    \"zinc_cream\": \"D-Line Zinc Cream\",
+    \"bepanthen_cream\": \"Bepanthen Cream 5%\",
+    \"bepanthen_ointment\": \"Bepanthen Ointment 5%\",
+    \"dressing\": \"Dressing\",
+    \"aquacel_ag_extra\": \"Aquacel Ag Extra\",
+    \"aquacel_extra\": \"Aquacel Extra\",
+    \"biatain_silicon\": \"Biatain Silicon\",
+    \"biatain_silicon_lite\": \"Biatain Silicon Lite\",
+    \"comfeel_plus\": \"Comfeel plus\",
+    \"curea_p1\": \"Curea P1\",
+    \"cauze_dry\": \"Gauze dry\",
+    \"jelonet\": \"Jelonet\",
+    \"kaltostat\": \"Kaltostat\",
+    \"compress\": \"Compress\",
+    \"mepilex_border\": \"Mepilex Border\",
+    \"mepilex_border_lite\": \"Mepilex Border Lite\",
+    \"mepitel\": \"Mepitel\",
+    \"mepore\": \"Mepore\",
+    \"nuderm\": \"Nuderm\",
+    \"polymem_max\": \"PolyMem MAX\",
+    \"polymem_cavity\": \"PolyMem WIC Cavity\",
+    \"prontosan_gel\": \"Prontosan Gel\",
+    \"quick_band\": \"Quick Band\",
+    \"tegaderm_adhesive\": \"Tegaderm Adhesive\",
+    \"tegaderm_foam\": \"Tegaderm Foam\",
+    \"telfa\": \"Telfa\",
+    \"zetuvit\": \"Zetuvit\",
+    \"zetuvit_plus\": \"Zetuvit plus\",
+    \"fixation\": \"Fixation\",
+    \"mefix\": \"Mefix\",
+    \"gauze_bandage\": \"Gauze bandage\",
+    \"elastic\": \"Elastic\",
+    \"opSite_film\": \"OpSite Film\",
+    \"filler\": \"Filler\",
+    \"aquacel\": \"Aquacel\",
+    \"biatain_alginate\": \"Biatain Alginate\",
+    \"biatain_alginate_ag\": \"Biatain Alginate Ag\",
+    \"biopad\": \"BIOPAD\",
+    \"gauze_damp_with_prontosan\": \"Gauze wet with Prontosan\",
+    \"ialugen\": \"Ialugen\",
+    \"compresses\": \"Compresses\",
+    \"polymem_wic\": \"PolyMem WIC\",
+    \"prontosan_wound_gel\": \"Prontosan Wound Gel\",
+    \"vac_foam\": \"V.A.C. Foam\",
+    \"local_negative_pressure\": \"Local Negative Pressure\",
+    \"recommended_dressign_change_interval\": \"Recommended dressing change interval (days).\",
+    \"dressing_change\": \"Dressing Change (days)\",
+    \"millimeters\": \"mm\",
+    \"hours\": \"o\'clock\",
+    \"days\": \"days\",
+    \"done\": \"Done\",
+    \"next\": \"Next\",
+    \"items\": \"items\",
+    \"validate_error_message\": \"Input value from 0 to 100\",
+    \"date_of_birth_age\": \"Date of birth (age)\",
+    \"patiend_id\": \"Patient ID\",
+    \"pdf_advertise\": \"Report generated by <span class='imito-red'>imitoWound</span> - Wound documentation in a breeze, mobile-first and image-centred.\",
+    \"wound_anamnesis\": \"Wound anamnesis\",
+    \"name\": \"Name\",
+    \"type\": \"Type\",
+    \"body_region\": \"Body region\",
+    \"wound_known_since\": \"Wound known since\",
+    \"recurrent\": \"Recurrent\",
+    \"note\": \"Note\",
+    \"cm2\": \"cm²\",
+    \"cm\": \"cm\",
+    \"wound_asm_num\": \"Wound assessment\",
+    \"information\": \"Information\",
+    \"created_by\": \"Created by\",
+    \"group\": \"Group\",
+    \"visit_id\": \"Visit ID\",
+    \"area\": \"Area\",
+    \"circumference\": \"Circumference\",
+    \"length\": \"Length\",
+    \"width\": \"Width\",
+    \"depth\": \"Depth\",
+    \"page_num\": \"Page\",
+    \"stage\": \"Stage\",
+    \"stage_1\": \"Stage 1\",
+    \"stage_2\": \"Stage 2\",
+    \"stage_3\": \"Stage 3\",
+    \"stage_4\": \"Stage 4\",
+    \"stage_a\": \"Stage A\",
+    \"stage_b\": \"Stage B\",
+    \"stage_c\": \"Stage C\",
+    \"stage_d\": \"Stage D\",
+    \"stage_1_latin\": \"Stage I\",
+    \"stage_2_latin\": \"Stage II\",
+    \"stage_2a_latin\": \"Stage IIa\",
+    \"stage_2b_latin\": \"Stage IIb\",
+    \"stage_3_latin\": \"Stage III\",
+    \"stage_4_latin\": \"Stage IV\",
+    \"unspecified_stage\": \"Unspecified Stage\",
+    \"unstageable\": \"Unstageable\",
+    \"grade\": \"Grade\",
+    \"grade_0\": \"Grade 0\",
+    \"grade_1\": \"Grade 1\",
+    \"grade_2\": \"Grade 2\",
+    \"grade_3\": \"Grade 3\",
+    \"grade_3a\": \"Grade 3a\",
+    \"grade_3b\": \"Grade 3b\",
+    \"unspecified_grade\": \"Unspecified Grade\",
+    \"ungradeable\": \"Ungradeable\",
+    \"degree\": \"Degree\",
+    \"degree_1\": \"Degree 1\",
+    \"degree_2a\": \"Degree 2a\",
+    \"degree_2b\": \"Degree 2b\",
+    \"degree_3\": \"Degree 3\",
+    \"degree_4\": \"Degree 4\",
+    \"unspecified\": \"Unspecified\",
+    \"not_classifiable\": \"Not classifiable\",
+    \"bedsore_pressure_ulcer_stage_1_description\": \"Pre-ulcer skin changes limited to persistent focal edema\",
+    \"bedsore_pressure_ulcer_stage_2_description\": \"Abrasion, blister, partial thickness skin loss involving epidermis and\/or dermis\",
+    \"bedsore_pressure_ulcer_stage_3_description\": \"Full thickness skin loss involving damage or necrosis of subcutaneous tissue\",
+    \"bedsore_pressure_ulcer_stage_4_description\": \"Necrosis of soft tissues through to underlying muscle, tendon, or bone\",
+    \"diabetic_foot_grade_0_description\": \"pre-or postulcerative site that has healed\",
+    \"diabetic_foot_grade_1_description\": \"superficial wound not involving tendon, capsule, or bone\",
+    \"diabetic_foot_grade_2_description\": \"wound penetrating to tendon or capsule\",
+    \"diabetic_foot_grade_3_description\": \"wound penetrating bone or joint\",
+    \"diabetic_foot_stage_a_description\": \"clean wound\",
+    \"diabetic_foot_stage_b_description\": \"non-ischemic infected wound\",
+    \"diabetic_foot_stage_c_description\": \"ischemic noninfected wound\",
+    \"diabetic_foot_stage_d_description\": \"ischemic infected wound\",
+    \"burn_degree_1_description\": \"Superficial layers of the epidermis\",
+    \"burn_degree_2a_description\": \"Epidermis and upper layers of the dermis; dermal appendages (hair follicles, sweat, and sebaceous glands) are spared\",
+    \"burn_degree_2b_description\": \"Deeper layers of the dermis\",
+    \"burn_degree_3_description\": \"Epidermis, dermis, and subcutaneous tissue\",
+    \"burn_degree_4_description\": \"Deeper structures (muscles, fat, fascia, and bones)\",
+    \"venous_leg_ulcer_grade_1_description\": \"Reversible edema, corona phlebectatica, perimalleolar reticular veins\",
+    \"venous_leg_ulcer_grade_2_description\": \"Persistent edema, hemosiderosis and purpura on the lower leg, lipodermatosclerosis, atrophie blanche, stasis dermatitis\",
+    \"venous_leg_ulcer_grade_3a_description\": \"Healed leg ulcer\",
+    \"venous_leg_ulcer_grade_3b_description\": \"Active leg ulcer\",
+    \"arterial_leg_ulcer_stage_1_description\": \"Asymptomatic, incomplete blood vessel obstruction\",
+    \"arterial_leg_ulcer_stage_2_description\": \"Mild claudication pain in limb\",
+    \"arterial_leg_ulcer_stage_2a_description\": \"Claudication at a distance &gt; 200m\",
+    \"arterial_leg_ulcer_stage_2b_description\": \"Claudication at a distance &lt; 200m\",
+    \"arterial_leg_ulcer_stage_3_description\": \"Rest pain, mostly in the feet\",
+    \"arterial_leg_ulcer_stage_4_description\": \"Necrosis and\/or gangrene of the limb\"
+}</string>
+    <string name="URL">URL</string>
+    <string name="PATIENT_HAS_NO_OPEN_VISITS">Patient has no open visits</string>
+    <string name="NO_VISITS_NO_ARCHIVE">It\'s not possible to archive this series, because the patient has no open visits. Please contact your IT support.</string>
+
+    <string-array name="test_array">
+        <item>All groups</item>
+        <item>Wound experts</item>
+        <item>IWOP derma</item>
+    </string-array>
+</resources>

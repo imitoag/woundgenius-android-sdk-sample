@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:override = "false">
+    <color name="sample_app_color_accent">@color/sample_app_red</color>
+    <color name="sample_app_color_primary">@color/sample_app_color_accent</color>
+    <color name="sample_app_color_primary_dark">@color/sample_app_color_accent</color>
+    <color name="sample_app_red">#e2352a</color>
+    <color name="sample_app_color_black">#000000</color>
+    <color name="sample_app_color_blue">#0200ff</color>
+    <color name="sample_app_color_yellow">#ffff02</color>
+
+    <color name="sample_app_grey_light">#f0f0f0</color>
+    <color name="sample_app_rey_light2">#f4f4f4</color>
+    <color name="sample_app_grey">#c7c7c7</color>
+
+    <color name="sample_app_color_separator_dark">#4a3c3c43</color>
+    <color name="sample_app_gray_opacity">#cc333333</color>
+    <color name="sample_app_color_text_hint">#c7c7c7</color>
+    <color name="sample_app_color_border">#dcdcdc</color>
+
+    <color name="sample_app_gray_disable_text">#d8c7c7c7</color>
+    <color name="sample_app_alert_layout_back_color">#464646</color>
+
+    <color name="sample_app_color_black_opacity_76">#4C000000</color>
+    <color name="sample_app_color_black_opacity_99">#99000000</color>
+    <color name="sample_app_color_intro_background">#F3F1F0</color>
+
+    <color name="sample_app_color_black_opacity_cc">#cc333333</color>
+    <color name="sample_app_color_black_opacity_69">#89000000</color>
+    <color name="sample_app_color_full_black_opacity_cc">#cc000000</color>
+    <color name="sample_app_color_full_black_opacity_99">#99000000</color>
+    <color name="sample_app_color_full_opacity">#00000000</color>
+
+    <color name="sample_app_barcode_background">#89636366</color>
+    <color name="sample_app_barcode_hint">#ebebf5</color>
+    <color name="sample_app_add_wound_action_menu_items_color">#333333</color>
+
+    <color name="sample_app_color_plus">#C7B299</color>
+
+    <color name="sample_app_white">#ffffff</color>
+    <color name="sample_app_light_grey">#fafafa</color>
+    <color name="sample_app_black">#000000</color>
+    
+    <color name="sample_app_color_grey_dark">#3c3c43</color>
+
+    <color name="sample_app_color_gray">#f4f4f4</color>
+    <color name="sample_app_color_separator">#19000000</color>
+    <color name="sample_app_color_text_gray_light">#4d3c3c43</color>
+    <color name="sample_app_color_white_opacity_80">#80ffffff</color>
+    <color name="sample_app_color_white_opacity_40">#40ffffff</color>
+
+    <color name="sample_app_login_et_border_color">#dcdcdc</color>
+    <color name="sample_app_login_hint_color">#777777</color>
+
+    <color name="sample_app_text_pressed_color">#561C1B</color>
+    <color name="sample_app_color_text_gray">#777777</color>
+
+    <color name="sample_app_color_text_black">@color/sample_app_color_black_scan</color>
+    <color name="sample_app_color_black_scan">#333333</color>
+    <color name="sample_app_finder_rect">#ccc</color>
+
+    <color name="sample_app_color_transparent">#00000000</color>
+
+    <color name="sample_app_color_green" tools:override = "false">#00E600</color>
+    <color name="sample_app_color_green_transparent">#3300E600</color>
+</resources>

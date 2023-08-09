@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "445917841589",
+    "project_id": "imitowoundgeniussdk",
+    "storage_bucket": "imitowoundgeniussdk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445917841589:android:0dd1d3332ac0080f8716fc",
+        "android_client_info": {
+          "package_name": "com.example.samplewoundsdk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445917841589-krdla4ls426q1a3ns0ucan751fh5mnsf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcY1Bz4rfySdpfALAuxZAj1PLhl7ibdIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445917841589-krdla4ls426q1a3ns0ucan751fh5mnsf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

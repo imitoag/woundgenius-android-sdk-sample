@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.samplewoundsdk">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="com.example.samplewoundsdk.core.SampleWoundSDKApplication"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/sample_app_data_extraction_rules"
+        android:fullBackupContent="@xml/sample_app_backup_rules"
+        android:icon="@mipmap/sample_app_ic_launcher_round"
+        android:label="Imito Wound SDK Sample"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/sample_app_ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="LockedOrientationActivity">
+
+        <activity
+            android:name="com.example.samplewoundsdk.ui.screen.main.MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <activity android:name=".ui.screen.measurementresult.holder.MeasurementResultHolderActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.screen.measurementfullscreen.MeasurementFullScreenActivity"
+            android:screenOrientation="portrait" />
+
+    </application>
+
+</manifest>

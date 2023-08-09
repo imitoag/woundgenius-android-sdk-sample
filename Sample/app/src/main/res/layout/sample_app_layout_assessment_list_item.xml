@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ru.rambler.libs.swipe_layout.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/assessmentSL"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:left_swipe_enabled="false"
+    app:right_swipe_enabled="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/assessmentCL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/assessmentImageIV"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/todoPatientFullNameACTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/sample_app_color_text_black"
+            android:textSize="17sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="@+id/assessmentImageIV"
+            app:layout_constraintEnd_toStartOf="@+id/todoCreationDateTv"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/assessmentImageIV"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Hans Muster" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/todoCreationDateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="15dp"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:maxLines="1"
+            android:textColor="@color/sample_app_color_text_gray"
+            android:textSize="15sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/todoPatientFullNameACTV"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Just Now" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="15dp"
+            android:background="@color/sample_app_color_separator"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/assessmentActionsCL"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:bring_to_clamp="150dp"
+        app:clamp="self"
+        app:gravity="right"
+        app:sticky="self">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/deleteAssessmentACTV"
+            android:layout_width="95dp"
+            android:layout_height="match_parent"
+            android:background="@color/sample_app_red"
+            android:gravity="center"
+            android:text="@string/DELETE"
+            android:textColor="@color/sample_app_white"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ru.rambler.libs.swipe_layout.SwipeLayout>

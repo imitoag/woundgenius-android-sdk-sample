@@ -1,0 +1,32 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/sample_app_color_primary</item>
+        <item name="colorPrimaryDark">@color/sample_app_color_primary_dark</item>
+        <item name="colorAccent">@color/sample_app_color_accent</item>
+    </style>
+
+    <style name="AppTheme.Launcher">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="ProgressBarWhite" parent="Widget.AppCompat.ProgressBar">
+        <item name="colorAccent">@color/sample_app_white</item>
+    </style>
+
+    <style name="ProgressBarAccent" parent="Widget.AppCompat.ProgressBar">
+        <item name="colorAccent">@color/sample_app_red</item>
+    </style>
+
+    <style name="FullScreenDialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimaryDark">@color/sample_app_color_accent</item>
+        <item name="colorAccent">@color/sample_app_color_accent</item>
+        <item name="colorPrimary">@color/sample_app_color_accent</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="actionMenuTextColor">@color/sample_app_color_accent</item>
+    </style>
+
+</resources>

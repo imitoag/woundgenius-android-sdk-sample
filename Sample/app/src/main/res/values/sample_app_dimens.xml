@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="stroke_circle_radius">12dp</dimen>
+    <dimen name="stroke_text_size">16sp</dimen>
+    <dimen name="stroke_line_width">2dp</dimen>
+    <dimen name="stroke_min_distance">24dp</dimen>
+
+    <dimen name="manual_measure_point_radius">60dp</dimen>
+    <dimen name="manual_measure_line_width">4dp</dimen>
+
+    <dimen name="clear_button_padding">6dp</dimen>
+    <dimen name="measurement_label_round">2dp</dimen>
+    <dimen name="textSize14">14dp</dimen>
+    <dimen name="text_size_medium">14sp</dimen>
+
+    <dimen name="swipe_button_text_size">17sp</dimen>
+
+    <dimen name="assessment_background_radius">20dp</dimen>
+
+    <dimen name="textSizeLessVerySmall">9sp</dimen>
+    <dimen name="textSizeVerySmall">10sp</dimen>
+    <dimen name="textSizeMoreVerySmall">11sp</dimen>
+
+    <dimen name="textSizeLessSmall">12sp</dimen>
+    <dimen name="textSizeSmall">13sp</dimen>
+    <dimen name="textSizeMoreSmall">14sp</dimen>
+
+    <dimen name="textSizeLessNormal">15sp</dimen>
+    <dimen name="textSizeNormal">16sp</dimen>
+    <dimen name="textSizeMoreNormal">17sp</dimen>
+
+    <dimen name="textSizeLessBig">18sp</dimen>
+    <dimen name="textSizeBig">19sp</dimen>
+    <dimen name="textSizeMoreBig">20sp</dimen>
+
+    <dimen name="textSizeLessVeryBig">21sp</dimen>
+    <dimen name="textSizeVeryBig">22sp</dimen>
+    <dimen name="textSizeMoreVeryBig">23sp</dimen>
+
+    <dimen name="textSizeLessBiggest">24sp</dimen>
+    <dimen name="textSizeBiggest">27sp</dimen>
+    <dimen name="textSizeMoreBiggest">32sp</dimen>
+
+    <dimen name="bottom_navigation_small_selected_width_difference">0dp</dimen>
+    <dimen name="bottom_navigation_small_inactive_max_width">100000dp</dimen>
+
+    <dimen name="paddingForFinder">10dp</dimen>
+
+</resources>

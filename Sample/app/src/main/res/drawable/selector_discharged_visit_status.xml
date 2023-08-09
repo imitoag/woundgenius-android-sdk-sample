@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/sample_app_ic_square_arrow_down_white" android:state_selected="true"/>
+    <item android:drawable="@drawable/sample_app_ic_square_arrow_down_grey" android:state_selected="false"/>
+
+</selector>

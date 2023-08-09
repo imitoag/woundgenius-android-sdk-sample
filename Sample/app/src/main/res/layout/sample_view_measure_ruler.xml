@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:background="@color/sample_app_color_black_opacity_99">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/valueACTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="2.0 cm"
+        android:textColor="@color/sample_app_white"
+        android:gravity="center_horizontal"/>
+
+    <RelativeLayout
+        android:id="@+id/lineLayoutRL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="2dp"
+        tools:layout_width="100dp">
+
+        <View
+            android:id="@+id/startLineV"
+            android:layout_width="2dp"
+            android:layout_height="8dp"
+            android:background="@color/sample_app_white"
+            android:layout_alignParentStart="true"/>
+
+        <View
+            android:id="@+id/lineV"
+            android:layout_height="2dp"
+            android:layout_width="0dp"
+            android:background="@color/sample_app_white"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+
+        <View
+            android:id="@+id/endLineV"
+            android:layout_width="2dp"
+            android:layout_height="8dp"
+            android:background="@color/sample_app_white"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

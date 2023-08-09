@@ -1,0 +1,90 @@
+package com.example.samplewoundsdk.ui.screen.homescreen
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
+import com.example.samplewoundsdk.data.pojo.assessment.SampleAssessmentEntity
+import com.example.samplewoundsdk.databinding.SampleAppLayoutAssessmentListItemBinding
+
+class AssessmentsAdapter(
+    private val onAssessmentClick: (
+        draftAssessmentModel: SampleAssessmentEntity
+    ) -> Unit,
+    private val onAssessmentDelete: (draftAssessmentModel: SampleAssessmentEntity) -> Unit
+) : ListAdapter<SampleAssessmentEntity, AssessmentsAdapter.ViewHolder>(
+    DiffCallback()
+) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = SampleAppLayoutAssessmentListItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
+        return ViewHolder(view)
+    }
+
+    private class DiffCallback : DiffUtil.ItemCallback<SampleAssessmentEntity>() {
+        override fun getChangePayload(
+            oldItem: SampleAssessmentEntity,
+            newItem: SampleAssessmentEntity
+        ): Any =
+            Any()
+
+        override fun areItemsTheSame(
+            oldItem: SampleAssessmentEntity,
+            newItem: SampleAssessmentEntity
+        ) =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(
+            oldItem: SampleAssessmentEntity,
+            newItem: SampleAssessmentEntity
+        ) = false
+    }
+
+    override fun onBindViewHolder(holder: AssessmentsAdapter.ViewHolder, position: Int) =
+        holder.bind(getItem(position))
+
+    inner class ViewHolder(private val itemBinding: SampleAppLayoutAssessmentListItemBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
+        init {
+            itemBinding.apply {
+                deleteAssessmentACTV.setOnClickListener {
+                    getItem(bindingAdapterPosition)?.let { it1 ->
+                        onAssessmentDelete(
+                            it1
+                        )
+                    }
+                    assessmentSL.animateReset()
+                }
+                assessmentCL.setOnClickListener {
+                    getItem(bindingAdapterPosition)?.let { it1 ->
+                        onAssessmentClick(
+                            it1
+                        )
+                    }
+                }
+            }
+        }
+
+        fun bind(item: SampleAssessmentEntity) {
+            itemBinding.apply {
+                todoCreationDateTv.text = item.uiDatetime
+
+                Glide.with(this.root.context)
+                    .load(item.media?.first()?.imagePath)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .apply(RequestOptions())
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
+                    .into(assessmentImageIV)
+            }
+        }
+    }
+
+}

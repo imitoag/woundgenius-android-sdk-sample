@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textColor="@color/sample_app_light_grey">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toolbarCL"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/sample_app_light_grey"
+        app:layout_constraintBottom_toTopOf="@+id/NSV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/editSelectionButtonACTV"
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/sample_app_ic_arrow_back_24"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:gravity="center_vertical"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="@string/SELECTION_BUTTON_BACK"
+            android:textColor="@color/sample_app_red"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/NSV"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarCL">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:textColor="@color/sample_app_white"
+            android:layout_height="match_parent">
+
+            <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
+                android:id="@+id/indicatorSPI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                app:layout_constraintBottom_toBottomOf="@id/imagesPagerVP2"
+                app:layout_constraintStart_toStartOf="@id/imagesPagerVP2"
+                app:layout_constraintEnd_toEndOf="@id/imagesPagerVP2"
+                app:spi_dotSize="7dp"
+                app:spi_dotSpacing="6dp"
+                android:elevation="2dp"
+                app:spi_dotSelectedSize="7dp"
+                app:spi_dotColor="@color/sample_app_grey"
+                app:spi_dotSelectedColor="@color/sample_app_color_accent"
+                app:spi_visibleDotCount="15"
+                app:spi_visibleDotThreshold="1"
+                app:spi_looped="false"/>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/imagesPagerVP2"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/measurementsCL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/sample_app_light_grey"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imagesPagerVP2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/woundContainerCL"
+                    android:textColor="@color/sample_app_light_grey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/allAreasACTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/sample_app_black"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="@string/ALL_AREAS" />
+
+                    <View
+                        android:id="@+id/dv1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/sample_app_grey"
+                        app:layout_constraintTop_toBottomOf="@+id/allAreasACTV" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/areaACTV"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="20dp"
+                        android:textColor="@color/sample_app_black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/totalAreaValueACTV"
+                        app:layout_constraintTop_toBottomOf="@+id/dv1"
+                        android:text="@string/TOTAL_AREA" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/totalAreaValueACTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/sample_app_grey"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/dv1"
+                        tools:text="20.3 cm2" />
+
+                    <View
+                        android:id="@+id/dv2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/sample_app_grey"
+                        app:layout_constraintTop_toBottomOf="@+id/areaACTV" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/circumferenceACTV"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/sample_app_black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/totalCircumferenceValueACTV"
+                        app:layout_constraintTop_toBottomOf="@+id/dv2"
+                        android:text="@string/CIRCUMFERENCE" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/totalCircumferenceValueACTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/sample_app_grey"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/dv2"
+                        tools:text="34.1 cm" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/measurementsItemsRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@+id/woundContainerCL"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
