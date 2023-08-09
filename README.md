@@ -12,7 +12,8 @@ To launch the Sample App perform the following actions:
 4. Create a github.properties file within your root Android project
 5. Add properties username=GITHUB_USERID and token=PERSONAL_ACCESS_TOKEN. Replace GITHUB_USERID with personal / organisation Github User ID and PERSONAL_ACCESS_TOKEN with the token generated in Step 3.
 6. Add the following code to build.gradle inside the module that will be using the library 
-    repositories {
+```ruby   
+ repositories {
         maven {
                 name = "GitHubPackages"
                 url = uri("https://github.com/imitoag/woundgenius-android-sdk")
@@ -25,6 +26,7 @@ To launch the Sample App perform the following actions:
                 }
         }
     }
+```
 6. Run the application.
 7. After you'll launch the application - go to Settings or press "License Key" button. And paste the license key you've received at Step 1.
 
