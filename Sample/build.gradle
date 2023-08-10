@@ -19,9 +19,6 @@ plugins {
 
 allprojects {
     repositories {
-        maven {
-            url = uri("https://maven.pkg.github.com/imitoag/woundgenius-android-sdk")
-        }
         maven { url 'https://jitpack.io' }
         maven { url 'https://maven.zohodl.com/' }
         google()
