@@ -5,10 +5,10 @@ and can be used as a reference app for Android team to integrate the WoundGenius
 
 ## Initial Setup
 To launch the Sample App perform the following actions:
-1. Request the WoundGenius SDK license, request access to the WoundGenius SDK repository for your Android Developers. Follow the instructions listed here to do that: https://support.imito.io/portal/en/kb/articles/licence-key (You'll need to Sign Up, provide the Bundle Ids you are planning to use, GitHub username of the developers).
+1. Request the WoundGenius SDK license, request access to the WoundGenius SDK repository for your Android Developers. Follow the instructions listed here to do that: https://support.imito.io/portal/en/kb/articles/licence-key (You'll need to Sign Up, provide the Bundle Ids you are planning to use, developer GitHub usernames).
 2. Download/Pull this Sample app to your machine. Open project in Android Studio.
 ![android_sample_screenshot_1](https://github.com/imitoag/woundgenius-android-sdk-sample/assets/139133999/6385965a-14bf-46f7-985e-e5ce9e2f0a66)
-3. There are two ways to implement the SDK.
+3. There are two ways to implement the SDK:
    
  Option 1 
 
