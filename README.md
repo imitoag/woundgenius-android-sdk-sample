@@ -1,7 +1,7 @@
 # WoundGeniusSDK Sample App
 
-This repository contains the WoundGenius SDK Sample App to demonstrate the available features of WoundGenius SDK.
-And to be used as a reference app for Android team to integrate the WoundGenius SDK to their project.
+This repository contains the WoundGenius SDK Sample App to demonstrate the available features of WoundGenius SDK
+and can be used as a reference app for Android team to integrate the WoundGenius SDK to their project.
 
 ## Initial Setup
 To launch the Sample App perform the following actions:
