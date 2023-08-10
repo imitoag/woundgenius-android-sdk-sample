@@ -29,7 +29,7 @@ To launch the Sample App perform the following actions:
         }
     }
 ```
- Option 2 
+Option 2 
 • Add sdk as local maven repo by adding the following code to build.gradle inside the app module
 ```ruby   
  repositories {
