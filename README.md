@@ -12,9 +12,9 @@ To launch the Sample App perform the following actions:
    
  Option 1 
 
-• In Github account you provided in Step 1 open Settings -> Developer Settings -> Personal Access Tokens -> Tokens(classic) -> Generate new token. Make sure you select the following scopes (“read:packages”) and Generate a token. After Generating make sure to copy your new personal access token. You cannot see it again! The only option is to generate a new key. 
+• In Github account you provided in Step 1 open Settings -> Developer Settings -> Personal Access Tokens -> Tokens(classic) -> Generate new token. Make sure you select the following scopes (“read:packages”) and Generate a token. After generating make sure to copy your new personal access token. You can't see it again! The only option is to generate a new key. 
 
-• Create a github.properties file within your root Android project
+• Create a github.properties file in the root of your Android project
 
 • Add properties username=GITHUB_USERID and token=PERSONAL_ACCESS_TOKEN. Replace GITHUB_USERID with personal / organisation Github User ID and PERSONAL_ACCESS_TOKEN with the token generated in Step 3.
 
