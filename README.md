@@ -23,7 +23,7 @@ To launch the Sample App, perform the following actions:
  repositories {
         maven {
                 name = "GitHubPackages"
-                url = uri("https://github.com/imitoag/woundgenius-android-sdk")
+                url = uri("https://maven.pkg.github.com/imitoag/woundgenius-android-sdk")
                 def propsFile = rootProject.file('github.properties')
                 def props = new Properties()
                 props.load(new FileInputStream(propsFile))
