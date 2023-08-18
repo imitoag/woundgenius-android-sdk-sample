@@ -191,6 +191,7 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                 getLicenseKey()
                 onSavedLicenseKeyReceived.observe(viewLifecycleOwner){
                     it?:return@observe
+                    licenseKeyButtonCL.isVisible = WoundGeniusSDK.getLicenseKey().isNullOrEmpty()
                     val licenseVerifyResult = WoundGeniusSDK.validateLicenseKey()
                     viewModel?.handleLicenseResult(licenseVerifyResult)
                 }

@@ -184,6 +184,9 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             binding.apply {
                 setupPrimaryColorUi()
                 setupLightBGUi()
+                if (WoundGeniusSDK.getLicenseKey()?.isNotEmpty() == true){
+                    licenseKeyValueACET.setText(WoundGeniusSDK.getLicenseKey())
+                }
                 val isAddMediaFromGallery = WoundGeniusSDK.getIsAddFromLocalStorageAvailable()
                 if (addFromGalleryS.isChecked != isAddMediaFromGallery) {
                     addFromGalleryS.isChecked = isAddMediaFromGallery
