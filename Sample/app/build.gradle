@@ -57,7 +57,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     //Wound SDK
-    implementation 'com.example.woundsdk:woundgeniussdk:0.9.4' // implementation local sdk aar library
+    implementation 'com.example.woundsdk:woundgeniussdk:0.9.4'  // implementation local sdk aar library
 
     //Fotoapparat
     implementation 'io.fotoapparat:fotoapparat:2.7.0'
