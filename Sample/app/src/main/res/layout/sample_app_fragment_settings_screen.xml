@@ -15,8 +15,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
             android:id="@+id/backButtonACTV"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,9 +26,9 @@
                 android:id="@+id/editSelectionArrowIconACTV"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:layout_margin="12dp"
                 android:background="@drawable/wound_genius_sdk_ic_arrow_back_24"
                 android:gravity="center_vertical"
-                android:layout_margin="12dp"
                 app:layout_constraintBottom_toBottomOf="@+id/editSelectionButtonACTV"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/editSelectionButtonACTV" />
@@ -100,16 +100,16 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/licenseKeyValueACET"
-            android:imeOptions="actionDone"
-            android:maxLines="1"
-            android:inputType="text"
-            app:layout_constraintStart_toEndOf="@+id/licenseKeyACTV"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_height="wrap_content"/>
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/licenseKeyACTV"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -308,11 +308,10 @@
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/primaryColorSpinner"
             android:layout_width="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -347,11 +346,48 @@
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/lightBGSpinner"
             android:layout_width="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/autoDetectionSelectorLayoutCL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lightBGSelectorLayoutCL">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/autoDetectionSelectorLabelACTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Auto Detection"
+            android:textColor="@color/sample_app_black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/autoDetectionSpinner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/autoDetectionSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

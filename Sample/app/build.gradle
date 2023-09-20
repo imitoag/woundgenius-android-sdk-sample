@@ -7,6 +7,13 @@ plugins {
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
+repositories {
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://maven.zohodl.com/' }
+    google()
+    mavenCentral()
+}
+
 android {
     namespace 'com.example.samplewoundsdk'
     compileSdk 33
@@ -14,8 +21,8 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 33
-        versionCode 5
-        versionName "0.9.4"
+        versionCode 6
+        versionName "0.9.5"
         applicationId "com.example.samplewoundsdk"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -56,8 +63,9 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
+
     //Wound SDK
-    implementation 'com.example.woundsdk:woundgeniussdk:0.9.4'  // implementation local sdk aar library
+    implementation 'com.example.woundsdk:woundgeniussdk:0.9.5' // implementation local sdk aar library
 
     //Fotoapparat
     implementation 'io.fotoapparat:fotoapparat:2.7.0'
@@ -75,7 +83,7 @@ dependencies {
     //multidex
     implementation 'androidx.multidex:multidex:2.0.1'
 
-    implementation 'com.google.android:flexbox:2.0.1'
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
     //view pager indicators
     implementation 'ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.2.1'

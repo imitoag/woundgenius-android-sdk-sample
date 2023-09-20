@@ -210,6 +210,9 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
             indicatorSPI.attachToPager(imagesPagerVP2)
             indicatorSPI.invalidate()
             indicatorSPI.reattach()
+            if (draftMediaList.size == 1){
+                indicatorSPI.isVisible = false
+            }
             if (draftMediaList.isNotEmpty()) {
                 imagesPagerVP2.setCurrentItem(0, true)
             }

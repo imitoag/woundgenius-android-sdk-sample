@@ -9,6 +9,12 @@
     <string name="APP_NAME">"Imito WoundGenius SDK"</string>
     <string name="EDIT">"Editar"</string>
     <string name="CLOSE">"Fechar"</string>
+    <string name="AUTO_DETECTION">"Auto-Detection"</string>
+    <string name="CLEAR_ALL">"Clear All"</string>
+    <string name="ENSURE_ACCURATE_DETECTION">Ensure accurate detection of wound edges and make adjustments as needed. Tap Measure to finalise measurement.</string>
+    <string name="PLEASE_START_DRAWING_WITH_AUTODETECT">Use your finger to outline areas or tap Auto-detect for automatic edges detection.</string>
+    <string name="HELP_CALIBRATION_MARKER_BUTTON">"Como usar este modo?"</string>
+    <string name="HELP_RULER_BUTTON">"Como usar este modo?"</string>
     <string name="FAILED_CREATE_ASSESSMENT">"Falha ao criar uma avaliação. Tente novamente."</string>
     <string name="TAP_MEASURE_TO_COUNTINUE">"Ótimo. Clique em Medir para continuar com a avaliação."</string>
     <string name="MARKER_NOT_DETECTED_DESCRIPTION">"Não conseguimos detetar o marcador de calibração na foto (nenhum marcador presente ou o ângulo de inclinação é demasiado grande). Deseja usar a calibração manual (se tiver uma régua de referência na foto, por exemplo) ou adicionar medidas manualmente?"</string>

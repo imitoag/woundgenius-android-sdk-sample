@@ -1,7 +1,8 @@
 package com.example.samplewoundsdk.data.pojo.media
 
 import androidx.room.TypeConverter
-import com.example.woundsdk.data.pojo.measurement.ImageResolution
+import com.example.samplewoundsdk.data.pojo.measurement.ImageResolution
+import com.example.woundsdk.data.pojo.cameramod.CameraMods
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -16,6 +17,9 @@ data class MediaModel(
 
     @SerializedName("originalPictureSize")
     val originalPictureSize: ImageResolution? = null,
+
+    @SerializedName("measurementMethod")
+    var measurementMethod: CameraMods? = null
 
     ) : Serializable {
     data class Metadata(

@@ -9,8 +9,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.example.samplewoundsdk.R
 import com.example.samplewoundsdk.data.pojo.assessment.SampleAssessmentEntity
 import com.example.samplewoundsdk.databinding.SampleAppLayoutAssessmentListItemBinding
+import com.example.woundsdk.data.pojo.cameramod.CameraMods
 
 class AssessmentsAdapter(
     private val onAssessmentClick: (
@@ -75,7 +77,12 @@ class AssessmentsAdapter(
 
         fun bind(item: SampleAssessmentEntity) {
             itemBinding.apply {
-                todoCreationDateTv.text = item.uiDatetime
+                creationDateTv.text = item.uiDatetime
+                measurementMethodNameACTV.text = if (item.media?.firstOrNull()?.measurementMethod == CameraMods.PHOTO_MODE){
+                    this.root.context.getString(R.string.PHOTO)
+                } else {
+                    MEASUREMENT
+                }
 
                 Glide.with(this.root.context)
                     .load(item.media?.first()?.imagePath)
@@ -85,6 +92,10 @@ class AssessmentsAdapter(
                     .into(assessmentImageIV)
             }
         }
+    }
+
+    companion object {
+        private const val MEASUREMENT = "Measurement"
     }
 
 }

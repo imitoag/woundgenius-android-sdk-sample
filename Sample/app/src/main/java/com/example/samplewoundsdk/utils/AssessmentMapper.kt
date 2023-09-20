@@ -1,6 +1,7 @@
 package com.example.samplewoundsdk.utils
 
 import com.example.samplewoundsdk.data.pojo.assessment.SampleAssessmentEntity
+import com.example.samplewoundsdk.data.pojo.measurement.ImageResolution
 import com.example.samplewoundsdk.data.pojo.media.MediaModel
 import com.example.woundsdk.data.pojo.assessment.entity.AssessmentEntity
 
@@ -50,7 +51,8 @@ fun AssessmentEntity.toRoomLocalEntity() =
                     )
                 ),
                 imagePath = mediaItem.image,
-                originalPictureSize = mediaItem.originalPictureSize
+                originalPictureSize = ImageResolution(mediaItem.originalPictureSize?.width ?:0,mediaItem.originalPictureSize?.height ?:0),
+                measurementMethod = mediaItem.measurementMethod
             )
         } ?: emptyList()),
         areaCmSq = null,

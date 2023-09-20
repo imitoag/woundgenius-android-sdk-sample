@@ -12,6 +12,7 @@ import dagger.android.HasAndroidInjector
 import com.example.samplewoundsdk.di.scope.AppComponent
 import com.example.samplewoundsdk.di.scope.DaggerAppComponent
 import com.example.samplewoundsdk.BuildConfig
+import com.example.woundsdk.data.pojo.autodetectionmod.AutoDetectionMod
 import com.example.woundsdk.data.pojo.cameramod.CameraMods
 import com.example.woundsdk.di.WoundGeniusSDK
 import io.reactivex.disposables.CompositeDisposable
@@ -43,7 +44,7 @@ class SampleWoundSDKApplication : MultiDexApplication(), HasAndroidInjector {
             .application(this)
             .build().apply { inject(this@SampleWoundSDKApplication) }
 
-      WoundGeniusSDK.init(
+        WoundGeniusSDK.init(
             application = this,
             appBundleId = BuildConfig.APPLICATION_ID
         )
@@ -51,7 +52,8 @@ class SampleWoundSDKApplication : MultiDexApplication(), HasAndroidInjector {
         WoundGeniusSDK.configure(
             isAddBodyPickerOnCaptureScreenAvailable = true,
             maxNumberOfMedia = 2,
-            isMultipleOutlinesEnabled = true
+            isMultipleOutlinesEnabled = true,
+            autoDetectionMod = AutoDetectionMod.WOUND
         )
 
         RxJavaPlugins.setErrorHandler { e: Throwable ->

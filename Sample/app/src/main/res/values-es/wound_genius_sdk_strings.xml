@@ -11,6 +11,12 @@
     <string name="ERROR">"Error"</string>
     <string name="OK">"OK"</string>
     <string name="CANCEL">"Cancelar"</string>
+    <string name="AUTO_DETECTION">"Auto-Detection"</string>
+    <string name="CLEAR_ALL">"Clear All"</string>
+    <string name="ENSURE_ACCURATE_DETECTION">Ensure accurate detection of wound edges and make adjustments as needed. Tap Measure to finalise measurement.</string>
+    <string name="PLEASE_START_DRAWING_WITH_AUTODETECT">Use your finger to outline areas or tap Auto-detect for automatic edges detection.</string>
+    <string name="HELP_CALIBRATION_MARKER_BUTTON">"¿Cómo utilizar este modo?"</string>
+    <string name="HELP_RULER_BUTTON">"¿Cómo utilizar este modo?"</string>
     <string name="WHOLE_BODY">"Seleccione todo"</string>
     <string name="CLEAR_SELECTION">"Borrar"</string>
     <string name="CLOSE">"Cerrar"</string>

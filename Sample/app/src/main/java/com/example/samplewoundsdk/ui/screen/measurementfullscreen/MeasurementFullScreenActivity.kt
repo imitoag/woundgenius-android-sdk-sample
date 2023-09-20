@@ -2,10 +2,15 @@ package com.example.samplewoundsdk.ui.screen.measurementfullscreen
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
+import android.graphics.Bitmap
 import android.graphics.Point
 import android.graphics.PointF
 import android.os.Bundle
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.example.samplewoundsdk.R
 import com.example.samplewoundsdk.data.pojo.measurement.MeasurementMetadata
@@ -13,7 +18,10 @@ import com.example.samplewoundsdk.databinding.SampleAppActivitySampleMeasurement
 import com.example.samplewoundsdk.ui.screen.base.AbsActivity
 import com.example.samplewoundsdk.ui.screen.measurementfullscreen.adapter.BoundaryLabelRecyclerAdapter
 import com.example.samplewoundsdk.utils.image.drawstroke.StrokeScalableImageView
+import com.example.samplewoundsdk.data.pojo.measurement.ImageResolution
+import java.io.File
 import java.io.Serializable
+import kotlin.math.max
 
 class MeasurementFullScreenActivity : AbsActivity<MeasurementFullScreenViewModel>() {
 
@@ -23,6 +31,8 @@ class MeasurementFullScreenActivity : AbsActivity<MeasurementFullScreenViewModel
     override fun provideLayoutId() = R.layout.sample_app_activity_sample_measurement_full_screen
 
     lateinit var binding: SampleAppActivitySampleMeasurementFullScreenBinding
+
+    private var currentPictureSize: ImageResolution? = null
 
     override fun initListeners() {}
 
@@ -76,13 +86,62 @@ class MeasurementFullScreenActivity : AbsActivity<MeasurementFullScreenViewModel
     }
 
     private fun loadImage() {
-        val file = args?.photoPath
-        val bitmap = BitmapFactory.decodeFile(file)
-        binding.imageSSIV.setImage(ImageSource.bitmap(bitmap))
+        args?.photoPath?.let { photoPath ->
+            binding.apply {
+                Glide.with(this@MeasurementFullScreenActivity)
+                    .asBitmap()
+                    .load(File(photoPath))
+                    .listener(object : RequestListener<Bitmap> {
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Bitmap>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            return true
+                        }
+
+                        override fun onResourceReady(
+                            resource: Bitmap?,
+                            model: Any?,
+                            target: Target<Bitmap>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            resource?.let {
+                                currentPictureSize = ImageResolution(it.width, it.height)
+                                imageSSIV.setImage(ImageSource.bitmap(it))
+                                setUpMetadataUi()
+                            }
+                            return true
+                        }
+                    }).into(hidePhotoACIV)
+            }
+        }
+    }
+
+    private fun getScale(
+        currentWidth: Int,
+        currentHeight: Int,
+        originalWidth: Int,
+        originalHeight: Int
+    ): Double {
+        val currentMaxWidth = max(currentWidth, currentHeight)
+        val originalMaxWidth = max(originalWidth, originalHeight)
+        return originalMaxWidth / currentMaxWidth.toDouble()
     }
 
     private fun setUpMetadataUi() {
         args?.apply {
+            var scale = 0.0
+            currentPictureSize?.let { currentSize ->
+                scale = getScale(
+                    currentWidth = currentSize.width,
+                    currentHeight = currentSize.height,
+                    originalWidth = pictureSize.width,
+                    originalHeight = pictureSize.height
+                )
+            }
 
             val allVertexesList = ArrayList<List<Point>>()
             val widthIndexes = ArrayList<Pair<Int?, Int?>>()
@@ -94,8 +153,8 @@ class MeasurementFullScreenActivity : AbsActivity<MeasurementFullScreenViewModel
                     boundaryMetadata.vertices?.let {
                         allVertexesList.add(it.map {
                             Point(
-                                it.x,
-                                it.y
+                                (it.x / scale).toInt(),
+                                (it.y / scale).toInt()
                             )
                         })
                     }
@@ -137,16 +196,18 @@ class MeasurementFullScreenActivity : AbsActivity<MeasurementFullScreenViewModel
 
         private data class Args(
             val photoPath: String,
+            val pictureSize: ImageResolution,
             val metadataList: List<MeasurementMetadata>
         ) : Serializable
 
         fun open(
             context: Context,
             photoPath: String,
+            pictureSize: ImageResolution,
             metadataList: List<MeasurementMetadata>
         ) = context.startActivity(
             Intent(context, MeasurementFullScreenActivity::class.java).apply {
-                putExtra(KEY_ARGS, Args(photoPath, metadataList))
+                putExtra(KEY_ARGS, Args(photoPath,pictureSize, metadataList))
             }
         )
 

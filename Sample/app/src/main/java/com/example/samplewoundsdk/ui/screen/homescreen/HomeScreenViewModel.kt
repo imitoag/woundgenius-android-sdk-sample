@@ -147,8 +147,7 @@ class HomeScreenViewModel @Inject constructor(
             getAssessmentsUseCase.execute(param)
                 .subscribe({ draftAssessments ->
                     Timber.d("RoomDB item size = %s", draftAssessments?.size)
-                    val newList =
-                        ArrayList(draftAssessments.sortedByDescending { it.id })
+                    val newList = ArrayList(draftAssessments.sortedBy { it.id })
                     _assessmentsResponseLD.value = newList
                 }, {
                     handleError(it)
@@ -169,7 +168,7 @@ class HomeScreenViewModel @Inject constructor(
             saveAssessmentToDBUseCase.execute(params)
                 .subscribe({
                 }, {
-
+                it
                 })
         )
     }

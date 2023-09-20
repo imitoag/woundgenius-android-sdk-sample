@@ -91,8 +91,8 @@ class AssessmentImageFragment : AbsFragment<AssessmentImageViewModel>() {
                         depth = areaAnnotationItem?.depth ?: 0.0,
                         vertices = pointsList?.map {
                             MeasurementMetadata.Point(
-                                (it.pointX?.div(4)) ?: 0,
-                                (it.pointY?.div(4)) ?: 0
+                                (it.pointX) ?: 0,
+                                (it.pointY) ?: 0
                             )
                         } ?: emptyList(),
                         lengthLine = MeasurementMetadata.Line(lengthA ?: -1, lengthB ?: -1),
@@ -129,8 +129,8 @@ class AssessmentImageFragment : AbsFragment<AssessmentImageViewModel>() {
                                 depth = annotationItem?.depth ?: 0.0,
                                 vertices = pointsList?.map {
                                     MeasurementMetadata.Point(
-                                        (it.pointX?.div(4)) ?: 0,
-                                        (it.pointY?.div(4)) ?: 0
+                                        (it.pointX) ?: 0,
+                                        (it.pointY) ?: 0
                                     )
                                 } ?: emptyList(),
                                 lengthLine = MeasurementMetadata.Line(lengthA ?: -1, lengthB ?: -1),
@@ -143,11 +143,14 @@ class AssessmentImageFragment : AbsFragment<AssessmentImageViewModel>() {
             }
 
             context?.let {
-                MeasurementFullScreenActivity.open(
-                    it,
-                    mediaModel.imagePath ?: "",
-                    metadataList
-                )
+                mediaModel.originalPictureSize?.let { it1 ->
+                    MeasurementFullScreenActivity.open(
+                        it,
+                        mediaModel.imagePath ?: "",
+                        it1,
+                        metadataList
+                    )
+                }
             }
         }
     }
