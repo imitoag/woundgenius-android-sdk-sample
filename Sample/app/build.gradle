@@ -7,13 +7,6 @@ plugins {
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
-repositories {
-    maven { url 'https://jitpack.io' }
-    maven { url 'https://maven.zohodl.com/' }
-    google()
-    mavenCentral()
-}
-
 android {
     namespace 'com.example.samplewoundsdk'
     compileSdk 33
@@ -21,14 +14,20 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 33
-        versionCode 6
-        versionName "0.9.5"
+        versionCode 7
+        versionName "0.9.6"
         applicationId "com.example.samplewoundsdk"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    packagingOptions {
+        pickFirst "lib/x86/libc++_shared.so"
+        pickFirst "lib/x86_64/libc++_shared.so"
+        pickFirst "lib/armeabi-v7a/libc++_shared.so"
+        pickFirst "lib/arm64-v8a/libc++_shared.so"
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.debug
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -37,16 +36,16 @@ android {
         exclude 'META-INF/atomicfu.kotlin_module'
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
     buildFeatures {
         viewBinding true
     }
-    ndkVersion '25.2.9519653'
+    ndkVersion '25.1.8937393'
 }
 
 dependencies {
@@ -58,14 +57,11 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
-
     //Wound SDK
-    implementation 'com.example.woundsdk:woundgeniussdk:0.9.5' // implementation local sdk aar library
+    implementation 'com.example.woundsdk:woundgeniussdk:0.9.6' // implementation local sdk aar library
 
     //Fotoapparat
     implementation 'io.fotoapparat:fotoapparat:2.7.0'
@@ -74,11 +70,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
     //dagger
-    kapt 'com.google.dagger:dagger-compiler:2.42'
-    kapt 'com.google.dagger:dagger-android-processor:2.42'
-    implementation 'com.google.dagger:dagger:2.42'
-    implementation 'com.google.dagger:dagger-android:2.42'
-    implementation 'com.google.dagger:dagger-android-support:2.42'
+    kapt 'com.google.dagger:dagger-compiler:2.48'
+    kapt 'com.google.dagger:dagger-android-processor:2.48'
+    implementation 'com.google.dagger:dagger:2.48'
+    implementation 'com.google.dagger:dagger-android:2.48'
+    implementation 'com.google.dagger:dagger-android-support:2.48'
 
     //multidex
     implementation 'androidx.multidex:multidex:2.0.1'
