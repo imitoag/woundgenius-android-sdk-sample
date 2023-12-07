@@ -25,6 +25,7 @@ import com.example.samplewoundsdk.databinding.SampleAppFragmentAssessmentImageBi
 import com.example.samplewoundsdk.ui.screen.base.AbsFragment
 import com.example.samplewoundsdk.ui.screen.measurementfullscreen.MeasurementFullScreenActivity
 import com.example.samplewoundsdk.utils.image.drawstroke.StrokeScalableImageView
+import com.example.samplewoundsdk.data.pojo.measurement.Vertices
 import java.io.Serializable
 import kotlin.collections.ArrayList
 import kotlin.math.max
@@ -266,18 +267,22 @@ class AssessmentImageFragment : AbsFragment<AssessmentImageViewModel>() {
                     )
                 }
 
-            val allVertexesList = ArrayList<List<Point>>()
+            val allVertexesList = ArrayList<ArrayList<Vertices>>()
             val widthIndexes = ArrayList<Pair<Int?, Int?>>()
             val lengthIndexes = ArrayList<Pair<Int?, Int?>>()
             val areaList = ArrayList<Double>()
             metadataList.forEachIndexed { index, boundaryMetadata ->
                 boundaryMetadata.apply {
-                    boundaryMetadata.vertices?.map {
-                        Point(
-                            (it.x / scale).toInt(),
-                            (it.y / scale).toInt()
-                        )
-                    }?.let { allVertexesList.add(it) }
+                    boundaryMetadata.vertices?.let {
+                        allVertexesList.add(ArrayList(it.map {
+                            Vertices(
+                                Point(
+                                    (it.x / scale).toInt(),
+                                    (it.y / scale).toInt()
+                                )
+                            )
+                        }))
+                    }
                     widthIndexes.add(
                         Pair(
                             boundaryMetadata.widthLine?.pointAIndex,
@@ -313,10 +318,12 @@ class AssessmentImageFragment : AbsFragment<AssessmentImageViewModel>() {
                 )
                 imageSSIV.setTouchListener(object : StrokeScalableImageView.ViewTouchListener {
                     override fun onDown(sourceCoords: PointF?) {}
-                    override fun onZoomChanged(zoom: Float) {}
+                    override fun onZoomChanged(zoom: Float) {
+                    }
+
                     override fun onUp() {}
                     override fun onVertexListChanged(
-                        vertices: ArrayList<ArrayList<Point>>?,
+                        vertices: ArrayList<ArrayList<Vertices>>?,
                         closed: Boolean
                     ) {
                     }
@@ -338,28 +345,6 @@ class AssessmentImageFragment : AbsFragment<AssessmentImageViewModel>() {
         viewModel?.apply {
             args?.apply {
                 binding.apply {
-                    imageSSIV.setMode(
-                        StrokeScalableImageView.Mode.ViewMeasurement
-                    )
-
-                    imageSSIV.maxScale = 5f
-                    imageSSIV.isNeedFillPolygon(false)
-                    imageSSIV.isNeedWhiteStrokesOnVertex(true)
-                    imageSSIV.setTouchListener(object : StrokeScalableImageView.ViewTouchListener {
-                        override fun onDown(sourceCoords: PointF?) {}
-
-                        override fun onMove(viewCoord: PointF?) {}
-
-                        override fun onUp() {}
-
-                        override fun onVertexListChanged(
-                            vertices: ArrayList<ArrayList<Point>>?,
-                            closed: Boolean
-                        ) {
-                        }
-
-                        override fun onZoomChanged(zoom: Float) {}
-                    })
                     activity?.let { ctx ->
                         Glide.with(ctx)
                             .asBitmap()

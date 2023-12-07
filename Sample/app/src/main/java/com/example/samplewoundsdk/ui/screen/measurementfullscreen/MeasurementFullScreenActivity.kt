@@ -19,6 +19,7 @@ import com.example.samplewoundsdk.ui.screen.base.AbsActivity
 import com.example.samplewoundsdk.ui.screen.measurementfullscreen.adapter.BoundaryLabelRecyclerAdapter
 import com.example.samplewoundsdk.utils.image.drawstroke.StrokeScalableImageView
 import com.example.samplewoundsdk.data.pojo.measurement.ImageResolution
+import com.example.samplewoundsdk.data.pojo.measurement.Vertices
 import java.io.File
 import java.io.Serializable
 import kotlin.math.max
@@ -71,7 +72,7 @@ class MeasurementFullScreenActivity : AbsActivity<MeasurementFullScreenViewModel
                     override fun onZoomChanged(zoom: Float) {}
                     override fun onUp() {}
                     override fun onVertexListChanged(
-                        vertices: ArrayList<ArrayList<Point>>?,
+                        vertices: ArrayList<ArrayList<Vertices>>?,
                         closed: Boolean
                     ) {
                     }
@@ -143,7 +144,7 @@ class MeasurementFullScreenActivity : AbsActivity<MeasurementFullScreenViewModel
                 )
             }
 
-            val allVertexesList = ArrayList<List<Point>>()
+            val allVertexesList = ArrayList<ArrayList<Vertices>>()
             val widthIndexes = ArrayList<Pair<Int?, Int?>>()
             val lengthIndexes = ArrayList<Pair<Int?, Int?>>()
             val areaList = ArrayList<Double>()
@@ -151,12 +152,14 @@ class MeasurementFullScreenActivity : AbsActivity<MeasurementFullScreenViewModel
             metadataList.forEachIndexed { index, boundaryMetadata ->
                 boundaryMetadata.apply {
                     boundaryMetadata.vertices?.let {
-                        allVertexesList.add(it.map {
-                            Point(
-                                (it.x / scale).toInt(),
-                                (it.y / scale).toInt()
+                        allVertexesList.add(ArrayList( it.map {
+                            Vertices(
+                                Point(
+                                    (it.x / scale).toInt(),
+                                    (it.y / scale).toInt()
+                                )
                             )
-                        })
+                        }))
                     }
                     widthIndexes.add(
                         Pair(

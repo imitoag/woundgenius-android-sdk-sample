@@ -2,20 +2,19 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
 }
-
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 
 android {
     namespace 'com.example.samplewoundsdk'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdk 26
-        targetSdk 33
-        versionCode 7
-        versionName "0.9.6"
+        targetSdk 34
+        versionCode 16
+        versionName "0.9.7"
         applicationId "com.example.samplewoundsdk"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -61,7 +60,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     //Wound SDK
-    implementation 'com.example.woundsdk:woundgeniussdk:0.9.6' // implementation local sdk aar library
+    implementation 'com.example.woundsdk:woundgeniussdk:0.9.7' // implementation local sdk aar library
 
     //Fotoapparat
     implementation 'io.fotoapparat:fotoapparat:2.7.0'

@@ -1,9 +1,15 @@
 package com.example.samplewoundsdk.utils.image.drawstroke
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Point
+import android.graphics.Rect
+import android.graphics.RectF
+import android.graphics.Typeface
 import com.example.samplewoundsdk.R
-import kotlin.collections.ArrayList
+import com.example.samplewoundsdk.data.pojo.measurement.Vertices
 import kotlin.math.max
 
 class CloseButton(r: Int, context: Context) {
@@ -29,7 +35,7 @@ class CloseButton(r: Int, context: Context) {
     var center: Point? = null
 
     private fun findCloseCenter(
-        vertices: ArrayList<Point>,
+        verticeList: ArrayList<Vertices>,
         scalablePolylineView: StrokeScalableImageView,
         width: Int,
         height: Int,
@@ -40,26 +46,26 @@ class CloseButton(r: Int, context: Context) {
         var bottom: Point? = null
         var left: Point? = null
         var right: Point? = null
-        val size: Int = vertices.size
+        val size: Int = verticeList.size
         return if (size > 0) {
 
-            vertices.forEach { point ->
-                top = initPoint(top, point)
-                bottom = initPoint(bottom, point)
-                left = initPoint(left, point)
-                right = initPoint(right, point)
+            verticeList.forEach { vertices ->
+                top = initPoint(top, vertices.point)
+                bottom = initPoint(bottom, vertices.point)
+                left = initPoint(left, vertices.point)
+                right = initPoint(right, vertices.point)
 
-                if (point.x > (right?.x ?: 0)) {
-                    right = point
+                if (vertices.point.x > (right?.x ?: 0)) {
+                    right = vertices.point
                 }
-                if (point.x < (left?.x ?: 0)) {
-                    left = point
+                if (vertices.point.x < (left?.x ?: 0)) {
+                    left = vertices.point
                 }
-                if (point.y < (top?.y ?: 0)) {
-                    top = point
+                if (vertices.point.y < (top?.y ?: 0)) {
+                    top = vertices.point
                 }
-                if (point.y > (bottom?.y ?: 0)) {
-                    bottom = point
+                if (vertices.point.y > (bottom?.y ?: 0)) {
+                    bottom = vertices.point
                 }
             }
 
@@ -77,14 +83,17 @@ class CloseButton(r: Int, context: Context) {
                         val point = scalablePolylineView.sourceToViewCoordInt(right ?: Point(0, 0))
                         Point(point.x + padding.toInt(), point.y)
                     }
+
                     leftArea -> {
                         val point = scalablePolylineView.sourceToViewCoordInt(left ?: Point(0, 0))
                         Point(point.x - padding.toInt(), point.y)
                     }
+
                     topArea -> {
                         val point = scalablePolylineView.sourceToViewCoordInt(top ?: Point(0, 0))
                         Point(point.x, point.y - rectHeight.toInt() - padding.toInt())
                     }
+
                     else -> {
                         val point = scalablePolylineView.sourceToViewCoordInt(bottom ?: Point(0, 0))
                         Point(point.x, point.y + rectHeight.toInt() + padding.toInt())
@@ -101,7 +110,7 @@ class CloseButton(r: Int, context: Context) {
         tempCanvas: Canvas,
         fillColor: Int,
         number: Int,
-        vertices: ArrayList<Point>,
+        vertices: ArrayList<Vertices>,
         scalablePolylineView: StrokeScalableImageView,
         mode: StrokeScalableImageView.Mode
     ): Canvas {
@@ -166,7 +175,7 @@ class CloseButton(r: Int, context: Context) {
         number: Int,
         area: Double,
         length: Double,
-        vertices: ArrayList<Point>,
+        vertices: ArrayList<Vertices>,
         scalablePolylineView: StrokeScalableImageView,
         mode: StrokeScalableImageView.Mode
     ): Canvas {
@@ -253,7 +262,7 @@ class CloseButton(r: Int, context: Context) {
         val whiteLine = Paint(Paint.ANTI_ALIAS_FLAG)
         whiteLine.style = Paint.Style.FILL
         whiteLine.color = Color.WHITE
-        whiteLine.textSize = context.resources.getDimension(R.dimen.textSize14)
+        whiteLine.textSize = context.resources.getDimension(com.example.samplewoundsdk.R.dimen.textSize14)
         whiteLine.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
         whiteLine.strokeWidth = context.resources.getDimension(R.dimen.stroke_line_width)
         return whiteLine

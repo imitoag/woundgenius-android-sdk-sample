@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3729f44e-0df6-40c3-b4a0-1a866c1a3ccd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Sample/app/SDK/com/example/woundsdk/woundgeniussdk/0.9.6/woundgeniussdk-0.9.6.aar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample/app/SDK/com/example/woundsdk/woundgeniussdk/0.9.6/woundgeniussdk-0.9.6.pom" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Sample/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample/app/src/main/java/com/example/samplewoundsdk/core/SampleWoundSDKApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Sample/app/src/main/java/com/example/samplewoundsdk/core/SampleWoundSDKApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Sample/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample/app/src/main/java/com/example/samplewoundsdk/ui/screen/measurementfullscreen/MeasurementFullScreenActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Sample/app/src/main/java/com/example/samplewoundsdk/ui/screen/measurementfullscreen/MeasurementFullScreenActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample/app/src/main/java/com/example/samplewoundsdk/ui/screen/settings/SettingsScreenFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Sample/app/src/main/java/com/example/samplewoundsdk/ui/screen/settings/SettingsScreenFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample/app/src/main/java/com/example/samplewoundsdk/utils/image/drawstroke/CloseButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Sample/app/src/main/java/com/example/samplewoundsdk/utils/image/drawstroke/CloseButton.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample/app/src/main/java/com/example/samplewoundsdk/utils/image/drawstroke/PolygonGeometry.java" beforeDir="false" afterPath="$PROJECT_DIR$/Sample/app/src/main/java/com/example/samplewoundsdk/utils/image/drawstroke/PolygonGeometry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample/app/src/main/java/com/example/samplewoundsdk/utils/image/drawstroke/StrokeScalableImageView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Sample/app/src/main/java/com/example/samplewoundsdk/utils/image/drawstroke/StrokeScalableImageView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample/app/src/main/res/values-de/wound_genius_sdk_strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Sample/app/src/main/res/values-de/wound_genius_sdk_strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample/app/src/main/res/values-es/wound_genius_sdk_strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Sample/app/src/main/res/values-es/wound_genius_sdk_strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample/app/src/main/res/values-fr/wound_genius_sdk_strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Sample/app/src/main/res/values-fr/wound_genius_sdk_strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample/app/src/main/res/values-pt/wound_genius_sdk_strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Sample/app/src/main/res/values-pt/wound_genius_sdk_strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sample/app/src/main/res/values/wound_genius_sdk_strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Sample/app/src/main/res/values/wound_genius_sdk_strings.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2ZDKlk7eZQz3eDT6PvQFoeuk5XB" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "v.0.9.7",
+    "last_opened_file_path": "E:/woundgenius-android-sdk-sample"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3729f44e-0df6-40c3-b4a0-1a866c1a3ccd" name="Changes" comment="" />
+      <created>1701951362481</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1701951362481</updated>
+    </task>
+    <servers />
+  </component>
+</project>

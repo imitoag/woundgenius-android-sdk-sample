@@ -1,6 +1,7 @@
 package com.example.samplewoundsdk.utils.image.drawstroke;
 
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.util.SparseArray;
 
 import com.example.samplewoundsdk.data.pojo.measurement.MeasurementMetadata;
@@ -11,6 +12,15 @@ import java.util.List;
 public class PolygonGeometry {
     //method fo calculating distance between 2 points
     public static double calculateDistance(Point start, Point end) {
+        double dx = end.x - start.x;
+        double dy = end.y - start.y;
+        double qX = Math.pow(dx, 2);
+        double qY = Math.pow(dy, 2);
+        double squaredDistance = qX + qY;
+        return Math.sqrt(squaredDistance);
+    }
+
+    public static double calculateDistance(PointF start, PointF end) {
         double dx = end.x - start.x;
         double dy = end.y - start.y;
         double qX = Math.pow(dx, 2);

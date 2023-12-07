@@ -105,4 +105,6 @@
     <string name="outlineScreenSubtitle">""</string>
     <string name="resultsScreenTitle">"Résultats de mesure"</string>
     <string name="resultsScreenSubtitle">""</string>
+    <string name="HIDE_ALL">"Masquer Tout"</string>
+    <string name="SHOW_ALL">"Montrer Tout"</string>
 </resources>

@@ -207,8 +207,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                 }
             }
             autoDetectionSpinner.adapter = adapter
-            val selectedAutoDetectionMod = AutoDetectionMod.values().withIndex()
-                .find { it.value == currentAutoDetectMod }?.index ?: 0
+            val selectedAutoDetectionMod = AutoDetectionMod.values().withIndex().find { it.value == currentAutoDetectMod }?.index ?: 0
 
             autoDetectionSpinner.setSelection(selectedAutoDetectionMod, false)
         }
