@@ -2,7 +2,7 @@ package com.example.samplewoundsdk.di.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.samplewoundsdk.ui.screen.assesmentimage.AssessmentImageViewModel
+import com.example.samplewoundsdk.ui.screen.assesmentimage.AssessmentMediaViewModel
 import com.example.samplewoundsdk.ui.screen.homescreen.HomeScreenViewModel
 import com.example.samplewoundsdk.ui.screen.main.MainViewModel
 import com.example.samplewoundsdk.ui.screen.measurementfullscreen.MeasurementFullScreenViewModel
@@ -32,8 +32,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(AssessmentImageViewModel::class)
-    abstract fun bindAssessmentImageViewModel(viewModel: AssessmentImageViewModel): ViewModel
+    @ViewModelKey(AssessmentMediaViewModel::class)
+    abstract fun bindAssessmentImageViewModel(viewModel: AssessmentMediaViewModel): ViewModel
 
     @Binds
     @IntoMap

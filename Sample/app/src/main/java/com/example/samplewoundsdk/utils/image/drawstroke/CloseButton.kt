@@ -8,8 +8,6 @@ import android.graphics.Point
 import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.Typeface
-import com.example.samplewoundsdk.R
-import com.example.samplewoundsdk.data.pojo.measurement.Vertices
 import kotlin.math.max
 
 class CloseButton(r: Int, context: Context) {
@@ -22,8 +20,10 @@ class CloseButton(r: Int, context: Context) {
 
     init {
         RADIUS = r
-        padding = context.resources.getDimension(R.dimen.clear_button_padding)
-        radiusForRect = context.resources.getDimension(R.dimen.measurement_label_round)
+        padding =
+            context.resources.getDimension(com.example.samplewoundsdk.R.dimen.clear_button_padding)
+        radiusForRect =
+            context.resources.getDimension(com.example.samplewoundsdk.R.dimen.measurement_label_round)
         whitePaint = getWhitePaint(context)
         fillPaint = getFillPaint()
     }
@@ -34,9 +34,8 @@ class CloseButton(r: Int, context: Context) {
 
     var center: Point? = null
 
-    private fun findCloseCenter(
-        verticeList: ArrayList<Vertices>,
-        scalablePolylineView: StrokeScalableImageView,
+    private fun findBestPointToDrawCloseLabel(
+        verticesList: ArrayList<com.example.samplewoundsdk.data.pojo.measurement.Vertices>,
         width: Int,
         height: Int,
         rectHeight: Float
@@ -46,10 +45,10 @@ class CloseButton(r: Int, context: Context) {
         var bottom: Point? = null
         var left: Point? = null
         var right: Point? = null
-        val size: Int = verticeList.size
+        val size: Int = verticesList.size
         return if (size > 0) {
 
-            verticeList.forEach { vertices ->
+            verticesList.forEach { vertices ->
                 top = initPoint(top, vertices.point)
                 bottom = initPoint(bottom, vertices.point)
                 left = initPoint(left, vertices.point)
@@ -80,23 +79,19 @@ class CloseButton(r: Int, context: Context) {
             } else {
                 val center: Point = when (maxArea) {
                     rightArea -> {
-                        val point = scalablePolylineView.sourceToViewCoordInt(right ?: Point(0, 0))
-                        Point(point.x + padding.toInt(), point.y)
+                        Point(right ?: Point(0, 0))
                     }
 
                     leftArea -> {
-                        val point = scalablePolylineView.sourceToViewCoordInt(left ?: Point(0, 0))
-                        Point(point.x - padding.toInt(), point.y)
+                        (left ?: Point(0, 0))
                     }
 
                     topArea -> {
-                        val point = scalablePolylineView.sourceToViewCoordInt(top ?: Point(0, 0))
-                        Point(point.x, point.y - rectHeight.toInt() - padding.toInt())
+                        Point(top ?: Point(0, 0))
                     }
 
                     else -> {
-                        val point = scalablePolylineView.sourceToViewCoordInt(bottom ?: Point(0, 0))
-                        Point(point.x, point.y + rectHeight.toInt() + padding.toInt())
+                        Point(bottom ?: Point(0, 0))
                     }
                 }
                 center
@@ -106,19 +101,15 @@ class CloseButton(r: Int, context: Context) {
         }
     }
 
-    fun drawFilled(
-        tempCanvas: Canvas,
-        fillColor: Int,
+    fun findBestOptionPointToDrawCloseButton(
         number: Int,
-        vertices: ArrayList<Vertices>,
-        scalablePolylineView: StrokeScalableImageView,
-        mode: StrokeScalableImageView.Mode
-    ): Canvas {
-        val text =
-            if (mode == StrokeScalableImageView.Mode.DrawSingle) "" else scalablePolylineView.context.getString(
-                R.string.close_button_label,
-                number
-            )
+        vertices: ArrayList<com.example.samplewoundsdk.data.pojo.measurement.Vertices>,
+        scalablePolylineView: StrokeScalableImageView
+    ): Point {
+        val text = scalablePolylineView.context.getString(
+            com.example.samplewoundsdk.R.string.close_button_label,
+            number
+        )
         val textSize = Rect()
         whitePaint.getTextBounds(text, 0, text.length, textSize)
 
@@ -127,95 +118,305 @@ class CloseButton(r: Int, context: Context) {
             textHeight = (padding * 2).toInt()
         }
 
-        center = findCloseCenter(
+        return findBestPointToDrawCloseLabel(
             vertices,
-            scalablePolylineView,
             scalablePolylineView.sWidth,
             scalablePolylineView.sHeight,
             textHeight + padding * 2
         )
-        center?.let { centerPoint ->
-            fillPaint.color = fillColor
+    }
 
-            val line1StartX =
-                centerPoint.x.toFloat() + textSize.width() + (if (mode == StrokeScalableImageView.Mode.DrawSingle) 0f else padding)
-            val line1StartY = centerPoint.y.toFloat() - textHeight
-            val line1EndX = line1StartX + textHeight
-            val line1EndY = centerPoint.y.toFloat()
+    fun getAreaRectangleByPoint(
+        centerPoint: Point, rectanglePointIndex: Int, scalablePolylineView: StrokeScalableImageView, number: Int
+    ): ArrayList<Point> {
+        val text = scalablePolylineView.context.getString(
+            com.example.samplewoundsdk.R.string.close_button_label,
+            number
+        )
+        val textSize = Rect()
+        whitePaint.getTextBounds(text, 0, text.length, textSize)
 
-            val line2StartX = line1StartX
-            val line2StartY = line1EndY
-            val line2EndX = line1EndX
-            val line2EndY = line1StartY
+        var textHeight = textSize.height()
+        if (textHeight == 0) {
+            textHeight = (padding * 2).toInt()
+        }
 
-            val rectLeft = centerPoint.x - padding
-            val rectTop = line1StartY - padding
-            val rectRight = line1EndX + padding
-            val rectBottom = line1EndY + padding
+        val rectangleHeight = padding / 2 + textHeight + padding / 2
+        val rectangleWidth = padding / 2 + textSize.width() + padding / 2
 
-            tempCanvas.drawRoundRect(
-                rectLeft,
-                rectTop,
-                rectRight,
-                rectBottom,
-                radiusForRect,
-                radiusForRect,
-                fillPaint
+        var rectLeft: Int = 0
+        var rectTop: Int = 0
+        var rectRight: Int = 0
+        var rectBottom: Int = 0
+
+        when (rectanglePointIndex) {
+            0 -> {
+                rectLeft = centerPoint.x
+                rectTop = centerPoint.y
+                rectRight = (centerPoint.x + rectangleWidth).toInt()
+                rectBottom = (centerPoint.y + rectangleHeight).toInt()
+            }
+
+            1 -> {
+                rectLeft = (centerPoint.x - rectangleWidth).toInt()
+                rectTop = centerPoint.y
+                rectRight = centerPoint.x
+                rectBottom = (centerPoint.y + rectangleHeight).toInt()
+            }
+
+            2 -> {
+                rectLeft = (centerPoint.x - rectangleWidth).toInt()
+                rectTop = (centerPoint.y - rectangleHeight).toInt()
+                rectRight = centerPoint.x
+                rectBottom = centerPoint.y
+            }
+
+            3 -> {
+                rectLeft = centerPoint.x
+                rectTop = (centerPoint.y - rectangleHeight).toInt()
+                rectRight = (centerPoint.x + rectangleWidth).toInt()
+                rectBottom = centerPoint.y
+            }
+
+            else -> {
+                rectLeft = (centerPoint.x - rectangleWidth / 2).toInt()
+                rectTop = (centerPoint.y - rectangleHeight / 2).toInt()
+                rectRight = (centerPoint.x + rectangleWidth / 2).toInt()
+                rectBottom = (centerPoint.y + rectangleHeight / 2).toInt()
+            }
+        }
+
+        val pointA = Point(
+            rectLeft.toInt(),
+            rectTop.toInt()
+        )
+        val pointB = Point(
+            rectRight.toInt(),
+            rectTop.toInt()
+        )
+        val pointC = Point(
+            rectRight.toInt(),
+            rectBottom.toInt()
+        )
+        val pointD = Point(
+            rectLeft.toInt(),
+            rectBottom.toInt()
+        )
+
+        val rectanglePoints: ArrayList<Point> = ArrayList()
+        rectanglePoints.add(pointA)
+        rectanglePoints.add(pointB)
+        rectanglePoints.add(pointC)
+        rectanglePoints.add(pointD)
+
+        return rectanglePoints
+    }
+
+    fun getAreaClearRectangleByPoint(
+        centerPoint: Point,
+        rectanglePointIndex: Int,
+        scalablePolylineView: StrokeScalableImageView,
+        number: Int
+    ): ArrayList<Point> {
+        val text = scalablePolylineView.context.getString(
+            com.example.samplewoundsdk.R.string.close_button_label,
+            number
+        )
+        val textSize = Rect()
+        whitePaint.getTextBounds(text, 0, text.length, textSize)
+
+        var textHeight = textSize.height()
+        if (textHeight == 0) {
+            textHeight = (padding * 2).toInt()
+        }
+
+        val rectangleHeight = padding / 2 + textHeight + padding / 2
+        val rectangleWidth =
+            padding / 2 + textSize.width() + padding + textSize.height() + padding / 2
+
+        var rectLeft: Int = 0
+        var rectTop: Int = 0
+        var rectRight: Int = 0
+        var rectBottom: Int = 0
+
+        when (rectanglePointIndex) {
+            0 -> {
+                rectLeft = centerPoint.x
+                rectTop = centerPoint.y
+                rectRight = (centerPoint.x + rectangleWidth).toInt()
+                rectBottom = (centerPoint.y + rectangleHeight).toInt()
+            }
+
+            1 -> {
+                rectLeft = (centerPoint.x - rectangleWidth).toInt()
+                rectTop = centerPoint.y
+                rectRight = centerPoint.x
+                rectBottom = (centerPoint.y + rectangleHeight).toInt()
+            }
+
+            2 -> {
+                rectLeft = (centerPoint.x - rectangleWidth).toInt()
+                rectTop = (centerPoint.y - rectangleHeight).toInt()
+                rectRight = centerPoint.x
+                rectBottom = centerPoint.y
+            }
+
+            3 -> {
+                rectLeft = centerPoint.x
+                rectTop = (centerPoint.y - rectangleHeight).toInt()
+                rectRight = (centerPoint.x + rectangleWidth).toInt()
+                rectBottom = centerPoint.y
+            }
+
+            else -> {
+                rectLeft = (centerPoint.x - rectangleWidth / 2).toInt()
+                rectTop = (centerPoint.y - rectangleHeight / 2).toInt()
+                rectRight = (centerPoint.x + rectangleWidth / 2).toInt()
+                rectBottom = (centerPoint.y + rectangleHeight / 2).toInt()
+            }
+        }
+
+
+        val pointA = Point(
+            rectLeft,
+            rectTop
+        )
+        val pointB = Point(
+            rectRight,
+            rectTop
+        )
+        val pointC = Point(
+            rectRight,
+            rectBottom
+        )
+        val pointD = Point(
+            rectLeft,
+            rectBottom
+        )
+
+        val rectanglePoints: ArrayList<Point> = ArrayList()
+        rectanglePoints.add(pointA)
+        rectanglePoints.add(pointB)
+        rectanglePoints.add(pointC)
+        rectanglePoints.add(pointD)
+
+        return rectanglePoints
+    }
+
+    fun drawAreaClearLabelButton(
+        number: Int,
+        tempCanvas: Canvas,
+        fillColor: Int,
+        scalablePolylineView: StrokeScalableImageView,
+        mode: StrokeScalableImageView.Mode,
+        rectanglePoints: ArrayList<Point>
+    ): Canvas {
+        val text = scalablePolylineView.context.getString(
+            com.example.samplewoundsdk.R.string.close_button_label,
+            number
+        )
+        val textSize = Rect()
+        whitePaint.getTextBounds(text, 0, text.length, textSize)
+
+        var textHeight = textSize.height()
+        if (textHeight == 0) {
+            textHeight = (padding * 2).toInt()
+        }
+
+        if (rectanglePoints.isNotEmpty()) {
+
+            this.center = Point(
+                ((rectanglePoints[3].x + padding / 2).toInt()),
+                (rectanglePoints[3].y - padding / 2).toInt()
             )
-            tempCanvas.drawText(text, centerPoint.x.toFloat(), centerPoint.y.toFloat(), whitePaint)
-            tempCanvas.drawLine(line1StartX, line1StartY, line1EndX, line1EndY, whitePaint)
-            tempCanvas.drawLine(line2StartX, line2StartY, line2EndX, line2EndY, whitePaint)
+
+            center?.let { centerPoint ->
+                fillPaint.color = fillColor
+
+                val line1StartX =
+                    centerPoint.x.toFloat() + textSize.width() + (if (mode == StrokeScalableImageView.Mode.DrawSingle) 0f else padding)
+                val line1StartY = centerPoint.y.toFloat() - textHeight
+                val line1EndX = line1StartX + textHeight
+                val line1EndY = centerPoint.y.toFloat()
+
+                val line2StartX = line1StartX
+                val line2StartY = line1EndY
+                val line2EndX = line1EndX
+                val line2EndY = line1StartY
+
+                val rectLeft = rectanglePoints[0].x.toFloat()
+                val rectTop = rectanglePoints[1].y.toFloat()
+                val rectRight = rectanglePoints[1].x.toFloat()
+                val rectBottom = rectanglePoints[2].y.toFloat()
+
+                tempCanvas.drawRoundRect(
+                    rectLeft,
+                    rectTop,
+                    rectRight,
+                    rectBottom,
+                    radiusForRect,
+                    radiusForRect,
+                    fillPaint
+                )
+                tempCanvas.drawText(
+                    text,
+                    centerPoint.x.toFloat(),
+                    centerPoint.y.toFloat(),
+                    whitePaint
+                )
+                tempCanvas.drawLine(line1StartX, line1StartY, line1EndX, line1EndY, whitePaint)
+                tempCanvas.drawLine(line2StartX, line2StartY, line2EndX, line2EndY, whitePaint)
+            }
         }
         return tempCanvas
     }
 
-    fun drawAreaLabel(
+    fun drawAreaLabelButton(
+        number: Int,
         tempCanvas: Canvas,
         fillColor: Int,
-        number: Int,
-        area: Double,
-        length: Double,
-        vertices: ArrayList<Vertices>,
         scalablePolylineView: StrokeScalableImageView,
-        mode: StrokeScalableImageView.Mode
+        rectanglePoints: ArrayList<Point>
     ): Canvas {
-        val text = if (mode == StrokeScalableImageView.Mode.ViewStoma) {
-            scalablePolylineView.context.getString(R.string.mm, String.format("%.2f", length))
-        } else {
-            scalablePolylineView.context.getString(
-                R.string.close_button_area_label,
-                number,
-                String.format("%.2f", area)
-            )
-        }
+        val text = scalablePolylineView.context.getString(
+            com.example.samplewoundsdk.R.string.close_button_label,
+            number
+        )
+
         val textSize = Rect()
         whitePaint.getTextBounds(text, 0, text.length, textSize)
 
-        center = findCloseCenter(
-            vertices,
-            scalablePolylineView,
-            scalablePolylineView.sWidth,
-            scalablePolylineView.sHeight,
-            textSize.height() + padding * 2
-        )
-        center?.let { centerPoint ->
-            fillPaint.color = fillColor
+        if (rectanglePoints.isNotEmpty()) {
 
-            val rectLeft = centerPoint.x - padding
-            val rectTop = centerPoint.y - textSize.height() - padding
-            val rectRight = centerPoint.x + textSize.width() + padding
-            val rectBottom = centerPoint.y + padding
-
-            tempCanvas.drawRoundRect(
-                rectLeft,
-                rectTop,
-                rectRight,
-                rectBottom,
-                radiusForRect,
-                radiusForRect,
-                fillPaint
+            val center = Point(
+                ((rectanglePoints[3].x + padding / 1.5f).toInt()),
+                (rectanglePoints[3].y - padding / 2).toInt()
             )
-            tempCanvas.drawText(text, centerPoint.x.toFloat(), centerPoint.y.toFloat(), whitePaint)
+
+            center.let { centerPoint ->
+                fillPaint.color = fillColor
+
+                val rectLeft = rectanglePoints[0].x.toFloat()
+                val rectTop = rectanglePoints[1].y.toFloat()
+                val rectRight = rectanglePoints[1].x.toFloat()
+                val rectBottom = rectanglePoints[2].y.toFloat()
+
+                tempCanvas.drawRoundRect(
+                    rectLeft,
+                    rectTop,
+                    rectRight,
+                    rectBottom,
+                    radiusForRect,
+                    radiusForRect,
+                    fillPaint
+                )
+                tempCanvas.drawText(
+                    text,
+                    centerPoint.x.toFloat(),
+                    centerPoint.y.toFloat(),
+                    whitePaint
+                )
+            }
         }
         return tempCanvas
     }
@@ -230,7 +431,7 @@ class CloseButton(r: Int, context: Context) {
         center?.let { centerPoint ->
             val text =
                 if (mode == StrokeScalableImageView.Mode.DrawSingle) "" else context.getString(
-                    R.string.close_button_label,
+                    com.example.samplewoundsdk.R.string.close_button_label,
                     number
                 )
 
@@ -248,7 +449,7 @@ class CloseButton(r: Int, context: Context) {
             val line1EndX = line1StartX + textHeight
             val line1EndY = centerPoint.y.toFloat()
 
-            val rectLeft = centerPoint.x - padding
+            val rectLeft = centerPoint.x - (padding / 2)
             val rectTop = line1StartY - padding
             val rectRight = line1EndX + padding
             val rectBottom = line1EndY + padding
@@ -262,9 +463,11 @@ class CloseButton(r: Int, context: Context) {
         val whiteLine = Paint(Paint.ANTI_ALIAS_FLAG)
         whiteLine.style = Paint.Style.FILL
         whiteLine.color = Color.WHITE
-        whiteLine.textSize = context.resources.getDimension(com.example.samplewoundsdk.R.dimen.textSize14)
+        whiteLine.textSize =
+            context.resources.getDimension(com.example.samplewoundsdk.R.dimen.textSize14)
         whiteLine.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-        whiteLine.strokeWidth = context.resources.getDimension(R.dimen.stroke_line_width)
+        whiteLine.strokeWidth =
+            context.resources.getDimension(com.example.samplewoundsdk.R.dimen.stroke_line_width)
         return whiteLine
     }
 

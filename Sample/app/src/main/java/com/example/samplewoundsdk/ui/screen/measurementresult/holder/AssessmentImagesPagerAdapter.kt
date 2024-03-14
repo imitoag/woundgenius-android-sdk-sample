@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.samplewoundsdk.data.pojo.media.MediaModel
-import com.example.samplewoundsdk.ui.screen.assesmentimage.AssessmentImageFragment
+import com.example.samplewoundsdk.ui.screen.assesmentimage.AssessmentMediaFragment
 
 class AssessmentImagesPagerAdapter(
     fragmentActivity: FragmentActivity,
@@ -15,6 +15,6 @@ class AssessmentImagesPagerAdapter(
         draftMediaList.size
 
     override fun createFragment(position: Int): Fragment =
-        AssessmentImageFragment.newInstance(draftMediaList[position])
+        AssessmentMediaFragment.newInstance(draftMediaList[position])
 
 }

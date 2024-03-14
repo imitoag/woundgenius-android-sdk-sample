@@ -85,7 +85,7 @@
             android:layout_height="match_parent"
             android:background="@color/sample_app_red"
             android:gravity="center"
-            android:text="@string/DELETE"
+            android:text="@string/DELETE_BUTTON"
             android:textColor="@color/sample_app_white"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent" />

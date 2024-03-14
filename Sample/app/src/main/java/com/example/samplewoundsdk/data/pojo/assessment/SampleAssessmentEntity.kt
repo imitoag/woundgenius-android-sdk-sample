@@ -61,6 +61,9 @@ data class SampleAssessmentEntity(
     @ColumnInfo(name = "observationsJson")
     var observationsJson: String? = null,
 
+    @ColumnInfo(name = "isStoma")
+    var isStoma: Boolean? = null
+
     ) : Serializable {
 
     class Converter {

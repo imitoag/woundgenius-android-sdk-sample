@@ -8,13 +8,11 @@ import com.example.samplewoundsdk.data.usecase.assessment.DeleteDraftAssessmentB
 import com.example.samplewoundsdk.data.usecase.assessment.GetAssessmentsUseCase
 import com.example.samplewoundsdk.data.usecase.assessment.SaveAssessmentToDBUseCase
 import com.example.samplewoundsdk.data.usecase.license.GetLicenseKeyUseCase
-import com.example.samplewoundsdk.data.usecase.license.SaveLicenseKeyUseCase
 import com.example.samplewoundsdk.utils.toRoomLocalEntity
 import com.example.woundsdk.data.pojo.assessment.entity.AssessmentEntity
 import com.example.woundsdk.data.pojo.license.LicenseErrorType
 import com.example.woundsdk.data.pojo.license.LicenseValidateResult
 import com.example.woundsdk.di.WoundGeniusSDK
-import timber.log.Timber
 import javax.inject.Inject
 
 class HomeScreenViewModel @Inject constructor(
@@ -146,7 +144,6 @@ class HomeScreenViewModel @Inject constructor(
         add(
             getAssessmentsUseCase.execute(param)
                 .subscribe({ draftAssessments ->
-                    Timber.d("RoomDB item size = %s", draftAssessments?.size)
                     val newList = ArrayList(draftAssessments.sortedBy { it.id })
                     _assessmentsResponseLD.value = newList
                 }, {

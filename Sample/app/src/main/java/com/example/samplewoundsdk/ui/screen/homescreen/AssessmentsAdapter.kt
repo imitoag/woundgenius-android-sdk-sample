@@ -78,11 +78,22 @@ class AssessmentsAdapter(
         fun bind(item: SampleAssessmentEntity) {
             itemBinding.apply {
                 creationDateTv.text = item.uiDatetime
-                measurementMethodNameACTV.text = if (item.media?.firstOrNull()?.measurementMethod == CameraMods.PHOTO_MODE){
-                    this.root.context.getString(R.string.PHOTO)
-                } else {
-                    MEASUREMENT
-                }
+                measurementMethodNameACTV.text =
+                    when (item.media?.firstOrNull()?.measurementMethod) {
+                        CameraMods.PHOTO_MODE -> {
+                            this.root.context.getString(R.string.PHOTO)
+                        }
+                        CameraMods.MANUAL_MEASURE_MODE,CameraMods.MARKER_DETECT_MODE -> {
+                            MEASUREMENT
+                        }
+                        CameraMods.VIDEO_MODE -> {
+                            VIDEO
+                        }
+
+                        else -> {
+                            ""
+                        }
+                    }
 
                 Glide.with(this.root.context)
                     .load(item.media?.first()?.imagePath)
@@ -96,6 +107,7 @@ class AssessmentsAdapter(
 
     companion object {
         private const val MEASUREMENT = "Measurement"
+        private const val VIDEO = "Video"
     }
 
 }

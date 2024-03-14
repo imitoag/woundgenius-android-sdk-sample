@@ -15,6 +15,7 @@ import com.example.samplewoundsdk.R
 import com.example.samplewoundsdk.databinding.SampleAppFragmentSettingsScreenBinding
 import com.example.samplewoundsdk.ui.screen.base.AbsFragment
 import com.example.woundsdk.data.pojo.autodetectionmod.AutoDetectionMod
+import com.example.woundsdk.data.pojo.cameramod.CameraMods
 import com.example.woundsdk.di.WoundGeniusSDK
 
 
@@ -40,12 +41,61 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             addFromGalleryLayoutCL.setOnClickListener {
                 addFromGalleryS.isChecked = !addFromGalleryS.isChecked
             }
-            addFromGalleryS.setOnCheckedChangeListener { _, isChecked ->
-                WoundGeniusSDK.configure(isAddFromLocalStorageAvailable = isChecked)
+            addFromGalleryLayoutCL.setOnClickListener {
+                WoundGeniusSDK.configure(isAddFromLocalStorageAvailable = !addFromGalleryS.isChecked)
             }
-            isMultipleOutlinesEnabledS.setOnCheckedChangeListener { _, isChecked ->
-                WoundGeniusSDK.configure(isMultipleOutlinesEnabled = isChecked)
+            isMultipleOutlinesEnabledLayoutCL.setOnClickListener {
+                WoundGeniusSDK.configure(isMultipleOutlinesEnabled = !isMultipleOutlinesEnabledS.isChecked)
             }
+
+            addVideoModeS.setOnCheckedChangeListener { _, isChecked ->
+                onCameraModsChange(CameraMods.VIDEO_MODE, isChecked)
+            }
+            addVideoModeLayoutCL.setOnClickListener {
+                addVideoModeS.isChecked = !addVideoModeS.isChecked
+            }
+
+            addMarkerModeS.setOnCheckedChangeListener { _, isChecked ->
+                onCameraModsChange(CameraMods.MARKER_DETECT_MODE, isChecked)
+            }
+            addMarkerModeLayoutCL.setOnClickListener {
+                addMarkerModeS.isChecked = !addMarkerModeS.isChecked
+            }
+
+            addPhotoModeS.setOnCheckedChangeListener { _, isChecked ->
+                onCameraModsChange(CameraMods.PHOTO_MODE, isChecked)
+            }
+            addPhotoModeLayoutCL.setOnClickListener {
+                addPhotoModeS.isChecked = !addPhotoModeS.isChecked
+            }
+
+            addRulerModeS.setOnCheckedChangeListener { _, isChecked ->
+                onCameraModsChange(CameraMods.MANUAL_MEASURE_MODE, isChecked)
+            }
+            addRulerModeLayoutCL.setOnClickListener {
+                addRulerModeS.isChecked = !addRulerModeS.isChecked
+            }
+
+            stomaFlowS.setOnCheckedChangeListener { _, isChecked ->
+                WoundGeniusSDK.configure(
+                    isStomaFlow = isChecked,
+                    autoDetectionMod = if (isChecked) AutoDetectionMod.NONE else WoundGeniusSDK.getAutoDetectionMod()
+                )
+                if (isChecked) {
+                    setupAutoDetectionModsUi()
+                }
+            }
+            stomaFlowLayoutCL.setOnClickListener {
+                stomaFlowS.isChecked = !stomaFlowS.isChecked
+            }
+
+            addCameraSwitchS.setOnCheckedChangeListener { _, isChecked ->
+                WoundGeniusSDK.configure(isFrontCameraUsageAllowed = isChecked)
+            }
+            addCameraSwitchLayoutCL.setOnClickListener {
+                addCameraSwitchS.isChecked = !addCameraSwitchS.isChecked
+            }
+
             maxMediaNumberValueACET.addTextChangedListener(
                 onTextChanged = { _, _, _, _ ->
                     if (maxMediaNumberValueACET.text.toString().isNotEmpty()) {
@@ -76,6 +126,20 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
         }
     }
 
+    private fun onCameraModsChange(cameraMod: CameraMods, isChecked: Boolean) {
+        val availableCameraMods = ArrayList(WoundGeniusSDK.getAvailableModes())
+        if (isChecked) {
+            if (!availableCameraMods.contains(cameraMod)) {
+                availableCameraMods.add(cameraMod)
+            }
+        } else {
+            availableCameraMods.removeIf {
+                it == cameraMod
+            }
+        }
+
+        WoundGeniusSDK.configure(availableModes = availableCameraMods)
+    }
 
     private fun AppCompatEditText.onDone(callback: () -> Unit) {
         setOnEditorActionListener { _, actionId, _ ->
@@ -207,7 +271,8 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                 }
             }
             autoDetectionSpinner.adapter = adapter
-            val selectedAutoDetectionMod = AutoDetectionMod.values().withIndex().find { it.value == currentAutoDetectMod }?.index ?: 0
+            val selectedAutoDetectionMod = AutoDetectionMod.values().withIndex()
+                .find { it.value == currentAutoDetectMod }?.index ?: 0
 
             autoDetectionSpinner.setSelection(selectedAutoDetectionMod, false)
         }
@@ -235,6 +300,34 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                 val isAddBodyPickerOnCamera = WoundGeniusSDK.getIsAddBodyPickerAvailable()
                 if (addBodyPickerOnCameraS.isChecked != isAddBodyPickerOnCamera) {
                     addBodyPickerOnCameraS.isChecked = isAddBodyPickerOnCamera
+                }
+                val iStomaFlow = WoundGeniusSDK.getIsStomaFlow()
+                if (stomaFlowS.isChecked != iStomaFlow) {
+                    stomaFlowS.isChecked = iStomaFlow
+                }
+                val addCameraSwitch = WoundGeniusSDK.getIsFrontCameraUsageAllowed()
+                if (addCameraSwitchS.isChecked != addCameraSwitch) {
+                    addCameraSwitchS.isChecked = addCameraSwitch
+                }
+                val addVideoMode =
+                    WoundGeniusSDK.getAvailableModes().contains(CameraMods.VIDEO_MODE)
+                if (addVideoModeS.isChecked != addVideoMode) {
+                    addVideoModeS.isChecked = addVideoMode
+                }
+                val addRulerMode =
+                    WoundGeniusSDK.getAvailableModes().contains(CameraMods.MANUAL_MEASURE_MODE)
+                if (addRulerModeS.isChecked != addRulerMode) {
+                    addRulerModeS.isChecked = addRulerMode
+                }
+                val addPhotoMode =
+                    WoundGeniusSDK.getAvailableModes().contains(CameraMods.PHOTO_MODE)
+                if (addPhotoModeS.isChecked != addPhotoMode) {
+                    addPhotoModeS.isChecked = addPhotoMode
+                }
+                val addMarkerMod =
+                    WoundGeniusSDK.getAvailableModes().contains(CameraMods.MARKER_DETECT_MODE)
+                if (addMarkerModeS.isChecked != addMarkerMod) {
+                    addMarkerModeS.isChecked = addMarkerMod
                 }
                 val maxMediaNumber = WoundGeniusSDK.getMaxNumberOfMedia()
                 maxMediaNumberValueACET.setText(maxMediaNumber.toString())

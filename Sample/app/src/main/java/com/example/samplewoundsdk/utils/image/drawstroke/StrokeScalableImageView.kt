@@ -10,9 +10,21 @@ import android.util.TypedValue
 import android.view.MotionEvent
 import androidx.core.content.ContextCompat
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
-import com.example.samplewoundsdk.R
+import com.example.samplewoundsdk.data.pojo.measurement.AreaButton
+import com.example.samplewoundsdk.data.pojo.measurement.IntersectPoint
+import com.example.samplewoundsdk.data.pojo.measurement.RectangleEdges
+import com.example.samplewoundsdk.data.pojo.measurement.RectanglePosition
 import com.example.samplewoundsdk.data.pojo.measurement.Vertices
+import com.example.samplewoundsdk.data.pojo.measurement.VerticesVector
+import com.example.samplewoundsdk.data.pojo.measurement.LengthWidthButton
+import com.example.samplewoundsdk.data.pojo.measurement.LengthWidthButtonPosition
+import com.example.samplewoundsdk.utils.image.drawstroke.CloseButton
+import com.example.samplewoundsdk.utils.image.drawstroke.PolygonGeometry
+import timber.log.Timber
+import java.util.Locale
 import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 class StrokeScalableImageView : SubsamplingScaleImageView {
 
@@ -24,7 +36,8 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
     private var transparentGreenColor = 0
     private val polygonPath = Path()
     private val fingerLinePath = Path()
-    var verticesList = ArrayList<ArrayList<Vertices>>()
+    var verticesList =
+        ArrayList<ArrayList<Vertices>>()
     private var visibilityVerticesIndexes = ArrayList(verticesList.mapIndexed { index, _ -> index })
     private var vertexPaint: Paint? = null
     private var vertexDisabledPaint: Paint? = null
@@ -36,7 +49,8 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
     private var currentPosition: PointF = PointF()
     private var firstPoint = Point()
     private var isPathClosed = ArrayList<Boolean>()
-    private var currentDraggedVertices: Vertices? = null
+    private var currentDraggedVertices: Vertices? =
+        null
     private var fillPathPaint: Paint? = null
     private var clearPaint: Paint? = null
     private var isClear = false
@@ -54,6 +68,11 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
     private var touchEventHandle = Handler()
     private var zoomChangedTime = 0L
     private var showOutlines = true
+    private var lengthWidthLabelCoordinates =
+        ArrayList<Pair<LengthWidthButton?, LengthWidthButton?>>()
+
+    private var clearButtonLabelCoordinates = ArrayList<AreaButton>()
+    private var clearButtonRectangleCoordinates = ArrayList<Pair<Int, Pair<Int, Int>>>()
 
     private var diameter = 0.0
 
@@ -74,12 +93,23 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
     }
 
     private fun init() {
-        closeButtonRadius = context.resources.getDimension(R.dimen.stroke_circle_radius)
-        textSize = context.resources.getDimension(R.dimen.stroke_text_size)
-        lineWidth = context.resources.getDimension(R.dimen.stroke_line_width)
-        minDistance = context.resources.getDimension(R.dimen.stroke_min_distance)
-        greenColor = ContextCompat.getColor(context, R.color.sample_app_color_green)
-        transparentGreenColor = ContextCompat.getColor(context, R.color.sample_app_color_green_transparent)
+        closeButtonRadius =
+            context.resources.getDimension(com.example.samplewoundsdk.R.dimen.stroke_circle_radius)
+        textSize =
+            context.resources.getDimension(com.example.samplewoundsdk.R.dimen.stroke_text_size)
+        lineWidth =
+            context.resources.getDimension(com.example.samplewoundsdk.R.dimen.stroke_line_width)
+        minDistance =
+            context.resources.getDimension(com.example.samplewoundsdk.R.dimen.stroke_min_distance)
+        greenColor = ContextCompat.getColor(
+            context,
+            com.example.samplewoundsdk.R.color.sample_app_color_green
+        )
+        transparentGreenColor =
+            ContextCompat.getColor(
+                context,
+                com.example.samplewoundsdk.R.color.sample_app_color_green_transparent
+            )
         initPaints()
         buildDrawingCache()
         setDoubleTapZoomScale(3f)
@@ -101,13 +131,14 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
         circlePaint!!.color = Color.WHITE
         circlePaint!!.style = Paint.Style.FILL_AND_STROKE
         linesPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        linesPaint!!.color = Color.GREEN
+        linesPaint!!.color = Color.WHITE
         textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        textPaint!!.color = Color.WHITE
-        textPaint!!.textSize = 26f
+        textPaint!!.color = Color.GREEN
+        textPaint!!.textSize = 42f
         textPaint!!.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
         linesStrokePaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        linesStrokePaint!!.color = resources.getColor(R.color.sample_app_color_white_opacity_80)
+        linesStrokePaint!!.color =
+            resources.getColor(com.example.samplewoundsdk.R.color.sample_app_color_transparent)
         linesStrokePaint!!.strokeWidth = lineWidth * 2
         linesStrokePaint!!.style = Paint.Style.STROKE
     }
@@ -237,8 +268,10 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
         secondAdjustedVertices: List<Vertices>
     ): Pair<List<Vertices>, List<Vertices>> {
 
-        val newPointsForFirstAdjustedList = ArrayList<Vertices>()
-        val newPointsForSecondAdjustedList = ArrayList<Vertices>()
+        val newPointsForFirstAdjustedList =
+            ArrayList<Vertices>()
+        val newPointsForSecondAdjustedList =
+            ArrayList<Vertices>()
 
         var compareVertices = firstAdjustedVertices[0]
         newPointsForFirstAdjustedList.add(firstAdjustedVertices[0])
@@ -330,6 +363,11 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
         }
     }
 
+    private fun getCenterPointOnLine(startPoint: Point, endPoint: Point): Point {
+        val newPointX = (startPoint.x + endPoint.x) / 2
+        val newPointY = (startPoint.y + endPoint.y) / 2
+        return Point(newPointX, newPointY)
+    }
 
     private fun isAllPathClosed(): Boolean {
         var isAllPathClosed = true
@@ -376,6 +414,7 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
         closeButton.forEachIndexed { index, closeButton ->
             if (closeButton.center != null) {
                 if (processClearClick(originalX, originalY, closeButton, index)) {
+                    currentDraggedVertices = null
                     return
                 }
             }
@@ -385,9 +424,10 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                 return
             }
             if (verticesList.size == 0) {
-                verticesList = ArrayList<ArrayList<Vertices>>().apply {
-                    add(ArrayList())
-                }
+                verticesList =
+                    ArrayList<ArrayList<Vertices>>().apply {
+                        add(ArrayList())
+                    }
                 verticesList.lastOrNull()?.add(
                     Vertices(
                         Point(eventX.toInt(), eventY.toInt())
@@ -460,6 +500,10 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                                         }
                                         fingerLinePath.reset()
                                         isPathClosed[isPathClosed.lastIndex] = true
+                                        verticesList.lastOrNull()?.let {
+                                            checkIfAllAreaValid(it)
+                                        }
+                                        checkIfLabelInsideAnyOutlines()
                                         validateAvailablePoints()
                                     }
                                 }
@@ -469,21 +513,23 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                         if (verticesList.isNotEmpty() && verticesList.lastOrNull()
                                 ?.isEmpty() == true
                         ) {
-                            verticesList.lastOrNull()
-                                ?.add(
-                                    Vertices(
-                                        Point(
-                                            eventX.toInt(),
-                                            eventY.toInt()
-                                        )
+                            verticesList.lastOrNull()?.add(
+                                Vertices(
+                                    Point(
+                                        eventX.toInt(),
+                                        eventY.toInt()
                                     )
                                 )
+                            )
                         }
                     }
                 }
             }
         } else {
             movePointsToSameDirection(eventX, eventY)
+            verticesList.lastOrNull()?.let {
+                checkIfAllAreaValid(it)
+            }
         }
     }
 
@@ -500,16 +546,77 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
         } ?: return false
     }
 
-    private fun checkIfDistanceBetweenAutoDetectionDots(
-        currentPoint: PointF,
-        finalPoint: PointF
-    ): Boolean {
-        val distance = PolygonGeometry.calculateDistance(
-            currentPoint,
-            finalPoint
-        )
-        return distance >= POINTS_RANGE_PX
+    private fun checkIfAllAreaValid(vertices: ArrayList<Vertices>) {
+        if (vertices.size > 1) {
+            val preLast = vertices.lastIndex - 1
+            val verticePointA = sourceToViewCoordInt(vertices[preLast].point)
+            val verticePointB = sourceToViewCoordInt(vertices.last().point)
+
+            clearButtonRectangleCoordinates.forEachIndexed { buttonIndex, rectanglePoints ->
+                val pointIndex = clearButtonLabelCoordinates[buttonIndex].areaIndex
+                val currentOutlinePoint =
+                    sourceToViewCoordInt(verticesList[buttonIndex][pointIndex].point)
+
+                val pointXMoveDistance = currentOutlinePoint.x - rectanglePoints.second.first
+                val pointYMoveDistance = currentOutlinePoint.y - rectanglePoints.second.second
+
+                val rectanglePoint = Point(pointXMoveDistance, pointYMoveDistance)
+
+                val rectanglePointList = getAreaClearRectangleLabelPoints(
+                    rectanglePoint,
+                    rectanglePoints.first,
+                    closeButton[buttonIndex],
+                    buttonIndex + 1
+                )
+
+                if (isLabelCrossAnyOutlines(rectanglePointList)) {
+                    clearButtonLabelCoordinates[buttonIndex] =
+                        clearButtonLabelCoordinates[buttonIndex].copy(isAreaValid = false)
+                }
+
+
+                rectanglePointList.forEachIndexed { index, point ->
+                    val pointA = sourceToViewCoordInt(point)
+                    val pointB = if (index + 1 > rectanglePointList.lastIndex) {
+                        sourceToViewCoordInt(rectanglePointList[0])
+                    } else {
+                        sourceToViewCoordInt(rectanglePointList[index + 1])
+                    }
+
+                    if (linesIntersect(verticePointA, verticePointB, pointA, pointB)) {
+                        clearButtonLabelCoordinates[buttonIndex] =
+                            clearButtonLabelCoordinates[buttonIndex].copy(isAreaValid = false)
+                    }
+                }
+            }
+        }
     }
+
+    private fun checkIfLabelInsideAnyOutlines() {
+        clearButtonRectangleCoordinates.forEachIndexed { buttonIndex, rectanglePoints ->
+            val pointIndex = clearButtonLabelCoordinates[buttonIndex].areaIndex
+            val currentOutlinePoint =
+                sourceToViewCoordInt(verticesList[buttonIndex][pointIndex].point)
+
+            val pointXMoveDistance = currentOutlinePoint.x - rectanglePoints.second.first
+            val pointYMoveDistance = currentOutlinePoint.y - rectanglePoints.second.second
+
+            val rectanglePoint = Point(pointXMoveDistance, pointYMoveDistance)
+
+            val rectanglePointList = getAreaClearRectangleLabelPoints(
+                rectanglePoint,
+                rectanglePoints.first,
+                closeButton[buttonIndex],
+                buttonIndex + 1
+            )
+
+            if (isLabelCrossAnyOutlines(rectanglePointList)) {
+                clearButtonLabelCoordinates[buttonIndex] =
+                    clearButtonLabelCoordinates[buttonIndex].copy(isAreaValid = false)
+            }
+        }
+    }
+
 
     private fun touchUp(eventX: Float, eventY: Float) {
         isTouchUP = true
@@ -570,6 +677,10 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                                         }
                                         fingerLinePath.reset()
                                         isPathClosed[isPathClosed.lastIndex] = true
+                                        verticesList.lastOrNull()?.let {
+                                            checkIfAllAreaValid(it)
+                                        }
+                                        checkIfLabelInsideAnyOutlines()
                                         validateAvailablePoints()
                                     }
                                 }
@@ -593,7 +704,9 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
 
         if (isPointCanBeMoved() && currentDraggedVertices != null) {
             movePointsToSameDirection(eventX, eventY)
-
+            verticesList.lastOrNull()?.let {
+                checkIfAllAreaValid(it)
+            }
         } else if (currentDraggedVertices != null) drawPath(eventX, eventY)
     }
 
@@ -664,67 +777,13 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
         } while (checkIfDistanceBetweenDots(receivedPoint))
     }
 
-    private fun addAdditionalDotsBetweenAutoDetectionPoints(
-        point: PointF,
-        finalePoint: PointF
-    ): ArrayList<PointF> {
-        val resultPointList = ArrayList<PointF>()
-        resultPointList.add(point)
-        do {
-            val lastPoint = resultPointList.last()
-            val isXvalueLower = (lastPoint.x - finalePoint.x) >= POINTS_RANGE_PX
-            val isXvalueBigger = (lastPoint.x + POINTS_RANGE_PX) <= finalePoint.x
-            val isYvalueLower = (lastPoint.y - finalePoint.y) >= POINTS_RANGE_PX
-            val isYvalueBigger = (lastPoint.y + POINTS_RANGE_PX) <= finalePoint.y
-
-            val currentX = if (isXvalueLower) {
-                lastPoint.x - POINTS_RANGE_PX
-            } else if (isXvalueBigger) {
-                lastPoint.x + POINTS_RANGE_PX
-            } else {
-                if (lastPoint.x != finalePoint.x) {
-                    if (lastPoint.x - finalePoint.x < 0) {
-                        lastPoint.x + (((lastPoint.x - finalePoint.x) * -1))
-                    } else {
-                        lastPoint.x - (lastPoint.x - finalePoint.x)
-                    }
-                } else {
-                    finalePoint.x
-                }
-            }.toFloat()
-
-            val currentY = if (isYvalueLower) {
-                lastPoint.y - POINTS_RANGE_PX
-            } else if (isYvalueBigger) {
-                lastPoint.y + POINTS_RANGE_PX
-            } else {
-                if (lastPoint.y != finalePoint.y) {
-                    if (lastPoint.y - finalePoint.y < 0) {
-                        lastPoint.y + (((lastPoint.y - finalePoint.y) * -1))
-                    } else {
-                        lastPoint.y - (lastPoint.y - finalePoint.y)
-                    }
-                } else {
-                    finalePoint.y
-                }
-            }.toFloat()
-
-
-            val resultPoint = PointF(currentX, currentY)
-            val resultDistance = PolygonGeometry.calculateDistance(resultPoint, finalePoint)
-
-            if (resultDistance >= POINTS_RANGE_PX && resultPoint != finalePoint) {
-                resultPointList.add(resultPoint)
-            }
-        } while (checkIfDistanceBetweenAutoDetectionDots(resultPoint, finalePoint))
-        resultPointList.add(finalePoint)
-        return resultPointList
-    }
 
     private fun touchMove(x: Float, y: Float) {
         if (isPointCanBeMoved() && currentDraggedVertices != null) {
             movePointsToSameDirection(x, y)
-
+            verticesList.lastOrNull()?.let {
+                checkIfAllAreaValid(it)
+            }
         } else {
             drawPath(x, y)
         }
@@ -766,8 +825,13 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
             currentDraggedVertices!!.point.x = imagePoint.x
             currentDraggedVertices!!.point.y = imagePoint.y
 
-            var newPoints = Pair<List<Vertices>, List<Vertices>>(emptyList(), emptyList())
-            var adjustedVertices: ArrayList<Vertices>? = null
+            var newPoints =
+                Pair<List<Vertices>, List<Vertices>>(
+                    emptyList(),
+                    emptyList()
+                )
+            var adjustedVertices: ArrayList<Vertices>? =
+                null
 
             var startIndexOfFirstList = -1
             var endIndexOfFirstList = -1
@@ -899,7 +963,7 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                             compareVertices.point,
                             vertix.point
                         )
-                        if (distance.toInt() < POINTS_RANGE_PX) {
+                        if (distance.toInt() + 5 < POINTS_RANGE_PX) {
                             if (index == currentDraggedIndex) {
                                 val previousIndex =
                                     verticesList[adjustedVertices].indexOf(compareVertices)
@@ -916,7 +980,7 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                     verticesList[adjustedVertices].first().point,
                     verticesList[adjustedVertices].last().point
                 )
-                if (distance.toInt() < POINTS_RANGE_PX) {
+                if (distance.toInt() + 5 < POINTS_RANGE_PX) {
                     if (0 == currentDraggedIndex) {
                         removePointIndexes.add(verticesList[adjustedVertices].lastIndex)
                     } else {
@@ -934,7 +998,10 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
         }
     }
 
-    private fun findNearestPoint(x: Float, y: Float): Vertices? {
+    private fun findNearestPoint(
+        x: Float,
+        y: Float
+    ): Vertices? {
         val distances = SparseArray<Vertices?>()
         val position = Point(x.toInt(), y.toInt())
         val nearestPoint: Vertices?
@@ -942,13 +1009,13 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
         val allowedDistance = this.context.toPx(40)
         verticesList.forEach { vertices ->
             vertices.filter { it.isEnabled }.forEach { vertix ->
-                val compareVerticesInViewCoordinate = sourceToViewCoordInt(position)
-                val vertixInViewCoordinate = sourceToViewCoordInt(vertix.point)
+                val compareVerticesInView = sourceToViewCoordInt(position)
+                val vertixInView = sourceToViewCoordInt(vertix.point)
 
                 val calculateDistance =
                     PolygonGeometry.calculateDistance(
-                        compareVerticesInViewCoordinate,
-                        vertixInViewCoordinate
+                        compareVerticesInView,
+                        vertixInView
                     ).toInt()
 
                 if (calculateDistance < allowedDistance) {
@@ -1053,6 +1120,10 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                                     )
                                 )
 
+                                verticesList.lastOrNull()?.let {
+                                    checkIfAllAreaValid(it)
+                                }
+
                                 fingerLinePath.reset()
                                 fingerLinePath.moveTo(
                                     point.x.toFloat(),
@@ -1074,6 +1145,10 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                                 )
                             )
                         )
+
+                        verticesList.lastOrNull()?.let {
+                            checkIfAllAreaValid(it)
+                        }
 
                         fingerLinePath.reset()
                         fingerLinePath.moveTo(
@@ -1102,6 +1177,10 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                         }
                         fingerLinePath.reset()
                         isPathClosed[isPathClosed.lastIndex] = true
+                        verticesList.lastOrNull()?.let {
+                            checkIfAllAreaValid(it)
+                        }
+                        checkIfLabelInsideAnyOutlines()
                         validateAvailablePoints()
                     }
                 }
@@ -1128,6 +1207,8 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
         verticesList.removeAt(index)
         isPathClosed.removeAt(index)
         closeButton.removeAt(index)
+        clearButtonLabelCoordinates.removeAt(index)
+        clearButtonRectangleCoordinates.removeAt(index)
         isClear = true
         invalidate()
     }
@@ -1137,12 +1218,6 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
             if (showOutlines) {
                 verticesList.forEachIndexed { index, vertices ->
                     if (index != this.verticesList.lastIndex && this.verticesList.lastIndex != -1) {
-                        drawWidthAndLength(
-                            canvas,
-                            vertices,
-                            widthIndexes?.get(index),
-                            lengthIndexes?.get(index)
-                        )
                         drawPolygon(canvas, vertices, false) //draw dots
                         closePath(
                             canvas,
@@ -1154,8 +1229,29 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                         if (isNeedWhiteStroke) { //white borders of green dots
                             drawVertexStrokes(canvas, vertices, false)
                         }
-                        drawClearSymbol(canvas, closeButton[index], index + 1, vertices)
+                        drawAreaLabels(index, canvas, vertices, true)
                         polygonPath.reset()
+                    }
+                }
+                verticesList.forEachIndexed { index, vertices ->
+                    if (index != this.verticesList.lastIndex && this.verticesList.lastIndex != -1) {
+                        drawOrientationLine(
+                            canvas,
+                            vertices,
+                            widthIndexes?.get(index),
+                            lengthIndexes?.get(index)
+                        )
+                    }
+                }
+                verticesList.forEachIndexed { index, vertices ->
+                    if (index != this.verticesList.lastIndex && this.verticesList.lastIndex != -1) {
+                        drawWidthAndLengthLabels(
+                            canvas,
+                            vertices,
+                            widthIndexes?.get(index),
+                            lengthIndexes?.get(index),
+                            index
+                        )
                     }
                 }
                 drawPolygon(canvas)
@@ -1178,18 +1274,18 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                     if (isTouchUP && !polygonPath.isEmpty && isPathClosed.last()) {
                         if (closeButton.isEmpty()) {
                             closeButton.add(CloseButton(closeButtonRadius.toInt(), context))
-                            drawClearSymbol(
+                            drawAreaLabels(
+                                verticesList.lastIndex,
                                 canvas,
-                                closeButton.last(),
-                                verticesList.lastIndex + 1,
-                                verticesList.lastOrNull() ?: ArrayList()
+                                verticesList.lastOrNull() ?: ArrayList(),
+                                true
                             )
                         } else {
-                            drawClearSymbol(
+                            drawAreaLabels(
+                                verticesList.lastIndex,
                                 canvas,
-                                closeButton.last(),
-                                verticesList.lastIndex + 1,
-                                verticesList.lastOrNull() ?: ArrayList()
+                                verticesList.lastOrNull() ?: ArrayList(),
+                                true
                             )
                             closeButton.add(CloseButton(closeButtonRadius.toInt(), context))
                         }
@@ -1214,9 +1310,6 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
     private fun doOnRepresent(canvas: Canvas) {
         this.verticesList.forEachIndexed { index, vertices ->
             if (vertices.isNotEmpty() && visibilityVerticesIndexes.contains(index)) {
-                val widthIndex = widthIndexes?.get(index)
-                val lengthIndex = lengthIndexes?.get(index)
-                drawWidthAndLength(canvas, vertices, widthIndex, lengthIndex)
                 drawPolygon(canvas, vertices, true) //green dots
                 closePath(
                     canvas,
@@ -1228,35 +1321,496 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                 if (isNeedWhiteStroke) {
                     drawVertexStrokes(canvas, vertices, true)
                 } //white borders of green dots
-
+                polygonPath.reset()
+            }
+        }
+        verticesList.forEachIndexed { index, vertices ->
+            if (vertices.isNotEmpty() && visibilityVerticesIndexes.contains(index)) {
+                drawOrientationLine(
+                    canvas,
+                    vertices,
+                    widthIndexes?.get(index),
+                    lengthIndexes?.get(index)
+                )
+            }
+        }
+        this.verticesList.forEachIndexed { index, vertices ->
+            if (vertices.isNotEmpty() && visibilityVerticesIndexes.contains(index)) {
+                val widthIndex = widthIndexes?.get(index)
+                val lengthIndex = lengthIndexes?.get(index)
+                drawWidthAndLengthLabels(canvas, vertices, widthIndex, lengthIndex, index)
+            }
+        }
+        this.verticesList.forEachIndexed { index, vertices ->
+            if (vertices.isNotEmpty() && visibilityVerticesIndexes.contains(index)) {
                 try {
                     if (closeButton.lastIndex >= index) {
                         if (areaList.lastIndex >= index) {
-                            closeButton[index].drawAreaLabel(
-                                canvas,
-                                greenColor,
-                                index + 1,
-                                areaList[index],
-                                diameter * 10.0,
-                                vertices,
-                                this,
-                                mode
-                            )
+                            drawAreaLabels(index, canvas, vertices, false)
                         }
                     }
                 } catch (_: Exception) {
 
                 }
-                polygonPath.reset()
             }
         }
+    }
+
+    private fun moveLengthWidthLabelIfNeed(
+        canvas: Canvas,
+        labelPoint: Point, // view coordinates
+        startIndex: Int,
+        letter: String,
+        index: Int,
+        isLengthLabel: Boolean,
+        vertices: List<Vertices>
+    ) {
+        val orientationLabel: Point
+        var pointIndex = startIndex
+        var pointDifference = Pair(0, 0)
+        var endTime: Long = System.currentTimeMillis()
+
+        if (lengthWidthLabelCoordinates.isNotEmpty()) {
+            if (index <= lengthWidthLabelCoordinates.lastIndex) {
+                if (isLengthLabel) {
+                    if (lengthWidthLabelCoordinates[index].first != null) {
+                        pointIndex = lengthWidthLabelCoordinates[index].first?.outlinePointIndex!!
+
+                        val outlinePoint =
+                            sourceToViewCoordInt(verticesList[index][pointIndex].point)
+                        pointDifference = lengthWidthLabelCoordinates[index].first?.drawDifference!!
+
+                        val xDifference = pointDifference.first
+                        val yDifference = pointDifference.second
+
+                        val labelPoint = Point(
+                            outlinePoint.x - xDifference,
+                            outlinePoint.y - yDifference
+                        )
+                        orientationLabel = labelPoint
+                    } else {
+                        orientationLabel = labelPoint
+                    }
+                } else {
+                    if (lengthWidthLabelCoordinates[index].second != null) {
+                        pointIndex = lengthWidthLabelCoordinates[index].second?.outlinePointIndex!!
+
+                        val outlinePoint =
+                            sourceToViewCoordInt(verticesList[index][pointIndex].point)
+                        pointDifference =
+                            lengthWidthLabelCoordinates[index].second?.drawDifference!!
+
+                        val xDifference = pointDifference.first
+                        val yDifference = pointDifference.second
+
+                        val labelPoint = Point(
+                            outlinePoint.x - xDifference,
+                            outlinePoint.y - yDifference
+                        )
+                        orientationLabel = labelPoint
+                    } else {
+                        orientationLabel = labelPoint
+                    }
+                }
+            } else {
+                orientationLabel = labelPoint
+            }
+        } else {
+            orientationLabel = labelPoint
+        }
+
+        val functionStartTime = System.currentTimeMillis()
+        var duration: Long
+
+        var isPointValid = false
+
+        if (lengthWidthLabelCoordinates.isNotEmpty()) {
+            if (index <= lengthWidthLabelCoordinates.lastIndex) {
+                isPointValid = if (isLengthLabel) {
+                    lengthWidthLabelCoordinates[index].first?.isAreaValid ?: false
+                } else {
+                    lengthWidthLabelCoordinates[index].second?.isAreaValid ?: false
+                }
+            }
+        }
+
+        if (isPointValid) {
+            drawLabelCircle(canvas, orientationLabel, letter)
+        } else {
+            var methodStartTime: Long = System.currentTimeMillis()
+            Timber.tag("moveLengthWidthLabelIfNeed func")
+                .d("start")
+
+            val crossAnyLengthWidthLabel =
+                isOrientationLabelCrossAnyOrientationLabel(orientationLabel, index)
+
+            duration = endTime - methodStartTime
+            Timber.tag("moveLengthWidthLabelIfNeed")
+                .d("checkIfOrientationLabelCrossAnyOrientationLabel duration time = $duration ms")
+
+            val allowedDistance = RADIUS * 2f
+
+            methodStartTime = System.currentTimeMillis()
+
+            val isNewLabelInsideAnyOutlines =
+                isLengthWidthLabelInsideAnyOutlines(orientationLabel, allowedDistance)
+            endTime = System.currentTimeMillis()
+            duration = endTime - methodStartTime
+            Timber.tag("moveLengthWidthLabelIfNeed")
+                .d("checkIfLengthWidthLabelInsideAnyOutlines duration time = $duration ms")
+
+            if (crossAnyLengthWidthLabel.first && crossAnyLengthWidthLabel.second != null || isNewLabelInsideAnyOutlines) {
+                val newLabelPoint = moveOrientationLabel(
+                    pointIndex,
+                    allowedDistance,
+                    vertices,
+                    index
+                )
+                drawLabelCircle(canvas, newLabelPoint.point, letter)
+                val pointDifference = newLabelPoint.drawDifference
+                val outlinePointIndex = newLabelPoint.outlinePointIndex
+                if (lengthWidthLabelCoordinates.isEmpty()) {
+                    if (isLengthLabel) {
+                        lengthWidthLabelCoordinates.add(
+                            Pair(
+                                LengthWidthButton(
+                                    outlinePointIndex,
+                                    pointDifference,
+                                    true
+                                ), null
+                            )
+                        )
+                    } else {
+                        lengthWidthLabelCoordinates.add(
+                            Pair(
+                                null,
+                                LengthWidthButton(
+                                    outlinePointIndex,
+                                    pointDifference,
+                                    true
+                                )
+                            )
+                        )
+                    }
+                } else {
+                    if (index <= lengthWidthLabelCoordinates.lastIndex) {
+                        if (isLengthLabel) {
+                            lengthWidthLabelCoordinates[index] =
+                                Pair(
+                                    LengthWidthButton(
+                                        outlinePointIndex,
+                                        pointDifference,
+                                        true
+                                    ),
+                                    lengthWidthLabelCoordinates[index].second
+                                )
+                        } else {
+                            lengthWidthLabelCoordinates[index] =
+                                Pair(
+                                    lengthWidthLabelCoordinates[index].first,
+                                    LengthWidthButton(
+                                        outlinePointIndex,
+                                        pointDifference,
+                                        true
+                                    )
+                                )
+                        }
+                    } else {
+                        if (isLengthLabel) {
+                            lengthWidthLabelCoordinates.add(
+                                Pair(
+                                    LengthWidthButton(
+                                        outlinePointIndex,
+                                        pointDifference,
+                                        true
+                                    ),
+                                    null
+                                )
+                            )
+                        } else {
+                            lengthWidthLabelCoordinates.add(
+                                Pair(
+                                    null,
+                                    LengthWidthButton(
+                                        outlinePointIndex,
+                                        pointDifference,
+                                        true
+                                    )
+                                )
+                            )
+                        }
+                    }
+                }
+            } else {
+                if (orientationLabel.x in 0..<width && orientationLabel.y in 0..<height) {
+                    drawLabelCircle(canvas, orientationLabel, letter)
+                    if (lengthWidthLabelCoordinates.isEmpty()) {
+                        if (isLengthLabel) {
+                            lengthWidthLabelCoordinates.add(
+                                Pair(
+                                    LengthWidthButton(
+                                        pointIndex,
+                                        pointDifference,
+                                        true
+                                    ),
+                                    null
+                                )
+                            )
+                        } else {
+                            lengthWidthLabelCoordinates.add(
+                                Pair(
+                                    null,
+                                    LengthWidthButton(
+                                        pointIndex,
+                                        pointDifference,
+                                        true
+                                    )
+                                )
+                            )
+                        }
+                    } else {
+                        if (index <= lengthWidthLabelCoordinates.lastIndex) {
+                            if (isLengthLabel) {
+                                lengthWidthLabelCoordinates[index] =
+                                    Pair(
+                                        LengthWidthButton(
+                                            pointIndex,
+                                            pointDifference,
+                                            true
+                                        ),
+                                        lengthWidthLabelCoordinates[index].second
+                                    )
+                            } else {
+                                lengthWidthLabelCoordinates[index] =
+                                    Pair(
+                                        lengthWidthLabelCoordinates[index].first,
+                                        LengthWidthButton(
+                                            pointIndex,
+                                            pointDifference,
+                                            true
+                                        )
+                                    )
+                            }
+                        } else {
+                            if (isLengthLabel) {
+                                lengthWidthLabelCoordinates.add(
+                                    Pair(
+                                        LengthWidthButton(
+                                            pointIndex,
+                                            pointDifference,
+                                            true
+                                        ),
+                                        null
+                                    )
+                                )
+                            } else {
+                                lengthWidthLabelCoordinates.add(
+                                    Pair(
+                                        null,
+                                        LengthWidthButton(
+                                            pointIndex,
+                                            pointDifference,
+                                            true
+                                        )
+                                    )
+                                )
+                            }
+                        }
+                    }
+                } else {
+                    val newLabelPoint = moveOrientationLabel(
+                        pointIndex,
+                        allowedDistance,
+                        vertices,
+                        index
+                    )
+                    drawLabelCircle(canvas, newLabelPoint.point, letter)
+                    if (lengthWidthLabelCoordinates.isEmpty()) {
+                        if (isLengthLabel) {
+                            lengthWidthLabelCoordinates.add(
+                                Pair(
+                                    LengthWidthButton(
+                                        newLabelPoint.outlinePointIndex,
+                                        newLabelPoint.drawDifference,
+                                        true
+                                    ),
+                                    null
+                                )
+                            )
+                        } else {
+                            lengthWidthLabelCoordinates.add(
+                                Pair(
+                                    null,
+                                    LengthWidthButton(
+                                        newLabelPoint.outlinePointIndex,
+                                        newLabelPoint.drawDifference,
+                                        true
+                                    )
+                                )
+                            )
+                        }
+                    } else {
+                        if (index <= lengthWidthLabelCoordinates.lastIndex) {
+                            if (isLengthLabel) {
+                                lengthWidthLabelCoordinates[index] =
+                                    Pair(
+                                        LengthWidthButton(
+                                            newLabelPoint.outlinePointIndex,
+                                            newLabelPoint.drawDifference,
+                                            true
+                                        ),
+                                        lengthWidthLabelCoordinates[index].second
+                                    )
+                            } else {
+                                lengthWidthLabelCoordinates[index] =
+                                    Pair(
+                                        lengthWidthLabelCoordinates[index].first,
+                                        LengthWidthButton(
+                                            newLabelPoint.outlinePointIndex,
+                                            newLabelPoint.drawDifference,
+                                            true
+                                        )
+                                    )
+                            }
+                        } else {
+                            if (isLengthLabel) {
+                                lengthWidthLabelCoordinates.add(
+                                    Pair(
+                                        LengthWidthButton(
+                                            newLabelPoint.outlinePointIndex,
+                                            newLabelPoint.drawDifference,
+                                            true
+                                        ),
+                                        null
+                                    )
+                                )
+                            } else {
+                                lengthWidthLabelCoordinates.add(
+                                    Pair(
+                                        null,
+                                        LengthWidthButton(
+                                            newLabelPoint.outlinePointIndex,
+                                            newLabelPoint.drawDifference,
+                                            true
+                                        )
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        endTime = System.currentTimeMillis()
+        duration = endTime - functionStartTime
+        Timber.tag("moveLengthWidthLabelIfNeed func").d("duration time = $duration")
+    }
+
+
+    private fun isAreaLabelCrossAnyOrientationLabels(rectanglePointList: ArrayList<Point>): Boolean {
+        val allowDistance = RADIUS * 2
+        val firstRectangleEdges =
+            com.example.samplewoundsdk.data.pojo.measurement.RectangleEdges.createFromRectangle(
+                rectanglePointList
+            )
+
+        for (i in 0..lengthWidthLabelCoordinates.lastIndex step 1) {
+            lengthWidthLabelCoordinates[i].first?.let {
+                val outlinePoint = sourceToViewCoordInt(verticesList[i][it.outlinePointIndex].point)
+
+                val xDifference = outlinePoint.x - it.drawDifference.first
+                val yDifference = outlinePoint.y - it.drawDifference.second
+
+                val lengthLabelPointToView = Point(xDifference, yDifference)
+
+                val secondRectangleEdges =
+                    com.example.samplewoundsdk.data.pojo.measurement.RectangleEdges.createFromCircle(
+                        lengthLabelPointToView,
+                        allowDistance
+                    )
+                if (checkIfLabelTouchOrientationCircle(secondRectangleEdges, firstRectangleEdges)) {
+                    return true
+                }
+            }
+            lengthWidthLabelCoordinates[i].second?.let {
+                val outlinePoint = sourceToViewCoordInt(verticesList[i][it.outlinePointIndex].point)
+
+                val xDifference = outlinePoint.x - it.drawDifference.first
+                val yDifference = outlinePoint.y - it.drawDifference.second
+
+                val widthLabelPointToView = Point(xDifference, yDifference)
+
+                val secondRectangleEdges =
+                    com.example.samplewoundsdk.data.pojo.measurement.RectangleEdges.createFromCircle(
+                        widthLabelPointToView,
+                        allowDistance
+                    )
+                if (checkIfLabelTouchOrientationCircle(secondRectangleEdges, firstRectangleEdges)) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    private fun checkIfLabelTouchOrientationCircle(
+        firstEdgeList: com.example.samplewoundsdk.data.pojo.measurement.RectangleEdges,
+        secondEdgeList: com.example.samplewoundsdk.data.pojo.measurement.RectangleEdges
+    ): Boolean {
+
+        if (firstEdgeList.rightEdge > secondEdgeList.leftEdge && firstEdgeList.rightEdge < secondEdgeList.rightEdge) {
+            if (firstEdgeList.topEdge > secondEdgeList.topEdge && firstEdgeList.topEdge < secondEdgeList.bottomEdge) {
+                return true
+            }
+            if (firstEdgeList.bottomEdge > secondEdgeList.topEdge && firstEdgeList.bottomEdge < secondEdgeList.bottomEdge) {
+                return true
+            }
+        }
+
+        if (firstEdgeList.bottomEdge > secondEdgeList.topEdge && firstEdgeList.bottomEdge < secondEdgeList.bottomEdge) {
+            if (firstEdgeList.leftEdge > secondEdgeList.leftEdge && firstEdgeList.leftEdge < secondEdgeList.rightEdge) {
+                return true
+            }
+            if (firstEdgeList.rightEdge > secondEdgeList.leftEdge && firstEdgeList.rightEdge < secondEdgeList.rightEdge) {
+                return true
+            }
+        }
+
+        if (firstEdgeList.leftEdge > secondEdgeList.leftEdge && firstEdgeList.leftEdge < secondEdgeList.rightEdge) {
+            if (firstEdgeList.topEdge > secondEdgeList.topEdge && firstEdgeList.topEdge < secondEdgeList.bottomEdge) {
+                return true
+            }
+            if (firstEdgeList.bottomEdge > secondEdgeList.topEdge && firstEdgeList.bottomEdge < secondEdgeList.bottomEdge) {
+                return true
+            }
+        }
+
+        if (firstEdgeList.topEdge > secondEdgeList.topEdge && firstEdgeList.topEdge < secondEdgeList.bottomEdge) {
+            if (firstEdgeList.leftEdge > secondEdgeList.leftEdge && firstEdgeList.leftEdge < secondEdgeList.rightEdge) {
+                return true
+            }
+            if (firstEdgeList.rightEdge > secondEdgeList.leftEdge && firstEdgeList.rightEdge < secondEdgeList.rightEdge) {
+                return true
+            }
+        }
+        return false
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawRect(0f, 0f, 0f, 0f, clearPaint!!)
         validateAvailablePoints()
-        if (zoom != scale) {
+        val currentZoom = String.format(
+            Locale.UK,
+            context.getString(com.example.samplewoundsdk.R.string.float_format_two_points),
+            zoom
+        ).toDouble()
+        val currentScale = String.format(
+            Locale.UK,
+            context.getString(com.example.samplewoundsdk.R.string.float_format_two_points),
+            scale
+        ).toDouble()
+        if (currentZoom != currentScale) {
             if (zoom != 0f) {
                 zoomChangedTime = System.currentTimeMillis()
             }
@@ -1342,7 +1896,8 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                                                 comparePoint,
                                                 point
                                             )
-                                            imagePointCoordinates[index].isEnabled = distance.toInt() >= allowedDistance
+                                            imagePointCoordinates[index].isEnabled =
+                                                distance.toInt() >= allowedDistance
                                             if (distance.toInt() >= allowedDistance) {
                                                 comparePoint = viewPointCoordinates[index]
                                             }
@@ -1352,7 +1907,8 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                                     }
                                 } else {
                                     if (comparePoint != point) {
-                                        val distance = PolygonGeometry.calculateDistance(comparePoint, point)
+                                        val distance =
+                                            PolygonGeometry.calculateDistance(comparePoint, point)
                                         imagePointCoordinates[index].isEnabled =
                                             distance.toInt() >= allowedDistance
                                         if (distance.toInt() >= allowedDistance) {
@@ -1377,7 +1933,8 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                                 imagePointCoordinates.last().point,
                                 imagePointCoordinates.first().point
                             )
-                            imagePointCoordinates[imagePointCoordinates.lastIndex].isEnabled = distance > allowedDistance
+                            imagePointCoordinates[imagePointCoordinates.lastIndex].isEnabled =
+                                distance > allowedDistance
                         }
                     }
                 }
@@ -1486,26 +2043,95 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
         }
     }
 
-    private fun drawWidthAndLength(
+    private fun drawWidthAndLengthLabels(
         canvas: Canvas,
         vertices: ArrayList<Vertices>,
         widthIndexesPoints: Pair<Int?, Int?>?,
-        lengthIndexesPoints: Pair<Int?, Int?>?
+        lengthIndexesPoints: Pair<Int?, Int?>?,
+        index: Int
     ) {
         //uncomment to show W and L
         if (widthIndexes != null && mode != Mode.ViewStoma) {
-            drawLineWithLetter(canvas, vertices, widthIndexesPoints ?: Pair(0, 0), "W")
+            drawLengthWidthCircleLabel(
+                canvas,
+                vertices,
+                widthIndexesPoints ?: Pair(0, 0),
+                context.getString(com.example.samplewoundsdk.R.string.WIDTH_SHORT),
+                index,
+                false
+            )
         }
         if (lengthIndexes != null) {
-            drawLineWithLetter(canvas, vertices, lengthIndexesPoints ?: Pair(0, 0), "L")
+            drawLengthWidthCircleLabel(
+                canvas,
+                vertices,
+                lengthIndexesPoints ?: Pair(0, 0),
+                context.getString(com.example.samplewoundsdk.R.string.LENGTH_SHORT),
+                index,
+                true
+            )
         }
     }
 
-    private fun drawLineWithLetter(
+    private fun drawOrientationLine(
+        canvas: Canvas,
+        vertices: ArrayList<Vertices>,
+        widthIndexes: Pair<Int?, Int?>?,
+        lengthIndexes: Pair<Int?, Int?>?
+    ) {
+        if (widthIndexes != null && mode != Mode.ViewStoma) {
+            try {
+                val verticesA = vertices[widthIndexes.first ?: 0]
+                val verticesB = vertices[widthIndexes.second ?: 0]
+                verticesA.point.let { widthA ->
+                    val pointA = sourceToViewCoordInt(widthA)
+
+                    verticesB.point.let { widthB ->
+                        val pointB = sourceToViewCoordInt(widthB)
+                        canvas.drawLine(
+                            pointA.x.toFloat(),
+                            pointA.y.toFloat(),
+                            pointB.x.toFloat(),
+                            pointB.y.toFloat(),
+                            pathPaint!!
+                        )
+                    }
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
+        }
+        lengthIndexes?.let {
+            try {
+                val verticesA = vertices[lengthIndexes.first ?: 0]
+                val verticesB = vertices[lengthIndexes.second ?: 0]
+                verticesA.point.let { widthA ->
+                    val pointA = sourceToViewCoordInt(widthA)
+
+                    verticesB.point.let { widthB ->
+                        val pointB = sourceToViewCoordInt(widthB)
+                        canvas.drawLine(
+                            pointA.x.toFloat(),
+                            pointA.y.toFloat(),
+                            pointB.x.toFloat(),
+                            pointB.y.toFloat(),
+                            pathPaint!!
+                        )
+                    }
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
+        }
+    }
+
+    private fun drawLengthWidthCircleLabel(
         canvas: Canvas,
         vertices: ArrayList<Vertices>,
         indexes: Pair<Int?, Int?>,
         letter: String,
+        index: Int,
+        isLengthLabel: Boolean
     ) {
         try {
             val verticesA = vertices[indexes.first ?: 0]
@@ -1514,50 +2140,1120 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
                 val pointA = sourceToViewCoordInt(widthA)
 
                 verticesB.point.let { widthB ->
-                    val pointB = sourceToViewCoordInt(widthB)
-
-                    canvas.drawLine(
-                        pointA.x.toFloat(),
-                        pointA.y.toFloat(),
-                        pointB.x.toFloat(),
-                        pointB.y.toFloat(),
-                        pathPaint!!
+                    val labelPoint = Point(pointA.x, pointA.y)
+                    moveLengthWidthLabelIfNeed(
+                        canvas,
+                        labelPoint,
+                        indexes.first ?: 0,
+                        letter,
+                        index,
+                        isLengthLabel,
+                        listOf(verticesA, verticesB)
                     )
-                    var xOffset = 20 + RADIUS * 3.5f
-                    if (pointA.x < pointB.x) {
-                        xOffset *= -1f
-                    }
-                    var yOffset = 20 + RADIUS * 3.5f
-                    if (pointA.y < pointB.y) {
-                        yOffset *= -1f
-                    }
-                    val offset = Point(xOffset.toInt(), yOffset.toInt())
-//                    canvas.drawCircle(
-//                        (pointA.x + offset.x).toFloat(),
-//                        (pointA.y + offset.y).toFloat(),
-//                        RADIUS * 3.5f,
-//                        linesStrokePaint!!
-//                    )
-//                    canvas.drawCircle(
-//                        (pointA.x + offset.x).toFloat(),
-//                        (pointA.y + offset.y).toFloat(),
-//                        RADIUS * 3.5f,
-//                        linesPaint!!
-//                    )
-                    val bounds = Rect()
-                    textPaint!!.getTextBounds(letter, 0, letter.length, bounds)
-//                    canvas.drawText(
-//                        letter,
-//                        pointA.x - bounds.width() / 2f + offset.x,
-//                        pointA.y + bounds.height() / 2f + offset.y,
-//                        textPaint!!
-//                    )
                 }
             }
         } catch (ex: Exception) {
             ex.printStackTrace()
         }
     }
+
+
+    private fun moveRectangleButtonLabelIfPossible(
+        startIndex: Int,
+        vertices: ArrayList<Vertices>,
+        closeButton: CloseButton,
+        number: Int,
+        isAreaClearButton: Boolean
+    ): com.example.samplewoundsdk.data.pojo.measurement.RectanglePosition {
+
+        val functionStartTime = System.currentTimeMillis()
+        var methodStartTime: Long
+        var endTime: Long
+        var duration: Long
+
+        Timber.tag("moveRectangleButtonLabelIfPossible func").d("start")
+
+        val newPointIndex = if (startIndex < 0) {
+            0
+        } else {
+            startIndex
+        }
+
+        val verticesPoint = sourceToViewCoordInt(vertices[newPointIndex].point)
+
+        val verticesRectanglePointList = if (isAreaClearButton) {
+            getAreaClearRectangleLabelPoints(verticesPoint, -1, closeButton, number)
+        } else {
+            getAreaRectangleLabelPoints(verticesPoint, -1, closeButton, number)
+        }
+
+        val newPoint = com.example.samplewoundsdk.data.pojo.measurement.RectanglePosition(
+            newPointIndex,
+            0,
+            Pair(0, 0),
+            verticesRectanglePointList
+        )
+
+        var currentIndex = startIndex
+
+        while (startIndex != currentIndex + 1) {
+            if (currentIndex < vertices.size && currentIndex >= 0) {
+                if (currentDraggedVertices?.point != vertices[currentIndex].point) {
+                    val currentPoint = vertices[currentIndex].point
+                    val currentPointOnView = sourceToViewCoordInt(currentPoint)
+
+                    val rectanglePointList = if (isAreaClearButton) {
+                        getAreaClearRectangleLabelPoints(
+                            currentPointOnView,
+                            -1,
+                            closeButton,
+                            number
+                        )
+                    } else {
+                        getAreaRectangleLabelPoints(currentPointOnView, -1, closeButton, number)
+                    }
+
+                    methodStartTime = System.currentTimeMillis()
+                    val isNewLabelPointCrossAnyOutlines =
+                        isLabelCrossAnyOutlines(rectanglePointList)
+
+                    endTime = System.currentTimeMillis()
+                    duration = endTime - methodStartTime
+                    Timber.tag("moveRectangleButtonLabelIfPossible")
+                        .d("checkIfCloseLabelCrossNearAnyOutlines duration time = $duration ms")
+
+                    methodStartTime = System.currentTimeMillis()
+                    val isLabelTouchAnyClearLabels =
+                        isAreaLabelTouchAnyAreaLabel(
+                            rectanglePointList,
+                            number - 1,
+                            isAreaClearButton, closeButton, number
+                        )
+                    endTime = System.currentTimeMillis()
+                    duration = endTime - methodStartTime
+                    Timber.tag("moveRectangleButtonLabelIfPossible")
+                        .d("isAreaLabelTouchAnyAreaLabel duration time = $duration ms")
+
+                    val isCrossingAnyLengthWidthLabel =
+                        if (lengthWidthLabelCoordinates.isNotEmpty()) {
+                            methodStartTime = System.currentTimeMillis()
+                            val isAreaLabelCrossing =
+                                isAreaLabelCrossAnyOrientationLabels(rectanglePointList)
+                            endTime = System.currentTimeMillis()
+                            duration = endTime - methodStartTime
+                            Timber.tag("moveRectangleButtonLabelIfPossible")
+                                .d("isAreaLabelCrossAnyOrientationLabels duration time = $duration ms")
+                            isAreaLabelCrossing
+                        } else false
+
+                    val isRectangleFitsInTheScreen =
+                        rectanglePointList[0].x > 0 && rectanglePointList[1].x < width && rectanglePointList[0].y > 0 && rectanglePointList[3].y < height
+
+                    if (!isNewLabelPointCrossAnyOutlines && !isLabelTouchAnyClearLabels && !isCrossingAnyLengthWidthLabel && currentPointOnView.x < width && currentPointOnView.x > 0 && currentPointOnView.y > 0 && currentPointOnView.y < height && isRectangleFitsInTheScreen) {
+
+                        var minPoint = Pair(0, Int.MAX_VALUE)
+                        vertices.forEachIndexed { verticesIndex, vertices ->
+                            val verticesToView = sourceToViewCoordInt(vertices.point)
+                            rectanglePointList.forEachIndexed { index, point ->
+                                val distance =
+                                    com.example.samplewoundsdk.utils.image.drawstroke.PolygonGeometry.calculateDistance(
+                                        verticesToView,
+                                        point
+                                    ).toInt()
+                                if (distance < minPoint.second) {
+                                    minPoint = Pair(index, distance)
+                                    currentIndex = verticesIndex
+                                }
+                            }
+                        }
+
+                        val verticesToView = sourceToViewCoordInt(vertices[currentIndex].point)
+
+                        val pointXMoveDistance =
+                            verticesToView.x - rectanglePointList[minPoint.first].x
+                        val pointYMoveDistance =
+                            verticesToView.y - rectanglePointList[minPoint.first].y
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - functionStartTime
+                        Timber.tag("moveRectangleButtonLabelIfPossible func")
+                            .d("duration time = $duration")
+
+                        return com.example.samplewoundsdk.data.pojo.measurement.RectanglePosition(
+                            outlinePointIndex = currentIndex,
+                            rectanglePointIndex = minPoint.first,
+                            drawDifference = Pair(pointXMoveDistance, pointYMoveDistance),
+                            rectangle = rectanglePointList
+                        )
+                    }
+
+                    var step = 1
+                    val rectangleHeight = abs(rectanglePointList[0].y - rectanglePointList[3].y)
+                    val availableHeight = rectangleHeight * 3
+
+                    val availableWidth = abs(rectanglePointList[0].x - rectanglePointList[1].x) * 2
+                    val topEdge = currentPointOnView.y - availableHeight
+                    val bottomEdge = currentPointOnView.y + availableHeight
+                    val leftEdge = currentPointOnView.x - availableWidth
+                    val rightEdge = currentPointOnView.x + availableWidth
+
+                    val moveStep = (rectangleHeight / 2f).toInt()
+
+                    fun calculateCurrentStep(): Int {
+                        return moveStep * step + rectangleHeight / 2
+                    }
+
+                    var currentStep = calculateCurrentStep()
+                    while (currentPointOnView.y + currentStep < bottomEdge && currentPointOnView.y + currentStep < height && currentPointOnView.y + currentStep > 0 && currentPointOnView.x < width && currentPointOnView.x > 0) {
+                        currentStep = calculateCurrentStep()
+
+                        val newRectanglePointList = ArrayList(rectanglePointList.map {
+                            Point(it.x, it.y + currentStep)
+                        })
+
+                        methodStartTime = System.currentTimeMillis()
+
+                        val isNewPointCrossingAnyOutlines =
+                            isLabelCrossAnyOutlines(newRectanglePointList)
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveRectangleButtonLabelIfPossible")
+                            .d("isLabelCrossAnyOutlines duration time = $duration ms")
+
+                        methodStartTime = System.currentTimeMillis()
+                        val isLabelTouchAnyClearLabels =
+                            isAreaLabelTouchAnyAreaLabel(
+                                newRectanglePointList,
+                                number - 1,
+                                isAreaClearButton, closeButton, number
+                            )
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveRectangleButtonLabelIfPossible")
+                            .d("isAreaLabelTouchAnyAreaLabel duration time = $duration ms")
+
+
+                        val isCrossingAnyLengthWidthLabel =
+                            if (lengthWidthLabelCoordinates.isNotEmpty()) {
+                                methodStartTime = System.currentTimeMillis()
+                                val isAreaLabelCrossing =
+                                    isAreaLabelCrossAnyOrientationLabels(newRectanglePointList)
+
+                                endTime = System.currentTimeMillis()
+                                duration = endTime - methodStartTime
+                                Timber.tag("moveRectangleButtonLabelIfPossible")
+                                    .d("isAreaLabelCrossAnyOrientationLabels duration time = $duration ms")
+                                isAreaLabelCrossing
+                            } else false
+
+                        val isRectangleFitsInTheScreen =
+                            newRectanglePointList[0].x > 0 && newRectanglePointList[1].x < width && newRectanglePointList[0].y > 0 && newRectanglePointList[3].y < height
+
+                        if (!isNewPointCrossingAnyOutlines && !isLabelTouchAnyClearLabels && !isCrossingAnyLengthWidthLabel && isRectangleFitsInTheScreen) {
+                            var minPoint = Pair(0, Int.MAX_VALUE)
+                            vertices.forEachIndexed { verticesIndex, vertices ->
+                                val verticesToView = sourceToViewCoordInt(vertices.point)
+                                newRectanglePointList.forEachIndexed { index, point ->
+                                    val distance =
+                                        com.example.samplewoundsdk.utils.image.drawstroke.PolygonGeometry.calculateDistance(
+                                            verticesToView,
+                                            point
+                                        ).toInt()
+                                    if (distance < minPoint.second) {
+                                        minPoint = Pair(index, distance)
+                                        currentIndex = verticesIndex
+                                    }
+                                }
+                            }
+
+                            val verticesToView = sourceToViewCoordInt(vertices[currentIndex].point)
+
+                            val pointXMoveDistance =
+                                verticesToView.x - newRectanglePointList[minPoint.first].x
+                            val pointYMoveDistance =
+                                verticesToView.y - newRectanglePointList[minPoint.first].y
+
+                            endTime = System.currentTimeMillis()
+                            duration = endTime - functionStartTime
+                            Timber.tag("moveRectangleButtonLabelIfPossible func")
+                                .d("duration time = $duration")
+
+                            return com.example.samplewoundsdk.data.pojo.measurement.RectanglePosition(
+                                outlinePointIndex = currentIndex,
+                                rectanglePointIndex = minPoint.first,
+                                drawDifference = Pair(pointXMoveDistance, pointYMoveDistance),
+                                rectangle = newRectanglePointList
+                            )
+                        }
+                        step++
+                    }
+                    step = 1
+                    currentStep = calculateCurrentStep()
+                    while (currentPointOnView.y - currentStep > topEdge && currentPointOnView.y - currentStep > 0 && currentPointOnView.y - currentStep < height && currentPointOnView.x < width && currentPointOnView.x > 0) {
+                        currentStep = calculateCurrentStep()
+
+
+                        val newRectanglePointList = ArrayList(rectanglePointList.map {
+                            Point(it.x, it.y - currentStep)
+                        })
+                        methodStartTime = System.currentTimeMillis()
+
+                        val isNewLabelPointCrossAnyOutlines =
+                            isLabelCrossAnyOutlines(newRectanglePointList)
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveRectangleButtonLabelIfPossible")
+                            .d("isLabelCrossAnyOutlines duration time = $duration ms")
+
+                        methodStartTime = System.currentTimeMillis()
+                        val isLabelTouchAnyClearLabels =
+                            isAreaLabelTouchAnyAreaLabel(
+                                newRectanglePointList,
+                                number - 1,
+                                isAreaClearButton, closeButton, number
+                            )
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveRectangleButtonLabelIfPossible")
+                            .d("isAreaLabelTouchAnyAreaLabel duration time = $duration ms")
+
+
+                        val isCrossingAnyLengthWidthLabel =
+                            if (lengthWidthLabelCoordinates.isNotEmpty()) {
+                                methodStartTime = System.currentTimeMillis()
+                                val isAreaLabelCrossing =
+                                    isAreaLabelCrossAnyOrientationLabels(newRectanglePointList)
+
+                                endTime = System.currentTimeMillis()
+                                duration = endTime - methodStartTime
+                                Timber.tag("moveRectangleButtonLabelIfPossible")
+                                    .d("isAreaLabelCrossAnyOrientationLabels duration time = $duration ms")
+                                isAreaLabelCrossing
+                            } else false
+
+                        val isRectangleFitsInTheScreen =
+                            newRectanglePointList[0].x > 0 && newRectanglePointList[1].x < width && newRectanglePointList[0].y > 0 && newRectanglePointList[3].y < height
+
+                        if (!isNewLabelPointCrossAnyOutlines && !isLabelTouchAnyClearLabels && !isCrossingAnyLengthWidthLabel && isRectangleFitsInTheScreen) {
+                            var minPoint = Pair(0, Int.MAX_VALUE)
+                            vertices.forEachIndexed { verticesIndex, vertices ->
+                                val verticesToView = sourceToViewCoordInt(vertices.point)
+                                newRectanglePointList.forEachIndexed { index, point ->
+                                    val distance =
+                                        com.example.samplewoundsdk.utils.image.drawstroke.PolygonGeometry.calculateDistance(
+                                            verticesToView,
+                                            point
+                                        ).toInt()
+                                    if (distance < minPoint.second) {
+                                        minPoint = Pair(index, distance)
+                                        currentIndex = verticesIndex
+                                    }
+                                }
+                            }
+
+                            val verticesToView = sourceToViewCoordInt(vertices[currentIndex].point)
+
+                            val pointXMoveDistance =
+                                verticesToView.x - newRectanglePointList[minPoint.first].x
+                            val pointYMoveDistance =
+                                verticesToView.y - newRectanglePointList[minPoint.first].y
+
+                            endTime = System.currentTimeMillis()
+                            duration = endTime - functionStartTime
+                            Timber.tag("moveRectangleButtonLabelIfPossible func")
+                                .d("duration time = $duration")
+
+                            return com.example.samplewoundsdk.data.pojo.measurement.RectanglePosition(
+                                outlinePointIndex = currentIndex,
+                                rectanglePointIndex = minPoint.first,
+                                drawDifference = Pair(pointXMoveDistance, pointYMoveDistance),
+                                rectangle = newRectanglePointList
+                            )
+                        }
+                        step++
+                    }
+                    step = 1
+                    currentStep = calculateCurrentStep()
+                    while (currentPointOnView.x + currentStep < rightEdge && currentPointOnView.x + currentStep < width && currentPointOnView.x + currentStep > 0 && currentPointOnView.y < height && currentPointOnView.y > 0) {
+                        currentStep = calculateCurrentStep()
+
+                        val newRectanglePointList = ArrayList(rectanglePointList.map {
+                            Point(it.x + currentStep, it.y)
+                        })
+                        methodStartTime = System.currentTimeMillis()
+
+                        val isNewLabelPointCrossAnyOutlines =
+                            isLabelCrossAnyOutlines(newRectanglePointList)
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveRectangleButtonLabelIfPossible")
+                            .d("isLabelCrossAnyOutlines duration time = $duration ms")
+
+                        methodStartTime = System.currentTimeMillis()
+                        val isLabelTouchAnyClearLabels =
+                            isAreaLabelTouchAnyAreaLabel(
+                                newRectanglePointList,
+                                number - 1,
+                                isAreaClearButton, closeButton, number
+                            )
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveRectangleButtonLabelIfPossible")
+                            .d("isAreaLabelTouchAnyAreaLabel duration time = $duration ms")
+
+
+                        val isCrossingAnyLengthWidthLabel =
+                            if (lengthWidthLabelCoordinates.isNotEmpty()) {
+                                methodStartTime = System.currentTimeMillis()
+                                val isAreaLabelCrossing =
+                                    isAreaLabelCrossAnyOrientationLabels(newRectanglePointList)
+
+                                endTime = System.currentTimeMillis()
+                                duration = endTime - methodStartTime
+                                Timber.tag("drawAreaLabels")
+                                    .d("isAreaLabelCrossAnyOrientationLabels duration time = $duration ms")
+                                isAreaLabelCrossing
+                            } else false
+
+                        val isRectangleFitsInTheScreen =
+                            newRectanglePointList[0].x > 0 && newRectanglePointList[1].x < width && newRectanglePointList[0].y > 0 && newRectanglePointList[3].y < height
+
+                        if (!isNewLabelPointCrossAnyOutlines && !isLabelTouchAnyClearLabels && !isCrossingAnyLengthWidthLabel && isRectangleFitsInTheScreen) {
+                            var minPoint = Pair(0, Int.MAX_VALUE)
+                            vertices.forEachIndexed { verticesIndex, vertices ->
+                                val verticesToView = sourceToViewCoordInt(vertices.point)
+                                newRectanglePointList.forEachIndexed { index, point ->
+                                    val distance =
+                                        com.example.samplewoundsdk.utils.image.drawstroke.PolygonGeometry.calculateDistance(
+                                            verticesToView,
+                                            point
+                                        ).toInt()
+                                    if (distance < minPoint.second) {
+                                        minPoint = Pair(index, distance)
+                                        currentIndex = verticesIndex
+                                    }
+                                }
+                            }
+
+                            val verticesToView = sourceToViewCoordInt(vertices[currentIndex].point)
+
+                            val pointXMoveDistance =
+                                verticesToView.x - newRectanglePointList[minPoint.first].x
+                            val pointYMoveDistance =
+                                verticesToView.y - newRectanglePointList[minPoint.first].y
+
+                            endTime = System.currentTimeMillis()
+                            duration = endTime - functionStartTime
+                            Timber.tag("moveRectangleButtonLabelIfPossible func")
+                                .d("duration time = $duration")
+
+                            return com.example.samplewoundsdk.data.pojo.measurement.RectanglePosition(
+                                outlinePointIndex = currentIndex,
+                                rectanglePointIndex = minPoint.first,
+                                drawDifference = Pair(pointXMoveDistance, pointYMoveDistance),
+                                rectangle = newRectanglePointList
+                            )
+                        }
+                        step++
+                    }
+                    step = 1
+                    currentStep = calculateCurrentStep()
+                    while (currentPointOnView.x - currentStep > leftEdge && currentPointOnView.x - currentStep > 0 && currentPointOnView.x - currentStep < width && currentPointOnView.y < height && currentPointOnView.y > 0) {
+                        currentStep = calculateCurrentStep()
+
+                        val newRectanglePointList = ArrayList(rectanglePointList.map {
+                            Point(it.x - currentStep, it.y)
+                        })
+
+                        val isNewLabelPointCrossAnyOutlines =
+                            isLabelCrossAnyOutlines(newRectanglePointList)
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveRectangleButtonLabelIfPossible")
+                            .d("isLabelCrossAnyOutlines duration time = $duration ms")
+
+                        methodStartTime = System.currentTimeMillis()
+                        val isLabelTouchAnyClearLabels =
+                            isAreaLabelTouchAnyAreaLabel(
+                                newRectanglePointList,
+                                number - 1,
+                                isAreaClearButton, closeButton, number
+                            )
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveRectangleButtonLabelIfPossible")
+                            .d("isAreaLabelTouchAnyAreaLabel duration time = $duration ms")
+
+
+                        val isCrossingAnyLengthWidthLabel =
+                            if (lengthWidthLabelCoordinates.isNotEmpty()) {
+                                methodStartTime = System.currentTimeMillis()
+                                val isAreaLabelCrossing =
+                                    isAreaLabelCrossAnyOrientationLabels(newRectanglePointList)
+
+                                endTime = System.currentTimeMillis()
+                                duration = endTime - methodStartTime
+                                Timber.tag("drawAreaLabels")
+                                    .d("isAreaLabelCrossAnyOrientationLabels duration time = $duration ms")
+                                isAreaLabelCrossing
+                            } else false
+
+                        val isRectangleFitsInTheScreen =
+                            newRectanglePointList[0].x > 0 && newRectanglePointList[1].x < width && newRectanglePointList[0].y > 0 && newRectanglePointList[3].y < height
+
+                        if (!isNewLabelPointCrossAnyOutlines && !isLabelTouchAnyClearLabels && !isCrossingAnyLengthWidthLabel && isRectangleFitsInTheScreen) {
+                            var minPoint = Pair(0, Int.MAX_VALUE)
+                            vertices.forEachIndexed { verticesIndex, vertices ->
+                                val verticesToView = sourceToViewCoordInt(vertices.point)
+                                newRectanglePointList.forEachIndexed { index, point ->
+                                    val distance =
+                                        com.example.samplewoundsdk.utils.image.drawstroke.PolygonGeometry.calculateDistance(
+                                            verticesToView,
+                                            point
+                                        ).toInt()
+                                    if (distance < minPoint.second) {
+                                        minPoint = Pair(index, distance)
+                                        currentIndex = verticesIndex
+                                    }
+                                }
+                            }
+
+                            val verticesToView = sourceToViewCoordInt(vertices[currentIndex].point)
+
+                            val pointXMoveDistance =
+                                verticesToView.x - newRectanglePointList[minPoint.first].x
+                            val pointYMoveDistance =
+                                verticesToView.y - newRectanglePointList[minPoint.first].y
+
+                            endTime = System.currentTimeMillis()
+                            duration = endTime - functionStartTime
+                            Timber.tag("moveRectangleButtonLabelIfPossible func")
+                                .d("duration time = $duration")
+
+                            return com.example.samplewoundsdk.data.pojo.measurement.RectanglePosition(
+                                outlinePointIndex = currentIndex,
+                                rectanglePointIndex = minPoint.first,
+                                drawDifference = Pair(pointXMoveDistance, pointYMoveDistance),
+                                rectangle = newRectanglePointList
+                            )
+                        }
+                        step++
+                    }
+                }
+                if (currentIndex + 1 < vertices.size) {
+                    currentIndex++
+                } else if (currentIndex + 1 == vertices.size && startIndex == 0) {
+                    currentIndex = -1
+                } else {
+                    currentIndex = 0
+                }
+            } else {
+                endTime = System.currentTimeMillis()
+                duration = endTime - functionStartTime
+                Timber.tag("moveRectangleButtonLabelIfPossible func").d("duration time = $duration")
+                return newPoint
+            }
+        }
+        val firstPoint = sourceToViewCoordInt(vertices[0].point)
+
+        val rectanglePointList = if (isAreaClearButton) {
+            getAreaClearRectangleLabelPoints(firstPoint, -1, closeButton, number)
+        } else {
+            getAreaRectangleLabelPoints(firstPoint, -1, closeButton, number)
+        }
+
+        endTime = System.currentTimeMillis()
+        duration = endTime - functionStartTime
+        Timber.tag("moveRectangleButtonLabelIfPossible func").d("duration time = $duration")
+        return com.example.samplewoundsdk.data.pojo.measurement.RectanglePosition(
+            0,
+            0,
+            Pair(0, 0),
+            rectanglePointList
+        )
+    }
+
+    private fun moveOrientationLabel(
+        startIndex: Int,
+        allowedDistance: Float,
+        vertices: List<Vertices>,
+        labelsIndex: Int
+    ): com.example.samplewoundsdk.data.pojo.measurement.LengthWidthButtonPosition {
+        val functionStartTime = System.currentTimeMillis()
+        var methodStartTime: Long
+        var endTime: Long
+        var duration: Long
+        Timber.tag("moveOrientationLabel func").d("start")
+        vertices.forEachIndexed { currentIndex, vertix ->
+            if (currentIndex < vertices.size) {
+                if (currentDraggedVertices?.point != vertices[currentIndex].point) {
+                    val currentPoint = vertices[currentIndex].point
+                    val outlineIndex =
+                        verticesList[labelsIndex].indexOfFirst { it.point == currentPoint }
+                    val currentPointOnView = sourceToViewCoordInt(currentPoint)
+
+                    var step = 1
+                    val availableHeight = allowedDistance * 3f
+                    val availableWidth = allowedDistance * 3f
+
+                    val topEdge = currentPointOnView.y - availableHeight
+                    val bottomEdge = currentPointOnView.y + availableHeight
+                    val leftEdge = currentPointOnView.x - availableWidth
+                    val rightEdge = currentPointOnView.x + availableWidth
+                    val moveStep = (allowedDistance / 2f).toInt()
+
+                    fun calculateCurrentStep(): Int {
+                        return moveStep * step + allowedDistance.toInt()
+                    }
+
+                    var currentStep = calculateCurrentStep()
+                    while (currentPointOnView.y + currentStep < bottomEdge && currentPointOnView.y + currentStep < height && currentPointOnView.y + currentStep > 0 && currentPointOnView.x < width && currentPointOnView.x > 0) {
+                        currentStep = calculateCurrentStep()
+
+                        val newPoint =
+                            Point(currentPointOnView.x, currentPointOnView.y + currentStep)
+
+                        methodStartTime = System.currentTimeMillis()
+
+                        val isOrientationLabelTouchAnyOrientationLabels =
+                            isOrientationLabelCrossAnyOrientationLabel(newPoint, labelsIndex)
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveOrientationLabel")
+                            .d("isOrientationLabelCrossAnyOrientationLabel duration time = $duration ms")
+
+                        methodStartTime = System.currentTimeMillis()
+
+                        val isNewLabelInsideAnyOutlines =
+                            isLengthWidthLabelInsideAnyOutlines(newPoint, allowedDistance)
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveOrientationLabel")
+                            .d("isLengthWidthLabelInsideAnyOutlines duration time = $duration ms")
+
+                        if (!isOrientationLabelTouchAnyOrientationLabels.first && !isNewLabelInsideAnyOutlines) {
+                            endTime = System.currentTimeMillis()
+                            duration = endTime - functionStartTime
+                            Timber.tag("moveOrientationLabel func")
+                                .d("duration time = $duration ms")
+
+                            val pointXMoveDistance =
+                                currentPointOnView.x - newPoint.x
+                            val pointYMoveDistance =
+                                currentPointOnView.y - newPoint.y
+
+                            return com.example.samplewoundsdk.data.pojo.measurement.LengthWidthButtonPosition(
+                                outlineIndex,
+                                Pair(pointXMoveDistance, pointYMoveDistance),
+                                newPoint
+                            )
+                        }
+                        step++
+                    }
+                    step = 1
+                    currentStep = calculateCurrentStep()
+                    while (currentPointOnView.y - currentStep > topEdge && currentPointOnView.y - currentStep > 0 && currentPointOnView.y - currentStep < height && currentPointOnView.x < width && currentPointOnView.x > 0) {
+                        currentStep = calculateCurrentStep()
+                        val newPoint =
+                            Point(currentPointOnView.x, currentPointOnView.y - currentStep)
+
+                        methodStartTime = System.currentTimeMillis()
+
+                        val isOrientationLabelTouchAnyOrientationLabels =
+                            isOrientationLabelCrossAnyOrientationLabel(newPoint, labelsIndex)
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveOrientationLabel")
+                            .d("isOrientationLabelCrossAnyOrientationLabel duration time = $duration ms")
+
+
+                        methodStartTime = System.currentTimeMillis()
+
+                        val isNewLabelInsideAnyOutlines =
+                            isLengthWidthLabelInsideAnyOutlines(newPoint, allowedDistance)
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveOrientationLabel")
+                            .d("isLengthWidthLabelInsideAnyOutlines duration time = $duration ms")
+
+                        if (!isOrientationLabelTouchAnyOrientationLabels.first && !isNewLabelInsideAnyOutlines) {
+                            endTime = System.currentTimeMillis()
+                            duration = endTime - functionStartTime
+                            Timber.tag("moveOrientationLabel func")
+                                .d("duration time = $duration ms")
+                            val pointXMoveDistance =
+                                currentPointOnView.x - newPoint.x
+                            val pointYMoveDistance =
+                                currentPointOnView.y - newPoint.y
+
+                            return com.example.samplewoundsdk.data.pojo.measurement.LengthWidthButtonPosition(
+                                outlineIndex,
+                                Pair(pointXMoveDistance, pointYMoveDistance),
+                                newPoint
+                            )
+                        }
+                        step++
+                    }
+                    step = 1
+                    currentStep = calculateCurrentStep()
+                    while (currentPointOnView.x + currentStep < rightEdge && currentPointOnView.x + currentStep < width && currentPointOnView.x + currentStep > 0 && currentPointOnView.y < height && currentPointOnView.y > 0) {
+                        currentStep = calculateCurrentStep()
+                        val newPoint =
+                            Point(currentPointOnView.x + currentStep, currentPointOnView.y)
+
+                        methodStartTime = System.currentTimeMillis()
+
+                        val isOrientationLabelTouchAnyOrientationLabels =
+                            isOrientationLabelCrossAnyOrientationLabel(newPoint, labelsIndex)
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveOrientationLabel")
+                            .d("isOrientationLabelCrossAnyOrientationLabel duration time = $duration ms")
+
+
+                        methodStartTime = System.currentTimeMillis()
+
+                        val isNewLabelInsideAnyOutlines =
+                            isLengthWidthLabelInsideAnyOutlines(newPoint, allowedDistance)
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveOrientationLabel")
+                            .d("isLengthWidthLabelInsideAnyOutlines duration time = $duration ms")
+
+                        if (!isOrientationLabelTouchAnyOrientationLabels.first && !isNewLabelInsideAnyOutlines) {
+                            endTime = System.currentTimeMillis()
+                            duration = endTime - functionStartTime
+                            Timber.tag("moveOrientationLabel func")
+                                .d("duration time = $duration ms")
+                            val pointXMoveDistance =
+                                currentPointOnView.x - newPoint.x
+                            val pointYMoveDistance =
+                                currentPointOnView.y - newPoint.y
+
+                            return com.example.samplewoundsdk.data.pojo.measurement.LengthWidthButtonPosition(
+                                outlineIndex,
+                                Pair(pointXMoveDistance, pointYMoveDistance),
+                                newPoint
+                            )
+                        }
+                        step++
+                    }
+                    step = 1
+                    currentStep = calculateCurrentStep()
+                    while (currentPointOnView.x - currentStep > leftEdge && currentPointOnView.x - currentStep > 0 && currentPointOnView.x - currentStep < width && currentPointOnView.y < height && currentPointOnView.y > 0) {
+                        currentStep = calculateCurrentStep()
+                        val newPoint =
+                            Point(currentPointOnView.x - currentStep, currentPointOnView.y)
+
+                        methodStartTime = System.currentTimeMillis()
+
+                        val isOrientationLabelTouchAnyOrientationLabels =
+                            isOrientationLabelCrossAnyOrientationLabel(newPoint, labelsIndex)
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveOrientationLabel")
+                            .d("isOrientationLabelCrossAnyOrientationLabel duration time = $duration ms")
+
+
+                        methodStartTime = System.currentTimeMillis()
+
+                        val isNewLabelInsideAnyOutlines =
+                            isLengthWidthLabelInsideAnyOutlines(newPoint, allowedDistance)
+
+                        endTime = System.currentTimeMillis()
+                        duration = endTime - methodStartTime
+                        Timber.tag("moveOrientationLabel")
+                            .d("isLengthWidthLabelInsideAnyOutlines duration time = $duration ms")
+
+                        if (!isOrientationLabelTouchAnyOrientationLabels.first && !isNewLabelInsideAnyOutlines) {
+                            endTime = System.currentTimeMillis()
+                            duration = endTime - functionStartTime
+                            Timber.tag("moveOrientationLabel func")
+                                .d("duration time = $duration ms")
+                            val pointXMoveDistance =
+                                currentPointOnView.x - newPoint.x
+                            val pointYMoveDistance =
+                                currentPointOnView.y - newPoint.y
+
+                            return com.example.samplewoundsdk.data.pojo.measurement.LengthWidthButtonPosition(
+                                outlineIndex,
+                                Pair(pointXMoveDistance, pointYMoveDistance),
+                                newPoint
+                            )
+                        }
+                        step++
+                    }
+                }
+            } else {
+                endTime = System.currentTimeMillis()
+                duration = endTime - functionStartTime
+                Timber.tag("moveOrientationLabel func").d("duration time = $duration ms")
+                return com.example.samplewoundsdk.data.pojo.measurement.LengthWidthButtonPosition(
+                    startIndex,
+                    Pair(0, 0),
+                    vertices[startIndex].point
+                )
+            }
+        }
+        endTime = System.currentTimeMillis()
+        duration = endTime - functionStartTime
+        Timber.tag("moveOrientationLabel func").d("duration time = $duration ms")
+        return com.example.samplewoundsdk.data.pojo.measurement.LengthWidthButtonPosition(
+            startIndex,
+            Pair(0, 0),
+            vertices[startIndex].point
+        )
+    }
+
+    private fun isLabelCrossAnyOutlines(
+        rectanglePointList: ArrayList<Point>
+    ): Boolean {
+
+        val labelEdgePoints = ArrayList<Pair<Point, Point>>(rectanglePointList.map {
+            Pair(Point(it.x, -height * 4), it)
+        })
+
+        val sidePointList = ArrayList<Pair<Point, Point>>()
+        sidePointList.add(Pair(rectanglePointList[0], rectanglePointList[1]))
+        sidePointList.add(Pair(rectanglePointList[1], rectanglePointList[2]))
+        sidePointList.add(Pair(rectanglePointList[2], rectanglePointList[3]))
+        sidePointList.add(Pair(rectanglePointList[3], rectanglePointList[0]))
+
+        return checkIntersect(labelEdgePoints, sidePointList)
+    }
+
+    private fun isLengthWidthLabelInsideAnyOutlines(
+        currentPoint: Point,
+        allowedDistance: Float
+    ): Boolean {
+
+        val labelLeftPoint = Point(currentPoint.x - allowedDistance.toInt(), currentPoint.y)
+        val labelRightPoint = Point(currentPoint.x + allowedDistance.toInt(), currentPoint.y)
+        val labelTopPoint = Point(currentPoint.x, currentPoint.y - allowedDistance.toInt())
+        val labelBottomPoint = Point(currentPoint.x, currentPoint.y + allowedDistance.toInt())
+
+        val labelEdgePoints = ArrayList<Pair<Point, Point>>()
+        labelEdgePoints.add(Pair(Point(labelLeftPoint.x, -height * 4), labelLeftPoint))
+        labelEdgePoints.add(Pair(Point(labelRightPoint.x, -height * 4), labelRightPoint))
+        labelEdgePoints.add(Pair(Point(labelTopPoint.x, -height * 4), labelTopPoint))
+        labelEdgePoints.add(Pair(Point(labelBottomPoint.x, -height * 4), labelBottomPoint))
+
+        return checkIntersect(labelEdgePoints)
+    }
+
+    private fun checkIntersect(
+        labelEdgePoints: ArrayList<Pair<Point, Point>>,
+        sidePointList: ArrayList<Pair<Point, Point>> = ArrayList()
+    ): Boolean {
+        sidePointList.forEach {
+            verticesList.forEach { vertices ->
+                for (i in 0 until vertices.size step 1) {
+                    val pointA = sourceToViewCoordInt(vertices[i].point)
+                    val pointB = if (i + 1 > vertices.lastIndex) {
+                        var index = if (i + 1 == vertices.size) {
+                            0
+                        } else {
+                            abs(vertices.size - 1 - i)
+                        }
+
+                        while (index > vertices.lastIndex) {
+                            index -= 1
+                        }
+
+                        sourceToViewCoordInt(vertices[index].point)
+                    } else {
+                        sourceToViewCoordInt(vertices[i + 1].point)
+                    }
+
+                    if (linesIntersect(pointA, pointB, it.second, it.first)) {
+                        return true
+                    }
+                }
+            }
+        }
+        labelEdgePoints.forEach {
+            var countIntersectObjects = 0
+            verticesList.forEach { vertices ->
+                val crossPoints = ArrayList<Point>()
+                for (i in 0 until vertices.size step 1) {
+                    val pointA = sourceToViewCoordInt(vertices[i].point)
+                    val pointB = if (i + 1 > vertices.lastIndex) {
+                        var index = if (i + 1 == vertices.size) {
+                            0
+                        } else {
+                            abs(vertices.size - 1 - i)
+                        }
+
+                        while (index > vertices.lastIndex) {
+                            index -= 1
+                        }
+
+                        sourceToViewCoordInt(vertices[index].point)
+                    } else {
+                        sourceToViewCoordInt(vertices[i + 1].point)
+                    }
+
+                    if (linesIntersect(pointA, pointB, it.second, it.first)) {
+                        var alreadyCounted = false
+                        if (it.second.x == pointA.x || it.second.y == pointA.y) {
+                            if (crossPoints.contains(pointA)) {
+                                alreadyCounted = true
+                            } else {
+                                crossPoints.add(pointA)
+                            }
+                        }
+                        if (it.second.x == pointB.x || it.second.y == pointA.y) {
+                            if (crossPoints.contains(pointB)) {
+                                alreadyCounted = true
+                            } else {
+                                crossPoints.add(pointB)
+                            }
+                        }
+                        if (!alreadyCounted) {
+                            countIntersectObjects++
+                        }
+                    }
+                }
+            }
+            if (countIntersectObjects % 2 != 0) {
+                return true
+            }
+        }
+        return false
+    }
+
+
+    fun orientation(
+        p: com.example.samplewoundsdk.data.pojo.measurement.IntersectPoint,
+        q: com.example.samplewoundsdk.data.pojo.measurement.IntersectPoint,
+        r: com.example.samplewoundsdk.data.pojo.measurement.IntersectPoint
+    ): Int {
+        val value = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y)
+        return when {
+            value == 0.0 -> 0 // collinear
+            value > 0 -> 1   // clockwise
+            else -> 2        // anticlockwise
+        }
+    }
+
+    private fun onSegment(
+        p: com.example.samplewoundsdk.data.pojo.measurement.IntersectPoint,
+        q: com.example.samplewoundsdk.data.pojo.measurement.IntersectPoint,
+        r: com.example.samplewoundsdk.data.pojo.measurement.IntersectPoint
+    ): Boolean {
+        return q.x <= max(p.x, r.x) && q.x >= min(p.x, r.x) &&
+                q.y <= max(p.y, r.y) && q.y >= min(p.y, r.y)
+    }
+
+    private fun doIntersect(
+        p1: com.example.samplewoundsdk.data.pojo.measurement.IntersectPoint,
+        q1: com.example.samplewoundsdk.data.pojo.measurement.IntersectPoint,
+        p2: com.example.samplewoundsdk.data.pojo.measurement.IntersectPoint,
+        q2: com.example.samplewoundsdk.data.pojo.measurement.IntersectPoint
+    ): Boolean {
+        val o1 = orientation(p1, q1, p2)
+        val o2 = orientation(p1, q1, q2)
+        val o3 = orientation(p2, q2, p1)
+        val o4 = orientation(p2, q2, q1)
+
+        if (o1 != o2 && o3 != o4) {
+            return true
+        }
+
+        if (o1 == 0 && onSegment(p1, p2, q1)) return true
+        if (o2 == 0 && onSegment(p1, q2, q1)) return true
+        if (o3 == 0 && onSegment(p2, p1, q2)) return true
+        if (o4 == 0 && onSegment(p2, q1, q2)) return true
+
+        return false
+    }
+
+    private fun getAreaRectangleLabelPoints(
+        center: Point,
+        rectanglePointIndex: Int,
+        closeButton: CloseButton,
+        number: Int
+    ): ArrayList<Point> {
+        return closeButton.getAreaRectangleByPoint(center, rectanglePointIndex, this, number)
+    }
+
+    private fun getAreaClearRectangleLabelPoints(
+        center: Point,
+        rectanglePointIndex: Int,
+        closeButton: CloseButton,
+        number: Int
+    ): ArrayList<Point> {
+        return closeButton.getAreaClearRectangleByPoint(center, rectanglePointIndex, this, number)
+    }
+
+    private fun drawLabelCircle(
+        canvas: Canvas,
+        labelPoint: Point,
+        letter: String
+    ) {
+        canvas.drawCircle(
+            labelPoint.x.toFloat(),
+            labelPoint.y.toFloat(),
+            RADIUS * 2f,
+            linesPaint!!
+        )
+        val bounds = Rect()
+        textPaint!!.getTextBounds(letter, 0, letter.length, bounds)
+        val labelPointX = labelPoint.x - bounds.width() / 2f
+        val labelPointY = labelPoint.y + bounds.height() / 2f
+        canvas.drawText(
+            letter,
+            labelPointX,
+            labelPointY,
+            textPaint!!
+        )
+    }
+
+    private fun isOrientationLabelCrossAnyOrientationLabel(
+        position: Point,
+        index: Int
+    ): Pair<Boolean, Point?> {
+        val allowedDistance = RADIUS * 2f
+        val firstRectangleEdges =
+            com.example.samplewoundsdk.data.pojo.measurement.RectangleEdges.createFromCircle(
+                position,
+                allowedDistance
+            )
+
+        lengthWidthLabelCoordinates.forEachIndexed { labelIndex, lengthWidthLabelPoint ->
+            if (labelIndex != index) {
+                if (lengthWidthLabelPoint.first != null) {
+                    val lengthOutlinePoint =
+                        sourceToViewCoordInt(verticesList[labelIndex][lengthWidthLabelPoint.first?.outlinePointIndex!!].point)
+
+                    val xDifference =
+                        lengthOutlinePoint.x - (lengthWidthLabelPoint.first?.drawDifference?.first!!)
+                    val yDifference =
+                        lengthOutlinePoint.y - (lengthWidthLabelPoint.first?.drawDifference?.second!!)
+
+                    val lengthLabelPointToView = Point(xDifference, yDifference)
+
+                    val secondRectangleEdges =
+                        com.example.samplewoundsdk.data.pojo.measurement.RectangleEdges.createFromCircle(
+                            lengthLabelPointToView,
+                            allowedDistance
+                        )
+                    if (checkIfLabelTouchOrientationCircle(
+                            firstRectangleEdges,
+                            secondRectangleEdges
+                        ) || checkIfLabelTouchOrientationCircle(
+                            secondRectangleEdges,
+                            firstRectangleEdges
+                        )
+                    ) {
+                        return Pair(true, lengthLabelPointToView)
+                    }
+                }
+                if (lengthWidthLabelPoint.second != null) {
+                    val widthOutlinePoint =
+                        sourceToViewCoordInt(verticesList[labelIndex][lengthWidthLabelPoint.second?.outlinePointIndex!!].point)
+
+                    val xDifference =
+                        widthOutlinePoint.x - (lengthWidthLabelPoint.second?.drawDifference?.first!!)
+                    val yDifference =
+                        widthOutlinePoint.y - (lengthWidthLabelPoint.second?.drawDifference?.second!!)
+
+                    val widthLabelPointToView = Point(xDifference, yDifference)
+
+                    val secondRectangleEdges =
+                        com.example.samplewoundsdk.data.pojo.measurement.RectangleEdges.createFromCircle(
+                            widthLabelPointToView,
+                            allowedDistance
+                        )
+
+                    if (
+                        checkIfLabelTouchOrientationCircle(
+                            firstRectangleEdges,
+                            secondRectangleEdges
+                        ) ||
+                        checkIfLabelTouchOrientationCircle(
+                            secondRectangleEdges,
+                            firstRectangleEdges
+                        )
+                    ) {
+                        return Pair(true, widthLabelPointToView)
+                    }
+                }
+            }
+        }
+        return Pair(false, null)
+    }
+
+    private fun isAreaLabelTouchAnyAreaLabel(
+        rectangleLabelPointList: ArrayList<Point>,
+        rectangleIndex: Int,
+        isAreaClearButton: Boolean,
+        closeButton: CloseButton,
+        number: Int
+    ): Boolean {
+
+        val firstRectangleEdges =
+            com.example.samplewoundsdk.data.pojo.measurement.RectangleEdges.createFromRectangle(
+                rectangleLabelPointList
+            )
+
+        clearButtonRectangleCoordinates.forEachIndexed { index, rectanglePoints ->
+            if (index != rectangleIndex) {
+                val pointIndex = clearButtonLabelCoordinates[index].areaIndex
+                val currentOutlinePoint =
+                    sourceToViewCoordInt(verticesList[index][pointIndex].point)
+
+                val pointXMoveDistance = currentOutlinePoint.x - rectanglePoints.second.first
+                val pointYMoveDistance = currentOutlinePoint.y - rectanglePoints.second.second
+
+                val rectanglePoint = Point(pointXMoveDistance, pointYMoveDistance)
+
+                val rectangleCenter = if (isAreaClearButton) {
+                    getAreaClearRectangleLabelPoints(
+                        rectanglePoint,
+                        rectanglePoints.first,
+                        closeButton,
+                        number
+                    )
+                } else {
+                    getAreaRectangleLabelPoints(
+                        rectanglePoint,
+                        rectanglePoints.first,
+                        closeButton,
+                        number
+                    )
+                }
+
+                val secondRectangleEdges =
+                    com.example.samplewoundsdk.data.pojo.measurement.RectangleEdges.createFromRectangle(
+                        rectangleCenter
+                    )
+                if (
+                    checkIfLabelTouchOrientationCircle(firstRectangleEdges, secondRectangleEdges) ||
+                    checkIfLabelTouchOrientationCircle(secondRectangleEdges, firstRectangleEdges)
+                ) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
 
     private fun closePath(
         canvas: Canvas,
@@ -1595,23 +3291,318 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
         }
     }
 
-    private fun drawClearSymbol(
+    private fun drawAreaLabels(
+        index: Int,
         canvas: Canvas,
-        closeButton: CloseButton,
-        number: Int,
-        vertices: ArrayList<Vertices>
+        vertices: ArrayList<Vertices>,
+        isClearAreaButton: Boolean
     ) {
-        closeButton.drawFilled(canvas, greenColor, number, vertices, this, mode)
+        val functionStartTime = System.currentTimeMillis()
+        var methodStartTime: Long
+        var endTime: Long
+        var duration: Long
+
+        Timber.tag("drawAreaLabels func").d("start")
+
+        val isDrawPointCrossingAnyOutline: Boolean
+        var startPoint: Point
+        val startIndex: Int
+        val bestPoint: Point
+        var isPointValid = false
+
+        startIndex = if (clearButtonLabelCoordinates.isNotEmpty()) {
+            if (index <= clearButtonLabelCoordinates.lastIndex) {
+                val clearButtonIndex = clearButtonLabelCoordinates[index].areaIndex
+                isPointValid = clearButtonLabelCoordinates[index].isAreaValid
+                startPoint = sourceToViewCoordInt(vertices[clearButtonIndex].point)
+                clearButtonIndex
+            } else {
+                methodStartTime = System.currentTimeMillis()
+                bestPoint =
+                    closeButton[index].findBestOptionPointToDrawCloseButton( // find best label option
+                        index + 1,
+                        vertices,
+                        this
+                    )
+                endTime = System.currentTimeMillis()
+                duration = endTime - methodStartTime
+                Timber.tag("drawAreaLabels")
+                    .d("findBestOptionPointToDrawCloseButton duration time = $duration ms")
+                startPoint = sourceToViewCoordInt(bestPoint)
+                vertices.indexOfFirst { it.point == bestPoint }
+            }
+        } else {
+            methodStartTime = System.currentTimeMillis()
+            bestPoint =
+                closeButton[index].findBestOptionPointToDrawCloseButton( // find best label option
+                    index + 1,
+                    vertices,
+                    this
+                )
+            endTime = System.currentTimeMillis()
+            duration = endTime - methodStartTime
+            Timber.tag("drawAreaLabels")
+                .d("findBestOptionPointToDrawCloseButton duration time = $duration ms")
+            startPoint = sourceToViewCoordInt(bestPoint)
+            vertices.indexOfFirst { it.point == bestPoint }
+        }
+
+        if (clearButtonRectangleCoordinates.isNotEmpty()) {
+            if (index <= clearButtonRectangleCoordinates.lastIndex) {
+                startPoint = Point(
+                    startPoint.x - clearButtonRectangleCoordinates[index].second.first,
+                    startPoint.y - clearButtonRectangleCoordinates[index].second.second
+                )
+            }
+        }
+
+        val rectanglePointList = if (isClearAreaButton) {
+            getAreaClearRectangleLabelPoints(
+                startPoint,
+                clearButtonRectangleCoordinates.getOrNull(index)?.first ?: -1,
+                closeButton[index],
+                index + 1
+            )
+        } else {
+            getAreaRectangleLabelPoints(
+                startPoint,
+                clearButtonRectangleCoordinates.getOrNull(index)?.first ?: -1,
+                closeButton[index],
+                index + 1
+
+            )
+        }
+
+        if (isPointValid) {
+            drawAreaLabel(isClearAreaButton, index, canvas, rectanglePointList)
+        } else {
+            methodStartTime = System.currentTimeMillis()
+            val isLabelTouchAnyClearLabels =
+                isAreaLabelTouchAnyAreaLabel(
+                    rectanglePointList,
+                    index,
+                    isClearAreaButton,
+                    closeButton[index],
+                    index + 1
+                )
+
+            endTime = System.currentTimeMillis()
+            duration = endTime - methodStartTime
+            Timber.tag("drawAreaLabels")
+                .d("isAreaLabelTouchAnyAreaLabel duration time = $duration ms")
+
+
+            methodStartTime = System.currentTimeMillis()
+            isDrawPointCrossingAnyOutline = isLabelCrossAnyOutlines(rectanglePointList)
+
+            endTime = System.currentTimeMillis()
+            duration = endTime - methodStartTime
+            Timber.tag("drawAreaLabels")
+                .d("checkIfCloseLabelCrossNearAnyOutlines duration time = $duration ms")
+
+            val isCrossingAnyLengthWidthLabel =
+                if (lengthWidthLabelCoordinates.isNotEmpty()) {
+                    methodStartTime = System.currentTimeMillis()
+                    val isCrossing = isAreaLabelCrossAnyOrientationLabels(rectanglePointList)
+                    endTime = System.currentTimeMillis()
+                    duration = endTime - methodStartTime
+                    Timber.tag("drawAreaLabels")
+                        .d("isAreaLabelCrossAnyOrientationLabels duration time = $duration ms")
+                    isCrossing
+                } else false
+
+            val isRectangleFitsInTheScreen =
+                rectanglePointList[0].x > 0 && rectanglePointList[1].x < width && rectanglePointList[0].y > 0 && rectanglePointList[3].y < height
+
+            if (clearButtonLabelCoordinates.size > 1) {
+                if (isDrawPointCrossingAnyOutline || isLabelTouchAnyClearLabels || isCrossingAnyLengthWidthLabel || !isRectangleFitsInTheScreen) {
+                    val newLabelPoint = moveRectangleButtonLabelIfPossible(
+                        startIndex,
+                        vertices,
+                        closeButton[index],
+                        index + 1,
+                        isAreaClearButton = isClearAreaButton
+                    )
+
+                    if (index > clearButtonLabelCoordinates.lastIndex) {
+                        clearButtonLabelCoordinates.add(
+                            AreaButton(
+                                newLabelPoint.outlinePointIndex,
+                                true
+                            )
+                        )
+                    } else {
+                        clearButtonLabelCoordinates[index] =
+                            AreaButton(
+                                newLabelPoint.outlinePointIndex,
+                                true
+                            )
+                    }
+
+                    drawAreaLabel(isClearAreaButton, index, canvas, newLabelPoint.rectangle)
+
+                    if (clearButtonRectangleCoordinates.isEmpty()) {
+                        clearButtonRectangleCoordinates.add(
+                            Pair(
+                                newLabelPoint.rectanglePointIndex,
+                                newLabelPoint.drawDifference
+                            )
+                        )
+                    } else {
+                        if (index > clearButtonRectangleCoordinates.lastIndex) {
+                            clearButtonRectangleCoordinates.add(
+                                Pair(
+                                    newLabelPoint.rectanglePointIndex,
+                                    newLabelPoint.drawDifference
+                                )
+                            )
+                        } else {
+                            clearButtonRectangleCoordinates[index] =
+                                Pair(
+                                    newLabelPoint.rectanglePointIndex,
+                                    newLabelPoint.drawDifference
+                                )
+                        }
+                    }
+                } else {
+                    if (index > clearButtonLabelCoordinates.lastIndex) {
+                        clearButtonLabelCoordinates.add(
+                            AreaButton(
+                                startIndex,
+                                true
+                            )
+                        )
+                    }
+                    drawAreaLabel(isClearAreaButton, index, canvas, rectanglePointList)
+                }
+            } else {
+                if (!isDrawPointCrossingAnyOutline && !isLabelTouchAnyClearLabels && !isCrossingAnyLengthWidthLabel && isRectangleFitsInTheScreen) {
+                    if (clearButtonLabelCoordinates.isNotEmpty()) {
+                        if (index > clearButtonLabelCoordinates.lastIndex) {
+                            clearButtonLabelCoordinates.add(
+                                AreaButton(
+                                    startIndex,
+                                    true
+                                )
+                            )
+                        }
+                    } else {
+                        clearButtonLabelCoordinates.add(
+                            AreaButton(
+                                startIndex,
+                                true
+                            )
+                        )
+                    }
+
+                    drawAreaLabel(isClearAreaButton, index, canvas, rectanglePointList)
+                } else {
+                    val newLabelPoint = moveRectangleButtonLabelIfPossible(
+                        startIndex,
+                        vertices,
+                        closeButton[index],
+                        index + 1,
+                        isAreaClearButton = isClearAreaButton
+                    )
+                    drawAreaLabel(isClearAreaButton, index, canvas, newLabelPoint.rectangle)
+                    if (clearButtonRectangleCoordinates.isEmpty()) {
+                        clearButtonRectangleCoordinates.add(
+                            Pair(
+                                newLabelPoint.rectanglePointIndex,
+                                newLabelPoint.drawDifference
+                            )
+                        )
+                    } else {
+                        if (index > clearButtonRectangleCoordinates.lastIndex) {
+                            clearButtonRectangleCoordinates.add(
+                                Pair(
+                                    newLabelPoint.rectanglePointIndex,
+                                    newLabelPoint.drawDifference
+                                )
+                            )
+                        } else {
+                            clearButtonRectangleCoordinates[index] =
+                                Pair(
+                                    newLabelPoint.rectanglePointIndex,
+                                    newLabelPoint.drawDifference
+                                )
+                        }
+                    }
+
+                    if (clearButtonLabelCoordinates.isEmpty()) {
+                        clearButtonLabelCoordinates.add(
+                            AreaButton(
+                                newLabelPoint.outlinePointIndex,
+                                true
+                            )
+                        )
+                    } else {
+                        if (index > clearButtonLabelCoordinates.lastIndex) {
+                            clearButtonLabelCoordinates.add(
+                                AreaButton(
+                                    newLabelPoint.outlinePointIndex,
+                                    true
+                                )
+                            )
+                        } else {
+                            clearButtonLabelCoordinates[index] =
+                                AreaButton(
+                                    newLabelPoint.outlinePointIndex,
+                                    true
+                                )
+                        }
+                    }
+                }
+            }
+        }
+        endTime = System.currentTimeMillis()
+        duration = endTime - functionStartTime
+        Timber.tag("drawAreaLabels func").d("duration time = $duration")
     }
 
-    fun sourceToViewCoordInt(vertex: Point): Point {
-        val pointF = sourceToViewCoord(vertex.x.toFloat(), vertex.y.toFloat())
+    private fun drawAreaLabel(
+        isClearAreaButton: Boolean,
+        index: Int,
+        canvas: Canvas,
+        newLabelPoint: ArrayList<Point>
+    ): Canvas {
+        return if (isClearAreaButton) {
+            closeButton[index].drawAreaClearLabelButton(
+                index + 1,
+                canvas,
+                greenColor,
+                this,
+                mode,
+                newLabelPoint
+            )
+        } else {
+            closeButton[index].drawAreaLabelButton(
+                index + 1,
+                canvas,
+                greenColor,
+                this,
+                newLabelPoint
+            )
+        }
+    }
+
+    private fun linesIntersect(a: Point, b: Point, c: Point, d: Point): Boolean {
+        val aPoint = IntersectPoint.fromPoint(a)
+        val bPoint = IntersectPoint.fromPoint(b)
+        val cPoint = IntersectPoint.fromPoint(c)
+        val dPoint = IntersectPoint.fromPoint(d)
+
+        return doIntersect(aPoint, bPoint, cPoint, dPoint)
+    }
+
+    fun sourceToViewCoordInt(point: Point): Point {
+        val pointF = sourceToViewCoord(point.x.toFloat(), point.y.toFloat())
             ?: return Point(0, 0)
         return Point(pointF.x.toInt(), pointF.y.toInt())
     }
 
-    fun viewToSourceCoordInt(vertex: Point): Point {
-        val pointF = viewToSourceCoord(vertex.x.toFloat(), vertex.y.toFloat())
+    private fun viewToSourceCoordInt(point: Point): Point {
+        val pointF = viewToSourceCoord(point.x.toFloat(), point.y.toFloat())
         return Point(pointF!!.x.toInt(), pointF.y.toInt())
     }
 
@@ -1624,6 +3615,9 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
 
     fun setAutoDetectedVertices(vertices: List<List<Vertices>>) {
         this.verticesList = validateAutoDetectionVertices(vertices)
+        lengthWidthLabelCoordinates.clear()
+        clearButtonLabelCoordinates.clear()
+        clearButtonRectangleCoordinates.clear()
         if (this.verticesList.isEmpty()) {
             isPathClosed.clear()
             closeButton.clear()
@@ -1649,7 +3643,9 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
 
     fun setVertices(vertices: ArrayList<ArrayList<Vertices>>) {
         this.verticesList = vertices
-
+        lengthWidthLabelCoordinates.clear()
+        clearButtonLabelCoordinates.clear()
+        clearButtonRectangleCoordinates.clear()
         if (this.verticesList.isEmpty()) {
             isPathClosed.clear()
             closeButton.clear()
@@ -1673,146 +3669,204 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
 
     private fun validateAutoDetectionVertices(verticesList: List<List<Vertices>>): ArrayList<ArrayList<Vertices>> {
 
-        val viewVerticesList = verticesList.map {
-            it.map { vertix ->
+        val verticesListToViewCoordinates = ArrayList(verticesList.map {
+            ArrayList(it.map { vertix ->
                 PointF(
                     (vertix.point.x.toFloat()),
                     (vertix.point.y.toFloat())
                 )
-            }
-        }
+            })
+        })
 
-        val orderedVerticesList = ArrayList<ArrayList<PointF>>()
-
-        viewVerticesList.forEach { vertices ->
-            if (vertices.isNotEmpty()) {
-                orderedVerticesList.add(ArrayList())
-
-                vertices.forEach { vertix ->
-                    if (vertices[0] == vertix) {
-                        orderedVerticesList.lastOrNull()?.add(vertix)
-                    } else {
-                        var compareVertices = vertix
-                        val distances = SparseArray<PointF?>()
-                        val nearestPoint: PointF?
-                        val allowedDistance = this.context.toPx(40)
-                        vertices.forEach { vertix ->
-                            if (vertix != compareVertices) {
-                                val calculateDistance =
-                                    PolygonGeometry.calculateDistance(
-                                        compareVertices,
-                                        vertix
-                                    ).toInt()
-                                if (calculateDistance < allowedDistance) {
-                                    distances.put(calculateDistance, vertix)
-                                }
-                            }
-                        }
-                        if (distances.size() != 0) {
-                            val keyAt = distances.keyAt(0)
-                            nearestPoint = distances[keyAt, null]
-                            if (nearestPoint != null) {
-                                if (orderedVerticesList.lastOrNull()?.contains(nearestPoint) == false
-                                ) {
-                                    orderedVerticesList.lastOrNull()?.add(nearestPoint)
-                                    compareVertices = nearestPoint
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        val adjustedVertices = ArrayList<Pair<Int, ArrayList<Int>>>()
-        orderedVerticesList.forEachIndexed { verticesIndex, vertices ->
+        val removeVerticesList = ArrayList<Pair<Int, ArrayList<Int>>>()
+        verticesListToViewCoordinates.forEachIndexed { verticesIndex, vertices ->
             val removePointIndexes = ArrayList<Int>()
             if (vertices.isNotEmpty()) {
-                var compareVertices = vertices.first()
                 vertices.forEachIndexed { index, vertix ->
-                    if (compareVertices != vertix) {
-                        val distance = PolygonGeometry.calculateDistance(
-                            compareVertices,
-                            vertix
-                        )
-                        if (distance.toInt() < POINTS_RANGE_PX) {
-                            removePointIndexes.add(index)
+                    if (!removePointIndexes.contains(index)) {
+                        var isClose = true
+                        var i = if (index + 1 > vertices.lastIndex) {
+                            0
+                        } else {
+                            index + 1
+                        }
+
+                        while (isClose) {
+                            val distance = PolygonGeometry.calculateDistance(
+                                vertix,
+                                vertices[i]
+                            )
+                            if (distance.toInt() + 5 < POINTS_RANGE_PX) {
+                                removePointIndexes.add(i)
+                                if (removePointIndexes.size >= vertices.size) {
+                                    isClose = false
+                                }
+                            } else {
+                                isClose = false
+                            }
+                            if (i + 1 > vertices.lastIndex) {
+                                i = 0
+                            } else {
+                                i += 1
+                            }
                         }
                     }
-                    compareVertices = vertix
                 }
 
                 val distance = PolygonGeometry.calculateDistance(
                     vertices.first(),
                     vertices.last()
                 )
-                if (distance.toInt() < POINTS_RANGE_PX) {
-                    removePointIndexes.add(0)
+                if (distance.toInt() + 5 < POINTS_RANGE_PX) {
+                    removePointIndexes.add(vertices.lastIndex)
                 }
                 if (removePointIndexes.isNotEmpty()) {
-                    if (!adjustedVertices.contains(Pair(verticesIndex, removePointIndexes))) {
-                        adjustedVertices.add(Pair(verticesIndex, removePointIndexes))
+                    if (!removeVerticesList.contains(Pair(verticesIndex, removePointIndexes))) {
+                        removeVerticesList.add(Pair(verticesIndex, removePointIndexes))
                     }
                 }
             }
         }
 
-        adjustedVertices.forEach { (verticesIndex, removeIndexes) ->
-            if (orderedVerticesList[verticesIndex].size > 3) {
+        removeVerticesList.forEach { (verticesIndex, removeIndexes) ->
+            if (verticesListToViewCoordinates[verticesIndex].size > 3) {
                 removeIndexes.distinct().sortedByDescending { it }.forEach {
-                    orderedVerticesList[verticesIndex].removeAt(it)
+                    verticesListToViewCoordinates[verticesIndex].removeAt(it)
                 }
             }
         }
 
-        val extendedVerticesList = ArrayList<ArrayList<Vertices>>()
+        var extendedVerticesListWithPoints =
+            ArrayList<ArrayList<Vertices>>()
+        extendedVerticesListWithPoints = ArrayList(verticesListToViewCoordinates.map {
+            ArrayList(it.map {
+                Vertices(it)
+            })
+        })
 
-        orderedVerticesList.forEach { vertices ->
+
+        var adjustCycles = 0
+        extendedVerticesListWithPoints.forEach { vertices ->
             if (vertices.isNotEmpty()) {
-                val pointList = ArrayList<Vertices>()
-
                 var compareVertices = vertices[0]
                 vertices.forEach { vertix ->
-                    if (compareVertices == vertix) {
-                        pointList.add(Vertices(vertix))
-                    } else {
-                        val distance = PolygonGeometry.calculateDistance(compareVertices, vertix)
-                        compareVertices =
-                            if (distance.toInt() >= POINTS_RANGE_PX) {
-                                val result = addAdditionalDotsBetweenAutoDetectionPoints(
-                                    compareVertices,
-                                    vertix
-                                )
-                                result.forEach {
-                                    if (!pointList.contains(
-                                            Vertices(
-                                                it
-                                            )
-                                        )) {
-                                        pointList.add(
-                                            Vertices(
-                                                it
-                                            )
-                                        )
-                                    }
-                                }
-                                PointF(pointList.last().point)
-                            } else {
-                                pointList.add(
-                                    Vertices(
-                                        vertix
-                                    )
-                                )
-                                vertix
-                            }
+                    if (compareVertices != vertix) {
+                        val distance =
+                            PolygonGeometry.calculateDistance(compareVertices.point, vertix.point)
+                        val cycles = ((distance / POINTS_RANGE_PX) - 1).toInt()
+                        if (cycles >= 0) {
+                            adjustCycles += cycles
+                        }
+                        compareVertices = vertix
                     }
                 }
-
-                extendedVerticesList.add(pointList)
             }
         }
 
-        return ArrayList(extendedVerticesList.map { ArrayList(it) })
+        val adjustedVerticesList = if (adjustCycles > 0) {
+            var newAdjustedVerticesList =
+                ArrayList<ArrayList<Vertices>>()
+            for (i in 1..adjustCycles step 1) {
+                val verticesList = if (i == 1) {
+                    extendedVerticesListWithPoints
+                } else {
+                    newAdjustedVerticesList
+                }
+                val newVerticesList =
+                    ArrayList<ArrayList<Vertices>>()
+                verticesList.forEach { vertices ->
+                    if (vertices.isNotEmpty()) {
+                        val pointList =
+                            ArrayList<Vertices>()
+
+                        var compareVertices = vertices[0]
+                        vertices.forEach { vertix ->
+                            if (compareVertices == vertix) {
+                                pointList.add(
+                                    Vertices(
+                                        vertix.point
+                                    )
+                                )
+                            } else {
+                                val distance = PolygonGeometry.calculateDistance(
+                                    compareVertices.point,
+                                    vertix.point
+                                )
+                                compareVertices = if (distance.toInt() >= POINTS_RANGE_PX * 2) {
+                                    val result = addAdditionalDotsBetweenAdjustedPoints(
+                                        compareVertices.point,
+                                        vertix.point
+                                    )
+                                    result?.let {
+                                        if (!pointList.contains(
+                                                Vertices(
+                                                    it
+                                                )
+                                            )
+                                        ) {
+                                            pointList.add(
+                                                Vertices(
+                                                    it
+                                                )
+                                            )
+                                        }
+                                    }
+                                    pointList.add(
+                                        Vertices(
+                                            vertix.point
+                                        )
+                                    )
+                                    vertix
+                                } else {
+                                    pointList.add(
+                                        Vertices(
+                                            vertix.point
+                                        )
+                                    )
+                                    vertix
+                                }
+                            }
+                        }
+
+                        val newFirstPointOfList = pointList.first().point
+                        val newLastPointOfList = pointList.last().point
+
+                        val distance = PolygonGeometry.calculateDistance(
+                            newLastPointOfList,
+                            newFirstPointOfList
+                        )
+                        if (distance.toInt() >= POINTS_RANGE_PX * 2) {
+                            val result = addAdditionalDotsBetweenAdjustedPoints(
+                                newLastPointOfList,
+                                newFirstPointOfList
+                            )
+                            result?.let {
+                                if (!pointList.contains(
+                                        Vertices(
+                                            it
+                                        )
+                                    )
+                                ) {
+                                    pointList.add(
+                                        Vertices(
+                                            it
+                                        )
+                                    )
+                                }
+                            }
+                        }
+
+                        newVerticesList.add(pointList)
+                    }
+                }
+                newAdjustedVerticesList = newVerticesList
+            }
+            newAdjustedVerticesList
+        } else {
+            extendedVerticesListWithPoints
+        }.filter { it.size >= 3 }
+
+        return ArrayList(adjustedVerticesList.map { ArrayList(it) })
     }
 
     fun setWidthAndLength(
@@ -1868,7 +3922,11 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
         fun onDown(sourceCoords: PointF?)
         fun onMove(viewCoord: PointF?)
         fun onUp()
-        fun onVertexListChanged(vertices: ArrayList<ArrayList<Vertices>>?, closed: Boolean)
+        fun onVertexListChanged(
+            vertices: ArrayList<ArrayList<Vertices>>?,
+            closed: Boolean
+        )
+
         fun onZoomChanged(zoom: Float)
     }
 
@@ -1879,7 +3937,7 @@ class StrokeScalableImageView : SubsamplingScaleImageView {
     companion object {
         var RADIUS = 10f
         var DISABLED_RADIUS = 8f
-        const val POINTS_RANGE_PX = 35
+        const val POINTS_RANGE_PX = 15
         private const val FIRST_TWO_POINTS_MULTIPLIER = 0.5
         private const val SECOND_TWO_POINTS_MULTIPLIER = 0.2
     }

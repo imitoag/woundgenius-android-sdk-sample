@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.view.isVisible
+import com.example.samplewoundsdk.BuildConfig
 import com.example.samplewoundsdk.R
 import com.example.samplewoundsdk.data.pojo.assessment.SampleAssessmentEntity
 import com.example.samplewoundsdk.data.pojo.media.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_AREA_TYPE
@@ -150,7 +151,7 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                                 MeasureCameraActivity.openWithResult(
                                     launcher = measureCameraLauncher,
                                     fragment = this@HomeScreenFragment,
-                                    imageFolder = mediaFolder
+                                    mediaFolder = mediaFolder
                                 )
                             }
                         }
@@ -178,8 +179,12 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            val sdkVersionTitle = "${getString(R.string.APP_NAME)} (${BuildConfig.VERSION_NAME})"
+            sampleSdkVersionLabelACTV.text = sdkVersionTitle
             assessmentsRV.adapter = assessmentsAdapter
-            val primaryButtonColor = context?.getColor(WoundGeniusSDK.getPrimaryButtonColor()?.toInt() ?: R.color.sample_app_red)
+            val primaryButtonColor = context?.getColor(
+                WoundGeniusSDK.getPrimaryButtonColor()?.toInt() ?: R.color.sample_app_red
+            )
             if (primaryButtonColor != null) {
                 bodyPickerButtonCL.setBackgroundColor(primaryButtonColor)
                 settingsButtonACIV.setColorFilter(primaryButtonColor)
@@ -189,8 +194,8 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
 
             viewModel?.apply {
                 getLicenseKey()
-                onSavedLicenseKeyReceived.observe(viewLifecycleOwner){
-                    it?:return@observe
+                onSavedLicenseKeyReceived.observe(viewLifecycleOwner) {
+                    it ?: return@observe
                     licenseKeyButtonCL.isVisible = WoundGeniusSDK.getLicenseKey().isNullOrEmpty()
                     val licenseVerifyResult = WoundGeniusSDK.validateLicenseKey()
                     viewModel?.handleLicenseResult(licenseVerifyResult)

@@ -17,6 +17,7 @@ import com.example.samplewoundsdk.data.pojo.media.MediaModel.Metadata.Measuremen
 import com.example.samplewoundsdk.data.pojo.media.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_WIDTH_PREFIX
 import com.example.samplewoundsdk.databinding.SampleAppActivityMeasurementResultHolderBinding
 import com.example.samplewoundsdk.ui.screen.base.AbsActivity
+import com.example.woundsdk.di.WoundGeniusSDK
 import java.io.Serializable
 import java.text.DecimalFormat
 
@@ -184,12 +185,51 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
 
             args?.apply {
                 binding.apply {
-                    woundContainerCL.isVisible = metadataList.size > 1
-                    measurementsItemsRV.isVisible = true
 
-                    totalAreaValueACTV.text =
-                        getString(R.string.cm_square, decimalFormat.format(totalArea))
-                    totalCircumferenceValueACTV.text = getString(R.string.cm_square, decimalFormat.format(totalCircumference))
+                    if (assessmentEntity.isStoma == false){
+                        stomaContainerCL.isVisible = false
+                        measurementsItemsRV.isVisible = true
+
+                        if (areaList.size == 1) {
+                            woundContainerCL.isVisible = false
+                            totalCircumferenceValueACTV.isVisible = false
+                            circumferenceACTV.isVisible = false
+                        } else if (areaList.size > 1) {
+                            woundContainerCL.isVisible = true
+                            totalCircumferenceValueACTV.isVisible = true
+                            circumferenceACTV.isVisible = true
+                        } else {
+                            woundContainerCL.isVisible = false
+                        }
+                        totalAreaValueACTV.text =
+                            getString(com.example.woundsdk.R.string.cm_square, decimalFormat.format(totalArea))
+                        totalCircumferenceValueACTV.text =
+                            getString(com.example.woundsdk.R.string.cm_square, decimalFormat.format(totalCircumference))
+                    } else {
+                        woundContainerCL.isVisible = false
+                        stomaContainerCL.isVisible = true
+                        measurementsItemsRV.isVisible = false
+
+                        metadataList.firstOrNull().let {
+                            stomaDiameterValueACTV.text = if (it?.length != null) {
+                                getString(
+                                    com.example.woundsdk.R.string.mm,
+                                    decimalFormat.format((it.length ?: 0.0) * 10.0)
+                                )
+                            } else getString(com.example.woundsdk.R.string.not_a_number)
+                            if (it?.depth != null) {
+                                stomaHeightValueACET.setText(
+                                    decimalFormat.format(
+                                        it.depth ?: 0.0
+                                    )
+                                )
+                            } else {
+                                stomaHeightMmACTV.isVisible = false
+                                stomaHeightValueACET.setHint(com.example.woundsdk.R.string.TAP_TO_ADD_HEIGHT)
+                            }
+                        }
+                    }
+
                 }
             }
         }

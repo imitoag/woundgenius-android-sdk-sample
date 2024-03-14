@@ -1,6 +1,6 @@
 package com.example.samplewoundsdk.di.modules
 
-import com.example.samplewoundsdk.ui.screen.assesmentimage.AssessmentImageFragment
+import com.example.samplewoundsdk.ui.screen.assesmentimage.AssessmentMediaFragment
 import com.example.samplewoundsdk.ui.screen.homescreen.HomeScreenFragment
 import com.example.samplewoundsdk.ui.screen.settings.SettingsScreenFragment
 import dagger.Module
@@ -16,5 +16,5 @@ abstract class FragmentModule {
     abstract fun contributeSettingsScreenFragment(): SettingsScreenFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeAssessmentImageFragment(): AssessmentImageFragment
+    abstract fun contributeAssessmentImageFragment(): AssessmentMediaFragment
 }

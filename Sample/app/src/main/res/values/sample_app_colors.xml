@@ -5,6 +5,7 @@
     <color name="sample_app_color_primary_dark">@color/sample_app_color_accent</color>
     <color name="sample_app_red">#e2352a</color>
     <color name="sample_app_color_black">#000000</color>
+    <color name="sample_app_light_grey_2">#242424</color>
     <color name="sample_app_color_blue">#0200ff</color>
     <color name="sample_app_color_yellow">#ffff02</color>
 

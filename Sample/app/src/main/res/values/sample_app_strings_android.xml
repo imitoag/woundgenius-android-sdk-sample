@@ -6,6 +6,7 @@
     <string name="float_format_two_points">%.2f</string>
     <string name="not_a_number">N/A</string>
     <string name="blank"></string>
+    <string name="APP_NAME">"WoundGenius"</string>
 
     <string name="backend_version_is_outdated_title">Backend version is outdated</string>
     <string name="backend_version_is_outdated_description">Please contact your IT support. Backend version is outdated and doesn’t support multiple wounds measurement feature.</string>

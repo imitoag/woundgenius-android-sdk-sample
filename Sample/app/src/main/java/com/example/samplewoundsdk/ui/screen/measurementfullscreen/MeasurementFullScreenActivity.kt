@@ -47,12 +47,27 @@ class MeasurementFullScreenActivity : AbsActivity<MeasurementFullScreenViewModel
         setUpMetadataUi()
         args?.apply {
             binding.apply {
-                boundaryLabelListRV.adapter = BoundaryLabelRecyclerAdapter(
-                    labelList = metadataList.mapIndexed { index, _ -> index + 1 },
-                    onSelectedLabel = { selectedIndexes ->
-                        imageSSIV.setVisibilityVerticesIndexes(selectedIndexes)
+                viewModel?.apply {
+                    viewModel?.getBoundaryLabelList(metadataList)
+
+                    boundaryListLD.observe(this@MeasurementFullScreenActivity) {
+                        binding.boundaryLabelListRV.adapter =
+                            BoundaryLabelRecyclerAdapter(
+                                labelList = it,
+                                verticesSelectedIndexes = metadataList.mapIndexed { index, s -> index },
+                                onSelectedLabel = { selectedIndexes ->
+                                    binding.imageSSIV.setVisibilityVerticesIndexes(selectedIndexes)
+                                },
+                                onHideOutlineClick = { isOutlineHidden ->
+                                    if (!isOutlineHidden) {
+                                        binding.imageSSIV.setVisibilityVerticesIndexes(emptyList())
+                                    } else {
+                                        binding.imageSSIV.setVisibilityVerticesIndexes(metadataList.mapIndexed { index, s -> index })
+                                    }
+                                }
+                            )
                     }
-                )
+                }
             }
         }
 
@@ -152,7 +167,7 @@ class MeasurementFullScreenActivity : AbsActivity<MeasurementFullScreenViewModel
             metadataList.forEachIndexed { index, boundaryMetadata ->
                 boundaryMetadata.apply {
                     boundaryMetadata.vertices?.let {
-                        allVertexesList.add(ArrayList( it.map {
+                        allVertexesList.add(ArrayList(it.map {
                             Vertices(
                                 Point(
                                     (it.x / scale).toInt(),
@@ -210,7 +225,7 @@ class MeasurementFullScreenActivity : AbsActivity<MeasurementFullScreenViewModel
             metadataList: List<MeasurementMetadata>
         ) = context.startActivity(
             Intent(context, MeasurementFullScreenActivity::class.java).apply {
-                putExtra(KEY_ARGS, Args(photoPath,pictureSize, metadataList))
+                putExtra(KEY_ARGS, Args(photoPath, pictureSize, metadataList))
             }
         )
 

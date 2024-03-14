@@ -9,6 +9,7 @@ import com.example.samplewoundsdk.databinding.SampleAppActivityMainBinding
 import com.example.samplewoundsdk.ui.screen.homescreen.HomeScreenFragment
 import com.example.samplewoundsdk.ui.screen.base.AbsActivity
 import com.example.samplewoundsdk.ui.screen.settings.SettingsScreenFragment
+import com.example.woundsdk.di.WoundGeniusSDK
 
 
 class MainActivity : AbsActivity<MainViewModel>(), MainBridge {

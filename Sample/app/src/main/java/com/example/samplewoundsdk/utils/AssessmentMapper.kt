@@ -9,7 +9,7 @@ fun AssessmentEntity.toRoomLocalEntity() =
     SampleAssessmentEntity(
         userId = userId ?: "",
         patientId = patientId ?: "",
-        widthCm = null,
+        widthCm = widthCm,
         datetime = datetime ?: "",
         media = ArrayList(media?.mapIndexed { index, mediaItem ->
             MediaModel(
@@ -55,9 +55,10 @@ fun AssessmentEntity.toRoomLocalEntity() =
                 measurementMethod = mediaItem.measurementMethod
             )
         } ?: emptyList()),
-        areaCmSq = null,
-        circumferenceCm = null,
-        originalImageId = null,
-        lengthCm = null,
-        depthCm = null
+        areaCmSq = areaCmSq,
+        circumferenceCm = circumferenceCm,
+        originalImageId = originalImageId,
+        lengthCm = lengthCm,
+        depthCm = depthCm,
+        isStoma = isStoma
     )

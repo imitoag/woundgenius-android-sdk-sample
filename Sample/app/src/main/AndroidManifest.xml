@@ -2,8 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name="com.example.samplewoundsdk.core.SampleWoundSDKApplication"
@@ -11,7 +15,7 @@
         android:dataExtractionRules="@xml/sample_app_data_extraction_rules"
         android:fullBackupContent="@xml/sample_app_backup_rules"
         android:icon="@mipmap/sample_app_ic_launcher_round"
-        android:label="Imito Wound SDK Sample"
+        android:label="Imito WoundGenius SDK Sample"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/sample_app_ic_launcher_round"
         android:supportsRtl="true"
