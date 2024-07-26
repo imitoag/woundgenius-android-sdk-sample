@@ -8,13 +8,14 @@ import com.example.samplewoundsdk.ui.screen.assesmentimage.AssessmentMediaFragme
 
 class AssessmentImagesPagerAdapter(
     fragmentActivity: FragmentActivity,
-    private val draftMediaList: ArrayList<MediaModel>
+    private val draftMediaList: ArrayList<MediaModel>,
+    private val isStoma:Boolean
 ) : FragmentStateAdapter(fragmentActivity) {
 
     override fun getItemCount() =
         draftMediaList.size
 
     override fun createFragment(position: Int): Fragment =
-        AssessmentMediaFragment.newInstance(draftMediaList[position])
+        AssessmentMediaFragment.newInstance(draftMediaList[position],isStoma)
 
 }

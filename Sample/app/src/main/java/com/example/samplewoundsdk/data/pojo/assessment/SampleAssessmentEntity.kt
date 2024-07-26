@@ -4,7 +4,6 @@ import androidx.room.*
 import com.example.samplewoundsdk.data.pojo.media.MediaModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import timber.log.Timber
 import java.io.Serializable
 
 @Entity(tableName = "sample_assessment_entity")

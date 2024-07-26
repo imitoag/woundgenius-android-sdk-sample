@@ -31,9 +31,6 @@
     <string name="ruler_description_1">As alternative, you can use a ruler or any other physical object with known size. In this case, you will need to manually calibrate photo each time you make a measurement.</string>
     <string name="ruler_description_2">Check out short tutorial video to see how it works.</string>
 
-    <string name="close_button_label">A%d</string>
-    <string name="close_button_area_label">A%d: %s cm\u00B2</string>
-
     <string name="next">Next</string>
 
     <string name="observation">{

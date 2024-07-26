@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:text="License Key"
+                android:text="LICENSE KEY"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -155,37 +155,77 @@
                 app:layout_constraintTop_toBottomOf="@+id/licenseKeyLayoutCL" />
 
 
-            <!--    <androidx.appcompat.widget.AppCompatTextView-->
-            <!--        android:id="@+id/flowLabelACTV"-->
-            <!--        android:text="Flow"-->
-            <!--        android:textSize="18sp"-->
-            <!--        app:layout_constraintStart_toStartOf="parent"-->
-            <!--        android:layout_width="wrap_content"-->
-            <!--        android:layout_height="wrap_content"/>-->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/userIdLabelACTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="USER ID"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/licenseKeyValueBottomV"
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <!--    <androidx.appcompat.widget.AppCompatTextView-->
-            <!--        android:id="@+id/machineLearningLabelACTV"-->
-            <!--        android:text="Machine Learning"-->
-            <!--        android:textSize="18sp"-->
-            <!--        app:layout_constraintStart_toStartOf="parent"-->
-            <!--        android:layout_width="wrap_content"-->
-            <!--        android:layout_height="wrap_content"/>-->
+            <View
+                android:id="@+id/userIdValueTopV"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/sample_app_grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/userIdLabelACTV"
+                app:layout_constraintTop_toBottomOf="@+id/userIdLabelACTV" />
 
-            <!--    <androidx.appcompat.widget.AppCompatTextView-->
-            <!--        android:id="@+id/otherLabelACTV"-->
-            <!--        android:text="Other"-->
-            <!--        android:textSize="18sp"-->
-            <!--        app:layout_constraintStart_toStartOf="parent"-->
-            <!--        android:layout_width="wrap_content"-->
-            <!--        android:layout_height="wrap_content"/>-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/userIdLayoutCL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userIdValueTopV">
 
-            <!--    <androidx.appcompat.widget.AppCompatTextView-->
-            <!--        android:id="@+id/colorLabelACTV"-->
-            <!--        android:text="Color"-->
-            <!--        android:textSize="18sp"-->
-            <!--        app:layout_constraintStart_toStartOf="parent"-->
-            <!--        android:layout_width="wrap_content"-->
-            <!--        android:layout_height="wrap_content"/>-->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/userIdACTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="User Id"
+                    android:textColor="@color/sample_app_black"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/userIdValueACET"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/userIdACTV"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/userIdValueBottomV"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/sample_app_grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/userIdLayoutCL"
+                app:layout_constraintTop_toBottomOf="@+id/userIdLayoutCL" />
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/modesConfigurationsACTV"
@@ -194,10 +234,10 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="20dp"
-                android:text="Modes Configurations"
+                android:text="MODES CONFIGURATIONS"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/licenseKeyValueBottomV" />
+                app:layout_constraintTop_toBottomOf="@+id/userIdValueBottomV" />
 
             <View
                 android:id="@+id/modesConfigurationsValueTopV"
@@ -211,12 +251,25 @@
                 app:layout_constraintStart_toStartOf="@+id/licenseKeyValueBottomV"
                 app:layout_constraintTop_toBottomOf="@+id/modesConfigurationsACTV" />
 
+            <View
+                android:id="@+id/addVideoModeLayoutBlockerCL"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="7dp"
+                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
+                app:layout_constraintTop_toTopOf="@+id/addVideoModeLayoutCL"
+                app:layout_constraintBottom_toBottomOf="@+id/addVideoModeLayoutCL"
+                app:layout_constraintStart_toStartOf="@+id/addVideoModeLayoutCL"
+                app:layout_constraintEnd_toEndOf="@+id/addVideoModeLayoutCL"
+                />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addVideoModeLayoutCL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/modesConfigurationsValueTopV">
@@ -256,6 +309,20 @@
                     app:layout_constraintTop_toBottomOf="@+id/addVideoModeLabelACTV" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/addMarkerModeLayoutBlockerCL"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="7dp"
+                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
+                app:layout_constraintTop_toTopOf="@+id/addMarkerModeLayoutCL"
+                app:layout_constraintBottom_toBottomOf="@+id/addMarkerModeLayoutCL"
+                app:layout_constraintStart_toStartOf="@+id/addMarkerModeLayoutCL"
+                app:layout_constraintEnd_toEndOf="@+id/addMarkerModeLayoutCL"
+                />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addMarkerModeLayoutCL"
@@ -303,6 +370,20 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/addPhotoModeLayoutBlockerCL"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="7dp"
+                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
+                app:layout_constraintTop_toTopOf="@+id/addPhotoModeLayoutCL"
+                app:layout_constraintBottom_toBottomOf="@+id/addPhotoModeLayoutCL"
+                app:layout_constraintStart_toStartOf="@+id/addPhotoModeLayoutCL"
+                app:layout_constraintEnd_toEndOf="@+id/addPhotoModeLayoutCL"
+                />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addPhotoModeLayoutCL"
                 android:layout_width="match_parent"
@@ -348,6 +429,20 @@
                     app:layout_constraintTop_toBottomOf="@+id/addPhotoModeLabelACTV" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/addRulerModeLayoutBlockerCL"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="7dp"
+                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
+                app:layout_constraintTop_toTopOf="@+id/addRulerModeLayoutCL"
+                app:layout_constraintBottom_toBottomOf="@+id/addRulerModeLayoutCL"
+                app:layout_constraintStart_toStartOf="@+id/addRulerModeLayoutCL"
+                app:layout_constraintEnd_toEndOf="@+id/addRulerModeLayoutCL"
+                />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addRulerModeLayoutCL"
@@ -398,11 +493,12 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/maxMediaNumberLabelACTV"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
-                android:text="Max Number of Media"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="NUMBER OF MEDIA PER SERIES/ASSESSMENT"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addRulerModeLayoutCL" />
@@ -449,6 +545,8 @@
                     android:layout_marginEnd="16dp"
                     android:digits="0123456789"
                     android:inputType="number"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
                     android:textAlignment="center"
                     app:layout_constraintBottom_toBottomOf="@+id/maxMediaNumberValueLabelACTV"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -475,7 +573,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
-                android:text="Flow"
+                android:text="FLOW"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/maxMediaNumberContainerCL" />
@@ -490,12 +588,25 @@
                 app:layout_constraintStart_toStartOf="@+id/flowLabelACTV"
                 app:layout_constraintTop_toBottomOf="@+id/flowLabelACTV" />
 
+            <View
+                android:id="@+id/stomaFlowLayoutBlockerCL"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="7dp"
+                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
+                app:layout_constraintTop_toTopOf="@+id/stomaFlowLayoutCL"
+                 app:layout_constraintBottom_toBottomOf="@+id/stomaFlowLayoutCL"
+                app:layout_constraintStart_toStartOf="@+id/stomaFlowLayoutCL"
+                app:layout_constraintEnd_toEndOf="@+id/stomaFlowLayoutCL"
+                />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/stomaFlowLayoutCL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/flowValueTopV">
@@ -539,7 +650,7 @@
                     android:layout_marginEnd="20dp"
                     android:layout_marginTop="20dp"
                     android:background="@color/wound_genius_sdk_color_transparent"
-                    android:text="When Stoma Capturing flow is activated:\n- Wound Auto-detection, Tissue Type Auto-detection will get disabled.\n- Instead of Wound Depth user will be requested to enter Stoma Height.\n- Instead of Wound Width Length\n- Stoma Diameter is measured."
+                    android:text="When Stoma Capturing flow is activated:\n- Wound Auto-detection, Tissue Type Auto-detection will get disabled.\n- Instead of Wound Depth user will be requested to enter Stoma Height.\n- Instead of Wound Width Length - Stoma Diameter is measured."
                     android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -554,7 +665,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
-                android:text="Machine Learning"
+                android:text="MACHINE LEARNING"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stomaFlowLayoutCL" />
@@ -568,6 +679,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/machineLearningLabelACTV"
                 app:layout_constraintTop_toBottomOf="@+id/machineLearningLabelACTV" />
+
+            <View
+                android:id="@+id/machineLearningLayoutBlockerCL"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="7dp"
+                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
+                app:layout_constraintTop_toTopOf="@+id/machineLearningLayoutCL"
+                app:layout_constraintBottom_toBottomOf="@+id/machineLearningLayoutCL"
+                app:layout_constraintStart_toStartOf="@+id/machineLearningLayoutCL"
+                app:layout_constraintEnd_toEndOf="@+id/machineLearningLayoutCL"
+                />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/machineLearningLayoutCL"
@@ -624,7 +749,76 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/liveDetectionLayoutBlockerCL"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="7dp"
+                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
+                app:layout_constraintTop_toTopOf="@+id/liveDetectionLayoutCL"
+                app:layout_constraintBottom_toBottomOf="@+id/liveDetectionLayoutCL"
+                app:layout_constraintStart_toStartOf="@+id/liveDetectionLayoutCL"
+                app:layout_constraintEnd_toEndOf="@+id/liveDetectionLayoutCL"
+                />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/liveDetectionLayoutCL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/machineLearningLayoutCL">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/liveDetectionLabelACTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="Live Wound Detection"
+                    android:textColor="@color/sample_app_black"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/liveDetectionS"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/liveDetectionS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/liveDetectionLabelACTV"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/liveDetectionLabelACTV" />
+
+                <View
+                    android:id="@+id/liveDetectionValueBottomV"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/sample_app_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/liveDetectionLabelACTV"
+                    app:layout_constraintTop_toBottomOf="@+id/liveDetectionLabelACTV" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/liveDetectionDescriptionACTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textSize="15sp"
+                    android:text="Highlight the wound on the live video preview to guide users through the best device positioning for capturing the wound."
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:paddingEnd="20dp"
+                    android:paddingStart="0dp"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/liveDetectionValueBottomV" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -633,10 +827,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
-                android:text="Other"
+                android:text="OTHER"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/machineLearningLayoutCL" />
+                app:layout_constraintTop_toBottomOf="@+id/liveDetectionLayoutCL" />
 
             <View
                 android:id="@+id/otherValueTopV"
@@ -647,6 +841,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/otherLabelACTV"
                 app:layout_constraintTop_toBottomOf="@+id/otherLabelACTV" />
+
+            <View
+                android:id="@+id/addFromGalleryLayoutBlockerCL"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="7dp"
+                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
+                app:layout_constraintTop_toTopOf="@+id/addFromGalleryLayoutCL"
+                app:layout_constraintBottom_toBottomOf="@+id/addFromGalleryLayoutCL"
+                app:layout_constraintStart_toStartOf="@+id/addFromGalleryLayoutCL"
+                app:layout_constraintEnd_toEndOf="@+id/addFromGalleryLayoutCL"
+                />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addFromGalleryLayoutCL"
@@ -695,6 +903,21 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+            <View
+                android:id="@+id/addBodyPickerOnCameraLayoutBlockerCL"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="7dp"
+                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
+                app:layout_constraintTop_toTopOf="@+id/addBodyPickerOnCameraLayoutCL"
+                app:layout_constraintBottom_toBottomOf="@+id/addBodyPickerOnCameraLayoutCL"
+                app:layout_constraintStart_toStartOf="@+id/addBodyPickerOnCameraLayoutCL"
+                app:layout_constraintEnd_toEndOf="@+id/addBodyPickerOnCameraLayoutCL"
+                />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addBodyPickerOnCameraLayoutCL"
                 android:layout_width="match_parent"
@@ -742,6 +965,19 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/isMultipleOutlinesEnabledLayoutBlockerCL"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="7dp"
+                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
+                app:layout_constraintTop_toTopOf="@+id/isMultipleOutlinesEnabledLayoutCL"
+                app:layout_constraintBottom_toBottomOf="@+id/isMultipleOutlinesEnabledLayoutCL"
+                app:layout_constraintStart_toStartOf="@+id/isMultipleOutlinesEnabledLayoutCL"
+                app:layout_constraintEnd_toEndOf="@+id/isMultipleOutlinesEnabledLayoutCL"
+                />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/isMultipleOutlinesEnabledLayoutCL"
@@ -760,7 +996,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Allow Multiple Outlines per image"
+                    android:text="Multiple Outlines per Images"
                     android:textColor="@color/sample_app_black"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -790,6 +1026,20 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/addCameraSwitchLayoutBlockerCL"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="7dp"
+                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
+                app:layout_constraintTop_toTopOf="@+id/addCameraSwitchLayoutCL"
+                app:layout_constraintBottom_toBottomOf="@+id/addCameraSwitchLayoutCL"
+                app:layout_constraintStart_toStartOf="@+id/addCameraSwitchLayoutCL"
+                app:layout_constraintEnd_toEndOf="@+id/addCameraSwitchLayoutCL"
+                />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addCameraSwitchLayoutCL"
                 android:layout_width="match_parent"
@@ -807,7 +1057,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Add Camera Switch"
+                    android:text="Frontal Camera Enabled"
                     android:textColor="@color/sample_app_black"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -844,7 +1094,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="20dp"
-                android:text="Color"
+                android:text="COLOR"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addCameraSwitchLayoutCL" />

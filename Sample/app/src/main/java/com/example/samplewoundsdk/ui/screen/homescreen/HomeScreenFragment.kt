@@ -28,14 +28,14 @@ import com.example.woundsdk.ui.screen.bodypicker.BodyPickerActivity
 import com.example.woundsdk.ui.screen.measurecamera.MeasureCameraActivity
 import com.example.woundsdk.ui.screen.measurecamera.MeasureCameraContract
 import com.example.woundsdk.utils.ConverterUtil
+import com.example.woundsdk.utils.SdkFeature
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import java.io.File
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Locale
 
 class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
 
@@ -110,7 +110,7 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                     if (viewModel?.isNoLicenseError?.value == true) {
                         viewModel?.openNoLicenseKeyDialog()
                     } else {
-                        if (viewModel?.availableFeatures?.value?.contains(BODY_PART_PICKER) == true) {
+                        if (viewModel?.availableFeatures?.value?.contains(SdkFeature.BODY_PART_PICKER.featureName) == true) {
                             val htGroupId =
                                 viewModel?.bodyPartSelectedLD?.value?.let { bodyPartSelected ->
                                     context?.let { it1 ->
@@ -140,22 +140,23 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                 }
             }
             captureModeButtonLabelACTV.setOnClickListener {
-                context?.cacheDir?.absolutePath?.let { it1 -> File(it1).absolutePath }
-                    ?.let { mediaFolder ->
-                        if (viewModel?.licenseErrorDialog?.value?.first == true) {
-                            viewModel?.openLicenseIssueDialog(viewModel?.licenseErrorDialog?.value?.second)
-                        } else {
-                            if (viewModel?.isNoLicenseError?.value == true) {
-                                viewModel?.openNoLicenseKeyDialog()
-                            } else {
-                                MeasureCameraActivity.openWithResult(
-                                    launcher = measureCameraLauncher,
-                                    fragment = this@HomeScreenFragment,
-                                    mediaFolder = mediaFolder
-                                )
-                            }
-                        }
+                val previewDir = File(context?.cacheDir, PREVIEW)
+                if (!previewDir.exists()) {
+                    previewDir.mkdir()
+                }
+                if (viewModel?.licenseErrorDialog?.value?.first == true) {
+                    viewModel?.openLicenseIssueDialog(viewModel?.licenseErrorDialog?.value?.second)
+                } else {
+                    if (viewModel?.isNoLicenseError?.value == true) {
+                        viewModel?.openNoLicenseKeyDialog()
+                    } else {
+                        MeasureCameraActivity.openWithResult(
+                            launcher = measureCameraLauncher,
+                            fragment = this@HomeScreenFragment,
+                            mediaFolder = previewDir.absolutePath
+                        )
                     }
+                }
             }
             licenseKeyButtonCL.setOnClickListener {
                 mainBridge.openSettingsScreen()
@@ -179,8 +180,9 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            val sdkVersionTitle = "${getString(R.string.APP_NAME)} (${BuildConfig.VERSION_NAME})"
-            sampleSdkVersionLabelACTV.text = sdkVersionTitle
+            val sdkVersionTitle =
+                "WoundGenius: ${WoundGeniusSDK.sdkReleaseVersion} Build: ${BuildConfig.VERSION_NAME}"
+            toolbarLabelACTV.text = sdkVersionTitle
             assessmentsRV.adapter = assessmentsAdapter
             val primaryButtonColor = context?.getColor(
                 WoundGeniusSDK.getPrimaryButtonColor()?.toInt() ?: R.color.sample_app_red
@@ -193,13 +195,6 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
             }
 
             viewModel?.apply {
-                getLicenseKey()
-                onSavedLicenseKeyReceived.observe(viewLifecycleOwner) {
-                    it ?: return@observe
-                    licenseKeyButtonCL.isVisible = WoundGeniusSDK.getLicenseKey().isNullOrEmpty()
-                    val licenseVerifyResult = WoundGeniusSDK.validateLicenseKey()
-                    viewModel?.handleLicenseResult(licenseVerifyResult)
-                }
                 getAssessmentList()
                 bodyPartSelectedLD.observe(viewLifecycleOwner) { bodyPart ->
                     if (bodyPart.isNullOrEmpty()) {
@@ -215,6 +210,7 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                                 "Selected Body Part: $bodyRegion"
                     }
                 }
+
                 assessmentProgress.observe(viewLifecycleOwner) { isShowProgress ->
                     isShowProgress ?: return@observe
                     recyclerLockerV.visibility = if (isShowProgress) View.VISIBLE else View.GONE
@@ -290,7 +286,6 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
             }
         }
     }
-
     private fun setAssessmentChartData(assessmentList: List<SampleAssessmentEntity>) {
         val chartList = ArrayList<LineChartData>()
 
@@ -443,9 +438,10 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
         }
     }
 
+
     companion object {
 
-        private const val BODY_PART_PICKER = "bodyPartPicker"
+        private const val PREVIEW = "preview"
 
         fun newInstance() = HomeScreenFragment()
     }

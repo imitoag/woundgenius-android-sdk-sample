@@ -1,13 +1,14 @@
 package com.example.samplewoundsdk.ui.screen.homescreen
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.samplewoundsdk.data.pojo.assessment.SampleAssessmentEntity
-import com.example.samplewoundsdk.ui.screen.base.AbsViewModel
 import com.example.samplewoundsdk.data.usecase.assessment.DeleteDraftAssessmentByIdUseCase
 import com.example.samplewoundsdk.data.usecase.assessment.GetAssessmentsUseCase
 import com.example.samplewoundsdk.data.usecase.assessment.SaveAssessmentToDBUseCase
 import com.example.samplewoundsdk.data.usecase.license.GetLicenseKeyUseCase
+import com.example.samplewoundsdk.ui.screen.base.AbsViewModel
 import com.example.samplewoundsdk.utils.toRoomLocalEntity
 import com.example.woundsdk.data.pojo.assessment.entity.AssessmentEntity
 import com.example.woundsdk.data.pojo.license.LicenseErrorType
@@ -18,8 +19,7 @@ import javax.inject.Inject
 class HomeScreenViewModel @Inject constructor(
     private val getAssessmentsUseCase: GetAssessmentsUseCase,
     private val deleteDraftAssessmentByIdUseCase: DeleteDraftAssessmentByIdUseCase,
-    private val saveAssessmentToDBUseCase: SaveAssessmentToDBUseCase,
-    private val getLicenseKeyUseCase: GetLicenseKeyUseCase
+    private val saveAssessmentToDBUseCase: SaveAssessmentToDBUseCase
 ) : AbsViewModel(
 
 ) {
@@ -67,22 +67,6 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-
-    fun getLicenseKey() {
-        val params = GetLicenseKeyUseCase.Params.forGetLicenseKey()
-        add(
-            getLicenseKeyUseCase.execute(params)
-                .subscribe({
-                    if (it.isNotEmpty()) {
-                        WoundGeniusSDK.setLicenseKey(it)
-                    }
-                    _onSavedLicenseKeyReceived.value = Unit
-                    _onSavedLicenseKeyReceived.value = null
-                }, {
-
-                })
-        )
-    }
 
     fun openLicenseIssueDialog(dialogType: LicenseErrorType?) {
         _licenseErrorDialog.value = Triple(true, dialogType, Unit)
@@ -183,4 +167,5 @@ class HomeScreenViewModel @Inject constructor(
                 })
         )
     }
+
 }

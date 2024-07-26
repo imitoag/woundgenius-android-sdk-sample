@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.samplewoundsdk.R
-import com.example.samplewoundsdk.data.pojo.measurement.MeasurementMetadata
 import com.example.samplewoundsdk.databinding.SampleAppItemSampleMeasurementResultBinding
 import com.example.samplewoundsdk.ui.screen.view.SampleMeasurementResultItemView
+import com.example.woundsdk.data.pojo.measurement.MeasurementMetadata
 import java.text.DecimalFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -42,11 +42,13 @@ class MeasurementsItemsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
         holder.bind(list[position])
 
-    inner class ViewHolder(private val itemBinding: SampleAppItemSampleMeasurementResultBinding) : RecyclerView.ViewHolder(itemBinding.root) {
+    inner class ViewHolder(private val itemBinding: SampleAppItemSampleMeasurementResultBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
 
         init {
             itemBinding.apply {
-                measurementresultMRIV.onTextChanged(object : SampleMeasurementResultItemView.SampleMeasurementResultItemView {
+                measurementresultMRIV.onTextChanged(object :
+                    SampleMeasurementResultItemView.SampleMeasurementResultItemView {
                     override fun onTextChanged(value: String) {
                         var depth = value.toDoubleOrNull()
                         depth = String.format(Locale.UK, "%.2f", depth).toDoubleOrNull()
@@ -59,8 +61,8 @@ class MeasurementsItemsAdapter(
 
         fun bind(item: MeasurementMetadata) {
             itemBinding.apply {
-                val name =
-                    root.context.getString(R.string.close_button_label, bindingAdapterPosition + 1)
+                val name = root.context.getString(R.string.WOUND_ITEM_NUMBER)
+                    .replace(WOUND_ITEM_PATTERN, (bindingAdapterPosition + 1).toString())
                 measurementresultMRIV.tag = name
                 measurementresultMRIV.setMeasurementBlockValues(
                     needContinue = needContinue,
@@ -73,8 +75,14 @@ class MeasurementsItemsAdapter(
                         R.string.cm,
                         decimalFormat.format(item.circumference)
                     ),
-                    lengthValue = root.context.getString(R.string.cm, decimalFormat.format(item.length)),
-                    widthValue = root.context.getString(R.string.cm, decimalFormat.format(item.width)),
+                    lengthValue = root.context.getString(
+                        R.string.cm,
+                        decimalFormat.format(item.length)
+                    ),
+                    widthValue = root.context.getString(
+                        R.string.cm,
+                        decimalFormat.format(item.width)
+                    ),
                     depth = item.depth
                 )
             }
@@ -82,4 +90,7 @@ class MeasurementsItemsAdapter(
 
     }
 
+    companion object {
+        private const val WOUND_ITEM_PATTERN = "%d"
+    }
 }

@@ -62,5 +62,7 @@
     <color name="sample_app_color_transparent">#00000000</color>
 
     <color name="sample_app_color_green" tools:override = "false">#00E600</color>
+    <color name="sample_app_measurement_result_color" tools:override="false">#f4f4fd</color>
+    <color name="sample_app_measurement_value_text_color" tools:override="false">#8f8f8f</color>
     <color name="sample_app_color_green_transparent">#3300E600</color>
 </resources>

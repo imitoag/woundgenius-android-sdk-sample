@@ -6,9 +6,9 @@ import android.graphics.Point
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.example.samplewoundsdk.R
 import com.example.samplewoundsdk.data.pojo.assessment.SampleAssessmentEntity
-import com.example.samplewoundsdk.data.pojo.measurement.MeasurementMetadata
 import com.example.samplewoundsdk.data.pojo.media.MediaModel
 import com.example.samplewoundsdk.data.pojo.media.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_AREA_TYPE
 import com.example.samplewoundsdk.data.pojo.media.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_LENGTH_PREFIX
@@ -17,7 +17,7 @@ import com.example.samplewoundsdk.data.pojo.media.MediaModel.Metadata.Measuremen
 import com.example.samplewoundsdk.data.pojo.media.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_WIDTH_PREFIX
 import com.example.samplewoundsdk.databinding.SampleAppActivityMeasurementResultHolderBinding
 import com.example.samplewoundsdk.ui.screen.base.AbsActivity
-import com.example.woundsdk.di.WoundGeniusSDK
+import com.example.woundsdk.data.pojo.measurement.MeasurementMetadata
 import java.io.Serializable
 import java.text.DecimalFormat
 
@@ -56,27 +56,29 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
         setContentView(binding.root)
 
         binding.measurementsItemsRV.adapter = measurementsItemsAdapter
+        val draftMediaList = args?.assessmentEntity?.media ?: emptyList()
         viewModel?.apply {
             setUpAssessmentImagePager(
-                args?.assessmentEntity?.media ?: emptyList()
+                args?.assessmentEntity?.media ?: emptyList(),
+                args?.assessmentEntity?.isStoma ?: false
             )
+
+            val metadata = draftMediaList[0].metadata
+            prepareMediaMetaDataResultUi(metadata)
         }
-        prepareMediaMetaDataResultUi()
     }
 
-    private fun prepareMediaMetaDataResultUi() {
+    private fun prepareMediaMetaDataResultUi(metadata: MediaModel.Metadata?) {
         args?.apply {
             val metadataList = ArrayList<MeasurementMetadata>()
-            val metadata =
-                assessmentEntity.media?.find { it.metadata?.measurementData?.annotationList != null && it.metadata?.measurementData?.calibration != null }?.metadata
             if (metadata?.measurementData?.annotationList?.find { it?.type == ANNOTATION_AREA_TYPE } != null) {
                 val areaAnnotationItem =
-                    metadata.measurementData.annotationList.find { it?.type == ANNOTATION_AREA_TYPE }
+                    metadata.measurementData?.annotationList?.find { it?.type == ANNOTATION_AREA_TYPE }
                 val pointsList = areaAnnotationItem?.points
                 val lines =
-                    metadata.measurementData.annotationList.filter { it?.type == ANNOTATION_LINE_TYPE }
-                val widthLine = lines.find { it?.prefix == ANNOTATION_WIDTH_PREFIX }
-                val lengthLine = lines.find { it?.prefix == ANNOTATION_LENGTH_PREFIX }
+                    metadata.measurementData?.annotationList?.filter { it?.type == ANNOTATION_LINE_TYPE }
+                val widthLine = lines?.find { it?.prefix == ANNOTATION_WIDTH_PREFIX }
+                val lengthLine = lines?.find { it?.prefix == ANNOTATION_LENGTH_PREFIX }
 
                 val widthA =
                     pointsList?.indexOfFirst { it.pointX == widthLine?.pointA?.pointX && it.pointY == widthLine?.pointA?.pointY }
@@ -186,34 +188,35 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
             args?.apply {
                 binding.apply {
 
-                    if (assessmentEntity.isStoma == false){
+                    if (assessmentEntity.isStoma == false) {
                         stomaContainerCL.isVisible = false
                         measurementsItemsRV.isVisible = true
 
                         if (areaList.size == 1) {
-                            woundContainerCL.isVisible = false
+                            allAreaContainerCL.isVisible = false
                             totalCircumferenceValueACTV.isVisible = false
                             circumferenceACTV.isVisible = false
                         } else if (areaList.size > 1) {
-                            woundContainerCL.isVisible = true
+                            allAreaContainerCL.isVisible = true
                             totalCircumferenceValueACTV.isVisible = true
                             circumferenceACTV.isVisible = true
                         } else {
-                            woundContainerCL.isVisible = false
+                            allAreaContainerCL.isVisible = false
                         }
-                        totalAreaValueACTV.text =
-                            getString(com.example.woundsdk.R.string.cm_square, decimalFormat.format(totalArea))
-                        totalCircumferenceValueACTV.text =
-                            getString(com.example.woundsdk.R.string.cm_square, decimalFormat.format(totalCircumference))
                     } else {
-                        woundContainerCL.isVisible = false
+                        allAreaContainerCL.isVisible = false
                         stomaContainerCL.isVisible = true
+                        woundContainerCL.isVisible = false
                         measurementsItemsRV.isVisible = false
+
+                        val stomaItemName = getString(R.string.STOMA_ITEM_NUMBER).replace(STOMA_ITEM_PATTERN, ONE)
+
+                        stomaMeasurementItemLabelACTV.text = stomaItemName
 
                         metadataList.firstOrNull().let {
                             stomaDiameterValueACTV.text = if (it?.length != null) {
                                 getString(
-                                    com.example.woundsdk.R.string.mm,
+                                    com.example.woundsdk.R.string.cm,
                                     decimalFormat.format((it.length ?: 0.0) * 10.0)
                                 )
                             } else getString(com.example.woundsdk.R.string.not_a_number)
@@ -229,13 +232,22 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                             }
                         }
                     }
-
+                    totalAreaValueACTV.text =
+                        getString(
+                            com.example.woundsdk.R.string.cm_square,
+                            decimalFormat.format(totalArea)
+                        )
+                    totalCircumferenceValueACTV.text =
+                        getString(
+                            com.example.woundsdk.R.string.cm_square,
+                            decimalFormat.format(totalCircumference)
+                        )
                 }
             }
         }
     }
 
-    private fun setUpAssessmentImagePager(draftMediaList: List<MediaModel>) {
+    private fun setUpAssessmentImagePager(draftMediaList: List<MediaModel>,isStoma:Boolean) {
         binding.apply {
             (imagesPagerVP2.getChildAt(0) as RecyclerView).layoutManager?.isItemPrefetchEnabled =
                 false
@@ -243,14 +255,15 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
             imagesPagerVP2.adapter =
                 AssessmentImagesPagerAdapter(
                     this@MeasurementResultHolderActivity,
-                    ArrayList(draftMediaList)
+                    ArrayList(draftMediaList),
+                    isStoma
                 ).apply {
                     assessmentImagesPagerAdapter = this
                 }
             indicatorSPI.attachToPager(imagesPagerVP2)
             indicatorSPI.invalidate()
             indicatorSPI.reattach()
-            if (draftMediaList.size == 1){
+            if (draftMediaList.size == 1) {
                 indicatorSPI.isVisible = false
             }
             if (draftMediaList.isNotEmpty()) {
@@ -259,6 +272,13 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
             imagesPagerVP2.beginFakeDrag()
             imagesPagerVP2.fakeDragBy(150f)
             imagesPagerVP2.endFakeDrag()
+            imagesPagerVP2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    val metadata = draftMediaList[position].metadata
+                    prepareMediaMetaDataResultUi(metadata)
+                }
+            })
         }
     }
 
@@ -270,6 +290,8 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
     companion object {
 
         private const val EXTRA_ARGS = "KEY_ARGS"
+        private const val STOMA_ITEM_PATTERN = "%d"
+        private const val ONE = "1"
 
         private data class Args(
             val assessmentEntity: SampleAssessmentEntity

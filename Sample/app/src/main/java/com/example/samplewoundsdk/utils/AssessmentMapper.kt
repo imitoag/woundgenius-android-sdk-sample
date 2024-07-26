@@ -1,9 +1,9 @@
 package com.example.samplewoundsdk.utils
 
 import com.example.samplewoundsdk.data.pojo.assessment.SampleAssessmentEntity
-import com.example.samplewoundsdk.data.pojo.measurement.ImageResolution
 import com.example.samplewoundsdk.data.pojo.media.MediaModel
 import com.example.woundsdk.data.pojo.assessment.entity.AssessmentEntity
+import com.example.woundsdk.data.pojo.measurement.ImageResolution
 
 fun AssessmentEntity.toRoomLocalEntity() =
     SampleAssessmentEntity(

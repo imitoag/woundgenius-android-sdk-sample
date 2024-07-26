@@ -18,7 +18,7 @@
         tools:visibility="visible"
         tools:src="@tools:sample/backgrounds/scenic"/>
 
-    <com.example.samplewoundsdk.utils.image.drawstroke.StrokeScalableImageView
+    <com.example.woundsdk.utils.image.drawstroke.StrokeScalableImageView
         android:id="@+id/imageSSIV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

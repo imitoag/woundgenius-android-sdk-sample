@@ -3,12 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/sample_app_measurement_result_color">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/measurementItemACTV"
+        android:id="@+id/measurementItemLabelACTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:textSize="17sp"
         android:drawableStart="@drawable/sample_app_circle_shape_small_green"
         android:drawablePadding="5dp"
         android:textColor="@color/sample_app_black"
@@ -17,176 +20,194 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="A1" />
 
-    <View
-        android:id="@+id/dv1"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/measurementItemContainerCL"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/sample_app_grey"
-        app:layout_constraintBottom_toTopOf="@+id/areaItemACTV"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/sample_app_background_rounded_white_grey_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/measurementItemACTV" />
+        app:layout_constraintTop_toBottomOf="@+id/measurementItemLabelACTV">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/areaItemACTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/AREA"
-        android:textColor="@color/sample_app_black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dv1" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/areaItemValueACTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:inputType="number"
-        android:textColor="@color/sample_app_grey"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dv1"
-        tools:text="16.5 cm2" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/areaItemACTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/AREA"
+            android:textColor="@color/sample_app_black"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/dv2"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/areaItemValueACTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:inputType="number"
+            android:textColor="@color/sample_app_measurement_value_text_color"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="@+id/areaItemACTV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/areaItemACTV"
+            tools:text="16.5 cm2" />
+
+        <View
+            android:id="@+id/dv2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/sample_app_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/areaItemACTV"
+            app:layout_constraintTop_toBottomOf="@+id/areaItemACTV" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/circumferenceItemACTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/CIRCUMFERENCE"
+            android:textColor="@color/sample_app_black"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/dv2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/circumferenceItemValueACTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:inputType="number"
+            android:textColor="@color/sample_app_measurement_value_text_color"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="@+id/circumferenceItemACTV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/circumferenceItemACTV"
+            tools:text="28.6 cm" />
+
+        <View
+            android:id="@+id/dv3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/sample_app_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/circumferenceItemACTV"
+            app:layout_constraintTop_toBottomOf="@+id/circumferenceItemACTV" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/lengthItemACTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/LENGTH"
+            android:textColor="@color/sample_app_black"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/dv3" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/lengthItemValueACTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:inputType="number"
+            android:textColor="@color/sample_app_measurement_value_text_color"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="@+id/lengthItemACTV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/lengthItemACTV"
+            tools:text="4.2 cm" />
+
+        <View
+            android:id="@+id/dv4"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/sample_app_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/lengthItemACTV"
+            app:layout_constraintTop_toBottomOf="@+id/lengthItemACTV" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/widthItemACTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/WIDTH"
+            android:textColor="@color/sample_app_black"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/dv4" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/widthItemValueACTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:inputType="number"
+            android:textColor="@color/sample_app_measurement_value_text_color"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="@+id/widthItemACTV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/widthItemACTV"
+            tools:text="4.2 cm" />
+
+        <View
+            android:id="@+id/dv5"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/sample_app_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/widthItemACTV"
+            app:layout_constraintTop_toBottomOf="@+id/widthItemACTV" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/depthItemACTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="@string/DEPTH_MM"
+            android:textColor="@color/sample_app_black"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/dv5" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/depthItemValueACET"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:background="@null"
+            android:hint="@string/TAP_TO_ADD_DEPTH"
+            android:inputType="numberDecimal"
+            android:textAlignment="textEnd"
+            android:textColor="@color/sample_app_measurement_value_text_color"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="@+id/depthItemACTV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/depthItemACTV" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Space
+        app:layout_constraintTop_toBottomOf="@+id/measurementItemContainerCL"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/sample_app_grey"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/areaItemACTV" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/circumferenceItemACTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/CIRCUMFERENCE"
-        android:textColor="@color/sample_app_black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dv2" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/circumferenceItemValueACTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:inputType="number"
-        android:textColor="@color/sample_app_grey"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dv2"
-        tools:text="28.6 cm" />
-
-    <View
-        android:id="@+id/dv3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/sample_app_grey"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/circumferenceItemACTV" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/lengthItemACTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/LENGTH"
-        android:textColor="@color/sample_app_black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dv3" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/lengthItemValueACTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:inputType="number"
-        android:textColor="@color/sample_app_grey"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dv3"
-        tools:text="4.2 cm" />
-
-    <View
-        android:id="@+id/dv4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/sample_app_grey"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lengthItemACTV" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/widthItemACTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/WIDTH"
-        android:textColor="@color/sample_app_black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dv4" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/widthItemValueACTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:inputType="number"
-        android:textColor="@color/sample_app_grey"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dv4"
-        tools:text="4.2 cm" />
-
-    <View
-        android:id="@+id/dv5"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/sample_app_grey"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/widthItemACTV" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/depthItemACTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/DEPTH_MM"
-        android:textColor="@color/sample_app_black"
-        app:layout_constraintBottom_toTopOf="@+id/dv6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dv5" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/depthItemValueACET"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@null"
-        android:hint="@string/TAP_TO_ADD_DEPTH"
-        android:inputType="numberDecimal"
-        android:textAlignment="textEnd"
-        android:textColor="@color/sample_app_grey"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/depthItemACTV"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dv5" />
-
-    <View
-        android:id="@+id/dv6"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="20dp"
-        android:background="@color/sample_app_grey"
-        app:layout_constraintBottom_toBottomOf="@+id/depthItemACTV"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/depthItemACTV" />
+        android:layout_height="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

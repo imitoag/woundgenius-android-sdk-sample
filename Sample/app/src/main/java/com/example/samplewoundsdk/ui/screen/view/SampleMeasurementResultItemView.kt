@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import com.example.samplewoundsdk.R
 import com.example.samplewoundsdk.databinding.SampleMeasurementResultItemBinding
 import java.util.*
@@ -54,7 +55,7 @@ class SampleMeasurementResultItemView @JvmOverloads constructor(
         this.depth = depth
 
         binding.apply {
-            measurementItemACTV.text = name
+            measurementItemLabelACTV.text = name
             areaItemValueACTV.text = areaValue
             circumferenceItemValueACTV.text = circumferenceValue
             lengthItemValueACTV.text = lengthValue
@@ -74,6 +75,7 @@ class SampleMeasurementResultItemView @JvmOverloads constructor(
                     )
                 }.let { depthValue ->
                     depthItemValueACET.setText(depthValue)
+                    depthItemValueACET.setTextColor(ContextCompat.getColor(context, R.color.sample_app_measurement_value_text_color))
                 }
 
                 if (!needContinue) {

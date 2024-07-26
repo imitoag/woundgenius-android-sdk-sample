@@ -2,17 +2,16 @@ package com.example.samplewoundsdk.di.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.samplewoundsdk.di.ViewModelFactory
+import com.example.samplewoundsdk.di.ViewModelKey
 import com.example.samplewoundsdk.ui.screen.assesmentimage.AssessmentMediaViewModel
 import com.example.samplewoundsdk.ui.screen.homescreen.HomeScreenViewModel
 import com.example.samplewoundsdk.ui.screen.main.MainViewModel
-import com.example.samplewoundsdk.ui.screen.measurementfullscreen.MeasurementFullScreenViewModel
-import com.example.samplewoundsdk.ui.screen.settings.SettingsScreenViewModel
 import com.example.samplewoundsdk.ui.screen.measurementresult.holder.MeasurementResultHolderViewModel
+import com.example.samplewoundsdk.ui.screen.settings.SettingsScreenViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import com.example.samplewoundsdk.di.ViewModelFactory
-import com.example.samplewoundsdk.di.ViewModelKey
 
 @Module
 abstract class ViewModelModule {
@@ -44,10 +43,5 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SettingsScreenViewModel::class)
     abstract fun bindSettingsScreenViewModel(viewModel: SettingsScreenViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(MeasurementFullScreenViewModel::class)
-    abstract fun bindMeasurementFullScreenViewModel(viewModel: MeasurementFullScreenViewModel): ViewModel
 
 }
