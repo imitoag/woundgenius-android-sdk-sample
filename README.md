@@ -55,3 +55,21 @@ To launch the Sample App, perform the following actions:
 
 8. Navigate back from Settings Screen. Click Start Capturing. Grant the permission for the app to access the Camera.
  <img width="300" alt="image" src="https://github.com/imitoag/woundgenius-android-sdk-sample/assets/139133999/f8fd1408-19eb-46da-835b-7001d3ac8e31">
+
+
+# WoundGenius SDK React Native Sample App
+
+This repository contains the React Native Sample (SampleRN folder).
+
+## Initial Setup
+To launch the SampleRN App, perform the following actions:
+
+1. Pull the repository.
+2. Navigate to the SampleRN -> AwesomeProject.
+3. In terminal run a command ```npm install```. That should setup the node_modules.
+4. Open the ```android``` folder using AndroidStudio.
+5. Follow one of the options for integrating WoundGenius SDk into the Sample app.
+6. Update the license key in AndroidStudio in the ```MainApplication``` class file.
+9. Navigate out of android folder in terminal, to the AwesomeProject folder. Run the ```npm start``` command in terminal. This should start the dev server usually on port 8081.
+10. Switch back to AndroidStudio to run the Android app on your device/emulator or press ```a``` keybutton in terminal to run app on Android from React Native.
+11. Click "Start Capturing". Allow access to Camera.
