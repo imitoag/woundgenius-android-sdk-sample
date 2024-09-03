@@ -22,6 +22,11 @@ To launch the Sample App, perform the following actions:
 
 ```ruby   
  repositories {
+    google()
+    mavenCentral()
+    jcenter()
+    maven { url 'https://maven.google.com' }
+    maven { url "https://jitpack.io" }
         maven {
                 name = "GitHubPackages"
                 url = uri("https://maven.pkg.github.com/imitoag/woundgenius-android-sdk")
@@ -38,13 +43,17 @@ To launch the Sample App, perform the following actions:
 
  Option 2 
 
-• Add sdk as local maven repo by adding the following code to build.gradle inside the project gradle
+• Add sdk as local maven repo and repositories urls by adding the following code to build.gradle inside the project gradle
+3.  into your project build.gradle file
 ```ruby   
  repositories {
-      maven {
-            url "SDK"
-        }
-    }
+   google()
+    mavenCentral()
+    maven { url 'SDK' }
+    jcenter()
+    maven { url 'https://maven.google.com' }
+    maven { url "https://jitpack.io" }
+}
 ```
 
 6. Run the application.
