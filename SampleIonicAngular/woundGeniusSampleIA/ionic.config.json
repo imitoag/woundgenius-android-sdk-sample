@@ -1,0 +1,7 @@
+{
+  "name": "woundGeniusSampleIA",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
