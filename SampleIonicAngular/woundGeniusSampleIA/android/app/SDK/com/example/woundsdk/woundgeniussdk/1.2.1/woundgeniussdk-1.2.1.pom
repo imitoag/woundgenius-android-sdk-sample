@@ -21,7 +21,6 @@
        <artifactId>subsampling-scale-image-view-androidx</artifactId>
        <version>3.10.0</version>
     </dependency>
-
     <dependency>
       <groupId>com.google.android.material</groupId>
       <artifactId>material</artifactId>

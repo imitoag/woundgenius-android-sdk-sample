@@ -2,33 +2,45 @@ package io.ionic.starter
 
 import android.app.Application
 import android.content.pm.PackageManager
+import com.example.woundsdk.data.pojo.WoundGeniusOperatingMode
 import com.example.woundsdk.data.pojo.autodetectionmod.WoundAutoDetectionMode
 import com.example.woundsdk.data.pojo.cameramod.CameraMods
 import com.example.woundsdk.di.WoundGeniusSDK
+import com.orhanobut.hawk.Hawk
 
 class WoundGeniusSdkManager {
   fun init(application: Application) {
 
-    WoundGeniusSDK.init(application, "io.ionic.starter", "licenseKey")
+    val licenseKey = "eyJhbGciOiIxIiwiZW5jIjoiZXlKcGJtTnNkV1JsWkNJNlczc2lkSGx3WlNJNkltRndjR3hwWTJGMGFXOXVTV1FpTENKcFpDSTZJbWx2TG1sdmJtbGpMbk4wWVhKMEluMHNleUowZVhCbElqb2labVZoZEhWeVpVbGtJaXdpYVdRaU9pSndhRzkwYjBOaGNIUjFjbWx1WnlKOUxIc2lkSGx3WlNJNkltWmxZWFIxY21WSlpDSXNJbWxrSWpvaWRtbGtaVzlEWVhCMGRYSnBibWNpZlN4N0luUjVjR1VpT2lKbVpXRjBkWEpsU1dRaUxDSnBaQ0k2SW5KMWJHVnlUV1ZoYzNWeVpXMWxiblJEWVhCMGRYSnBibWNpZlN4N0luUjVjR1VpT2lKbVpXRjBkWEpsU1dRaUxDSnBaQ0k2SW0xaGNtdGxjazFsWVhOMWNtVnRaVzUwUTJGd2RIVnlhVzVuSW4wc2V5SjBlWEJsSWpvaVptVmhkSFZ5WlVsa0lpd2lhV1FpT2lKbWNtOXVkR0ZzUTJGdFpYSmhJbjBzZXlKMGVYQmxJam9pWm1WaGRIVnlaVWxrSWl3aWFXUWlPaUp0ZFd4MGFYQnNaVmR2ZFc1a2MxQmxja2x0WVdkbEluMHNleUowZVhCbElqb2labVZoZEhWeVpVbGtJaXdpYVdRaU9pSjNiM1Z1WkVSbGRHVmpkR2x2YmlKOUxIc2lkSGx3WlNJNkltWmxZWFIxY21WSlpDSXNJbWxrSWpvaWJHbDJaVmR2ZFc1a1JHVjBaV04wYVc5dUluMHNleUowZVhCbElqb2labVZoZEhWeVpVbGtJaXdpYVdRaU9pSmliMlI1VUdGeWRGQnBZMnRsY2lKOUxIc2lkSGx3WlNJNkltWmxZWFIxY21WSlpDSXNJbWxrSWpvaWJHOWpZV3hUZEc5eVlXZGxTVzFoWjJWekluMHNleUowZVhCbElqb2labVZoZEhWeVpVbGtJaXdpYVdRaU9pSnNiMk5oYkZOMGIzSmhaMlZXYVdSbGIzTWlmU3g3SW5SNWNHVWlPaUptWldGMGRYSmxTV1FpTENKcFpDSTZJblJwYzNOMVpWUjVjR1ZFWlhSbFkzUnBiMjRpZlN4N0luUjVjR1VpT2lKbVpXRjBkWEpsU1dRaUxDSnBaQ0k2SW5OMGIyMWhSRzlqZFcxbGJuUmhkR2x2YmlKOUxIc2lkSGx3WlNJNkltWmxZWFIxY21WSlpDSXNJbWxrSWpvaVltRnlZMjlrWlZOallXNXVhVzVuSW4wc2V5SjBlWEJsSWpvaVptVmhkSFZ5WlVsa0lpd2lhV1FpT2lKdFlXNTFZV3hOWldGemRYSmxiV1Z1ZEVsdWNIVjBJbjBzZXlKMGVYQmxJam9pWm1WaGRIVnlaVWxrSWl3aWFXUWlPaUpvWVc1a2VYTmpiM0JsUTJGd2RIVnlhVzVuSW4xZExDSmtZWFJoSWpwN2ZTd2liV1YwWVNJNmV5SmxlSEJwY25raU9pSXlNREkyTFRBMExURTJJREV4T2pVNE9qQXdJaXdpYVhOemRXVmtJam9pTWpBeU5TMHdOQzB4TmlBeE1UbzFPRG8wTVNKOWZRPT0iLCJzaWciOiJXZDNCWlM4XC8xM2lKN3RXK1ExaTR0OTBHR2RTdVVBbnR0czIrTzhvdzNqSGNLUW5EdUN1UW5IRTN6S202dU5aSmcya3o4bEMzMmlqQ1hLZFE3NU1OVEphRTZpZmRkUGZRRURzWG1GakNOQ1Q2WkVPeEkyemJtNlwvaDZvRVFnUU1KcGxHWXdSUGtmQWg3S2RZQTNIeWxCeCs4TDJTRGdWc0dKeTZwbEd6MGV1RDcwVGY1cU52VGEyd3UzZjlnZWIwaExZNTYza2gwREJ0cHd6M2luTFJhREJwNGtiYncxQTIxSTFxWFwvTkM3NnRvVGl4N1wvK0dWNCtObnE0dU1XK1NHUjVPQ1ZDRHEwcEQyVFVcL0ZzRHg1MFJFTzFlVlFMSVdDSWM5S3hLMlBMWkw3aDlxZkZQZEZwMzNCQXFPbHRMU1gzZTF2OVNBVmN4NnlPZ1ZUWWNOcmhCMk5RcTJ4M1hUSDZXdnBFRXpqVmhBMjlFVENEdnQ0Q0oyZE5FZDByZjByZDhuWXJZazgzQkxWNEJ3SFJQckJMZ2J0NFFDclNyMndEemZmbnUxVXJaUEdVcU41amFEbnk2T1JvM3RIWnJEVTlVUHNTWHdXRWxKZjhTeVh6cVFuU21zdEt5U2hUSjd2QjVFUWY1OTQ0VnNEZTFDUVwvS05GU2x5MmpkSGFCTXlLXC9vS0VKUUlSektROUFKR2N3REJsV0ZrUStrWjJFc3o5OHJaNTBLcXIwa1kwSGJLeFwvbzkycm11aEt3M054RDN6TW42b3VJeGdjbWFOMWw3OW5CVVlTQnVRbWRFOXBcL3BcL2laTjZ6OVAyTytwWHlnd01nWXA1anltOWR1djlYaFIzM3E5OEVvdDJPTGt1ZHZzdG51NVhrKzlxYTVoSHc3Y05IVUcxKzk4WU92b289In0="
+    WoundGeniusSDK.init(application, "io.ionic.start", licenseKey)
 
     WoundGeniusSDK.configure(
       availableModes = listOf(
-        CameraMods.VIDEO_MODE,
-        CameraMods.PHOTO_MODE,
-        CameraMods.MARKER_DETECT_MODE
+        CameraMods.MARKER_DETECT_MODE,
+        CameraMods.MANUAL_MEASURE_MODE,
+        CameraMods.PHOTO_MODE
       ),
-      defaultMode = CameraMods.PHOTO_MODE,
+      defaultMode = CameraMods.MARKER_DETECT_MODE,
       woundAutoDetectionMode = WoundAutoDetectionMode.WOUND,
+      isLiveDetectionEnabled = true,
       isAddFromLocalStorageAvailable = true,
       isAddBodyPickerOnCaptureScreenAvailable = false,
       isFrontCameraUsageAllowed = application.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT),
+      isFullHDVideoEnabled = false,
+      isCancelBarButtonItemVisible = true,
       maxNumberOfMedia = 100,
-      isLiveDetectionEnabled = true,
+      isRightNavBarButtonAvailable = true,
       completionButtonTitle = null,
-      isMultipleOutlinesEnabled = false,
-      isMinNumberOfMediaRequired = true,
+      isDepthInputEnabled = true,
+      showTotalCircumference = true,
+      isSendPrintablePDFHidden = false,
+      isResultsBottomBarHidden = false,
+      maxNumberOfCalibrationMedia = 1,
+      isMultipleOutlinesEnabled = true,
+      isMinNumberOfMediaRequired = false,
       isStomaFlow = false,
-      lightBackgroundColor = null,
+      lightBackgroundColor = null
     )
+
   }
 }
