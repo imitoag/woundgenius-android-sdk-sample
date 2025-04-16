@@ -11,7 +11,7 @@
     android:id="@+id/openSdkButtonACTV"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/wound_genius_sdk_background_orange_rounded"
+    android:background="@drawable/wound_genius_sdk_icon_background_orange_rounded"
     android:gravity="center_horizontal"
     android:padding="10dp"
     android:text="Open SDK"
