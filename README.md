@@ -76,14 +76,13 @@ To launch the SampleRN App, perform the following actions:
 
 1. Pull the repository.
 2. Navigate to the SampleRN -> AwesomeProject.
-3. In terminal run a command ```npm install```. That should setup the node_modules.
-4. Execute ``npm install -g @ionic/cli`` commad if you do not have ionic installed.
-5. Open the ```android``` folder using AndroidStudio.
-6. Follow one of the options for integrating WoundGenius SDK into the Sample app.
-7. Update the license key in AndroidStudio in the ```MainApplication``` class file.
-8. Navigate out of android folder in terminal, to the AwesomeProject folder. Run the ```npm start``` command in terminal. This should start the dev server usually on port 8081.
-9. Switch back to AndroidStudio to run the Android app on your device/emulator or press ```a``` keybutton in terminal to run app on Android from React Native.
-10. Click "Start Capturing". Allow access to Camera.
+3. In terminal run a command npm install. That should setup the node_modules.
+4. Open the android folder using AndroidStudio.
+5. Follow one of the options for integrating WoundGenius SDk into the Sample app.
+6. Update the license key in AndroidStudio in the MainApplication class file.
+7. Navigate out of android folder in terminal, to the AwesomeProject folder. Run the npm start command in terminal. This should start the dev server usually on port 8081.
+8. Switch back to AndroidStudio to run the Android app on your device/emulator or press a keybutton in terminal to run app on Android from React Native.
+9. Click "Start Capturing". Allow access to Camera.
 
 
 # WoundGenius SDK Ionic Angular Sample App
@@ -96,7 +95,8 @@ To launch the SampleIonicAngular App, perform the following actions:
 1. Pull the repository.
 2. Navigate to the SampleIonicAngular -> woundGeniusSampleIA.
 3. In terminal run a command ```npm install```. That should setup the angular_modules.
-4. Follow one of the options for integrating WoundGenius SDK into the Sample app.
-5. Update the license key in AndroidStudio in the ```MainApplication``` class file.
-6. run a command ```ionic capacitor run android``` and select the desired device on which you want to install the android application. If the options are empty, launch an android emulator or connect your device via cable and open Android Studio.
-7. Click "Open SDK". Allow access to Camera.
+4. Execute ``npm install -g @ionic/cli`` commad if you do not have ionic installed.
+5. Follow one of the options for integrating WoundGenius SDK into the Sample app.
+6. Update the license key in AndroidStudio in the ```MainApplication``` class file.
+7. run a command ```ionic capacitor run android``` and select the desired device on which you want to install the android application. If the options are empty, launch an android emulator or connect your device via cable and open Android Studio.
+8. Click "Open SDK". Allow access to Camera.
