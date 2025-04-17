@@ -10,8 +10,6 @@
     <color name="sample_app_light_orange" tools:override="false">#ffaa2f</color>
     <color name="sample_app_color_black" tools:override="false">#000000</color>
     <color name="sample_app_dark_grey_2" tools:override="false">#242424</color>
-    <color name="sample_app_color_blue">#0200ff</color>
-    <color name="sample_app_color_yellow">#ffff02</color>
 
     <color name="sample_app_grey_light1" tools:override="false">#f0f0f0</color>
     <color name="sample_app_grey_light2" tools:override="false">#f4f4f4</color>
@@ -75,17 +73,17 @@
     <color name="sample_app_color_green_transparent" tools:override="false">#3300E600</color>
 
 
-    <color name="sample_app_background" tools:override="false">#f0f0f0</color>
+    <color name="sample_app_background" tools:override="false">#000000</color>
 
-    <color name="sample_app_tutorial_background" tools:override="false">#ffffff</color>
+    <color name="sample_app_tutorial_background" tools:override="false">#2c2c2e</color>
 
-    <color name="sample_app_text_color" tools:override="false">#000000</color>
+    <color name="sample_app_text_color" tools:override="false">#ffffff</color>
 
     <color name="sample_app_measurement_value_text_color" tools:override="false">#8f8f8f</color>
 
     <color name="sample_app_hint_text_color" tools:override="false">#8f8f8f</color>
 
-    <color name="sample_app_forms_color" tools:override="false">#ffffff</color>
+    <color name="sample_app_forms_color" tools:override="false">#2c2c2e</color>
 
     <color name="sample_app_button_color" tools:override="false">@color/sample_app_color_accent</color>
 </resources>

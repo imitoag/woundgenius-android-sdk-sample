@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/sample_app_tutorial_background"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbarCL"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
+        android:background="@color/sample_app_tutorial_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -41,8 +43,8 @@
                 android:gravity="center_vertical"
                 android:paddingStart="0dp"
                 android:paddingEnd="12dp"
-                android:text="@string/BACK_BUTTON"
-                android:textColor="@color/sample_app_red"
+                android:text="@string/WOUND_GENIUS_SDK_BACK_BUTTON"
+                android:textColor="@color/sample_app_button_color"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/editSelectionArrowIconACTV"
@@ -58,9 +60,9 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:text="@string/SETTINGS_TITLE"
+            android:text="@string/WOUND_GENIUS_SDK_SETTINGS_TITLE"
             android:textAlignment="center"
-            android:textColor="@color/sample_app_black"
+            android:textColor="@color/sample_app_text_color"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -68,10 +70,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/shareLogsButtonCL"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/shareLogsTextACTV"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center_vertical"
+                android:paddingStart="0dp"
+                android:paddingEnd="12dp"
+                android:text="Share logs"
+                android:textColor="@color/sample_app_button_color"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/NSV"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,8 +108,10 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbarCL">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/settingContainerCL"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/sample_app_tutorial_background">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/licenseKeyLabelACTV"
@@ -89,6 +120,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="LICENSE KEY"
+                android:textColor="@color/sample_app_measurement_value_text_color"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -123,7 +155,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="License"
-                    android:textColor="@color/sample_app_black"
+                    android:textColor="@color/sample_app_text_color"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -137,6 +169,7 @@
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:maxLines="1"
+                    android:textColor="@color/sample_app_text_color"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/licenseKeyACTV"
@@ -162,9 +195,11 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="USER ID"
+                android:textColor="@color/sample_app_measurement_value_text_color"
+
                 android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@+id/licenseKeyValueBottomV"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/licenseKeyValueBottomV" />
 
             <View
                 android:id="@+id/userIdValueTopV"
@@ -195,7 +230,8 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="User Id"
-                    android:textColor="@color/sample_app_black"
+
+                    android:textColor="@color/sample_app_text_color"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -209,6 +245,7 @@
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:maxLines="1"
+                    android:textColor="@color/sample_app_text_color"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/userIdACTV"
@@ -235,7 +272,9 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="20dp"
                 android:text="MODES CONFIGURATIONS"
+                android:textColor="@color/sample_app_measurement_value_text_color"
                 android:textSize="18sp"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/userIdValueBottomV" />
 
@@ -255,15 +294,15 @@
                 android:id="@+id/addVideoModeLayoutBlockerCL"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:background="@color/sample_app_color_black_opacity_cc"
                 android:clickable="true"
-                android:focusable="true"
                 android:elevation="7dp"
-                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
-                app:layout_constraintTop_toTopOf="@+id/addVideoModeLayoutCL"
+                android:focusable="true"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/addVideoModeLayoutCL"
-                app:layout_constraintStart_toStartOf="@+id/addVideoModeLayoutCL"
                 app:layout_constraintEnd_toEndOf="@+id/addVideoModeLayoutCL"
-                />
+                app:layout_constraintStart_toStartOf="@+id/addVideoModeLayoutCL"
+                app:layout_constraintTop_toTopOf="@+id/addVideoModeLayoutCL" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addVideoModeLayoutCL"
@@ -282,7 +321,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="Video"
-                    android:textColor="@color/sample_app_black"
+                    android:textColor="@color/sample_app_text_color"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/addVideoModeS"
@@ -314,15 +353,15 @@
                 android:id="@+id/addMarkerModeLayoutBlockerCL"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:background="@color/sample_app_color_black_opacity_cc"
                 android:clickable="true"
-                android:focusable="true"
                 android:elevation="7dp"
-                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
-                app:layout_constraintTop_toTopOf="@+id/addMarkerModeLayoutCL"
+                android:focusable="true"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/addMarkerModeLayoutCL"
-                app:layout_constraintStart_toStartOf="@+id/addMarkerModeLayoutCL"
                 app:layout_constraintEnd_toEndOf="@+id/addMarkerModeLayoutCL"
-                />
+                app:layout_constraintStart_toStartOf="@+id/addMarkerModeLayoutCL"
+                app:layout_constraintTop_toTopOf="@+id/addMarkerModeLayoutCL" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addMarkerModeLayoutCL"
@@ -342,7 +381,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="Marker Measurement"
-                    android:textColor="@color/sample_app_black"
+                    android:textColor="@color/sample_app_text_color"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/addMarkerModeS"
@@ -374,15 +413,15 @@
                 android:id="@+id/addPhotoModeLayoutBlockerCL"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:background="@color/sample_app_color_black_opacity_cc"
                 android:clickable="true"
-                android:focusable="true"
                 android:elevation="7dp"
-                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
-                app:layout_constraintTop_toTopOf="@+id/addPhotoModeLayoutCL"
+                android:focusable="true"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/addPhotoModeLayoutCL"
-                app:layout_constraintStart_toStartOf="@+id/addPhotoModeLayoutCL"
                 app:layout_constraintEnd_toEndOf="@+id/addPhotoModeLayoutCL"
-                />
+                app:layout_constraintStart_toStartOf="@+id/addPhotoModeLayoutCL"
+                app:layout_constraintTop_toTopOf="@+id/addPhotoModeLayoutCL" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addPhotoModeLayoutCL"
@@ -402,7 +441,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="Photo"
-                    android:textColor="@color/sample_app_black"
+                    android:textColor="@color/sample_app_text_color"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/addPhotoModeS"
@@ -434,15 +473,15 @@
                 android:id="@+id/addRulerModeLayoutBlockerCL"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:background="@color/sample_app_color_black_opacity_cc"
                 android:clickable="true"
-                android:focusable="true"
                 android:elevation="7dp"
-                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
-                app:layout_constraintTop_toTopOf="@+id/addRulerModeLayoutCL"
+                android:focusable="true"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/addRulerModeLayoutCL"
-                app:layout_constraintStart_toStartOf="@+id/addRulerModeLayoutCL"
                 app:layout_constraintEnd_toEndOf="@+id/addRulerModeLayoutCL"
-                />
+                app:layout_constraintStart_toStartOf="@+id/addRulerModeLayoutCL"
+                app:layout_constraintTop_toTopOf="@+id/addRulerModeLayoutCL" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addRulerModeLayoutCL"
@@ -463,7 +502,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="Ruler"
-                    android:textColor="@color/sample_app_black"
+                    android:textColor="@color/sample_app_text_color"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/addRulerModeS"
@@ -497,9 +536,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:text="NUMBER OF MEDIA PER SERIES/ASSESSMENT"
+                android:textColor="@color/sample_app_measurement_value_text_color"
                 android:textSize="18sp"
+
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addRulerModeLayoutCL" />
 
@@ -530,7 +571,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="The maximal number of media\nthat can be captured [1: 100]"
-                    android:textColor="@color/sample_app_black"
+                    android:textColor="@color/sample_app_text_color"
                     android:textSize="17sp"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintEnd_toStartOf="@+id/maxMediaNumberValueACET"
@@ -544,10 +585,11 @@
                     android:layout_height="0dp"
                     android:layout_marginEnd="16dp"
                     android:digits="0123456789"
-                    android:inputType="number"
                     android:imeOptions="actionDone"
+                    android:inputType="number"
                     android:singleLine="true"
                     android:textAlignment="center"
+                    android:textColor="@color/sample_app_text_color"
                     app:layout_constraintBottom_toBottomOf="@+id/maxMediaNumberValueLabelACTV"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/maxMediaNumberValueLabelACTV"
@@ -574,7 +616,9 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
                 android:text="FLOW"
+                android:textColor="@color/sample_app_measurement_value_text_color"
                 android:textSize="18sp"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/maxMediaNumberContainerCL" />
 
@@ -592,15 +636,15 @@
                 android:id="@+id/stomaFlowLayoutBlockerCL"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:background="@color/sample_app_color_black_opacity_cc"
                 android:clickable="true"
-                android:focusable="true"
                 android:elevation="7dp"
-                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
-                app:layout_constraintTop_toTopOf="@+id/stomaFlowLayoutCL"
-                 app:layout_constraintBottom_toBottomOf="@+id/stomaFlowLayoutCL"
-                app:layout_constraintStart_toStartOf="@+id/stomaFlowLayoutCL"
+                android:focusable="true"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/stomaFlowLayoutCL"
                 app:layout_constraintEnd_toEndOf="@+id/stomaFlowLayoutCL"
-                />
+                app:layout_constraintStart_toStartOf="@+id/stomaFlowLayoutCL"
+                app:layout_constraintTop_toTopOf="@+id/stomaFlowLayoutCL" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/stomaFlowLayoutCL"
@@ -618,7 +662,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:text="Stoma Capturing"
-                    android:textColor="@color/sample_app_black"
+                    android:textColor="@color/sample_app_text_color"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toStartOf="@+id/stomaFlowS"
                     app:layout_constraintStart_toStartOf="parent"
@@ -647,10 +691,10 @@
                     android:id="@+id/stomaFlowDescriptionACTV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
                     android:layout_marginTop="20dp"
-                    android:background="@color/wound_genius_sdk_color_transparent"
+                    android:layout_marginEnd="20dp"
                     android:text="When Stoma Capturing flow is activated:\n- Wound Auto-detection, Tissue Type Auto-detection will get disabled.\n- Instead of Wound Depth user will be requested to enter Stoma Height.\n- Instead of Wound Width Length - Stoma Diameter is measured."
+                    android:textColor="@color/sample_app_hint_text_color"
                     android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -666,7 +710,9 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
                 android:text="MACHINE LEARNING"
+                android:textColor="@color/sample_app_measurement_value_text_color"
                 android:textSize="18sp"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stomaFlowLayoutCL" />
 
@@ -684,15 +730,15 @@
                 android:id="@+id/machineLearningLayoutBlockerCL"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:background="@color/sample_app_color_black_opacity_cc"
                 android:clickable="true"
-                android:focusable="true"
                 android:elevation="7dp"
-                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
-                app:layout_constraintTop_toTopOf="@+id/machineLearningLayoutCL"
+                android:focusable="true"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/machineLearningLayoutCL"
-                app:layout_constraintStart_toStartOf="@+id/machineLearningLayoutCL"
                 app:layout_constraintEnd_toEndOf="@+id/machineLearningLayoutCL"
-                />
+                app:layout_constraintStart_toStartOf="@+id/machineLearningLayoutCL"
+                app:layout_constraintTop_toTopOf="@+id/machineLearningLayoutCL" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/machineLearningLayoutCL"
@@ -710,7 +756,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:text="Auto Detection"
-                    android:textColor="@color/sample_app_black"
+                    android:textColor="@color/sample_app_text_color"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toStartOf="@+id/autoDetectionSpinner"
                     app:layout_constraintStart_toStartOf="parent"
@@ -741,6 +787,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="To enabled Wound AutoDetection - your license should have it enabled."
+                    android:textColor="@color/sample_app_hint_text_color"
                     android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -753,15 +800,15 @@
                 android:id="@+id/liveDetectionLayoutBlockerCL"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:background="@color/sample_app_color_black_opacity_cc"
                 android:clickable="true"
-                android:focusable="true"
                 android:elevation="7dp"
-                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
-                app:layout_constraintTop_toTopOf="@+id/liveDetectionLayoutCL"
+                android:focusable="true"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/liveDetectionLayoutCL"
-                app:layout_constraintStart_toStartOf="@+id/liveDetectionLayoutCL"
                 app:layout_constraintEnd_toEndOf="@+id/liveDetectionLayoutCL"
-                />
+                app:layout_constraintStart_toStartOf="@+id/liveDetectionLayoutCL"
+                app:layout_constraintTop_toTopOf="@+id/liveDetectionLayoutCL" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/liveDetectionLayoutCL"
@@ -779,7 +826,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:text="Live Wound Detection"
-                    android:textColor="@color/sample_app_black"
+                    android:textColor="@color/sample_app_text_color"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toStartOf="@+id/liveDetectionS"
                     app:layout_constraintStart_toStartOf="parent"
@@ -809,11 +856,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:textSize="15sp"
-                    android:text="Highlight the wound on the live video preview to guide users through the best device positioning for capturing the wound."
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:paddingEnd="20dp"
                     android:paddingStart="0dp"
+                    android:paddingEnd="20dp"
+                    android:text="Highlight the wound on the live video preview to guide users through the best device positioning for capturing the wound."
+                    android:textColor="@color/sample_app_hint_text_color"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/liveDetectionValueBottomV" />
@@ -828,7 +876,9 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
                 android:text="OTHER"
+                android:textColor="@color/sample_app_measurement_value_text_color"
                 android:textSize="18sp"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/liveDetectionLayoutCL" />
 
@@ -846,15 +896,15 @@
                 android:id="@+id/addFromGalleryLayoutBlockerCL"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:background="@color/sample_app_color_black_opacity_cc"
                 android:clickable="true"
-                android:focusable="true"
                 android:elevation="7dp"
-                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
-                app:layout_constraintTop_toTopOf="@+id/addFromGalleryLayoutCL"
+                android:focusable="true"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/addFromGalleryLayoutCL"
-                app:layout_constraintStart_toStartOf="@+id/addFromGalleryLayoutCL"
                 app:layout_constraintEnd_toEndOf="@+id/addFromGalleryLayoutCL"
-                />
+                app:layout_constraintStart_toStartOf="@+id/addFromGalleryLayoutCL"
+                app:layout_constraintTop_toTopOf="@+id/addFromGalleryLayoutCL" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addFromGalleryLayoutCL"
@@ -874,7 +924,8 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="Add media from gallery"
-                    android:textColor="@color/sample_app_black"
+                    android:textColor="@color/sample_app_text_color"
+
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/addFromGalleryS"
@@ -908,15 +959,15 @@
                 android:id="@+id/addBodyPickerOnCameraLayoutBlockerCL"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:background="@color/sample_app_color_black_opacity_cc"
                 android:clickable="true"
-                android:focusable="true"
                 android:elevation="7dp"
-                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
-                app:layout_constraintTop_toTopOf="@+id/addBodyPickerOnCameraLayoutCL"
+                android:focusable="true"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/addBodyPickerOnCameraLayoutCL"
-                app:layout_constraintStart_toStartOf="@+id/addBodyPickerOnCameraLayoutCL"
                 app:layout_constraintEnd_toEndOf="@+id/addBodyPickerOnCameraLayoutCL"
-                />
+                app:layout_constraintStart_toStartOf="@+id/addBodyPickerOnCameraLayoutCL"
+                app:layout_constraintTop_toTopOf="@+id/addBodyPickerOnCameraLayoutCL" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addBodyPickerOnCameraLayoutCL"
@@ -936,7 +987,8 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="Add body picker on capture screen"
-                    android:textColor="@color/sample_app_black"
+                    android:textColor="@color/sample_app_text_color"
+
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/addBodyPickerOnCameraS"
@@ -969,15 +1021,15 @@
                 android:id="@+id/isMultipleOutlinesEnabledLayoutBlockerCL"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:background="@color/sample_app_color_black_opacity_cc"
                 android:clickable="true"
-                android:focusable="true"
                 android:elevation="7dp"
-                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
-                app:layout_constraintTop_toTopOf="@+id/isMultipleOutlinesEnabledLayoutCL"
+                android:focusable="true"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/isMultipleOutlinesEnabledLayoutCL"
-                app:layout_constraintStart_toStartOf="@+id/isMultipleOutlinesEnabledLayoutCL"
                 app:layout_constraintEnd_toEndOf="@+id/isMultipleOutlinesEnabledLayoutCL"
-                />
+                app:layout_constraintStart_toStartOf="@+id/isMultipleOutlinesEnabledLayoutCL"
+                app:layout_constraintTop_toTopOf="@+id/isMultipleOutlinesEnabledLayoutCL" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/isMultipleOutlinesEnabledLayoutCL"
@@ -997,7 +1049,8 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="Multiple Outlines per Images"
-                    android:textColor="@color/sample_app_black"
+                    android:textColor="@color/sample_app_text_color"
+
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/isMultipleOutlinesEnabledS"
@@ -1030,15 +1083,15 @@
                 android:id="@+id/addCameraSwitchLayoutBlockerCL"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:background="@color/sample_app_color_black_opacity_cc"
                 android:clickable="true"
-                android:focusable="true"
                 android:elevation="7dp"
-                android:background="@color/wound_genius_sdk_color_black_opacity_cc"
-                app:layout_constraintTop_toTopOf="@+id/addCameraSwitchLayoutCL"
+                android:focusable="true"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/addCameraSwitchLayoutCL"
-                app:layout_constraintStart_toStartOf="@+id/addCameraSwitchLayoutCL"
                 app:layout_constraintEnd_toEndOf="@+id/addCameraSwitchLayoutCL"
-                />
+                app:layout_constraintStart_toStartOf="@+id/addCameraSwitchLayoutCL"
+                app:layout_constraintTop_toTopOf="@+id/addCameraSwitchLayoutCL" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addCameraSwitchLayoutCL"
@@ -1058,7 +1111,8 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="Frontal Camera Enabled"
-                    android:textColor="@color/sample_app_black"
+                    android:textColor="@color/sample_app_text_color"
+
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/addCameraSwitchS"
@@ -1095,6 +1149,8 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="20dp"
                 android:text="COLOR"
+                android:textColor="@color/sample_app_measurement_value_text_color"
+
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addCameraSwitchLayoutCL" />
@@ -1127,7 +1183,8 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="Primary Button"
-                    android:textColor="@color/sample_app_black"
+                    android:textColor="@color/sample_app_text_color"
+
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/primaryColorSpinner"
@@ -1174,7 +1231,8 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="Light BG"
-                    android:textColor="@color/sample_app_black"
+                    android:textColor="@color/sample_app_text_color"
+
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/lightBGSpinner"
@@ -1201,12 +1259,204 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/textColorSelectorLayoutCL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lightBGSelectorLayoutCL">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textColorSelectorLabelACTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Text Color"
+                    android:textColor="@color/sample_app_text_color"
+
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textColorSpinner"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/textColorSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <View
+                    android:id="@+id/textColorValueBottomV"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/sample_app_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textColorSelectorLabelACTV"
+                    app:layout_constraintTop_toBottomOf="@+id/textColorSelectorLabelACTV" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/formsColorSelectorLayoutCL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textColorSelectorLayoutCL">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/formsColorSelectorLabelACTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Measurement Forms Color"
+                    android:textColor="@color/sample_app_text_color"
+
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/formsColorSpinner"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/formsColorSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <View
+                    android:id="@+id/formsColorValueBottomV"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/sample_app_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/formsColorSelectorLabelACTV"
+                    app:layout_constraintTop_toBottomOf="@+id/formsColorSelectorLabelACTV" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/measurementValuesColorSelectorLayoutCL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/formsColorSelectorLayoutCL">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/measurementValuesColorSelectorLabelACTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Measurement Value Color"
+                    android:textColor="@color/sample_app_text_color"
+
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/measurementValuesColorSpinner"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/measurementValuesColorSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <View
+                    android:id="@+id/measurementValuesColorValueBottomV"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/sample_app_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/measurementValuesColorSelectorLabelACTV"
+                    app:layout_constraintTop_toBottomOf="@+id/measurementValuesColorSelectorLabelACTV" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/valueDividersColorSelectorLayoutCL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/measurementValuesColorSelectorLayoutCL">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/valueDividersColorSelectorLabelACTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Dividers color"
+                    android:textColor="@color/sample_app_text_color"
+
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/valueDividersColorSpinner"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/valueDividersColorSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <View
+                    android:id="@+id/valueDividersColorValueBottomV"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/sample_app_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/valueDividersColorSelectorLabelACTV"
+                    app:layout_constraintTop_toBottomOf="@+id/valueDividersColorSelectorLabelACTV" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lightBGSelectorLayoutCL" />
+                app:layout_constraintTop_toBottomOf="@+id/valueDividersColorSelectorLayoutCL" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

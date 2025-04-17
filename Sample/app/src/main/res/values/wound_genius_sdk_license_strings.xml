@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="NO_LICENSE_KEY_DIALOG_TITLE" translatable="false">No License Key</string>
-    <string name="LICENSE_KEY_IS_INVALID_DIALOG_TITLE" translatable="false">License Issue Identified</string>
-    <string name="LICENSE_KEY_IS_INVALID_DIALOG_DESCRIPTION" translatable="false">License is not accepted. Please contact imito AG Support.</string>
-    <string name="NO_LICENSE_KEY_DIALOG_DESCRIPTION" translatable="false">Please configure the license key in Settings, or contact imito AG support to get it.</string>
-    <string name="LICENSE_ISSUE_DIALOG_TITLE" translatable="false">License Issue</string>
-    <string name="SDK_FEATURE_LOCKED_DIALOG_TITLE" translatable="false">Feature Locked</string>
-    <string name="SDK_FEATURE_LOCKED_DIALOG_DESCRIPTION" translatable="false">To use this feature another license is required. Please contact imito AG Support.</string>
+    <string name="WOUND_GENIUS_SDK_NO_LICENSE_KEY_DIALOG_TITLE" translatable="false">No License Key</string>
+    <string name="WOUND_GENIUS_SDK_LICENSE_KEY_IS_INVALID_DIALOG_TITLE" translatable="false">License Issue Identified</string>
+    <string name="WOUND_GENIUS_SDK_LICENSE_KEY_IS_INVALID_DIALOG_DESCRIPTION" translatable="false">License is not accepted. Please contact imito AG Support.</string>
+    <string name="WOUND_GENIUS_SDK_NO_LICENSE_KEY_DIALOG_DESCRIPTION" translatable="false">Please configure the license key in Settings, or contact imito AG support to get it.</string>
+    <string name="WOUND_GENIUS_SDK_LICENSE_ISSUE_DIALOG_TITLE" translatable="false">License Issue</string>
+    <string name="WOUND_GENIUS_SDK_SDK_FEATURE_LOCKED_DIALOG_TITLE" translatable="false">Feature Locked</string>
+    <string name="WOUND_GENIUS_SDK_SDK_FEATURE_LOCKED_DIALOG_DESCRIPTION" translatable="false">To use this feature another license is required. Please contact imito AG Support.</string>
 </resources>

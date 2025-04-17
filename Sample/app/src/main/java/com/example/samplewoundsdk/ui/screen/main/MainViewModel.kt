@@ -7,6 +7,7 @@ import com.example.samplewoundsdk.data.usecase.license.GetLicenseKeyUseCase
 import com.example.samplewoundsdk.data.usecase.user.GetUserIdUseCase
 import com.example.samplewoundsdk.ui.screen.base.AbsViewModel
 import com.example.woundsdk.di.WoundGeniusSDK
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -44,11 +45,12 @@ class MainViewModel @Inject constructor(
         add(
             getLicenseKeyUseCase.execute(params)
                 .subscribe({
-                    if (it.isNotEmpty()) {
-                        WoundGeniusSDK.setLicenseKey(it)
-                    }
-                }, {
 
+//                    if (it.isNotEmpty()) {
+                        WoundGeniusSDK.setLicenseKey(it)
+//                    }
+                }, {
+                     Log.d("woundGeniusError", it.stackTraceToString())
                 })
         )
     }
@@ -75,7 +77,7 @@ class MainViewModel @Inject constructor(
                 .subscribe({
                     _userIdLD.value = it
                 }, {
-
+                     Log.d("woundGeniusError", it.stackTraceToString())
                 })
         )
     }
