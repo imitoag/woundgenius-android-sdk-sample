@@ -390,9 +390,6 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
             if (draftMediaList.isNotEmpty()) {
                 imagesPagerVP2.setCurrentItem(0, true)
             }
-            imagesPagerVP2.beginFakeDrag()
-            imagesPagerVP2.fakeDragBy(150f)
-            imagesPagerVP2.endFakeDrag()
             imagesPagerVP2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
