@@ -407,8 +407,12 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                 }
 
                 if (availableFeatures.contains(SdkFeature.WOUND_DETECTION.featureName)) {
-                    val woundAutoDetectionMode =
+                    var woundAutoDetectionMode =
                         sdkFeaturesStatus.autoDetectionMode
+
+                    if (wasLicenseIncorrect){
+                        woundAutoDetectionMode = WoundAutoDetectionMode.WOUND
+                    }
 
                     Log.d("settings","woundAutoDetectionMode =  set = ${if (WoundGeniusSDK.getIsStomaFlow()) WoundAutoDetectionMode.NONE else woundAutoDetectionMode}")
                     WoundGeniusSDK.configure(
@@ -424,8 +428,8 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
 
 
                 if (availableFeatures.contains(SdkFeature.LIVE_WOUND_DETECTION.featureName)) {
-                    isEnabled =
-                        sdkFeaturesStatus.isLiveDetectionEnabled ?: false
+                    isEnabled = sdkFeaturesStatus.isLiveDetectionEnabled ?: false
+
                     if (wasLicenseIncorrect){
                         isEnabled = true
                     }

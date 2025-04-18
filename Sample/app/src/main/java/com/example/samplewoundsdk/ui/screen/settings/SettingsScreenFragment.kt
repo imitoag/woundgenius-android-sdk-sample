@@ -833,7 +833,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                         parent: AdapterView<*>,
                         view: View, position: Int, id: Long
                     ) {
-                        WoundGeniusSDK.setAutoDetectionMod(WoundAutoDetectionMode.values()[position])
+                        WoundGeniusSDK.configure(woundAutoDetectionMode = WoundAutoDetectionMode.values()[position])
                         if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                             viewModel?.saveFeatureStatus()
                         }

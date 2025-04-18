@@ -25,28 +25,6 @@
         tools:src="@tools:sample/backgrounds/scenic" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/measurementImageCL"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:animateLayoutChanges="true"
-        app:layout_constraintBottom_toBottomOf="@+id/imageSSIV"
-        app:layout_constraintEnd_toEndOf="@+id/imageSSIV"
-        app:layout_constraintStart_toStartOf="@+id/imageSSIV"
-        app:layout_constraintTop_toTopOf="@+id/imageSSIV">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/measurementImageACIV"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/videoPlayerContainerCl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

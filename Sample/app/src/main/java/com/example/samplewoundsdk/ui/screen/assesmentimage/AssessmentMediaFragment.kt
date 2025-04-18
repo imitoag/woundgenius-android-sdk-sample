@@ -24,8 +24,10 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.example.samplewoundsdk.R
@@ -44,6 +46,7 @@ import com.example.woundsdk.data.pojo.measurement.Outline
 import com.example.woundsdk.data.pojo.measurement.Vertices
 import com.example.woundsdk.ui.screen.measurementfullscreen.MeasurementFullScreenActivity
 import com.example.woundsdk.utils.image.drawstroke.StrokeScalableImageView
+import java.io.File
 import java.io.Serializable
 import kotlin.math.max
 
@@ -411,14 +414,13 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
             initPlayer(file)
         } else {
             initStrokeScalableImageView()
-            val bitmap = BitmapFactory.decodeFile(file)
             viewModel?.apply {
                 args?.apply {
                     binding.apply {
                         activity?.let { ctx ->
                             Glide.with(ctx)
                                 .asBitmap()
-                                .load(bitmap)
+                                .load(file)
                                 .listener(object : RequestListener<Bitmap> {
                                     override fun onLoadFailed(
                                         e: GlideException?,
@@ -447,11 +449,6 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                                 }).into(hidePhotoACIV)
                         }
 
-                        media.metadata?.let {
-                            Glide.with(this@AssessmentMediaFragment)
-                                .load(media.imagePath)
-                                .into(measurementImageACIV)
-                        }
                     }
                 }
             }
@@ -459,7 +456,6 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
         binding.apply {
             hidePhotoACIV.isVisible = args?.media?.measurementMethod != CameraMods.VIDEO_MODE
             imageSSIV.isVisible = args?.media?.measurementMethod != CameraMods.VIDEO_MODE
-            measurementImageCL.isVisible = args?.media?.measurementMethod != CameraMods.VIDEO_MODE
             videoPlayerContainerCl.isVisible = args?.media?.measurementMethod == CameraMods.VIDEO_MODE
         }
     }
