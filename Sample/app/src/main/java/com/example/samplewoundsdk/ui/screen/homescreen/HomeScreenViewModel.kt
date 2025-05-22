@@ -66,8 +66,8 @@ class HomeScreenViewModel @Inject constructor(
     val onSavedLicenseKeyReceived: LiveData<Unit?>
         get() = _onSavedLicenseKeyReceived
 
-    private val _sdkFeaturesStatusLD = MutableLiveData<SdkFeatureStatus>()
-    val sdkFeaturesStatusLD: LiveData<SdkFeatureStatus>
+    private val _sdkFeaturesStatusLD = MutableLiveData<SdkFeatureStatus?>()
+    val sdkFeaturesStatusLD: LiveData<SdkFeatureStatus?>
         get() = _sdkFeaturesStatusLD
 
     fun changeSelectedBodyParts(bodyParts: List<WoundGeniusBodyPart>) {
@@ -79,26 +79,26 @@ class HomeScreenViewModel @Inject constructor(
         add(
             getLicenseKeyUseCase.execute(params)
                 .subscribe({
-
-//                    if (it.isNotEmpty()) {
-                        WoundGeniusSDK.setLicenseKey(it)
-//                    }
+                    WoundGeniusSDK.setLicenseKey(it)
                     _onSavedLicenseKeyReceived.value = Unit
                     _onSavedLicenseKeyReceived.value = null
                 }, {
-         Log.d("woundGeniusError", it.stackTraceToString())
+                    Log.e("woundGeniusError", it.stackTraceToString())
                 })
         )
     }
 
     fun getFeatureStatus() {
+        
         val params = GetSdkFeaturesUseCase.Params.forGetSdkFeatures()
         add(
             getSdkFeaturesUseCase.execute(params)
                 .subscribe({
-                    _sdkFeaturesStatusLD.value = it
+                    if (sdkFeaturesStatusLD.value != it) {
+                        _sdkFeaturesStatusLD.value = it
+                    }
                 }, {
-                     Log.d("woundGeniusError", it.stackTraceToString())
+                    Log.e("woundGeniusError", it.stackTraceToString())
                 })
         )
     }
@@ -167,7 +167,7 @@ class HomeScreenViewModel @Inject constructor(
                     val newList = ArrayList(draftAssessments.sortedBy { it.id })
                     _assessmentsResponseLD.value = newList
                 }, {
-                     Log.d("woundGeniusError", it.stackTraceToString())
+                    Log.e("woundGeniusError", it.stackTraceToString())
                     handleError(it)
                 })
         )
@@ -186,7 +186,7 @@ class HomeScreenViewModel @Inject constructor(
             saveAssessmentToDBUseCase.execute(params)
                 .subscribe({
                 }, {
-                     Log.d("woundGeniusError", it.stackTraceToString())
+                    Log.e("woundGeniusError", it.stackTraceToString())
                 })
         )
     }
@@ -200,10 +200,11 @@ class HomeScreenViewModel @Inject constructor(
                 .subscribe({
                     _assessmentProgress.value = false
                 }, {
-                     Log.d("woundGeniusError", it.stackTraceToString())
+                    Log.e("woundGeniusError", it.stackTraceToString())
                     handleError(it)
                 })
         )
     }
+
 
 }

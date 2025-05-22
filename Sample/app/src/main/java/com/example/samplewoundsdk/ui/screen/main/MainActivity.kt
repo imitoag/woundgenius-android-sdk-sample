@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import com.example.samplewoundsdk.R
 import com.example.samplewoundsdk.databinding.SampleAppActivityMainBinding
 import com.example.samplewoundsdk.ui.screen.base.AbsActivity
@@ -28,6 +29,8 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
     override fun initListeners() {
 
     }
+
+    private var currentFragmentTag: String = HOME_FRAGMENT_TAG
 
     private fun getAllLocalizedStrings(context: Context, locale: Locale): HashMap<String, String> {
         val localizedStrings = HashMap<String, String>()
@@ -53,25 +56,34 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
         return localizedStrings
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(CURRENT_FRAGMENT_TAG, currentFragmentTag)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SampleAppActivityMainBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
+
+        if (savedInstanceState != null) {
+            currentFragmentTag = savedInstanceState.getString(CURRENT_FRAGMENT_TAG, HOME_FRAGMENT_TAG)
+        }
 
         viewModel?.apply {
             getUserId()
             userIdLD.observe(this@MainActivity) { userId ->
                 WoundGeniusSDK.setCustomerUserId(userId)
+                val existingFragment = supportFragmentManager.findFragmentByTag(currentFragmentTag)
                 if (WoundGeniusSDK.getWoundGeniusOperatingMode() == WoundGeniusOperatingMode.SDK) {
                     val isPresent = checkIfWhatsNewPresent()
 
                     if (!isPresent) {
-                        val fragment = HomeScreenFragment.newInstance()
-                        supportFragmentManager
-                            .beginTransaction()
-                            .replace(R.id.mainFl, fragment)
-                            .commit()
+
+                        if (existingFragment == null) {
+                            this@MainActivity.openHomeScreen()
+                        }
                     } else {
                         val currentAppVersion = WoundGeniusSDK.sdkReleaseVersion
                         val needToShow = WoundGeniusSDK.showWhatsNewIfNeeded(
@@ -85,11 +97,9 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
                         }
                     }
                 } else {
-                    val fragment = HomeScreenFragment.newInstance()
-                    supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.mainFl, fragment)
-                        .commit()
+                    if (existingFragment == null) {
+                        this@MainActivity.openHomeScreen()
+                    }
                 }
             }
 
@@ -109,11 +119,10 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
 
             openHomeScreenLD.observe(this@MainActivity) {
                 it ?: return@observe
-                val fragment = HomeScreenFragment.newInstance()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.mainFl, fragment)
-                    .commit()
+                val existingFragment = supportFragmentManager.findFragmentByTag(currentFragmentTag)
+                if (existingFragment == null) {
+                    this@MainActivity.openHomeScreen()
+                }
             }
         }
     }
@@ -126,13 +135,12 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
 
     override fun onResume() {
         super.onResume()
-        if (viewModel?.whatNewScreenIsShowed?.value == true) {
-            viewModel?.resetWhatNewScreenShowed()
-            val fragment = HomeScreenFragment.newInstance()
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.mainFl, fragment)
-                .commit()
+        val fragment = supportFragmentManager.findFragmentByTag(currentFragmentTag)
+        if (fragment == null) {
+            if (viewModel?.whatNewScreenIsShowed?.value == true) {
+                viewModel?.resetWhatNewScreenShowed()
+                openHomeScreen()
+            }
         }
     }
 
@@ -141,8 +149,33 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
 
     override fun onKeyboardClose() {}
 
+    private fun openHomeScreen(){
+        val fragment = HomeScreenFragment.newInstance()
+        currentFragmentTag = HOME_FRAGMENT_TAG
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.mainFl, fragment, currentFragmentTag)
+            .commit()
+    }
+
+
+    override fun openSettingsScreen() {
+        val fragment = SettingsScreenFragment.newInstance()
+        currentFragmentTag = SETTINGS_FRAGMENT_TAG
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.mainFl, fragment,currentFragmentTag)
+            .addToBackStack(fragment.javaClass.simpleName)
+            .commit()
+    }
+
     companion object {
         private const val WHATS_NEW_ZIP_FILE_PATTERN = "WhatsNew$.zip"
+        private const val HOME_FRAGMENT_TAG = "HOME_SCREEN_TAG"
+        private const val SETTINGS_FRAGMENT_TAG = "SETTINGS_FRAGMENT_TAG"
+        private const val CURRENT_FRAGMENT_TAG = "current_fragment_tag"
 
         fun open(context: Context) =
             context.startActivity(Intent(context, MainActivity::class.java).apply {
@@ -151,15 +184,5 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
                         Intent.FLAG_ACTIVITY_CLEAR_TASK
             })
     }
-
-    override fun openSettingsScreen() {
-        val fragment = SettingsScreenFragment.newInstance()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.mainFl, fragment)
-            .addToBackStack(fragment.javaClass.simpleName)
-            .commit()
-    }
-
 
 }

@@ -2,6 +2,7 @@ package com.example.samplewoundsdk.ui.screen.assesmentimage
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.graphics.Point
 import android.graphics.PointF
 import android.net.Uri
@@ -26,6 +27,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
@@ -39,7 +42,7 @@ import com.example.samplewoundsdk.data.pojo.media.MediaModel.Metadata.Measuremen
 import com.example.samplewoundsdk.data.pojo.media.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_WIDTH_PREFIX
 import com.example.samplewoundsdk.databinding.SampleAppFragmentAssessmentImageBinding
 import com.example.samplewoundsdk.ui.screen.base.AbsFragment
-import com.example.woundsdk.data.pojo.cameramod.CameraMods
+import com.example.woundsdk.data.pojo.camera.cameramod.CameraMods
 import com.example.woundsdk.data.pojo.measurement.ImageResolution
 import com.example.woundsdk.data.pojo.measurement.MeasurementMetadata
 import com.example.woundsdk.data.pojo.measurement.Outline
@@ -48,6 +51,8 @@ import com.example.woundsdk.ui.screen.measurementfullscreen.MeasurementFullScree
 import com.example.woundsdk.utils.image.drawstroke.StrokeScalableImageView
 import java.io.File
 import java.io.Serializable
+import java.nio.charset.Charset
+import java.security.MessageDigest
 import kotlin.math.max
 
 class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
@@ -398,7 +403,47 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                 imageSSIV.maxScale = 5f
                 imageSSIV.isNeedFillPolygon(false)
                 imageSSIV.isNeedWhiteStrokesOnVertex(true)
+
+                if (context?.resources?.configuration?.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE) {
+                    imageSSIV.post {
+                        val layoutParams =
+                            imageSSIV?.layoutParams as ConstraintLayout.LayoutParams
+                        layoutParams.width =
+                            (((imageSSIV?.measuredHeight ?: 0) * 4f) / 3f).toInt()
+                        imageSSIV?.layoutParams = layoutParams
+                    }
+                } else {
+
+                    imageSSIV.post {
+                        val layoutParams =
+                            imageSSIV?.layoutParams as ConstraintLayout.LayoutParams
+                        layoutParams.height =
+                            (((imageSSIV?.measuredWidth ?: 0) * 4f) / 3f).toInt()
+                        imageSSIV?.layoutParams = layoutParams
+                    }
+                }
             }
+        }
+    }
+
+    class RotateTransformation(private val rotationAngle: Float) : BitmapTransformation() {
+
+        override fun updateDiskCacheKey(messageDigest: MessageDigest) {
+            messageDigest.update(("rotate$rotationAngle").toByteArray(Charset.forName("UTF-8")))
+        }
+
+        override fun transform(pool: BitmapPool, toTransform: Bitmap, outWidth: Int, outHeight: Int): Bitmap {
+            val matrix = Matrix()
+            matrix.postRotate(rotationAngle)
+            return Bitmap.createBitmap(toTransform, 0, 0, toTransform.width, toTransform.height, matrix, true)
+        }
+
+        override fun equals(other: Any?): Boolean {
+            return other is RotateTransformation && other.rotationAngle == rotationAngle
+        }
+
+        override fun hashCode(): Int {
+            return rotationAngle.hashCode()
         }
     }
 

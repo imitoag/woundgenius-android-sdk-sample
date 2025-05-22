@@ -1133,4 +1133,34 @@
   <string name="WOUND_GENIUS_SDK_CAPTURE_WOUND_AND_RULER_STATUS">
     "Wunde &amp; Lineal erfassen"
   </string>
+  <string name="WOUND_GENIUS_SDK_MEASURE_LINES">
+    "Linien messen"
+  </string>
+  <string name="WOUND_GENIUS_SDK_ADD_AREA">
+    "Add Area"
+  </string>
+  <string name="WOUND_GENIUS_SDK_ADD_LINE">
+    "Add Line"
+  </string>
+  <string name="WOUND_GENIUS_SDK_LINE">
+    "Line"
+  </string>
+  <string name="WOUND_GENIUS_SDK_LINE_MEASUREMENT">
+    "Line Measurement"
+  </string>
+  <string name="WOUND_GENIUS_SDK_LINE_MEASUREMENT_POPUP_DESCRIPTION">
+    "Measure post-operative seams and other features using the new line measurement mode."
+  </string>
+  <string name="WOUND_GENIUS_SDK_OUTLINE">
+    "Outline"
+  </string>
+  <string name="WOUND_GENIUS_SDK_NO_OPEN_WOUND_DETECTED">
+    "Keine offene Wunde erkannt. Erwägen Sie, ein neues Foto aufzunehmen oder Messungen manuell über die obigen Schaltflächen hinzuzufügen."
+  </string>
+  <string name="WOUND_GENIUS_SDK_START_DRAWING_LINE">
+    "Beginnen Sie zu zeichnen, um Linien oder Kurven zu messen, oder ziehen Sie vorhandene Punkte, um sie anzupassen. Tippen Sie auf „Fertig“, um fortzufahren."
+  </string>
+  <string name="WOUND_GENIUS_SDK_MEASUREMENT_RESULTS_ZOOM">
+    "Zoomen"
+  </string>
 </resources>

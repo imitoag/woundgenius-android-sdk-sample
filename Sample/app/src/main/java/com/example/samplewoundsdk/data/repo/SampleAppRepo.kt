@@ -2,6 +2,7 @@ package com.example.samplewoundsdk.data.repo
 
 import com.example.samplewoundsdk.data.pojo.assessment.SampleAssessmentEntity
 import com.example.samplewoundsdk.data.pojo.license.SdkFeatureStatus
+import com.example.woundsdk.di.WoundGeniusSDK
 
 import io.reactivex.Observable
 
@@ -23,6 +24,6 @@ interface SampleAppRepo {
     fun getLicenseKey():Observable<String>
     fun getUserId():Observable<String>
 
-    fun saveSdkFeaturesStatus():Observable<Unit>
+    fun saveSdkFeaturesStatus(woundGeniusSDK: WoundGeniusSDK):Observable<Unit>
     fun getSdkFeaturesStatus():Observable<SdkFeatureStatus>
 }

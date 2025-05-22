@@ -12,7 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.samplewoundsdk.R
 import com.example.samplewoundsdk.data.pojo.assessment.SampleAssessmentEntity
 import com.example.samplewoundsdk.databinding.SampleAppLayoutAssessmentListItemBinding
-import com.example.woundsdk.data.pojo.cameramod.CameraMods
+import com.example.woundsdk.data.pojo.camera.cameramod.CameraMods
 import com.example.woundsdk.di.WoundGeniusSDK
 
 class AssessmentsAdapter(
@@ -117,7 +117,7 @@ class AssessmentsAdapter(
                         CameraMods.PHOTO_MODE -> {
                             this.root.context.getString(R.string.WOUND_GENIUS_SDK_PHOTO)
                         }
-                        CameraMods.MANUAL_MEASURE_MODE,CameraMods.MARKER_DETECT_MODE -> {
+                        CameraMods.MANUAL_MEASURE_MODE, CameraMods.MARKER_DETECT_MODE -> {
                             MEASUREMENT
                         }
                         CameraMods.VIDEO_MODE -> {

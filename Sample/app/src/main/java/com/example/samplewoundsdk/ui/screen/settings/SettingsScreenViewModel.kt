@@ -13,7 +13,6 @@ import com.example.samplewoundsdk.data.usecase.user.SaveUserIdUseCase
 import com.example.samplewoundsdk.ui.screen.base.AbsViewModel
 import com.example.woundsdk.data.pojo.license.LicenseValidateResult
 import com.example.woundsdk.di.WoundGeniusSDK
-import timber.log.Timber
 import javax.inject.Inject
 
 class SettingsScreenViewModel @Inject constructor(
@@ -56,19 +55,19 @@ class SettingsScreenViewModel @Inject constructor(
                 .subscribe({
                     validateSDKCustomerLicense()
                 }, {
-                     Log.d("woundGeniusError", it.stackTraceToString())
+                     Log.e("woundGeniusError", it.stackTraceToString())
                 })
         )
     }
 
-    fun saveFeatureStatus() {
-        val params = SaveSdkFeaturesUseCase.Params.forSaveSdkFeatures()
+    fun saveFeatureStatus(woundGeniusSDK: WoundGeniusSDK) {
+        val params = SaveSdkFeaturesUseCase.Params.forSaveSdkFeatures(woundGeniusSDK)
         add(
             saveSdkFeaturesUseCase.execute(params)
                 .subscribe({
 
                 }, {
-                     Log.d("woundGeniusError", it.stackTraceToString())
+                     Log.e("woundGeniusError", it.stackTraceToString())
                 })
         )
     }
@@ -80,7 +79,7 @@ class SettingsScreenViewModel @Inject constructor(
                 .subscribe({
                     _sdkFeaturesStatusLD.value = it
                 }, {
-                     Log.d("woundGeniusError", it.stackTraceToString())
+                     Log.e("woundGeniusError", it.stackTraceToString())
                 })
         )
     }
@@ -89,12 +88,12 @@ class SettingsScreenViewModel @Inject constructor(
         val licenseVerifyResult = WoundGeniusSDK.validateLicenseKey()
 
         if (licenseVerifyResult is LicenseValidateResult.onSuccess) {
-            Log.d("settings","licenseVerifyResult onSuccess")
+
 
             _newAvailableFeatures.postValue(licenseVerifyResult.features)
 
         } else {
-            Log.d("settings","licenseVerifyResult onFail")
+
             _newAvailableFeatures.postValue(emptyList())
 
         }
@@ -107,7 +106,7 @@ class SettingsScreenViewModel @Inject constructor(
                 .subscribe({
 
                 }, {
-                     Log.d("woundGeniusError", it.stackTraceToString())
+                     Log.e("woundGeniusError", it.stackTraceToString())
                 })
         )
     }
@@ -119,7 +118,7 @@ class SettingsScreenViewModel @Inject constructor(
                 .subscribe({
                     _userIdLD.value = it
                 }, {
-                     Log.d("woundGeniusError", it.stackTraceToString())
+                     Log.e("woundGeniusError", it.stackTraceToString())
                 })
         )
     }

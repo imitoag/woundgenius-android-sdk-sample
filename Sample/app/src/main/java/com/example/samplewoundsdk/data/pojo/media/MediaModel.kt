@@ -2,7 +2,7 @@ package com.example.samplewoundsdk.data.pojo.media
 
 import androidx.room.TypeConverter
 import com.example.woundsdk.data.pojo.bodypart.WoundGeniusBodyPart
-import com.example.woundsdk.data.pojo.cameramod.CameraMods
+import com.example.woundsdk.data.pojo.camera.cameramod.CameraMods
 import com.example.woundsdk.data.pojo.measurement.ImageResolution
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName

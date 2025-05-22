@@ -43,16 +43,50 @@ class SampleAppRepoImpl(
         sharedMemory.getUserId()
     }.subscribeOn(Schedulers.io())
 
-    override fun saveSdkFeaturesStatus(): Observable<Unit> = Observable.fromCallable {
-        sharedMemory.setAvailableModes(WoundGeniusSDK.getAvailableModes())
-        sharedMemory.setIsMultipleOutlinesSupported(WoundGeniusSDK.getIsMultipleOutlinesEnabled())
-        sharedMemory.setIsStomaFlowEnabled(WoundGeniusSDK.getIsStomaFlow())
-        sharedMemory.setAutoDetectionMode(WoundGeniusSDK.getAutoDetectionMod()?: WoundAutoDetectionMode.NONE)
-        sharedMemory.setMaxNumberOfMedia(WoundGeniusSDK.getMaxNumberOfMedia())
-        sharedMemory.setIsLiveDetectionEnabled(WoundGeniusSDK.getIsLiveDetectionEnabled()?: false)
-        sharedMemory.setIsMediaFromGalleryAllowed(WoundGeniusSDK.getIsAddFromLocalStorageAvailable())
-        sharedMemory.setIsBodyPickerAllowed(WoundGeniusSDK.getIsAddBodyPickerAvailable())
-        sharedMemory.setIsFrontalCameraSupported(WoundGeniusSDK.getIsFrontCameraUsageAllowed())
+    override fun saveSdkFeaturesStatus(woundGeniusSDK: WoundGeniusSDK): Observable<Unit> = Observable.fromCallable {
+        if (woundGeniusSDK.getAvailableModes() != sharedMemory.getAvailableModes()) {
+            sharedMemory.setAvailableModes(woundGeniusSDK.getAvailableModes())
+        }
+
+        if (woundGeniusSDK.getIsMultipleOutlinesEnabled() != sharedMemory.getIsMultipleOutlinesSupported()) {
+            sharedMemory.setIsMultipleOutlinesSupported(woundGeniusSDK.getIsMultipleOutlinesEnabled())
+        }
+
+        if (woundGeniusSDK.getIsStomaFlow() != sharedMemory.getIsStomaFlowEnabled()) {
+            sharedMemory.setIsStomaFlowEnabled(woundGeniusSDK.getIsStomaFlow())
+        }
+
+        val newAutoDetectionMode = woundGeniusSDK.getAutoDetectionMod() ?: WoundAutoDetectionMode.NONE
+        if (newAutoDetectionMode != sharedMemory.getAutoDetectionMode()) {
+            sharedMemory.setAutoDetectionMode(newAutoDetectionMode)
+        }
+
+        if (woundGeniusSDK.getMaxNumberOfMedia() != sharedMemory.getMaxNumberOfMedia()) {
+            sharedMemory.setMaxNumberOfMedia(woundGeniusSDK.getMaxNumberOfMedia())
+        }
+
+        val newIsLiveDetectionEnabled = woundGeniusSDK.getIsLiveDetectionEnabled() ?: false
+        if (newIsLiveDetectionEnabled != sharedMemory.getIsLiveDetectionEnabled()) {
+            sharedMemory.setIsLiveDetectionEnabled(newIsLiveDetectionEnabled)
+        }
+
+        if (woundGeniusSDK.getIsAddFromLocalStorageAvailable() != sharedMemory.getIsMediaFromGalleryAllowed()) {
+            sharedMemory.setIsMediaFromGalleryAllowed(woundGeniusSDK.getIsAddFromLocalStorageAvailable())
+        }
+
+        if (woundGeniusSDK.getIsAddBodyPickerAvailable() != sharedMemory.getIsBodyPickerAllowed()) {
+            sharedMemory.setIsBodyPickerAllowed(woundGeniusSDK.getIsAddBodyPickerAvailable())
+        }
+
+        if (woundGeniusSDK.getIsFrontCameraUsageAllowed() != sharedMemory.getIsFrontalCameraSupported()) {
+            sharedMemory.setIsFrontalCameraSupported(woundGeniusSDK.getIsFrontCameraUsageAllowed())
+
+        }
+
+        if (woundGeniusSDK.getIsLandscapeSupported() != sharedMemory.getIsLandScapeSupported()) {
+            sharedMemory.setIsLandScapeSupported(woundGeniusSDK.getIsLandscapeSupported())
+        }
+
         Unit
     }.subscribeOn(Schedulers.io())
 
@@ -66,7 +100,8 @@ class SampleAppRepoImpl(
             isLiveDetectionEnabled = sharedMemory.getIsLiveDetectionEnabled(),
             isMediaFromGalleryAllowed = sharedMemory.getIsMediaFromGalleryAllowed(),
             isBodyPickerAllowed = sharedMemory.getIsBodyPickerAllowed(),
-            isFrontalCameraSupported = sharedMemory.getIsFrontalCameraSupported()
+            isFrontalCameraSupported = sharedMemory.getIsFrontalCameraSupported(),
+            isLandScapeSupported = sharedMemory.getIsLandScapeSupported()
         )
     }.subscribeOn(Schedulers.io())
 

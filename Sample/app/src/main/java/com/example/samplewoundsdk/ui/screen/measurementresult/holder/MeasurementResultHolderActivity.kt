@@ -2,9 +2,12 @@ package com.example.samplewoundsdk.ui.screen.measurementresult.holder
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.res.ColorStateList
+import android.content.res.Configuration
 import android.graphics.Point
 import android.os.Bundle
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -20,6 +23,7 @@ import com.example.samplewoundsdk.databinding.SampleAppActivityMeasurementResult
 import com.example.samplewoundsdk.ui.screen.base.AbsActivity
 import com.example.woundsdk.data.pojo.measurement.MeasurementMetadata
 import com.example.woundsdk.di.WoundGeniusSDK
+import com.example.woundsdk.utils.LandscapeUtils.isSDKSupportPortraitOnly
 import java.io.Serializable
 import java.text.DecimalFormat
 
@@ -52,9 +56,25 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SampleAppActivityMeasurementResultHolderBinding.inflate(layoutInflater)
+
+        requestedOrientation = if (isSDKSupportPortraitOnly(WoundGeniusSDK.getIsLandscapeSupported(),this@MeasurementResultHolderActivity))
+            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT else
+            ActivityInfo.SCREEN_ORIENTATION_FULL_USER
+
+        val container = binding.measurementResultLayoutCL
+        container.addView(object : View(this) {
+            override fun onConfigurationChanged(newConfig: Configuration?) {
+                super.onConfigurationChanged(newConfig)
+                requestedOrientation = if (isSDKSupportPortraitOnly(WoundGeniusSDK.getIsLandscapeSupported(),this@MeasurementResultHolderActivity))
+                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT else
+                    ActivityInfo.SCREEN_ORIENTATION_FULL_USER
+            }
+        })
+
         setContentView(binding.root)
 
         binding.measurementsItemsRV.adapter = measurementsItemsAdapter

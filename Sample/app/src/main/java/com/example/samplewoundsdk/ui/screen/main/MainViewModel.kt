@@ -50,7 +50,7 @@ class MainViewModel @Inject constructor(
                         WoundGeniusSDK.setLicenseKey(it)
 //                    }
                 }, {
-                     Log.d("woundGeniusError", it.stackTraceToString())
+                     Log.e("woundGeniusError", it.stackTraceToString())
                 })
         )
     }
@@ -77,7 +77,7 @@ class MainViewModel @Inject constructor(
                 .subscribe({
                     _userIdLD.value = it
                 }, {
-                     Log.d("woundGeniusError", it.stackTraceToString())
+                     Log.e("woundGeniusError", it.stackTraceToString())
                 })
         )
     }

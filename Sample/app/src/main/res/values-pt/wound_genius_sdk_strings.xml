@@ -1021,7 +1021,9 @@
   <string name="WOUND_GENIUS_SDK_CALIBRATION">
     "Calibration"
   </string>
-  <string name="WOUND_GENIUS_SDK_TAKE_PHOTO"/>
+  <string name="WOUND_GENIUS_SDK_TAKE_PHOTO">
+    "Tirar Foto"
+  </string>
   <string name="WOUND_GENIUS_SDK_NEED_HELP_DIALOG_title">
     "Precisa de ajuda?"
   </string>
@@ -1075,5 +1077,35 @@
   </string>
   <string name="WOUND_GENIUS_SDK_CAPTURE_WOUND_AND_RULER_STATUS">
     "Captura de Ferida e Régua"
+  </string>
+  <string name="WOUND_GENIUS_SDK_MEASURE_LINES">
+    "Medir linhas"
+  </string>
+  <string name="WOUND_GENIUS_SDK_ADD_AREA">
+    "Add Area"
+  </string>
+  <string name="WOUND_GENIUS_SDK_ADD_LINE">
+    "Add Line"
+  </string>
+  <string name="WOUND_GENIUS_SDK_LINE">
+    "Line"
+  </string>
+  <string name="WOUND_GENIUS_SDK_LINE_MEASUREMENT">
+    "Line Measurement"
+  </string>
+  <string name="WOUND_GENIUS_SDK_LINE_MEASUREMENT_POPUP_DESCRIPTION">
+    "Measure post-operative seams and other features using the new line measurement mode."
+  </string>
+  <string name="WOUND_GENIUS_SDK_OUTLINE">
+    "Outline"
+  </string>
+  <string name="WOUND_GENIUS_SDK_NO_OPEN_WOUND_DETECTED">
+    "Nenhuma ferida aberta detectada. Considere tirar uma nova foto ou adicionar medidas manualmente usando os botões acima."
+  </string>
+  <string name="WOUND_GENIUS_SDK_START_DRAWING_LINE">
+    "Comece a desenhar para medir linhas ou curvas, ou arraste os pontos existentes para ajustar. Toque em Concluir para continuar."
+  </string>
+  <string name="WOUND_GENIUS_SDK_MEASUREMENT_RESULTS_ZOOM">
+    "Ampliar"
   </string>
 </resources>

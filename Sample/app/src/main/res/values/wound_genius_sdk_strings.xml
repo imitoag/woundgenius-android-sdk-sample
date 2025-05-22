@@ -39,7 +39,7 @@
     "Complete the path to proceed with measurement."
   </string>
   <string name="WOUND_GENIUS_SDK_TAP_MEASURE_TO_COUNTINUE">
-    "All good. Tap Measure to continue with assessment."
+    "All good. Tap Confirm to continue with assessment."
   </string>
   <string name="WOUND_GENIUS_SDK_RESULT_TITLE">
     "Measurement Results"
@@ -360,11 +360,11 @@
 \"title\":\"How to Use?\",
 \"htmlBodyKey\":\"CALIBRATION_MARKER_HOW_TO_USE_HTML\"},
 {
-\"title\":\"How to get Calibration Markers?\",
+\"title\":\"How to get Calibration Markers?\", 
 \"htmlBodyKey\":\"CALIBRATION_MARKER_HOW_TO_GET_MARKERS_HTML\"
 },
 {
-\"title\": \"How is the Wound Size Calculated?\",
+\"title\": \"How is the Wound Size Calculated?\", 
 \"htmlBodyKey\": \"CALIBRATION_MARKER_HOW_WOUND_SIZE_CALCULATED_HTML\"
 }]"
   </string>
@@ -373,7 +373,7 @@
 \"title\":\"How to Use?\",
 \"htmlBodyKey\":\"RULER_HOW_TO_USE_HTML\"},
 {
-\"title\": \"How is the Wound Size Calculated?\",
+\"title\": \"How is the Wound Size Calculated?\", 
 \"htmlBodyKey\": \"RULER_HOW_WOUND_SIZE_CALCULATED_HTML\"
 }]"
   </string>
@@ -445,7 +445,7 @@
                         The app will notify you when the device is not parallel to the marker.
                     &lt;/li&gt;
                     &lt;li class=\"icon-zoom\"&gt;
-                        For smaller wounds, maintain a closer distance to the wound.
+                        For smaller wounds, maintain a closer distance to the wound. 
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
@@ -519,7 +519,7 @@
                 Hold your device parallel and close enough to the wound, ensuring the wound occupies at least 1/3 of the screen.
                 &lt;ul&gt;
                     &lt;li class=\"icon-zoom\"&gt;
-                        For smaller wounds, maintain a closer distance to the wound.
+                        For smaller wounds, maintain a closer distance to the wound. 
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
@@ -587,11 +587,11 @@
 \"title\":\"How to Use?\",
 \"htmlBodyKey\":\"CALIBRATION_MARKER_HOW_TO_USE_LIVE_WOUND_AUTODETECT_HTML\"},
 {
-\"title\":\"How to get Calibration Markers?\",
+\"title\":\"How to get Calibration Markers?\", 
 \"htmlBodyKey\":\"CALIBRATION_MARKER_HOW_TO_GET_MARKERS_HTML\"
 },
 {
-\"title\": \"How is the Wound Size Calculated?\",
+\"title\": \"How is the Wound Size Calculated?\", 
 \"htmlBodyKey\": \"CALIBRATION_MARKER_HOW_WOUND_SIZE_CALCULATED_HTML\"
 }]"
   </string>
@@ -600,7 +600,7 @@
 \"title\":\"How to Use?\",
 \"htmlBodyKey\":\"RULER_HOW_TO_USE_LIVE_WOUND_AUTODETECT_HTML\"},
 {
-\"title\": \"How is the Wound Size Calculated?\",
+\"title\": \"How is the Wound Size Calculated?\", 
 \"htmlBodyKey\": \"RULER_HOW_WOUND_SIZE_CALCULATED_HTML\"
 }]"
   </string>
@@ -632,7 +632,7 @@
                 Hold your device parallel and close enough to the wound, ensuring the wound occupies at least 1/3 of the screen.
                 &lt;ul&gt;
                     &lt;li class=\"icon-zoom\"&gt;
-                        For smaller wounds, maintain a closer distance to the wound.
+                        For smaller wounds, maintain a closer distance to the wound. 
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
@@ -722,9 +722,9 @@
                 &lt;ul&gt;
                    &lt;li class=\"icon-nonparallel\"&gt;
                         The app will notify you when the device is not parallel to the marker.
-                    &lt;/li&gt;
+                    &lt;/li&gt;    
                     &lt;li class=\"icon-zoom\"&gt;
-                        For smaller wounds, maintain a closer distance to the wound.
+                        For smaller wounds, maintain a closer distance to the wound. 
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
@@ -1078,7 +1078,7 @@
     "Calibration"
   </string>
   <string name="WOUND_GENIUS_SDK_TAKE_PHOTO">
-    "Take Photo"
+    "Take a Photo"
   </string>
   <string name="WOUND_GENIUS_SDK_NEED_HELP_DIALOG_title">
     "Need Help?"
@@ -1133,5 +1133,35 @@
   </string>
   <string name="WOUND_GENIUS_SDK_CAPTURE_WOUND_AND_RULER_STATUS">
     "Capture Wound &amp; Ruler"
+  </string>
+  <string name="WOUND_GENIUS_SDK_MEASURE_LINES">
+    "Measure Lines"
+  </string>
+  <string name="WOUND_GENIUS_SDK_ADD_AREA">
+    "Add Area"
+  </string>
+  <string name="WOUND_GENIUS_SDK_ADD_LINE">
+    "Add Line"
+  </string>
+  <string name="WOUND_GENIUS_SDK_LINE">
+    "Line"
+  </string>
+  <string name="WOUND_GENIUS_SDK_LINE_MEASUREMENT">
+    "Line Measurement"
+  </string>
+  <string name="WOUND_GENIUS_SDK_LINE_MEASUREMENT_POPUP_DESCRIPTION">
+    "Measure post-operative seams and other features using the new line measurement mode."
+  </string>
+  <string name="WOUND_GENIUS_SDK_OUTLINE">
+    "Outline"
+  </string>
+  <string name="WOUND_GENIUS_SDK_NO_OPEN_WOUND_DETECTED">
+    "No open wound detected. Consider Re-taking a photo or add measurements manually by using buttons above."
+  </string>
+  <string name="WOUND_GENIUS_SDK_START_DRAWING_LINE">
+    "Start drawing to measure lines or curves or drag points of an exiting ones to adjust. Tap Done to proceed."
+  </string>
+  <string name="WOUND_GENIUS_SDK_MEASUREMENT_RESULTS_ZOOM">
+    "Zoom"
   </string>
 </resources>

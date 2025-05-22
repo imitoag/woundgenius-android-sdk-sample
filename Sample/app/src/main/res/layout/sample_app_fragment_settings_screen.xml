@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/settingScreenContainer"
     android:background="@color/sample_app_tutorial_background"
     android:orientation="vertical">
 
@@ -1141,6 +1142,65 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/isLandscapeSupportedLayoutCL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addCameraSwitchLayoutCL">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/isLandscapeSupportedLabelACTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="Landscape supported"
+                    android:textColor="@color/sample_app_text_color"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/isLandScapeSupportedS"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/isLandScapeSupportedS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/isLandscapeSupportedLabelACTV"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/isLandscapeSupportedLabelACTV" />
+
+                <View
+                    android:id="@+id/isLandScapeSupportedBottomV"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/sample_app_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/isLandscapeSupportedLabelACTV"
+                    app:layout_constraintTop_toBottomOf="@+id/isLandscapeSupportedLabelACTV" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/isLandscapeSupportedBlockerCL"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/sample_app_color_black_opacity_cc"
+                android:clickable="true"
+                android:elevation="7dp"
+                android:focusable="true"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/isLandscapeSupportedLayoutCL"
+                app:layout_constraintEnd_toEndOf="@+id/isLandscapeSupportedLayoutCL"
+                app:layout_constraintStart_toStartOf="@+id/isLandscapeSupportedLayoutCL"
+                app:layout_constraintTop_toTopOf="@+id/isLandscapeSupportedLayoutCL" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/colorLabelACTV"
                 android:layout_width="wrap_content"
@@ -1153,7 +1213,7 @@
 
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addCameraSwitchLayoutCL" />
+                app:layout_constraintTop_toBottomOf="@+id/isLandscapeSupportedLayoutCL" />
 
             <View
                 android:id="@+id/colorValueTopV"

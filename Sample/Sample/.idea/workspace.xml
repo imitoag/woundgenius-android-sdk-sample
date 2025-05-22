@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f69afc81-88ca-4eef-8a9b-c35f5f14ffa7" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\MaBoRo\.android\avd\Pixel_2_API_28.avd]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/woundsdk">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/app">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Wound SDK Sample" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Object" />
+        <option value="layoutResourceFile" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin Enum" />
+        <option value="Kotlin Class" />
+        <option value="valueResourceFile" />
+      </list>
+    </option>
+  </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="BUILD_TARGET_KEY" value="apk" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2LSEuNKKyctcXl19JB4Ou0Lx1kp" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ApkExportedModule": "Wound_SDK_Sample.app",
+    "DEBUGGABLE_DEVICE": "Pixel_4_API_30 [emulator-5554]",
+    "DEBUGGABLE_PROCESS": "com.example.samplewoundsdk",
+    "DEBUGGER_ID": "Auto",
+    "ResourceManagerPrefKey.ResourceType": "STRING",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHOW_ALL_PROCESSES": "false",
+    "android-custom-viewC:/Users/MaBoRo/.gradle/caches/modules-2/files-2.1/com.davemorrissey.labs/subsampling-scale-image-view/3.10.0/f8b6fcce92537289e633d523c0e75cc5501ae6f5/subsampling-scale-image-view-3.10.0-sources.jar!/com/davemorrissey/labs/subscaleview/SubsamplingScaleImageView.java_SELECTED": "SubsamplingScaleImageView",
+    "android-custom-viewC:/Users/MaBoRo/.gradle/caches/modules-2/files-2.1/com.google.android.flexbox/flexbox/3.0.0/ab0cfea1daeb94f54c8f0b4f5d1e34882d97e37b/flexbox-3.0.0-sources.jar!/com/google/android/flexbox/FlexboxLayout.java_SELECTED": "FlexboxLayout",
+    "android-custom-viewC:/Users/MaBoRo/AppData/Local/Android/Sdk/sources/android-33/android/view/View.java_SELECTED": "View",
+    "android-custom-viewD:/Android_WoundGeniusSDK/app/src/main/java/com/example/samplewoundsdk/ui/screen/view/MeasurementResultItemView.kt_SELECTED": "MeasurementResultItemView",
+    "android-custom-viewD:/Android_WoundGeniusSDK/app/src/main/java/com/example/samplewoundsdk/ui/screen/view/SampleMeasurementResultItemView.kt_SELECTED": "SampleMeasurementResultItemView",
+    "android-custom-viewD:/Android_WoundGeniusSDK/app/src/main/java/com/example/samplewoundsdk/utils/image/drawstroke/MeasureRulerLine.java_SELECTED": "MeasureRulerLine",
+    "android-custom-viewD:/Android_WoundGeniusSDK/app/src/main/java/com/example/samplewoundsdk/utils/image/drawstroke/StrokeScalableImageView.kt_SELECTED": "StrokeScalableImageView",
+    "android-custom-viewD:/Android_WoundGeniusSDK/woundsdk/src/main/java/com/example/woundsdk/ui/view/MeasurementResultItemView.kt_SELECTED": "MeasurementResultItemView",
+    "android-custom-viewD:/Android_WoundGeniusSDK/woundsdk/src/main/java/com/example/woundsdk/ui/view/MeasurementResultItemViewCallback.kt_SELECTED": "MeasurementResultItemView",
+    "android-custom-viewD:/Android_WoundGeniusSDK/woundsdk/src/main/java/com/example/woundsdk/utils/bodypicker/BodyView.java_SELECTED": "BodyView",
+    "android-custom-viewD:/Android_WoundGeniusSDK/woundsdk/src/main/java/com/example/woundsdk/utils/camera/IdentifyViewfinderView.kt_SELECTED": "IdentifyViewfinderView",
+    "android-custom-viewD:/Android_WoundGeniusSDK/woundsdk/src/main/java/com/example/woundsdk/utils/image/drawstroke/MeasureRulerLine.java_SELECTED": "MeasureRulerLine",
+    "android-custom-viewD:/Android_WoundGeniusSDK/woundsdk/src/main/java/com/example/woundsdk/utils/image/drawstroke/StrokeScalableImageView.kt_SELECTED": "StrokeScalableImageView",
+    "android-custom-viewD:/WoundSDK/app/src/main/java/com/example/samplewoundsdk/ui/screen/view/MeasurementResultItemView.kt_SELECTED": "MeasurementResultItemView",
+    "android-custom-viewD:/WoundSDK/app/src/main/java/com/example/samplewoundsdk/utils/image/drawstroke/DrawZoomView.java_SELECTED": "DrawZoomView",
+    "android-custom-viewD:/WoundSDK/app/src/main/java/com/example/samplewoundsdk/utils/image/drawstroke/MeasureRulerLine.java_SELECTED": "MeasureRulerLine",
+    "android-custom-viewD:/WoundSDK/app/src/main/java/com/example/samplewoundsdk/utils/image/drawstroke/StrokeScalableImageView.kt_SELECTED": "StrokeScalableImageView",
+    "android-custom-viewD:/WoundSDK/woundsdk/src/main/java/com/example/woundsdk/ui/view/MeasurementResultItemView.kt_SELECTED": "MeasurementResultItemView",
+    "android-custom-viewD:/WoundSDK/woundsdk/src/main/java/com/example/woundsdk/utils/bodypicker/BodyView.java_SELECTED": "BodyView",
+    "android-custom-viewD:/WoundSDK/woundsdk/src/main/java/com/example/woundsdk/utils/camera/IdentifyViewfinderView.kt_SELECTED": "IdentifyViewfinderView",
+    "android-custom-viewD:/WoundSDK/woundsdk/src/main/java/com/example/woundsdk/utils/camera/ViewPagerOnTapEvent.kt_SELECTED": "ViewPagerOnTapEvent",
+    "android-custom-viewD:/WoundSDK/woundsdk/src/main/java/com/example/woundsdk/utils/camera/ViewfinderView.kt_SELECTED": "ViewfinderView",
+    "android-custom-viewD:/WoundSDK/woundsdk/src/main/java/com/example/woundsdk/utils/image/drawstroke/DrawZoomView.java_SELECTED": "DrawZoomView",
+    "android-custom-viewD:/WoundSDK/woundsdk/src/main/java/com/example/woundsdk/utils/image/drawstroke/MeasureRulerLine.java_SELECTED": "MeasureRulerLine",
+    "android-custom-viewD:/WoundSDK/woundsdk/src/main/java/com/example/woundsdk/utils/image/drawstroke/StrokeScalableImageView.kt_SELECTED": "StrokeScalableImageView",
+    "android-custom-viewD:/WoundSDK/woundsdk/src/main/java/com/example/woundsdk/utils/image/rulermeasure/RulerMeasureScalableImageView.kt_SELECTED": "RulerMeasureScalableImageView",
+    "cidr.known.project.marker": "true",
+    "last_directory_selection": "D:/WoundSDK/app/src/main/res/mipmap-hdpi",
+    "last_opened_file_path": "D:/cutimed",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "experimental"
+  }
+}]]></component>
+  <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Properties" />
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Android_WoundGeniusSDK\app\src\main\res\values-pt" />
+      <recent name="D:\Android_WoundGeniusSDK\app\src\main\res\values-fr" />
+      <recent name="D:\Android_WoundGeniusSDK\app\src\main\res\values-es" />
+      <recent name="D:\Android_WoundGeniusSDK\app\src\main\res\values-de" />
+      <recent name="D:\Android_WoundGeniusSDK\app\src\main\res\values" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Android_WoundGeniusSDK\app" />
+      <recent name="D:\Android_WoundGeniusSDK" />
+      <recent name="D:\WoundSDK\woundsdk\src\main\res\drawable" />
+      <recent name="D:\WoundSDK\woundsdk\src\main\java\com\example\woundsdk\data" />
+      <recent name="D:\WoundSDK\app\src\main\res\layout" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.example.woundsdk.ui.screen.measurecamera" />
+      <recent name="com.example.samplewoundsdk.utils" />
+      <recent name="com.example.woundsdk.pojo.image.entity" />
+      <recent name="com.example.woundsdk" />
+      <recent name="com.example.samplewoundsdk" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.example.samplewoundsdk.utils" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.example.samplewoundsdk.data.pojo.measurement" />
+      <recent name="com.example.woundsdk.ui.screen.bodypicker" />
+      <recent name="com.example.samplewoundsdk.di.modules" />
+      <recent name="com.example.samplewoundsdk.ui.screen.view" />
+      <recent name="com.example.samplewoundsdk.ui.screen.measurementresult.holder" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="gradle publish" />
+      <command value="gradle woundsdk:publish " />
+    </option>
+  </component>
+  <component name="RunManager" selected="Android App.app">
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="Wound_SDK_Sample.app.main" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Android_WoundGeniusSDK [BodyPartsScript]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="BodyPartsScript" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Android_WoundGeniusSDK [bodyUnzip]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="bodyUnzip" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Android_WoundGeniusSDK [publish]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="publish" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Android_WoundGeniusSDK [uploadArchives]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="uploadArchives" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Android_WoundGeniusSDK [woundsdk:publish]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="woundsdk:publish" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Android App.app" />
+      <item itemvalue="Gradle.Android_WoundGeniusSDK [BodyPartsScript]" />
+      <item itemvalue="Gradle.Android_WoundGeniusSDK [bodyUnzip]" />
+      <item itemvalue="Gradle.Android_WoundGeniusSDK [publish]" />
+      <item itemvalue="Gradle.Android_WoundGeniusSDK [uploadArchives]" />
+      <item itemvalue="Gradle.Android_WoundGeniusSDK [woundsdk:publish]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.Android_WoundGeniusSDK [woundsdk:publish]" />
+        <item itemvalue="Gradle.Android_WoundGeniusSDK [uploadArchives]" />
+        <item itemvalue="Gradle.Android_WoundGeniusSDK [publish]" />
+        <item itemvalue="Gradle.Android_WoundGeniusSDK [bodyUnzip]" />
+        <item itemvalue="Gradle.Android_WoundGeniusSDK [BodyPartsScript]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f69afc81-88ca-4eef-8a9b-c35f5f14ffa7" name="Changes" comment="" />
+      <created>1675856304614</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1675856304614</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/homescreen/AssessmentsAdapter.kt</url>
+          <line>68</line>
+          <option name="timeStamp" value="272" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>148</line>
+          <option name="timeStamp" value="287" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>147</line>
+          <option name="timeStamp" value="289" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>293</line>
+          <option name="timeStamp" value="290" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>294</line>
+          <option name="timeStamp" value="291" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>295</line>
+          <option name="timeStamp" value="292" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>296</line>
+          <option name="timeStamp" value="293" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>297</line>
+          <option name="timeStamp" value="294" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>298</line>
+          <option name="timeStamp" value="295" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/measurementresult/holder/AssessmentImagesPagerAdapter.kt</url>
+          <line>17</line>
+          <option name="timeStamp" value="298" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/measurementresult/holder/MeasurementResultHolderActivity.kt</url>
+          <line>206</line>
+          <option name="timeStamp" value="299" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>427</line>
+          <option name="timeStamp" value="302" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>425</line>
+          <option name="timeStamp" value="304" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>426</line>
+          <option name="timeStamp" value="305" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurementfullscreen/MeasurementFullScreenActivity.kt</url>
+          <line>214</line>
+          <option name="timeStamp" value="320" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurementfullscreen/MeasurementFullScreenActivity.kt</url>
+          <line>169</line>
+          <option name="timeStamp" value="321" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurementfullscreen/MeasurementFullScreenActivity.kt</url>
+          <line>119</line>
+          <option name="timeStamp" value="327" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/measurementfullscreen/MeasurementFullScreenActivity.kt</url>
+          <line>118</line>
+          <option name="timeStamp" value="345" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/measurementfullscreen/MeasurementFullScreenActivity.kt</url>
+          <line>119</line>
+          <option name="timeStamp" value="346" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/measurementfullscreen/MeasurementFullScreenActivity.kt</url>
+          <line>120</line>
+          <option name="timeStamp" value="347" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/measurementfullscreen/MeasurementFullScreenActivity.kt</url>
+          <line>121</line>
+          <option name="timeStamp" value="348" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/measurementfullscreen/MeasurementFullScreenActivity.kt</url>
+          <line>122</line>
+          <option name="timeStamp" value="349" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/measurementfullscreen/MeasurementFullScreenActivity.kt</url>
+          <line>123</line>
+          <option name="timeStamp" value="350" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/homescreen/HomeScreenFragment.kt</url>
+          <line>64</line>
+          <option name="timeStamp" value="351" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/homescreen/HomeScreenFragment.kt</url>
+          <line>66</line>
+          <option name="timeStamp" value="352" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/homescreen/HomeScreenFragment.kt</url>
+          <line>67</line>
+          <option name="timeStamp" value="353" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>170</line>
+          <option name="timeStamp" value="355" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>171</line>
+          <option name="timeStamp" value="356" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>172</line>
+          <option name="timeStamp" value="358" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>173</line>
+          <option name="timeStamp" value="359" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/assesmentimage/AssessmentImageFragment.kt</url>
+          <line>168</line>
+          <option name="timeStamp" value="360" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>297</line>
+          <option name="timeStamp" value="362" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>300</line>
+          <option name="timeStamp" value="363" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>303</line>
+          <option name="timeStamp" value="364" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>306</line>
+          <option name="timeStamp" value="365" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>307</line>
+          <option name="timeStamp" value="366" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>310</line>
+          <option name="timeStamp" value="371" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>235</line>
+          <option name="timeStamp" value="379" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>255</line>
+          <option name="timeStamp" value="380" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>233</line>
+          <option name="timeStamp" value="383" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>251</line>
+          <option name="timeStamp" value="386" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/homescreen/HomeScreenFragment.kt</url>
+          <line>270</line>
+          <option name="timeStamp" value="409" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/homescreen/HomeScreenFragment.kt</url>
+          <line>308</line>
+          <option name="timeStamp" value="417" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/homescreen/HomeScreenFragment.kt</url>
+          <line>324</line>
+          <option name="timeStamp" value="421" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/samplewoundsdk/ui/screen/homescreen/HomeScreenFragment.kt</url>
+          <line>309</line>
+          <option name="timeStamp" value="422" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>123</line>
+          <option name="timeStamp" value="424" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>124</line>
+          <option name="timeStamp" value="426" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>321</line>
+          <option name="timeStamp" value="429" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>338</line>
+          <option name="timeStamp" value="430" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>67</line>
+          <option name="timeStamp" value="434" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>76</line>
+          <option name="timeStamp" value="435" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>339</line>
+          <option name="timeStamp" value="437" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>427</line>
+          <option name="timeStamp" value="440" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>164</line>
+          <option name="timeStamp" value="441" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>171</line>
+          <option name="timeStamp" value="442" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>172</line>
+          <option name="timeStamp" value="443" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>165</line>
+          <option name="timeStamp" value="444" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>208</line>
+          <option name="timeStamp" value="445" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>340</line>
+          <option name="timeStamp" value="446" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/woundsdk/src/main/java/com/example/woundsdk/ui/screen/measurecamera/MeasureCameraActivity.kt</url>
+          <line>513</line>
+          <option name="timeStamp" value="447" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Android Debugger (pid: 11744, debug port: 64204)">
+        <watch expression="firstAssessmentDot?.timeStamp?.toFloat()" language="kotlin" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>

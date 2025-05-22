@@ -18,12 +18,12 @@ plugins {
 
 allprojects {
     repositories {
-        maven { url 'https://jitpack.io' }
-        maven { url 'https://maven.zohodl.com/' }
-        google()
         repositories {
             maven { url "SDK" }
         }
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.zohodl.com/' }
+        google()
         mavenCentral()
     }
 }

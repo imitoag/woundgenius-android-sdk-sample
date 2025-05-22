@@ -2,6 +2,7 @@ package com.example.samplewoundsdk.data.usecase.license
 
 import com.example.samplewoundsdk.data.repo.SampleAppRepo
 import com.example.woundsdk.data.usecase.base.AbsUseCase
+import com.example.woundsdk.di.WoundGeniusSDK
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -10,11 +11,13 @@ class SaveSdkFeaturesUseCase @Inject constructor(
 ) : AbsUseCase<Unit, SaveSdkFeaturesUseCase.Params>() {
 
     override fun buildUseCaseObservable(params: Params): Observable<Unit> =
-        sampleAppRepo.saveSdkFeaturesStatus()
+        sampleAppRepo.saveSdkFeaturesStatus(params.woundGeniusSDK)
 
-    class Params private constructor() {
+    class Params private constructor(
+         var woundGeniusSDK :WoundGeniusSDK
+    ) {
         companion object {
-            fun forSaveSdkFeatures() = Params()
+            fun forSaveSdkFeatures(woundGeniusSDK: WoundGeniusSDK) = Params(woundGeniusSDK)
         }
     }
 }
