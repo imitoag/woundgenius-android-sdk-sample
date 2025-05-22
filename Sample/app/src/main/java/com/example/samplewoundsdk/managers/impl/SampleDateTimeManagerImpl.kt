@@ -21,22 +21,22 @@ class SampleDateTimeManagerImpl(
         }
     private val dayMonthYearFormatter
         get() = SimpleDateFormat(
-            resources.getString(R.string.day_month_year_date_pattern),
+            resources.getString(R.string.WOUND_GENIUS_SDK_day_month_year_date_pattern),
             Locale.getDefault()
         )
     private val dayMonthFormatter
         get() = SimpleDateFormat(
-            resources.getString(R.string.day_month_date_pattern),
+            resources.getString(R.string.WOUND_GENIUS_SDK_day_month_date_pattern),
             Locale.getDefault()
         )
     private val yearFormatter
         get() = SimpleDateFormat(
-            resources.getString(R.string.year_pattern),
+            resources.getString(R.string.WOUND_GENIUS_SDK_year_pattern),
             Locale.getDefault()
         )
     private val timeFormatter
         get() = SimpleDateFormat(
-            resources.getString(R.string.time_pattern),
+            resources.getString(R.string.WOUND_GENIUS_SDK_time_pattern),
             Locale.getDefault()
         )
 

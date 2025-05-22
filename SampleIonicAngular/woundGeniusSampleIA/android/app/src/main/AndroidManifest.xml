@@ -35,8 +35,9 @@
       <meta-data
         android:name="android.support.FILE_PROVIDER_PATHS"
         android:resource="@xml/provider_paths"
-        tools:replace="android:resource"/>
+        tools:replace="android:resource" />
     </provider>
+
     <provider
       android:name="androidx.startup.InitializationProvider"
       android:authorities="${applicationId}.androidx-startup"

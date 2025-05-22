@@ -3,15 +3,18 @@ package com.example.samplewoundsdk.ui.screen.main
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import com.example.samplewoundsdk.R
 import com.example.samplewoundsdk.databinding.SampleAppActivityMainBinding
-import com.example.samplewoundsdk.ui.screen.homescreen.HomeScreenFragment
 import com.example.samplewoundsdk.ui.screen.base.AbsActivity
+import com.example.samplewoundsdk.ui.screen.homescreen.HomeScreenFragment
 import com.example.samplewoundsdk.ui.screen.settings.SettingsScreenFragment
-import com.example.woundsdk.ui.screen.whatsnew.WhatsNewActivity
 import com.example.woundsdk.data.pojo.WoundGeniusOperatingMode
 import com.example.woundsdk.di.WoundGeniusSDK
+import com.example.woundsdk.ui.screen.whatsnew.WhatsNewActivity
+import java.lang.reflect.Field
+import java.util.Locale
 
 
 class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
@@ -20,11 +23,36 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
 
     override fun provideLayoutId() = R.layout.sample_app_activity_main
 
-    lateinit var binding: SampleAppActivityMainBinding
+    private lateinit var binding: SampleAppActivityMainBinding
 
     override fun initListeners() {
 
     }
+
+    private fun getAllLocalizedStrings(context: Context, locale: Locale): HashMap<String, String> {
+        val localizedStrings = HashMap<String, String>()
+
+        // Get current Resources and Configuration
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(locale)
+        val localizedResources = context.createConfigurationContext(config).resources
+
+        // Use reflection to access all string resource IDs
+        try {
+            val fields: Array<Field> = R.string::class.java.declaredFields
+            for (field in fields) {
+                val resourceId = field.getInt(null)  // Get the resource ID
+                val key = field.name  // Get the key (name of the resource)
+                val localizedValue = localizedResources.getString(resourceId)  // Get the localized value
+                localizedStrings[key] = localizedValue  // Add the key-value pair to the HashMap
+            }
+        } catch (e: IllegalAccessException) {
+            e.printStackTrace()
+        }
+
+        return localizedStrings
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +64,9 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
             userIdLD.observe(this@MainActivity) { userId ->
                 WoundGeniusSDK.setCustomerUserId(userId)
                 if (WoundGeniusSDK.getWoundGeniusOperatingMode() == WoundGeniusOperatingMode.SDK) {
-                    val htmlWebViewValue = checkIfWhatsNewPresent()
+                    val isPresent = checkIfWhatsNewPresent()
 
-                    if (htmlWebViewValue == null) {
+                    if (!isPresent) {
                         val fragment = HomeScreenFragment.newInstance()
                         supportFragmentManager
                             .beginTransaction()
@@ -64,54 +92,21 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
                         .commit()
                 }
             }
+
             showWhatNewScreenLD.observe(this@MainActivity) { show ->
                 show ?: return@observe
-                val htmlWebViewValue = checkIfWhatsNewPresent()
-                val cssPartOneValue = try {
-                    getString(
-                        resources.getIdentifier(
-                            CSS_KEY_FIRST_KEY,
-                            "string",
-                            packageName
-                        )
-                    )
-                } catch (e: Exception) {
-                    null
-                }
 
-                val cssPartTwoValue = try {
-                    getString(
-                        resources.getIdentifier(
-                            CSS_KEY_SECOND_KEY,
-                            "string",
-                            packageName
-                        )
-                    )
-                } catch (e: Exception) {
-                    null
-                }
-
-                val cssWhatsNewValue = try {
-                    getString(
-                        resources.getIdentifier(
-                            WHATS_NEW_CSS,
-                            "string",
-                            packageName
-                        )
-                    )
-                } catch (e: Exception) {
-                    null
-                }
-
+                val localization = getAllLocalizedStrings(this@MainActivity,Locale(getString(R.string.WOUND_GENIUS_SDK_LANGUAGE_CODE)) )
+                val currentAppVersion = WoundGeniusSDK.sdkReleaseVersion.substringBefore("-")
+                val whatsNewFile = WHATS_NEW_ZIP_FILE_PATTERN.replace("$",currentAppVersion)
                 WhatsNewActivity.open(
-                    this@MainActivity,
-                    htmlWebViewValue ?: "",
-                    cssPartOneValue = cssPartOneValue,
-                    cssPartTwoValue = cssPartTwoValue,
-                    cssWhatsNewValue = cssWhatsNewValue
+                    context = this@MainActivity,
+                    whatNewContentPath = whatsNewFile,
+                    localization = localization
                 )
                 viewModel?.setWhatNewScreenShowed()
             }
+
             openHomeScreenLD.observe(this@MainActivity) {
                 it ?: return@observe
                 val fragment = HomeScreenFragment.newInstance()
@@ -123,32 +118,10 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
         }
     }
 
-    private fun checkIfWhatsNewPresent(): String? {
+    private fun checkIfWhatsNewPresent(): Boolean {
         val currentAppVersion = WoundGeniusSDK.sdkReleaseVersion.substringBefore("-")
-        val androidNotesKeyName = "WHATS_NEW_${currentAppVersion}_Android_HTML"
-        val generalNotesKeyName = "WHATS_NEW_${currentAppVersion}_HTML"
-        val htmlWebViewValue = try {
-            getString(
-                resources.getIdentifier(
-                    androidNotesKeyName,
-                    "string",
-                    packageName
-                )
-            )
-        } catch (e: Exception) {
-            try {
-                getString(
-                    resources.getIdentifier(
-                        generalNotesKeyName,
-                        "string",
-                        packageName
-                    )
-                )
-            } catch (e: Exception) {
-                null
-            }
-        }
-        return htmlWebViewValue
+        val whatsNewFile = WHATS_NEW_ZIP_FILE_PATTERN.replace("$",currentAppVersion)
+        return assets.list("")?.contains(whatsNewFile) ?: false
     }
 
     override fun onResume() {
@@ -169,9 +142,8 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
     override fun onKeyboardClose() {}
 
     companion object {
-        private const val CSS_KEY_FIRST_KEY = "COMMON_CSS_PART1"
-        private const val CSS_KEY_SECOND_KEY = "COMMON_CSS_PART2"
-        private const val WHATS_NEW_CSS = "WHATS_NEW_CSS"
+        private const val WHATS_NEW_ZIP_FILE_PATTERN = "WhatsNew$.zip"
+
         fun open(context: Context) =
             context.startActivity(Intent(context, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or
@@ -188,5 +160,6 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
             .addToBackStack(fragment.javaClass.simpleName)
             .commit()
     }
+
 
 }

@@ -1,17 +1,33 @@
 package com.example.samplewoundsdk.ui.screen.assesmentimage
 
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Point
+import android.graphics.PointF
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.OptIn
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.DefaultRenderersFactory
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.example.samplewoundsdk.R
@@ -26,18 +42,12 @@ import com.example.samplewoundsdk.ui.screen.base.AbsFragment
 import com.example.woundsdk.data.pojo.cameramod.CameraMods
 import com.example.woundsdk.data.pojo.measurement.ImageResolution
 import com.example.woundsdk.data.pojo.measurement.MeasurementMetadata
+import com.example.woundsdk.data.pojo.measurement.Outline
 import com.example.woundsdk.data.pojo.measurement.Vertices
-import com.example.woundsdk.di.WoundGeniusSDK
 import com.example.woundsdk.ui.screen.measurementfullscreen.MeasurementFullScreenActivity
 import com.example.woundsdk.utils.image.drawstroke.StrokeScalableImageView
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.google.android.exoplayer2.util.Util
+import java.io.File
 import java.io.Serializable
-import kotlin.collections.ArrayList
 import kotlin.math.max
 
 class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
@@ -46,8 +56,9 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
     private val getImageHandler = Handler()
     private var isStartingRequest = false
     private var currentPictureSize: ImageResolution? = null
-    private var player: SimpleExoPlayer? = null
-    private lateinit var videoSource: MediaSource
+    private var player: ExoPlayer? = null
+    private var playbackPosition: Long = 0
+    private var isPlaying: Boolean = true
 
     override fun provideViewModelClass() = AssessmentMediaViewModel::class
     override fun provideLayoutId() = R.layout.sample_app_fragment_assessment_image
@@ -102,6 +113,8 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
 
                     metadataList.add(
                         MeasurementMetadata(
+                            order = areaAnnotationItem?.order ?: (metadataList.lastIndex + 1),
+                            id = areaAnnotationItem?.id ?: (metadataList.lastIndex + 1),
                             area = areaAnnotationItem?.area ?: 0.0,
                             circumference = areaAnnotationItem?.circumference ?: 0.0,
                             length = lengthLine?.length ?: 0.0,
@@ -160,7 +173,9 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                                         widthB ?: -1
                                     ),
                                     countPxInCm = (1.0 / (mediaModel.metadata?.measurementData?.calibration?.unitPerPixel
-                                        ?: 1.0)).toInt()
+                                        ?: 1.0)).toInt(),
+                                    order = annotationItem?.order ?: (metadataList.lastIndex + 1),
+                                    id = annotationItem?.id ?: (metadataList.lastIndex + 1),
                                 )
                             )
                         }
@@ -245,7 +260,9 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                             widthB ?: -1
                         ),
                         countPxInCm = (1.0 / (metadata.measurementData?.calibration?.unitPerPixel
-                            ?: 1.0)).toInt()
+                            ?: 1.0)).toInt(),
+                        order = areaAnnotationItem?.order ?: (metadataList.lastIndex + 1),
+                        id = areaAnnotationItem?.id ?: (metadataList.lastIndex + 1),
                     )
                 )
             }
@@ -287,7 +304,9 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                                 widthB ?: -1
                             ),
                             countPxInCm = (1.0 / (metadata.measurementData?.calibration?.unitPerPixel
-                                ?: 1.0)).toInt()
+                                ?: 1.0)).toInt(),
+                            order = annotationItem?.order ?: (metadataList.lastIndex + 1),
+                            id = annotationItem?.id ?: (metadataList.lastIndex + 1),
                         )
                     )
                 }
@@ -324,7 +343,12 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                 }
             }
             binding.apply {
-                imageSSIV.setVertices(allVertexesList)
+                imageSSIV.setVertices(ArrayList(allVertexesList.mapIndexed { index, vertices ->
+                    Outline(
+                        id = index,
+                        vertices = vertices
+                    )
+                }))
                 imageSSIV.setDiameter(metadataList.firstOrNull()?.length ?: 0.0)
                 imageSSIV.setWidthAndLength(
                     widthIndexes,
@@ -358,9 +382,14 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
 
                     override fun onUp() {}
                     override fun onVertexListChanged(
-                        vertices: ArrayList<ArrayList<Vertices>>?,
+                        vertices: ArrayList<Outline>?,
                         closed: Boolean
                     ) {
+
+                    }
+
+
+                    override fun onUpdateAutoDetection(removedVertices: ArrayList<Int>) {
 
                     }
 
@@ -385,14 +414,13 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
             initPlayer(file)
         } else {
             initStrokeScalableImageView()
-            val bitmap = BitmapFactory.decodeFile(file)
             viewModel?.apply {
                 args?.apply {
                     binding.apply {
                         activity?.let { ctx ->
                             Glide.with(ctx)
                                 .asBitmap()
-                                .load(bitmap)
+                                .load(file)
                                 .listener(object : RequestListener<Bitmap> {
                                     override fun onLoadFailed(
                                         e: GlideException?,
@@ -421,11 +449,6 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                                 }).into(hidePhotoACIV)
                         }
 
-                        media.metadata?.let {
-                            Glide.with(this@AssessmentMediaFragment)
-                                .load(media.imagePath)
-                                .into(measurementImageACIV)
-                        }
                     }
                 }
             }
@@ -433,24 +456,42 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
         binding.apply {
             hidePhotoACIV.isVisible = args?.media?.measurementMethod != CameraMods.VIDEO_MODE
             imageSSIV.isVisible = args?.media?.measurementMethod != CameraMods.VIDEO_MODE
-            measurementImageCL.isVisible = args?.media?.measurementMethod != CameraMods.VIDEO_MODE
-            videoView.isVisible = args?.media?.measurementMethod == CameraMods.VIDEO_MODE
+            videoPlayerContainerCl.isVisible = args?.media?.measurementMethod == CameraMods.VIDEO_MODE
         }
     }
 
+    @OptIn(UnstableApi::class)
     private fun initPlayer(url: String?) {
-        context?.let {
-            player = SimpleExoPlayer.Builder(it).build()
-            binding.videoView.player = player
-            val dataSourceFactory: com.google.android.exoplayer2.upstream.DataSource.Factory =
-                DefaultDataSourceFactory(
-                    it, Util.getUserAgent(it, resources.getString(R.string.APP_NAME))
-                )
-            videoSource = ProgressiveMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(MediaItem.fromUri(Uri.parse(url)))
+        context?.let { context ->
+            player = ExoPlayer.Builder(context).apply {
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+                    setRenderersFactory(DefaultRenderersFactory(context))
+                    setUseLazyPreparation(true)
+                }
+            } .build().also { exoPlayer ->
+                exoPlayer.setMediaItem(MediaItem.fromUri(Uri.parse(url)))
+                exoPlayer.prepare()
+                exoPlayer.playWhenReady = true
 
-            player?.playWhenReady = false
-            player?.prepare(videoSource)
+                exoPlayer.addListener(object : Player.Listener {
+
+                    override fun onPlayerError(error: PlaybackException) {
+                        super.onPlayerError(error)
+                        initPlayer(url)
+                    }
+                })
+            }
+
+            val playerView = PlayerView(context)
+            val layoutParams = ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.MATCH_PARENT
+            )
+            playerView.layoutParams = layoutParams
+            binding.videoPlayerContainerCl.removeAllViews()
+            binding.videoPlayerContainerCl.addView(playerView)
+
+            playerView.player = player
         }
     }
 
@@ -466,17 +507,25 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
 
     override fun onPause() {
         super.onPause()
+        // Pause the ExoPlayer when the fragment is paused
         getImageHandler.removeCallbacksAndMessages(null)
     }
 
     override fun onStop() {
-        player?.release()
         super.onStop()
+        // Release the ExoPlayer when the fragment is stopped
+        player?.let {
+            playbackPosition = it.currentPosition
+            isPlaying = it.isPlaying
+            it.pause()
+        }
     }
 
-    override fun onDestroy() {
-        player?.stop()
-        super.onDestroy()
+    override fun onDestroyView() {
+        // Ensure proper release when view is destroyed
+        player?.release()
+        player = null
+        super.onDestroyView()
     }
 
     companion object {

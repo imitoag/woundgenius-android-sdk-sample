@@ -1,6 +1,7 @@
 package com.example.samplewoundsdk.data.pojo.media
 
 import androidx.room.TypeConverter
+import com.example.woundsdk.data.pojo.bodypart.WoundGeniusBodyPart
 import com.example.woundsdk.data.pojo.cameramod.CameraMods
 import com.example.woundsdk.data.pojo.measurement.ImageResolution
 import com.google.gson.Gson
@@ -19,7 +20,10 @@ data class MediaModel(
     val originalPictureSize: ImageResolution? = null,
 
     @SerializedName("measurementMethod")
-    var measurementMethod: CameraMods? = null
+    var measurementMethod: CameraMods? = null,
+
+    @SerializedName("bodyPart")
+    var bodyPart: List<WoundGeniusBodyPart>? = null
 
     ) : Serializable {
     data class Metadata(
@@ -63,6 +67,12 @@ data class MediaModel(
 
                 @field:SerializedName("type")
                 val type: String? = null,
+
+                @field:SerializedName("order")
+                val order: Int? = null,
+
+                @field:SerializedName("id")
+                val id: Int? = null,
 
                 @field:SerializedName("points")
                 var points: List<PointsItem>? = null,

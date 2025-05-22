@@ -1,68 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:override = "false">
-    <color name="sample_app_color_accent">@color/sample_app_red</color>
-    <color name="sample_app_color_primary">@color/sample_app_color_accent</color>
-    <color name="sample_app_color_primary_dark">@color/sample_app_color_accent</color>
-    <color name="sample_app_red">#e2352a</color>
-    <color name="sample_app_color_black">#000000</color>
-    <color name="sample_app_light_grey_2">#242424</color>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:override="false">
+    <color name="sample_app_color_accent" tools:override="false">@color/sample_app_red</color>
+    <color name="sample_app_color_primary" tools:override="false">@color/sample_app_color_accent</color>
+    <color name="sample_app_color_primary_dark" tools:override="false">@color/sample_app_color_accent</color>
+    <color name="sample_app_light_red" tools:override="false">#f74848</color>
+    <color name="sample_app_red" tools:override="false">#e2352a</color>
+    <color name="sample_app_light_green" tools:override="false">#30d158</color>
+    <color name="sample_app_dark_red" tools:override="false">#561C1B</color>
+    <color name="sample_app_light_orange" tools:override="false">#ffaa2f</color>
+    <color name="sample_app_color_black" tools:override="false">#000000</color>
+    <color name="sample_app_dark_grey_2" tools:override="false">#242424</color>
     <color name="sample_app_color_blue">#0200ff</color>
     <color name="sample_app_color_yellow">#ffff02</color>
 
-    <color name="sample_app_grey_light">#f0f0f0</color>
-    <color name="sample_app_rey_light2">#f4f4f4</color>
-    <color name="sample_app_grey">#c7c7c7</color>
+    <color name="sample_app_grey_light1" tools:override="false">#f0f0f0</color>
+    <color name="sample_app_grey_light2" tools:override="false">#f4f4f4</color>
+    <color name="sample_app_color_gray_opacity_30" tools:override="false">#4d3c3c43</color>
+    <color name="sample_app_grey" tools:override="false">#c7c7c7</color>
+    <color name="sample_app_grey_dark" tools:override="false">#646464</color>
+    <color name="sample_app_light_grey_2" tools:override="false">#a9a7ab</color>
 
-    <color name="sample_app_color_separator_dark">#4a3c3c43</color>
-    <color name="sample_app_gray_opacity">#cc333333</color>
-    <color name="sample_app_color_text_hint">#c7c7c7</color>
-    <color name="sample_app_color_border">#dcdcdc</color>
+    <color name="sample_app_color_separator_dark" tools:override="false">#4a3c3c43</color>
+    <color name="sample_app_gray_opacity" tools:override="false">#cc333333</color>
+    <color name="sample_app_color_text_hint" tools:override="false">#c7c7c7</color>
+    <color name="sample_app_full_opacity" tools:override="false">#00ffffff</color>
+    <color name="sample_app_color_border" tools:override="false">#dcdcdc</color>
 
-    <color name="sample_app_gray_disable_text">#d8c7c7c7</color>
-    <color name="sample_app_alert_layout_back_color">#464646</color>
+    <color name="sample_app_gray_disable_text" tools:override="false">#d8c7c7c7</color>
+    <color name="sample_app_alert_layout_back_color" tools:override="false">#464646</color>
 
-    <color name="sample_app_color_black_opacity_76">#4C000000</color>
-    <color name="sample_app_color_black_opacity_99">#99000000</color>
-    <color name="sample_app_color_intro_background">#F3F1F0</color>
+    <color name="sample_app_color_black_opacity_76" tools:override="false">#4C000000</color>
+    <color name="sample_app_color_black_opacity_99" tools:override="false">#99000000</color>
+    <color name="sample_app_color_intro_background" tools:override="false">#F3F1F0</color>
 
-    <color name="sample_app_color_black_opacity_cc">#cc333333</color>
-    <color name="sample_app_color_black_opacity_69">#89000000</color>
-    <color name="sample_app_color_full_black_opacity_cc">#cc000000</color>
-    <color name="sample_app_color_full_black_opacity_99">#99000000</color>
-    <color name="sample_app_color_full_opacity">#00000000</color>
+    <color name="sample_app_color_black_opacity_cc" tools:override="false">#cc333333</color>
+    <color name="sample_app_color_black_opacity_69" tools:override="false">#89000000</color>
+    <color name="sample_app_color_full_black_opacity_cc" tools:override="false">#cc000000</color>
+    <color name="sample_app_color_full_black_opacity_99" tools:override="false">#99000000</color>
+    <color name="sample_app_color_full_opacity" tools:override="false">#00000000</color>
 
-    <color name="sample_app_barcode_background">#89636366</color>
-    <color name="sample_app_barcode_hint">#ebebf5</color>
-    <color name="sample_app_add_wound_action_menu_items_color">#333333</color>
+    <color name="sample_app_barcode_background" tools:override="false">#89636366</color>
+    <color name="sample_app_barcode_hint" tools:override="false">#ebebf5</color>
+    <color name="sample_app_add_wound_action_menu_items_color" tools:override="false">#333333</color>
 
-    <color name="sample_app_color_plus">#C7B299</color>
+    <color name="sample_app_color_plus" tools:override="false">#C7B299</color>
 
-    <color name="sample_app_white">#ffffff</color>
-    <color name="sample_app_light_grey">#fafafa</color>
-    <color name="sample_app_black">#000000</color>
-    
-    <color name="sample_app_color_grey_dark">#3c3c43</color>
+    <color name="sample_app_white" tools:override="false">#ffffff</color>
+    <color name="sample_app_light_grey" tools:override="false">#fafafa</color>
+    <color name="sample_app_grey_dialog_option" tools:override="false">#aeaeb2</color>
+    <color name="sample_app_black" tools:override="false">#000000</color>
 
-    <color name="sample_app_color_gray">#f4f4f4</color>
-    <color name="sample_app_color_separator">#19000000</color>
-    <color name="sample_app_color_text_gray_light">#4d3c3c43</color>
-    <color name="sample_app_color_white_opacity_80">#80ffffff</color>
-    <color name="sample_app_color_white_opacity_40">#40ffffff</color>
+    <color name="sample_app_color_grey_dark" tools:override="false">#3c3c43</color>
 
-    <color name="sample_app_login_et_border_color">#dcdcdc</color>
-    <color name="sample_app_login_hint_color">#777777</color>
-
-    <color name="sample_app_text_pressed_color">#561C1B</color>
-    <color name="sample_app_color_text_gray">#777777</color>
-
-    <color name="sample_app_color_text_black">@color/sample_app_color_black_scan</color>
-    <color name="sample_app_color_black_scan">#333333</color>
-    <color name="sample_app_finder_rect">#ccc</color>
-
-    <color name="sample_app_color_transparent">#00000000</color>
-
-    <color name="sample_app_color_green" tools:override = "false">#00E600</color>
+    <color name="sample_app_color_gray" tools:override="false">#f4f4f4</color>
     <color name="sample_app_measurement_result_color" tools:override="false">#f4f4fd</color>
+    <color name="sample_app_color_separator" tools:override="false">#19000000</color>
+    <color name="sample_app_color_text_gray_light" tools:override="false">#4d3c3c43</color>
+    <color name="sample_app_color_white_opacity_80" tools:override="false">#80ffffff</color>
+    <color name="sample_app_color_white_opacity_40" tools:override="false">#40ffffff</color>
+
+    <color name="sample_app_login_et_border_color" tools:override="false">#dcdcdc</color>
+    <color name="sample_app_login_hint_color" tools:override="false">#777777</color>
+
+    <color name="sample_app_text_pressed_color" tools:override="false">#561C1B</color>
+    <color name="sample_app_color_text_gray" tools:override="false">#777777</color>
+
+    <color name="sample_app_color_text_black" tools:override="false">@color/sample_app_color_black_scan</color>
+    <color name="sample_app_color_black_scan" tools:override="false">#333333</color>
+    <color name="sample_app_finder_rect" tools:override="false">#ccc</color>
+
+    <color name="sample_app_color_transparent" tools:override="false">#00000000</color>
+
+    <color name="sample_app_color_green" tools:override="false">#00E600</color>
+    <color name="sample_app_color_green_transparent" tools:override="false">#3300E600</color>
+
+
+    <color name="sample_app_background" tools:override="false">#f0f0f0</color>
+
+    <color name="sample_app_tutorial_background" tools:override="false">#ffffff</color>
+
+    <color name="sample_app_text_color" tools:override="false">#000000</color>
+
     <color name="sample_app_measurement_value_text_color" tools:override="false">#8f8f8f</color>
-    <color name="sample_app_color_green_transparent">#3300E600</color>
+
+    <color name="sample_app_hint_text_color" tools:override="false">#8f8f8f</color>
+
+    <color name="sample_app_forms_color" tools:override="false">#ffffff</color>
+
+    <color name="sample_app_button_color" tools:override="false">@color/sample_app_color_accent</color>
 </resources>

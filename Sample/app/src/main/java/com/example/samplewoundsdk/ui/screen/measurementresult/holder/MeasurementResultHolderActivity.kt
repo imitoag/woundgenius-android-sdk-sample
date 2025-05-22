@@ -2,6 +2,7 @@ package com.example.samplewoundsdk.ui.screen.measurementresult.holder
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Point
 import android.os.Bundle
 import androidx.core.view.isVisible
@@ -18,6 +19,7 @@ import com.example.samplewoundsdk.data.pojo.media.MediaModel.Metadata.Measuremen
 import com.example.samplewoundsdk.databinding.SampleAppActivityMeasurementResultHolderBinding
 import com.example.samplewoundsdk.ui.screen.base.AbsActivity
 import com.example.woundsdk.data.pojo.measurement.MeasurementMetadata
+import com.example.woundsdk.di.WoundGeniusSDK
 import java.io.Serializable
 import java.text.DecimalFormat
 
@@ -66,6 +68,104 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
             val metadata = draftMediaList[0].metadata
             prepareMediaMetaDataResultUi(metadata)
         }
+        setUpUiTheme()
+    }
+
+    private fun setUpUiTheme() {
+        binding.apply {
+
+            var backgroundColor: Int? = null
+            var primaryButtonColor: Int? = null
+            var textColor: Int? = null
+            var dividerColor: Int? = null
+            var formsColor: Int? = null
+            var measurementValueColor: Int? = null
+
+            backgroundColor = WoundGeniusSDK.getLightBackgroundColor()?.let {
+                getColor(
+                    it.toInt()
+                )
+            } ?: getColor(
+                R.color.sample_app_background
+            )
+
+            dividerColor = WoundGeniusSDK.getValueDividersColor()?.let {
+                getColor(
+                    it.toInt()
+                )
+            } ?: getColor(
+                R.color.sample_app_light_grey
+            )
+            formsColor = WoundGeniusSDK.getFormsColor()?.let {
+                getColor(
+                    it.toInt()
+                )
+            } ?: getColor(
+                R.color.sample_app_forms_color
+            )
+
+            measurementValueColor = WoundGeniusSDK.getMeasurementResultColor()?.let {
+                getColor(
+                    it.toInt()
+                )
+            } ?: getColor(
+                R.color.sample_app_measurement_value_text_color
+            )
+
+            primaryButtonColor = WoundGeniusSDK.getPrimaryButtonColor()?.let {
+                getColor(
+                    it.toInt()
+                )
+            } ?: getColor(
+                R.color.sample_app_button_color
+            )
+            textColor = WoundGeniusSDK.getTextColor()?.let {
+                getColor(
+                    it.toInt()
+                )
+            } ?: getColor(
+                R.color.sample_app_text_color
+            )
+
+            backgroundColor?.let { backgroundColor ->
+                toolbarCL.setBackgroundColor(backgroundColor)
+                NSV.setBackgroundColor(backgroundColor)
+                measurementResultContainerCL.setBackgroundColor(backgroundColor)
+                measurementResultLayoutCL.setBackgroundColor(backgroundColor)
+                measurementsCL.setBackgroundColor(backgroundColor)
+                woundContainerCL.setBackgroundColor(backgroundColor)
+                stomaContainerCL.setBackgroundColor(backgroundColor)
+            }
+            primaryButtonColor?.let { primaryButtonColor ->
+                editSelectionButtonACTV.setTextColor(primaryButtonColor)
+                editSelectionButtonACTV.compoundDrawableTintList =
+                    ColorStateList.valueOf(primaryButtonColor)
+                indicatorSPI.selectedDotColor = primaryButtonColor
+            }
+            textColor?.let { textColor ->
+                allAreasACTV.setTextColor(textColor)
+                areaACTV.setTextColor(textColor)
+                circumferenceACTV.setTextColor(textColor)
+                stomaMeasurementItemLabelACTV.setTextColor(textColor)
+                stomaDiameterLabelTV.setTextColor(textColor)
+                stomaHeightLabelACTV.setTextColor(textColor)
+            }
+            dividerColor?.let { dividerColor ->
+                totalAreaValueDividerV.setBackgroundColor(dividerColor)
+                stomaDiameterSeparatorV.setBackgroundColor(dividerColor)
+            }
+            formsColor?.let { formsColor ->
+                allAreaContainerCL.backgroundTintList = ColorStateList.valueOf(formsColor)
+                stomaDetailsCL.backgroundTintList = ColorStateList.valueOf(formsColor)
+            }
+            measurementValueColor?.let { measurementValueColor ->
+                totalAreaValueACTV.setTextColor(measurementValueColor)
+                totalCircumferenceValueACTV.setTextColor(measurementValueColor)
+                stomaDiameterValueACTV.setTextColor(measurementValueColor)
+                stomaHeightValueACET.setTextColor(measurementValueColor)
+                stomaHeightMmACTV.setTextColor(measurementValueColor)
+            }
+        }
     }
 
     private fun prepareMediaMetaDataResultUi(metadata: MediaModel.Metadata?) {
@@ -102,7 +202,9 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                         lengthLine = MeasurementMetadata.Line(lengthA ?: -1, lengthB ?: -1),
                         widthLine = MeasurementMetadata.Line(widthA ?: -1, widthB ?: -1),
                         countPxInCm = (1.0 / (metadata.measurementData?.calibration?.unitPerPixel
-                            ?: 1.0)).toInt()
+                            ?: 1.0)).toInt(),
+                        order = areaAnnotationItem?.order ?: (metadataList.lastIndex + 1),
+                        id = areaAnnotationItem?.id ?: (metadataList.lastIndex + 1)
                     )
                 )
             }
@@ -135,7 +237,9 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                             lengthLine = MeasurementMetadata.Line(lengthA ?: -1, lengthB ?: -1),
                             widthLine = MeasurementMetadata.Line(widthA ?: -1, widthB ?: -1),
                             countPxInCm = (1.0 / (metadata.measurementData?.calibration?.unitPerPixel
-                                ?: 1.0)).toInt()
+                                ?: 1.0)).toInt(),
+                            order = annotationItem?.order ?: (metadataList.lastIndex + 1),
+                            id = annotationItem?.id ?: (metadataList.lastIndex + 1)
                         )
                     )
                 }
@@ -194,6 +298,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
 
                         if (areaList.size == 1) {
                             allAreaContainerCL.isVisible = false
+                            allAreasACTV.isVisible = false
                             totalCircumferenceValueACTV.isVisible = false
                             circumferenceACTV.isVisible = false
                         } else if (areaList.size > 1) {
@@ -202,44 +307,60 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                             circumferenceACTV.isVisible = true
                         } else {
                             allAreaContainerCL.isVisible = false
+                            allAreasACTV.isVisible = false
                         }
                     } else {
                         allAreaContainerCL.isVisible = false
-                        stomaContainerCL.isVisible = true
+                        allAreasACTV.isVisible = false
+                        stomaContainerCL.isVisible = metadataList.isNotEmpty()
                         woundContainerCL.isVisible = false
                         measurementsItemsRV.isVisible = false
 
-                        val stomaItemName = getString(R.string.STOMA_ITEM_NUMBER).replace(STOMA_ITEM_PATTERN, ONE)
+                        val stomaItemName =
+                            getString(R.string.WOUND_GENIUS_SDK_STOMA_ITEM_NUMBER).replace(STOMA_ITEM_PATTERN, ONE)
 
                         stomaMeasurementItemLabelACTV.text = stomaItemName
 
                         metadataList.firstOrNull().let {
                             stomaDiameterValueACTV.text = if (it?.length != null) {
                                 getString(
-                                    com.example.woundsdk.R.string.cm,
+                                    com.example.woundsdk.R.string.WOUND_GENIUS_SDK_cm,
                                     decimalFormat.format((it.length ?: 0.0) * 10.0)
                                 )
-                            } else getString(com.example.woundsdk.R.string.not_a_number)
-                            if (it?.depth != null) {
+                            } else getString(com.example.woundsdk.R.string.WOUND_GENIUS_SDK_not_a_number)
+                            if (it?.depth != null && it?.depth != 0.0) {
                                 stomaHeightValueACET.setText(
                                     decimalFormat.format(
-                                        it.depth ?: 0.0
+                                        ((it.depth ?: 0.0) * 10.0)
                                     )
                                 )
-                            } else {
-                                stomaHeightMmACTV.isVisible = false
-                                stomaHeightValueACET.setHint(com.example.woundsdk.R.string.TAP_TO_ADD_HEIGHT)
+                            }  else {
+                                stomaHeightValueACET.setText(
+                                    decimalFormat.format(
+                                         0.0
+                                    )
+                                )
+                                stomaHeightValueACET.isClickable = false
+                                stomaHeightValueACET.isFocusable = false
+                                stomaHeightValueACET.setFocusableInTouchMode(false)
                             }
                         }
                     }
+
+                    circumferenceACTV.isVisible = WoundGeniusSDK.getIsShowTotalCircumference()
+                    totalCircumferenceValueACTV.isVisible =
+                        WoundGeniusSDK.getIsShowTotalCircumference()
+                    totalAreaValueDividerV.isVisible = WoundGeniusSDK.getIsShowTotalCircumference()
+
                     totalAreaValueACTV.text =
                         getString(
-                            com.example.woundsdk.R.string.cm_square,
+                            com.example.woundsdk.R.string.WOUND_GENIUS_SDK_cm_square,
                             decimalFormat.format(totalArea)
                         )
+
                     totalCircumferenceValueACTV.text =
                         getString(
-                            com.example.woundsdk.R.string.cm_square,
+                            com.example.woundsdk.R.string.WOUND_GENIUS_SDK_cm_square,
                             decimalFormat.format(totalCircumference)
                         )
                 }
@@ -247,7 +368,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
         }
     }
 
-    private fun setUpAssessmentImagePager(draftMediaList: List<MediaModel>,isStoma:Boolean) {
+    private fun setUpAssessmentImagePager(draftMediaList: List<MediaModel>, isStoma: Boolean) {
         binding.apply {
             (imagesPagerVP2.getChildAt(0) as RecyclerView).layoutManager?.isItemPrefetchEnabled =
                 false
@@ -269,9 +390,6 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
             if (draftMediaList.isNotEmpty()) {
                 imagesPagerVP2.setCurrentItem(0, true)
             }
-            imagesPagerVP2.beginFakeDrag()
-            imagesPagerVP2.fakeDragBy(150f)
-            imagesPagerVP2.endFakeDrag()
             imagesPagerVP2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)

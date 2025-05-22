@@ -1,9 +1,13 @@
 package com.example.samplewoundsdk.data.repo.impl
 
+import android.util.Log
 import com.example.samplewoundsdk.data.pojo.assessment.SampleAssessmentEntity
+import com.example.samplewoundsdk.data.pojo.license.SdkFeatureStatus
 import com.example.samplewoundsdk.data.repo.SampleAppRepo
 import com.example.samplewoundsdk.managers.SampleDateTimeManager
 import com.example.samplewoundsdk.storage.db.AssessmentRoomDatabase
+import com.example.woundsdk.data.pojo.autodetectionmod.WoundAutoDetectionMode
+import com.example.woundsdk.di.WoundGeniusSDK
 import com.example.woundsdk.storage.shared.SharedMemory
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -38,6 +42,34 @@ class SampleAppRepoImpl(
     override fun getUserId(): Observable<String> = Observable.fromCallable {
         sharedMemory.getUserId()
     }.subscribeOn(Schedulers.io())
+
+    override fun saveSdkFeaturesStatus(): Observable<Unit> = Observable.fromCallable {
+        sharedMemory.setAvailableModes(WoundGeniusSDK.getAvailableModes())
+        sharedMemory.setIsMultipleOutlinesSupported(WoundGeniusSDK.getIsMultipleOutlinesEnabled())
+        sharedMemory.setIsStomaFlowEnabled(WoundGeniusSDK.getIsStomaFlow())
+        sharedMemory.setAutoDetectionMode(WoundGeniusSDK.getAutoDetectionMod()?: WoundAutoDetectionMode.NONE)
+        sharedMemory.setMaxNumberOfMedia(WoundGeniusSDK.getMaxNumberOfMedia())
+        sharedMemory.setIsLiveDetectionEnabled(WoundGeniusSDK.getIsLiveDetectionEnabled()?: false)
+        sharedMemory.setIsMediaFromGalleryAllowed(WoundGeniusSDK.getIsAddFromLocalStorageAvailable())
+        sharedMemory.setIsBodyPickerAllowed(WoundGeniusSDK.getIsAddBodyPickerAvailable())
+        sharedMemory.setIsFrontalCameraSupported(WoundGeniusSDK.getIsFrontCameraUsageAllowed())
+        Unit
+    }.subscribeOn(Schedulers.io())
+
+    override fun getSdkFeaturesStatus(): Observable<SdkFeatureStatus> = Observable.fromCallable {
+        SdkFeatureStatus(
+            availableModes = sharedMemory.getAvailableModes(),
+            isMultipleOutlinesSupported = sharedMemory.getIsMultipleOutlinesSupported(),
+            isStomaFlowEnable = sharedMemory.getIsStomaFlowEnabled(),
+            autoDetectionMode = sharedMemory.getAutoDetectionMode(),
+            maxNumberOfMedia = sharedMemory.getMaxNumberOfMedia(),
+            isLiveDetectionEnabled = sharedMemory.getIsLiveDetectionEnabled(),
+            isMediaFromGalleryAllowed = sharedMemory.getIsMediaFromGalleryAllowed(),
+            isBodyPickerAllowed = sharedMemory.getIsBodyPickerAllowed(),
+            isFrontalCameraSupported = sharedMemory.getIsFrontalCameraSupported()
+        )
+    }.subscribeOn(Schedulers.io())
+
 
     override fun deleteDraftAssessmentByLocalId(assessmentId: Long): Observable<Unit> =
         Observable.fromCallable {

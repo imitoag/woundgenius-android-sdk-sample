@@ -13,6 +13,7 @@ import com.example.samplewoundsdk.R
 import com.example.samplewoundsdk.data.pojo.assessment.SampleAssessmentEntity
 import com.example.samplewoundsdk.databinding.SampleAppLayoutAssessmentListItemBinding
 import com.example.woundsdk.data.pojo.cameramod.CameraMods
+import com.example.woundsdk.di.WoundGeniusSDK
 
 class AssessmentsAdapter(
     private val onAssessmentClick: (
@@ -77,11 +78,44 @@ class AssessmentsAdapter(
 
         fun bind(item: SampleAssessmentEntity) {
             itemBinding.apply {
+
+                var textColor: Int? = null
+                var dividerColor: Int? = null
+                var measurementValueColor: Int? = null
+
+                WoundGeniusSDK.getValueDividersColor()?.let {
+                    dividerColor = this.root.context?.getColor(
+                        it.toInt()
+                    )
+                }
+
+                WoundGeniusSDK.getMeasurementResultColor()?.let {
+                    measurementValueColor =this.root.context?.getColor(
+                        it.toInt()
+                    )
+                }
+                WoundGeniusSDK.getTextColor()?.let {
+                    textColor = this.root.context?.getColor(
+                        it.toInt()
+                    )
+                }
+
+                textColor?.let {
+                    measurementMethodNameACTV.setTextColor(it)
+                }
+                measurementValueColor?.let {
+                    creationDateTv.setTextColor(it)
+                }
+                dividerColor?.let {
+                    view.setBackgroundColor(it)
+                }
+
+
                 creationDateTv.text = item.uiDatetime
                 measurementMethodNameACTV.text =
                     when (item.media?.firstOrNull()?.measurementMethod) {
                         CameraMods.PHOTO_MODE -> {
-                            this.root.context.getString(R.string.PHOTO)
+                            this.root.context.getString(R.string.WOUND_GENIUS_SDK_PHOTO)
                         }
                         CameraMods.MANUAL_MEASURE_MODE,CameraMods.MARKER_DETECT_MODE -> {
                             MEASUREMENT

@@ -52,7 +52,8 @@ fun AssessmentEntity.toRoomLocalEntity() =
                 ),
                 imagePath = mediaItem.image,
                 originalPictureSize = ImageResolution(mediaItem.originalPictureSize?.width ?:0,mediaItem.originalPictureSize?.height ?:0),
-                measurementMethod = mediaItem.measurementMethod
+                measurementMethod = mediaItem.measurementMethod,
+                bodyPart = mediaItem.bodyPart
             )
         } ?: emptyList()),
         areaCmSq = areaCmSq,

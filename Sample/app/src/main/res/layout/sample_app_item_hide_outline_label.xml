@@ -26,12 +26,12 @@
         android:gravity="center"
         android:maxLines="1"
         android:textAlignment="center"
-        android:textColor="@color/wound_genius_sdk_white"
+        android:textColor="@color/WOUND_GENIUS_SDK_white"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/hideOutlineButtonIconACIV"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/SHOW_ALL" />
+        tools:text="@string/WOUND_GENIUS_SDK_SHOW_ALL" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,41 +1,41 @@
 <resources>
-    <string name="cm_square">%s cm\u00B2</string>
-    <string name="cm_square_label">Area (cm\u00B2)</string>
-    <string name="cm">%s cm</string>
-    <string name="mm">%s mm</string>
-    <string name="float_format_two_points">%.2f</string>
-    <string name="not_a_number">N/A</string>
-    <string name="blank"></string>
-    <string name="APP_NAME">"WoundGenius"</string>
+    <string name="WOUND_GENIUS_SDK_cm_square">%s cm\u00B2</string>
+    <string name="WOUND_GENIUS_SDK_cm_square_label">Area (cm\u00B2)</string>
+    <string name="WOUND_GENIUS_SDK_cm">%s cm</string>
+    <string name="WOUND_GENIUS_SDK_mm">%s mm</string>
+    <string name="WOUND_GENIUS_SDK_float_format_two_points">%.2f</string>
+    <string name="WOUND_GENIUS_SDK_not_a_number">N/A</string>
+    <string name="WOUND_GENIUS_SDK_blank"></string>
+    <string name="WOUND_GENIUS_SDK_APP_NAME">"WoundGenius"</string>
 
-    <string name="backend_version_is_outdated_title">Backend version is outdated</string>
-    <string name="backend_version_is_outdated_description">Please contact your IT support. Backend version is outdated and doesn’t support multiple wounds measurement feature.</string>
+    <string name="WOUND_GENIUS_SDK_backend_version_is_outdated_title">Backend version is outdated</string>
+    <string name="WOUND_GENIUS_SDK_backend_version_is_outdated_description">Please contact your IT support. Backend version is outdated and doesn’t support multiple wounds measurement feature.</string>
 
-    <string name="day_month_year_date_pattern">dd.MM.yyyy</string>
-    <string name="day_month_date_pattern">dd MMM</string>
-    <string name="year_pattern">yyyy</string>
-    <string name="time_pattern">HH:mm</string>
+    <string name="WOUND_GENIUS_SDK_day_month_year_date_pattern">dd.MM.yyyy</string>
+    <string name="WOUND_GENIUS_SDK_day_month_date_pattern">dd MMM</string>
+    <string name="WOUND_GENIUS_SDK_year_pattern">yyyy</string>
+    <string name="WOUND_GENIUS_SDK_time_pattern">HH:mm</string>
 
-    <string name="ok">OK</string>
-    <string name="support">\?</string>
-    <string name="url">URL</string>
+    <string name="WOUND_GENIUS_SDK_ok">OK</string>
+    <string name="WOUND_GENIUS_SDK_support">\?</string>
+    <string name="WOUND_GENIUS_SDK_url">URL</string>
 
-    <string name="choose_mode">Choose Mode</string>
-    <string name="server_address_restriction">Server address restriction</string>
-    <string name="mdm_full_keyboard_settings_description">Enable or disable full keyboard for Barcodes Manual Input</string>
-    <string name="mdm_full_keyboard_settings_title">fullKeyboardForBarcode</string>
+    <string name="WOUND_GENIUS_SDK_choose_mode">Choose Mode</string>
+    <string name="WOUND_GENIUS_SDK_server_address_restriction">Server address restriction</string>
+    <string name="WOUND_GENIUS_SDK_mdm_full_keyboard_settings_description">Enable or disable full keyboard for Barcodes Manual Input</string>
+    <string name="WOUND_GENIUS_SDK_mdm_full_keyboard_settings_title">fullKeyboardForBarcode</string>
 
-    <string name="markers_description_1">The best way to use imitoWound. It\'s fast and accurate.</string>
-    <string name="markers_description_2">Our calibration marker stickers are for single use and packed in small boxes that fits in your pocket. Your hospital can order them directly from imito AG</string>
+    <string name="WOUND_GENIUS_SDK_markers_description_1">The best way to use imitoWound. It\'s fast and accurate.</string>
+    <string name="WOUND_GENIUS_SDK_markers_description_2">Our calibration marker stickers are for single use and packed in small boxes that fits in your pocket. Your hospital can order them directly from imito AG</string>
 
-    <string name="ruler_title">Ruler or other object</string>
-    <string name="ruler_description_1">As alternative, you can use a ruler or any other physical object with known size. In this case, you will need to manually calibrate photo each time you make a measurement.</string>
-    <string name="ruler_description_2">Check out short tutorial video to see how it works.</string>
+    <string name="WOUND_GENIUS_SDK_ruler_title">Ruler or other object</string>
+    <string name="WOUND_GENIUS_SDK_ruler_description_1">As alternative, you can use a ruler or any other physical object with known size. In this case, you will need to manually calibrate photo each time you make a measurement.</string>
+    <string name="WOUND_GENIUS_SDK_ruler_description_2">Check out short tutorial video to see how it works.</string>
 
 
-    <string name="next">Next</string>
+    <string name="WOUND_GENIUS_SDK_next">Next</string>
 
-    <string name="observation">{
+    <string name="WOUND_GENIUS_SDK_observation">{
     \"covering\": \"Cover\",
     \"none\": \"None\",
     \"necrosis\": \"Necrosis\",
@@ -244,9 +244,9 @@
     \"arterial_leg_ulcer_stage_3_description\": \"Rest pain, mostly in the feet\",
     \"arterial_leg_ulcer_stage_4_description\": \"Necrosis and\/or gangrene of the limb\"
 }</string>
-    <string name="URL">URL</string>
-    <string name="PATIENT_HAS_NO_OPEN_VISITS">Patient has no open visits</string>
-    <string name="NO_VISITS_NO_ARCHIVE">It\'s not possible to archive this series, because the patient has no open visits. Please contact your IT support.</string>
+    <string name="WOUND_GENIUS_SDK_URL">URL</string>
+    <string name="WOUND_GENIUS_SDK_PATIENT_HAS_NO_OPEN_VISITS">Patient has no open visits</string>
+    <string name="WOUND_GENIUS_SDK_NO_VISITS_NO_ARCHIVE">It\'s not possible to archive this series, because the patient has no open visits. Please contact your IT support.</string>
 
     <string-array name="test_array">
         <item>All groups</item>

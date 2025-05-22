@@ -19,7 +19,7 @@
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
         android:textSize="14sp"
-        android:textColor="@color/wound_genius_sdk_white"
+        android:textColor="@color/WOUND_GENIUS_SDK_white"
         tools:text="A1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"

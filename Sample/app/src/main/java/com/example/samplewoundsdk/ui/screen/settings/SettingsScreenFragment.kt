@@ -2,23 +2,26 @@ package com.example.samplewoundsdk.ui.screen.settings
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import com.example.samplewoundsdk.R
+import com.example.samplewoundsdk.data.pojo.license.SdkFeatureStatus
 import com.example.samplewoundsdk.databinding.SampleAppFragmentSettingsScreenBinding
 import com.example.samplewoundsdk.ui.screen.base.AbsFragment
+import com.example.samplewoundsdk.utils.FileLogTree
 import com.example.woundsdk.data.pojo.autodetectionmod.WoundAutoDetectionMode
 import com.example.woundsdk.data.pojo.cameramod.CameraMods
 import com.example.woundsdk.di.WoundGeniusSDK
-import com.example.woundsdk.dialog.ImitoCenterScreenDialog
 import com.example.woundsdk.utils.SdkFeature
 
 
@@ -30,10 +33,18 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
 
     private lateinit var binding: SampleAppFragmentSettingsScreenBinding
 
+    private var wasLicenseIncorrect = false
+
     override fun initListeners() {
         binding.apply {
             backButtonACTV.setOnClickListener {
+                if (licenseKeyValueACET.text.toString().isNotEmpty()) {
+//                    viewModel?.saveFeatureStatus()
+                }
                 activity?.onBackPressed()
+            }
+            shareLogsButtonCL.setOnClickListener {
+                context?.let { FileLogTree.shareLogs(it) }
             }
             addBodyPickerOnCameraLayoutCL.setOnClickListener {
                 addBodyPickerOnCameraS.isChecked = !addBodyPickerOnCameraS.isChecked
@@ -41,30 +52,47 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             addBodyPickerOnCameraS.setOnCheckedChangeListener { _, isChecked ->
                 WoundGeniusSDK.configure(
                     isAddBodyPickerOnCaptureScreenAvailable = isChecked,
-                    captureScreenTitle = getString(R.string.CAPTURE_SCREEN_TITLE)
+                    captureScreenTitle = getString(R.string.WOUND_GENIUS_SDK_CAPTURE_SCREEN_TITLE)
                 )
-            }
-            addFromGalleryLayoutCL.setOnClickListener {
-                addFromGalleryS.isChecked = !addFromGalleryS.isChecked
+                if (licenseKeyValueACET.text.toString().isNotEmpty()) {
+                    viewModel?.saveFeatureStatus()
+                }
             }
             addFromGalleryLayoutCL.setOnClickListener {
                 WoundGeniusSDK.configure(
                     isAddFromLocalStorageAvailable = !addFromGalleryS.isChecked,
-                    captureScreenTitle = getString(R.string.CAPTURE_SCREEN_TITLE)
+                    captureScreenTitle = getString(R.string.WOUND_GENIUS_SDK_CAPTURE_SCREEN_TITLE)
                 )
+                if (licenseKeyValueACET.text.toString().isNotEmpty()) {
+                    viewModel?.saveFeatureStatus()
+                }
+                addFromGalleryS.isChecked = !addFromGalleryS.isChecked
             }
             isMultipleOutlinesEnabledLayoutCL.setOnClickListener {
-
                 isMultipleOutlinesEnabledS.isChecked = !isMultipleOutlinesEnabledS.isChecked
+            }
+            addFromGalleryS.setOnCheckedChangeListener { _, isChecked ->
+                WoundGeniusSDK.configure(
+                    isAddFromLocalStorageAvailable = isChecked,
+                )
+                if (licenseKeyValueACET.text.toString().isNotEmpty()) {
+                    viewModel?.saveFeatureStatus()
+                }
             }
             isMultipleOutlinesEnabledS.setOnCheckedChangeListener { _, isChecked ->
                 WoundGeniusSDK.configure(
                     isMultipleOutlinesEnabled = isMultipleOutlinesEnabledS.isChecked,
                 )
+                if (licenseKeyValueACET.text.toString().isNotEmpty()) {
+                    viewModel?.saveFeatureStatus()
+                }
             }
 
             addVideoModeS.setOnCheckedChangeListener { _, isChecked ->
                 onCameraModsChange(CameraMods.VIDEO_MODE, isChecked)
+                if (licenseKeyValueACET.text.toString().isNotEmpty()) {
+                    viewModel?.saveFeatureStatus()
+                }
             }
             addVideoModeLayoutCL.setOnClickListener {
                 addVideoModeS.isChecked = !addVideoModeS.isChecked
@@ -72,6 +100,9 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
 
             addMarkerModeS.setOnCheckedChangeListener { _, isChecked ->
                 onCameraModsChange(CameraMods.MARKER_DETECT_MODE, isChecked)
+                if (licenseKeyValueACET.text.toString().isNotEmpty()) {
+                    viewModel?.saveFeatureStatus()
+                }
             }
             addMarkerModeLayoutCL.setOnClickListener {
                 addMarkerModeS.isChecked = !addMarkerModeS.isChecked
@@ -79,6 +110,9 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
 
             addPhotoModeS.setOnCheckedChangeListener { _, isChecked ->
                 onCameraModsChange(CameraMods.PHOTO_MODE, isChecked)
+                if (licenseKeyValueACET.text.toString().isNotEmpty()) {
+                    viewModel?.saveFeatureStatus()
+                }
             }
             addPhotoModeLayoutCL.setOnClickListener {
                 addPhotoModeS.isChecked = !addPhotoModeS.isChecked
@@ -90,46 +124,19 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
 
             addRulerModeS.setOnCheckedChangeListener { _, isChecked ->
                 onCameraModsChange(CameraMods.MANUAL_MEASURE_MODE, isChecked)
+                if (licenseKeyValueACET.text.toString().isNotEmpty()) {
+                    viewModel?.saveFeatureStatus()
+                }
             }
             liveDetectionS.setOnCheckedChangeListener { _, isChecked ->
+                Log.d("settings", "liveDetection switch = $isChecked")
                 WoundGeniusSDK.configure(isLiveDetectionEnabled = isChecked)
+                if (licenseKeyValueACET.text.toString().isNotEmpty()) {
+                    viewModel?.saveFeatureStatus()
+                }
             }
             addRulerModeLayoutCL.setOnClickListener {
                 addRulerModeS.isChecked = !addRulerModeS.isChecked
-            }
-
-            stomaFlowLayoutBlockerCL.setOnClickListener {
-
-            }
-            liveDetectionLayoutBlockerCL.setOnClickListener {
-
-            }
-            machineLearningLayoutBlockerCL.setOnClickListener {
-
-            }
-            addVideoModeLayoutBlockerCL.setOnClickListener {
-
-            }
-            addMarkerModeLayoutBlockerCL.setOnClickListener {
-
-            }
-            addPhotoModeLayoutBlockerCL.setOnClickListener {
-
-            }
-            addRulerModeLayoutBlockerCL.setOnClickListener {
-
-            }
-            addFromGalleryLayoutBlockerCL.setOnClickListener {
-
-            }
-            addBodyPickerOnCameraLayoutBlockerCL.setOnClickListener {
-
-            }
-            isMultipleOutlinesEnabledLayoutBlockerCL.setOnClickListener {
-
-            }
-            addCameraSwitchLayoutBlockerCL.setOnClickListener {
-
             }
 
             stomaFlowS.setOnCheckedChangeListener { _, isChecked ->
@@ -137,11 +144,14 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                     woundAutoDetectionMode = if (isChecked) WoundAutoDetectionMode.NONE else WoundGeniusSDK.getAutoDetectionMod(),
                     isLiveDetectionEnabled = if (isChecked) false else WoundGeniusSDK.getIsLiveDetectionEnabled(),
                     isStomaFlow = isChecked,
-                    captureScreenTitle = getString(R.string.CAPTURE_SCREEN_TITLE)
+                    captureScreenTitle = getString(R.string.WOUND_GENIUS_SDK_CAPTURE_SCREEN_TITLE)
                 )
                 if (isChecked) {
                     liveDetectionS.isChecked = false
                     setupAutoDetectionModsUi()
+                }
+                if (licenseKeyValueACET.text.toString().isNotEmpty()) {
+                    viewModel?.saveFeatureStatus()
                 }
             }
             stomaFlowLayoutCL.setOnClickListener {
@@ -151,8 +161,11 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             addCameraSwitchS.setOnCheckedChangeListener { _, isChecked ->
                 WoundGeniusSDK.configure(
                     isFrontCameraUsageAllowed = isChecked,
-                    captureScreenTitle = getString(R.string.CAPTURE_SCREEN_TITLE)
+                    captureScreenTitle = getString(R.string.WOUND_GENIUS_SDK_CAPTURE_SCREEN_TITLE)
                 )
+                if (licenseKeyValueACET.text.toString().isNotEmpty()) {
+                    viewModel?.saveFeatureStatus()
+                }
             }
             addCameraSwitchLayoutCL.setOnClickListener {
                 addCameraSwitchS.isChecked = !addCameraSwitchS.isChecked
@@ -173,21 +186,20 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                         }
                         WoundGeniusSDK.configure(
                             maxNumberOfMedia = maxMediaNumberValueACET.text.toString().toInt(),
-                            captureScreenTitle = getString(R.string.CAPTURE_SCREEN_TITLE)
+                            captureScreenTitle = getString(R.string.WOUND_GENIUS_SDK_CAPTURE_SCREEN_TITLE)
                         )
                     }
                 }
             )
             licenseKeyValueACET.onDone {
                 WoundGeniusSDK.setLicenseKey(licenseKeyValueACET.text.toString())
-                val licenseVerifyResult = WoundGeniusSDK.validateLicenseKey()
-                viewModel?.handleLicenseResult(licenseVerifyResult)
-                viewModel?.saveLicenseKey(licenseKeyValueACET.text.toString())
+                if (licenseKeyValueACET.text.toString().isNotEmpty()) {
+                    viewModel?.saveFeatureStatus()
+                }
+                activity?.onBackPressed()
             }
             licenseKeyValueACET.doOnTextChanged { text, start, before, count ->
                 WoundGeniusSDK.setLicenseKey(licenseKeyValueACET.text.toString())
-                val licenseVerifyResult = WoundGeniusSDK.validateLicenseKey()
-                viewModel?.handleLicenseResult(licenseVerifyResult)
                 viewModel?.saveLicenseKey(licenseKeyValueACET.text.toString())
             }
             userIdValueACET.doOnTextChanged { text, start, before, count ->
@@ -211,7 +223,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
 
         WoundGeniusSDK.configure(
             availableModes = availableCameraMods,
-            captureScreenTitle = getString(R.string.CAPTURE_SCREEN_TITLE)
+            captureScreenTitle = getString(R.string.WOUND_GENIUS_SDK_CAPTURE_SCREEN_TITLE)
         )
     }
 
@@ -235,342 +247,827 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
         return binding.root
     }
 
-    private fun setupPrimaryColorUi() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         viewModel?.apply {
             binding.apply {
-                primaryButtonColorList.observe(viewLifecycleOwner) { primaryColors ->
-                    val primaryButtonColor =
-                        WoundGeniusSDK.getPrimaryButtonColor()?.toInt() ?: R.color.sample_app_red
-                    val colorNameList = ArrayList<String>()
-                    primaryColors.forEach {
-                        colorNameList.add(it.first)
+                context?.let { context ->
+                    getUserId()
+                    setUpUiTheme()
+                    setupAutoDetectionModsUi()
+                    licenseKeyValueACET.setText(WoundGeniusSDK.getLicenseKey().toString())
+                    primaryColorListLD.observe(viewLifecycleOwner) { colors ->
+                        setUpPrimaryColorTheme(colors)
+                        setUpBackgroundColorTheme(colors)
+                        setUpTextColorTheme(colors)
                     }
-                    val adapter = context?.let { it1 ->
-                        ArrayAdapter(
-                            it1,
-                            android.R.layout.simple_spinner_item, colorNameList
-                        )
+                    secondaryColorListLD.observe(viewLifecycleOwner) { colors ->
+                        setUpFormsColorTheme(colors)
+                        setUpMeasurementValuesColorTheme(colors)
+                        setUpValueDividersColorTheme(colors)
                     }
-                    primaryColorSpinner.onItemSelectedListener = object :
-                        AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>,
-                            view: View, position: Int, id: Long
-                        ) {
-                            WoundGeniusSDK.setPrimaryButtonColor(primaryColors[position].second.toString())
-                        }
 
-                        override fun onNothingSelected(parent: AdapterView<*>) {
-                            // write code to perform some action
+                    userIdLD.observe(viewLifecycleOwner) { userId ->
+                        userIdValueACET.setText(userId)
+                    }
+
+                    newAvailableFeatures.observe(viewLifecycleOwner) { availableFeatures ->
+                        if (availableFeatures.isNullOrEmpty()){
+                            wasLicenseIncorrect = true
+                        }
+                        sdkFeaturesStatusLD.value?.let {
+                            onLicenseUpdate(availableFeatures,it)
                         }
                     }
-                    primaryColorSpinner.adapter = adapter
-                    context?.getColor(primaryButtonColor)?.let {
-                        editSelectionButtonACTV.setTextColor(it)
-                        editSelectionArrowIconACTV.backgroundTintList = ColorStateList.valueOf(it)
-                    }
-                    val selectedPrimaryColor = primaryColors
-                        .withIndex()
-                        .find { it.value.second == primaryButtonColor }?.index ?: 0
-                    primaryColorSpinner.setSelection(selectedPrimaryColor, false)
                 }
             }
         }
     }
 
-    private fun setupLightBGUi() {
-        viewModel?.apply {
-            binding.apply {
-                lightBGColorListLD.observe(viewLifecycleOwner) { lightBGColors ->
-                    val lightBGColor = WoundGeniusSDK.getLightBackgroundColor()?.toInt()
-                        ?: R.color.sample_app_grey_light
-                    val colorNameList = ArrayList<String>()
-                    lightBGColors.forEach {
-                        colorNameList.add(it.first)
-                    }
-                    val adapter = context?.let { it1 ->
-                        ArrayAdapter(
-                            it1,
-                            android.R.layout.simple_spinner_item, colorNameList
-                        )
-                    }
-                    lightBGSpinner.onItemSelectedListener = object :
-                        AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>,
-                            view: View, position: Int, id: Long
-                        ) {
-                            WoundGeniusSDK.setLightBackgroundColor(lightBGColors[position].second.toString())
-                        }
+    override fun onResume() {
+        super.onResume()
+        viewModel?.validateSDKCustomerLicense()
+    }
 
-                        override fun onNothingSelected(parent: AdapterView<*>) {
-                            // write code to perform some action
-                        }
-                    }
-                    lightBGSpinner.adapter = adapter
-                    val selectedPrimaryColor = lightBGColors
-                        .withIndex()
-                        .find { it.value.second == lightBGColor }?.index ?: 0
+    override fun onPause() {
+        super.onPause()
+        if (binding.licenseKeyValueACET.text.toString().isNotEmpty()) {
+            viewModel?.saveFeatureStatus()
+        }
+    }
 
-                    lightBGSpinner.setSelection(selectedPrimaryColor, false)
+    private fun setUpTextColorTheme(textColors: List<Pair<String, Int?>>) {
+        binding.apply {
+            context?.let { context ->
+                val colorNameList = ArrayList<String>()
+                textColors.forEach {
+                    colorNameList.add(it.first)
                 }
+                var textColor: Int? = null
+                WoundGeniusSDK.getTextColor()?.let {
+                    textColor = it.toInt()
+                }
+                val textColorAdapter = object : ArrayAdapter<String>(
+                    context,
+                    R.layout.sample_app_spinner_item,
+                    colorNameList
+                ) {
+                    override fun getView(
+                        position: Int,
+                        convertView: View?,
+                        parent: ViewGroup
+                    ): View {
+                        val view = super.getView(position, convertView, parent)
+                        val textView: TextView = view.findViewById(R.id.spinner_item_text)
+                        // You can now modify the TextView if needed
+
+                        textView.setTextColor(context.getColor(R.color.sample_app_text_color))
+                        return view
+                    }
+
+                    override fun getDropDownView(
+                        position: Int,
+                        convertView: View?,
+                        parent: ViewGroup
+                    ): View {
+                        val view = super.getDropDownView(position, convertView, parent)
+                        // Customize the dropdown item appearance here if needed
+                        return view
+                    }
+                }
+                textColorSpinner.onItemSelectedListener = object :
+                    AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View, position: Int, id: Long
+                    ) {
+                        WoundGeniusSDK.setTextColor(textColors[position].second)
+                        setUpUiTheme()
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+                        // write code to perform some action
+                    }
+                }
+                textColorSpinner.adapter = textColorAdapter
+                val selectedPrimaryColor = textColors
+                    .withIndex()
+                    .find { it.value.second == textColor }?.index ?: 0
+
+                textColorSpinner.setSelection(selectedPrimaryColor, false)
+            }
+        }
+    }
+
+    private fun setUpFormsColorTheme(textColors: List<Pair<String, Int?>>) {
+        binding.apply {
+            context?.let { context ->
+                val colorNameList = ArrayList<String>()
+                textColors.forEach {
+                    colorNameList.add(it.first)
+                }
+                var textColor: Int? = null
+                WoundGeniusSDK.getFormsColor()?.let {
+                    textColor = it.toInt()
+                }
+                val textColorAdapter = object : ArrayAdapter<String>(
+                    context,
+                    R.layout.sample_app_spinner_item,
+                    colorNameList
+                ) {
+                    override fun getView(
+                        position: Int,
+                        convertView: View?,
+                        parent: ViewGroup
+                    ): View {
+                        val view = super.getView(position, convertView, parent)
+                        val textView: TextView = view.findViewById(R.id.spinner_item_text)
+                        // You can now modify the TextView if needed
+
+                        textView.setTextColor(context.getColor(R.color.sample_app_text_color))
+                        return view
+                    }
+
+                    override fun getDropDownView(
+                        position: Int,
+                        convertView: View?,
+                        parent: ViewGroup
+                    ): View {
+                        val view = super.getDropDownView(position, convertView, parent)
+                        // Customize the dropdown item appearance here if needed
+                        return view
+                    }
+                }
+                formsColorSpinner.onItemSelectedListener = object :
+                    AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View, position: Int, id: Long
+                    ) {
+                        WoundGeniusSDK.setFormsColor(textColors[position].second)
+                        setUpUiTheme()
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+                        // write code to perform some action
+                    }
+                }
+                formsColorSpinner.adapter = textColorAdapter
+                val selectedPrimaryColor = textColors
+                    .withIndex()
+                    .find { it.value.second == textColor }?.index ?: 0
+
+                formsColorSpinner.setSelection(selectedPrimaryColor, false)
+            }
+        }
+    }
+
+    private fun setUpMeasurementValuesColorTheme(textColors: List<Pair<String, Int?>>) {
+        binding.apply {
+            context?.let { context ->
+                val colorNameList = ArrayList<String>()
+                textColors.forEach {
+                    colorNameList.add(it.first)
+                }
+                var textColor: Int? = null
+                WoundGeniusSDK.getMeasurementResultColor()?.let {
+                    textColor = it.toInt()
+                }
+                val textColorAdapter = object : ArrayAdapter<String>(
+                    context,
+                    R.layout.sample_app_spinner_item,
+                    colorNameList
+                ) {
+                    override fun getView(
+                        position: Int,
+                        convertView: View?,
+                        parent: ViewGroup
+                    ): View {
+                        val view = super.getView(position, convertView, parent)
+                        val textView: TextView = view.findViewById(R.id.spinner_item_text)
+                        // You can now modify the TextView if needed
+
+                        textView.setTextColor(context.getColor(R.color.sample_app_text_color))
+                        return view
+                    }
+
+                    override fun getDropDownView(
+                        position: Int,
+                        convertView: View?,
+                        parent: ViewGroup
+                    ): View {
+                        val view = super.getDropDownView(position, convertView, parent)
+                        // Customize the dropdown item appearance here if needed
+                        return view
+                    }
+                }
+                measurementValuesColorSpinner.onItemSelectedListener = object :
+                    AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View, position: Int, id: Long
+                    ) {
+                        WoundGeniusSDK.setMeasurementResultColor(textColors[position].second)
+                        setUpUiTheme()
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+                        // write code to perform some action
+                    }
+                }
+                measurementValuesColorSpinner.adapter = textColorAdapter
+                val selectedPrimaryColor = textColors
+                    .withIndex()
+                    .find { it.value.second == textColor }?.index ?: 0
+
+                measurementValuesColorSpinner.setSelection(selectedPrimaryColor, false)
+            }
+        }
+    }
+
+    private fun setUpValueDividersColorTheme(textColors: List<Pair<String, Int?>>) {
+        binding.apply {
+            context?.let { context ->
+                val colorNameList = ArrayList<String>()
+                textColors.forEach {
+                    colorNameList.add(it.first)
+                }
+                var textColor: Int? = null
+                WoundGeniusSDK.getValueDividersColor()?.let {
+                    textColor = it.toInt()
+                }
+                val textColorAdapter = object : ArrayAdapter<String>(
+                    context,
+                    R.layout.sample_app_spinner_item,
+                    colorNameList
+                ) {
+                    override fun getView(
+                        position: Int,
+                        convertView: View?,
+                        parent: ViewGroup
+                    ): View {
+                        val view = super.getView(position, convertView, parent)
+                        val textView: TextView = view.findViewById(R.id.spinner_item_text)
+                        // You can now modify the TextView if needed
+
+                        textView.setTextColor(context.getColor(R.color.sample_app_text_color))
+                        return view
+                    }
+
+                    override fun getDropDownView(
+                        position: Int,
+                        convertView: View?,
+                        parent: ViewGroup
+                    ): View {
+                        val view = super.getDropDownView(position, convertView, parent)
+                        // Customize the dropdown item appearance here if needed
+                        return view
+                    }
+                }
+                valueDividersColorSpinner.onItemSelectedListener = object :
+                    AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View, position: Int, id: Long
+                    ) {
+                        WoundGeniusSDK.setDividerColor(textColors[position].second)
+                        setUpUiTheme()
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+                        // write code to perform some action
+                    }
+                }
+                valueDividersColorSpinner.adapter = textColorAdapter
+                val selectedPrimaryColor = textColors
+                    .withIndex()
+                    .find { it.value.second == textColor }?.index ?: 0
+
+                valueDividersColorSpinner.setSelection(selectedPrimaryColor, false)
+            }
+        }
+    }
+
+    private fun setUpPrimaryColorTheme(primaryColors: List<Pair<String, Int?>>) {
+        binding.apply {
+            context?.let { context ->
+                val primaryButtonColor = WoundGeniusSDK.getPrimaryButtonColor()?.toInt()
+                val colorNameList = ArrayList<String>()
+
+                primaryColors.forEach {
+                    colorNameList.add(it.first)
+                }
+
+                val primaryColorAdapter = object : ArrayAdapter<String>(
+                    context,
+                    R.layout.sample_app_spinner_item,
+                    colorNameList
+                ) {
+                    override fun getView(
+                        position: Int,
+                        convertView: View?,
+                        parent: ViewGroup
+                    ): View {
+                        val view = super.getView(position, convertView, parent)
+                        val textView: TextView = view.findViewById(R.id.spinner_item_text)
+                        // You can now modify the TextView if needed
+                        textView.setTextColor(context.getColor(R.color.sample_app_text_color))
+                        return view
+                    }
+
+                    override fun getDropDownView(
+                        position: Int,
+                        convertView: View?,
+                        parent: ViewGroup
+                    ): View {
+                        val view = super.getDropDownView(position, convertView, parent)
+                        // Customize the dropdown item appearance here if needed
+                        return view
+                    }
+                }
+
+                primaryColorSpinner.onItemSelectedListener = object :
+                    AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View, position: Int, id: Long
+                    ) {
+                        WoundGeniusSDK.setPrimaryButtonColor(primaryColors[position].second)
+                        setUpUiTheme()
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+                        // write code to perform some action
+                    }
+                }
+                primaryColorSpinner.adapter = primaryColorAdapter
+
+                primaryButtonColor?.let {
+                    context.getColor(it).let {
+                        editSelectionButtonACTV.setTextColor(it)
+                        editSelectionArrowIconACTV.backgroundTintList =
+                            ColorStateList.valueOf(it)
+                    }
+                }
+                val selectedPrimaryColor = primaryColors
+                    .withIndex()
+                    .find { it.value.second == primaryButtonColor }?.index ?: 0
+                primaryColorSpinner.setSelection(selectedPrimaryColor, false)
+            }
+        }
+    }
+
+    private fun setUpBackgroundColorTheme(lightBGColors: List<Pair<String, Int?>>) {
+        binding.apply {
+            context?.let { context ->
+                val lightBGColor = WoundGeniusSDK.getLightBackgroundColor()?.toInt()
+                    ?: context.getColor(R.color.sample_app_background)
+                val colorNameList = ArrayList<String>()
+
+                lightBGColors.forEach {
+                    colorNameList.add(it.first)
+                }
+                val primaryBGColorAdapter = object : ArrayAdapter<String>(
+                    context,
+                    R.layout.sample_app_spinner_item,
+                    colorNameList
+                ) {
+                    override fun getView(
+                        position: Int,
+                        convertView: View?,
+                        parent: ViewGroup
+                    ): View {
+                        val view = super.getView(position, convertView, parent)
+                        val textView: TextView = view.findViewById(R.id.spinner_item_text)
+                        // You can now modify the TextView if needed
+
+                        textView.setTextColor(context.getColor(R.color.sample_app_text_color))
+
+                        return view
+                    }
+
+                    override fun getDropDownView(
+                        position: Int,
+                        convertView: View?,
+                        parent: ViewGroup
+                    ): View {
+                        val view = super.getDropDownView(position, convertView, parent)
+                        // Customize the dropdown item appearance here if needed
+                        return view
+                    }
+                }
+                lightBGSpinner.onItemSelectedListener = object :
+                    AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View, position: Int, id: Long
+                    ) {
+                        WoundGeniusSDK.setLightBackgroundColor(lightBGColors[position].second)
+                        setUpUiTheme()
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+                        // write code to perform some action
+                    }
+                }
+                lightBGSpinner.adapter = primaryBGColorAdapter
+                val selectedPrimaryColor = lightBGColors
+                    .withIndex()
+                    .find { it.value.second == lightBGColor }?.index ?: 0
+
+                lightBGSpinner.setSelection(selectedPrimaryColor, false)
+            }
+        }
+    }
+
+    private fun setUpUiTheme() {
+        binding.apply {
+
+            var backgroundColor: Int? = null
+            var primaryButtonColor: Int? = null
+            var textColor: Int? = null
+            var dividerColor: Int? = null
+
+            backgroundColor = WoundGeniusSDK.getLightBackgroundColor()?.let {
+                context?.getColor(
+                    it.toInt()
+                )
+            } ?: context?.getColor(
+                R.color.sample_app_background
+            )
+
+            primaryButtonColor = WoundGeniusSDK.getPrimaryButtonColor()?.let {
+                context?.getColor(
+                    it.toInt()
+                )
+            } ?: context?.getColor(
+                R.color.sample_app_button_color
+            )
+
+            textColor = WoundGeniusSDK.getTextColor()?.let {
+                context?.getColor(
+                    it.toInt()
+                )
+            } ?: context?.getColor(
+                R.color.sample_app_text_color
+            )
+
+
+            dividerColor = WoundGeniusSDK.getValueDividersColor()?.let {
+                context?.getColor(
+                    it.toInt()
+                )
+            } ?: context?.getColor(
+                R.color.sample_app_grey
+            )
+
+
+
+            backgroundColor?.let { backgroundColor ->
+                toolbarCL.setBackgroundColor(backgroundColor)
+                NSV.setBackgroundColor(backgroundColor)
+                settingContainerCL.setBackgroundColor(backgroundColor)
+            }
+            primaryButtonColor?.let { primaryButtonColor ->
+                editSelectionButtonACTV.setTextColor(primaryButtonColor)
+                editSelectionArrowIconACTV.backgroundTintList =
+                    ColorStateList.valueOf(primaryButtonColor)
+            }
+            textColor?.let { textColor ->
+                toolbarLabelACTV.setTextColor(textColor)
+                licenseKeyACTV.setTextColor(textColor)
+                licenseKeyValueACET.setTextColor(textColor)
+                userIdACTV.setTextColor(textColor)
+                userIdValueACET.setTextColor(textColor)
+                addVideoModeLabelACTV.setTextColor(textColor)
+                addMarkerModeLabelACTV.setTextColor(textColor)
+                addPhotoModeLabelACTV.setTextColor(textColor)
+                addRulerModeLabelACTV.setTextColor(textColor)
+                maxMediaNumberValueLabelACTV.setTextColor(textColor)
+                maxMediaNumberValueACET.setTextColor(textColor)
+                stomaFlowLabelACTV.setTextColor(textColor)
+                autoDetectionSelectorLabelACTV.setTextColor(textColor)
+                liveDetectionLabelACTV.setTextColor(textColor)
+                addFromGalleryACTV.setTextColor(textColor)
+                addBodyPickerOnCameraACTV.setTextColor(textColor)
+                isMultipleOutlinesEnabledACTV.setTextColor(textColor)
+                addCameraSwitchACTV.setTextColor(textColor)
+                primaryColorSelectorLabelACTV.setTextColor(textColor)
+                lightBGSelectorLabelACTV.setTextColor(textColor)
+                textColorSelectorLabelACTV.setTextColor(textColor)
+                valueDividersColorSelectorLabelACTV.setTextColor(textColor)
+                formsColorSelectorLabelACTV.setTextColor(textColor)
+                measurementValuesColorSelectorLabelACTV.setTextColor(textColor)
+            }
+            dividerColor?.let { dividerColor ->
+                licenseKeyValueTopV.setBackgroundColor(dividerColor)
+                licenseKeyValueBottomV.setBackgroundColor(dividerColor)
+                userIdValueTopV.setBackgroundColor(dividerColor)
+                modesConfigurationsValueTopV.setBackgroundColor(dividerColor)
+                addVideoModeValueBottomV.setBackgroundColor(dividerColor)
+                addPhotoModeValueBottomV.setBackgroundColor(dividerColor)
+                addRulerModeValueBottomV.setBackgroundColor(dividerColor)
+                maxMediaNumberValueTopV.setBackgroundColor(dividerColor)
+                maxMediaNumberValueBottomV.setBackgroundColor(dividerColor)
+                flowValueTopV.setBackgroundColor(dividerColor)
+                stomaFlowValueBottomV.setBackgroundColor(dividerColor)
+                machineLearningValueTopV.setBackgroundColor(dividerColor)
+                autoDetectionValueBottomV.setBackgroundColor(dividerColor)
+                liveDetectionValueBottomV.setBackgroundColor(dividerColor)
+                otherValueTopV.setBackgroundColor(dividerColor)
+                addFromGalleryValueBottomV.setBackgroundColor(dividerColor)
+                addBodyPickerValueBottomV.setBackgroundColor(dividerColor)
+                isMultipleOutlinesValueBottomV.setBackgroundColor(dividerColor)
+                addCameraSwitchValueBottomV.setBackgroundColor(dividerColor)
+                colorValueTopV.setBackgroundColor(dividerColor)
+                primaryColorValueBottomV.setBackgroundColor(dividerColor)
+                lightBGValueBottomV.setBackgroundColor(dividerColor)
+                textColorValueBottomV.setBackgroundColor(dividerColor)
+                formsColorValueBottomV.setBackgroundColor(dividerColor)
+                measurementValuesColorValueBottomV.setBackgroundColor(dividerColor)
+                valueDividersColorValueBottomV.setBackgroundColor(dividerColor)
             }
         }
     }
 
     private fun setupAutoDetectionModsUi() {
         binding.apply {
-            val currentAutoDetectMod = WoundGeniusSDK.getAutoDetectionMod()
-            val autoDetectionModList = ArrayList<String>()
-            WoundAutoDetectionMode.values().forEach {
-                autoDetectionModList.add(it.modName)
-            }
-            val adapter = context?.let { it1 ->
-                ArrayAdapter(
-                    it1,
-                    android.R.layout.simple_spinner_item, autoDetectionModList
-                )
-            }
-            autoDetectionSpinner.onItemSelectedListener = object :
-                AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View, position: Int, id: Long
+            context?.let { context ->
+                val currentAutoDetectMod = WoundGeniusSDK.getAutoDetectionMod()
+                val autoDetectionModList = ArrayList<String>()
+                WoundAutoDetectionMode.values().forEach {
+                    autoDetectionModList.add(it.modName)
+                }
+                val autoDetectionAdapter = object : ArrayAdapter<String>(
+                    context,
+                    R.layout.sample_app_spinner_item,
+                    autoDetectionModList
                 ) {
-                    WoundGeniusSDK.setAutoDetectionMod(WoundAutoDetectionMode.values()[position])
-                }
+                    override fun getView(
+                        position: Int,
+                        convertView: View?,
+                        parent: ViewGroup
+                    ): View {
+                        val view = super.getView(position, convertView, parent)
+                        val textView: TextView = view.findViewById(R.id.spinner_item_text)
+                        // You can now modify the TextView if needed
 
-                override fun onNothingSelected(parent: AdapterView<*>) {
+                        textView.setTextColor(context.getColor(R.color.sample_app_text_color))
+                        return view
+                    }
 
+                    override fun getDropDownView(
+                        position: Int,
+                        convertView: View?,
+                        parent: ViewGroup
+                    ): View {
+                        val view = super.getDropDownView(position, convertView, parent)
+                        // Customize the dropdown item appearance here if needed
+                        return view
+                    }
                 }
+                autoDetectionSpinner.onItemSelectedListener = object :
+                    AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View, position: Int, id: Long
+                    ) {
+                        WoundGeniusSDK.configure(woundAutoDetectionMode = WoundAutoDetectionMode.values()[position])
+                        if (licenseKeyValueACET.text.toString().isNotEmpty()) {
+                            viewModel?.saveFeatureStatus()
+                        }
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+
+                    }
+                }
+                Log.d("selectedMod", currentAutoDetectMod?.modName ?: "")
+                autoDetectionSpinner.adapter = autoDetectionAdapter
+                val selectedWoundAutoDetectionMode = WoundAutoDetectionMode.values().withIndex()
+                    .find { it.value == currentAutoDetectMod }?.index ?: 0
+
+                autoDetectionSpinner.setSelection(selectedWoundAutoDetectionMode, false)
             }
-            autoDetectionSpinner.adapter = adapter
-            val selectedWoundAutoDetectionMode = WoundAutoDetectionMode.values().withIndex()
-                .find { it.value == currentAutoDetectMod }?.index ?: 0
-
-            autoDetectionSpinner.setSelection(selectedWoundAutoDetectionMode, false)
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun onLicenseUpdate(
+        availableFeatures: List<String>,
+        sdkFeaturesStatus: SdkFeatureStatus
+    ) {
+        binding.apply {
+            viewModel?.apply {
 
-        viewModel?.apply {
-            binding.apply {
-                getLicenseKey()
-                onSavedLicenseKeyReceived.observe(viewLifecycleOwner) {
-                    it ?: return@observe
-                    if (WoundGeniusSDK.getLicenseKey()?.isNotEmpty() == true) {
-                        licenseKeyValueACET.setText(WoundGeniusSDK.getLicenseKey())
-                        val licenseVerifyResult = WoundGeniusSDK.validateLicenseKey()
-                        viewModel?.handleLicenseResult(licenseVerifyResult)
-                    } else {
-                        licenseKeyValueACET.setText("")
-                        blockUi()
-                        featureStatusUi()
+                var isEnabled =
+                    sdkFeaturesStatus.availableModes?.contains(CameraMods.VIDEO_MODE) ?: false
+
+                if (availableFeatures.contains(SdkFeature.VIDEO_CAPTURING.featureName)) {
+                    if (wasLicenseIncorrect){
+                        isEnabled = true
                     }
+                    onCameraModsChange(CameraMods.VIDEO_MODE, isEnabled)
+                    addVideoModeS.isChecked = isEnabled
+                } else {
+                    onCameraModsChange(CameraMods.VIDEO_MODE, false)
+                    addVideoModeS.isChecked = false
                 }
 
-                userIdLD.observe(viewLifecycleOwner) { userId ->
-                    userIdValueACET.setText(userId)
+                addVideoModeLayoutBlockerCL.isVisible =
+                    !availableFeatures.contains(SdkFeature.VIDEO_CAPTURING.featureName)
+
+                if (availableFeatures.contains(SdkFeature.STOMA_DOCUMENTATION.featureName)) {
+                    val isStomaFlowEnabled =
+                        sdkFeaturesStatus.isStomaFlowEnable ?: false
+                    WoundGeniusSDK.configure(
+                        isStomaFlow = isStomaFlowEnabled
+                    )
+                    stomaFlowS.isChecked = isStomaFlowEnabled
+                } else {
+                    WoundGeniusSDK.configure(
+                        isStomaFlow = false
+                    )
+                    stomaFlowS.isChecked = false
                 }
-                noLicenseKeyErrorDialog.observe(viewLifecycleOwner) {
-                    it ?: return@observe
-                    ImitoCenterScreenDialog.getNoLicenseKeyDialog(
-                        titleText = getString(R.string.NO_LICENSE_KEY_DIALOG_TITLE),
-                        descriptionText = getString(R.string.NO_LICENSE_KEY_DIALOG_DESCRIPTION),
-                        onOkClick = {
 
-                        }
-                    ).let {
-                        it.show(this@SettingsScreenFragment.parentFragmentManager, it.tag)
+                if (availableFeatures.contains(SdkFeature.PHOTO_CAPTURING.featureName)) {
+                    isEnabled = sdkFeaturesStatus.availableModes?.contains(CameraMods.PHOTO_MODE) ?: false
+                    if (wasLicenseIncorrect){
+                        isEnabled = true
                     }
+                    onCameraModsChange(CameraMods.PHOTO_MODE, isEnabled)
+                    addPhotoModeS.isChecked = isEnabled
+                } else {
+                    onCameraModsChange(CameraMods.PHOTO_MODE, false)
+                    addPhotoModeS.isChecked = false
                 }
-                licenseError.observe(viewLifecycleOwner) {
-                    it ?: return@observe
-                    blockUi()
-                    featureStatusUi()
+
+                addPhotoModeLayoutBlockerCL.isVisible =
+                    !availableFeatures.contains(SdkFeature.PHOTO_CAPTURING.featureName)
+
+
+                if (availableFeatures.contains(SdkFeature.MARKER_MEASUREMENT_CAPTURING.featureName)) {
+                    isEnabled =
+                        sdkFeaturesStatus.availableModes?.contains(CameraMods.MARKER_DETECT_MODE)
+                            ?: false
+                    if (wasLicenseIncorrect){
+                        isEnabled = true
+                    }
+                    onCameraModsChange(CameraMods.MARKER_DETECT_MODE, isEnabled)
+                    addMarkerModeS.isChecked = isEnabled
+                } else {
+                    onCameraModsChange(CameraMods.MARKER_DETECT_MODE, false)
+                    addMarkerModeS.isChecked = false
                 }
-                licenseErrorDialog.observe(viewLifecycleOwner) {
-                    it.third ?: return@observe
-                    ImitoCenterScreenDialog.getLicenseIssueDialog(
-                        titleText = getString(R.string.LICENSE_ISSUE_DIALOG_TITLE),
-                        descriptionText = it.second?.value ?: "",
-                        onOkClick = {
 
-                        }
-                    ).let {
-                        it.show(this@SettingsScreenFragment.parentFragmentManager, it.tag)
+                addMarkerModeLayoutBlockerCL.isVisible =
+                    !availableFeatures.contains(SdkFeature.MARKER_MEASUREMENT_CAPTURING.featureName)
+
+                if (availableFeatures.contains(SdkFeature.RULER_MEASUREMENT_CAPTURING.featureName)) {
+                    isEnabled =
+                        sdkFeaturesStatus.availableModes?.contains(CameraMods.MANUAL_MEASURE_MODE)
+                            ?: false
+                    if (wasLicenseIncorrect){
+                        isEnabled = true
                     }
+                    onCameraModsChange(CameraMods.MANUAL_MEASURE_MODE, isEnabled)
+                    addRulerModeS.isChecked = isEnabled
+                } else {
+                    onCameraModsChange(CameraMods.MANUAL_MEASURE_MODE, false)
+                    addRulerModeS.isChecked = false
                 }
-                availableFeatures.observe(viewLifecycleOwner) { availableFeatures ->
-                    if (!availableFeatures.contains(SdkFeature.PHOTO_CAPTURING.featureName)) {
-                        onCameraModsChange(CameraMods.PHOTO_MODE, false)
-                        addPhotoModeLayoutBlockerCL.isVisible = true
-                    } else {
-                        addPhotoModeLayoutBlockerCL.isVisible = false
-                    }
 
-                    if (!availableFeatures.contains(SdkFeature.VIDEO_CAPTURING.featureName)) {
-                        onCameraModsChange(CameraMods.VIDEO_MODE, false)
-                        addVideoModeLayoutBlockerCL.isVisible = true
-                    } else {
-                        addVideoModeLayoutBlockerCL.isVisible = false
-                    }
+                addRulerModeLayoutBlockerCL.isVisible =
+                    !availableFeatures.contains(SdkFeature.RULER_MEASUREMENT_CAPTURING.featureName)
 
-                    if (!availableFeatures.contains(SdkFeature.RULER_MEASUREMENT_CAPTURING.featureName)) {
-                        onCameraModsChange(CameraMods.MANUAL_MEASURE_MODE, false)
-                        addRulerModeLayoutBlockerCL.isVisible = true
-                    } else {
-                        addRulerModeLayoutBlockerCL.isVisible = false
+                if (availableFeatures.contains(SdkFeature.MULTIPLE_WOUNDS_PER_IMAGE.featureName)) {
+                    isEnabled =
+                        sdkFeaturesStatus.isMultipleOutlinesSupported ?: false
+                    if (wasLicenseIncorrect){
+                        isEnabled = true
                     }
-
-                    if (!availableFeatures.contains(SdkFeature.MARKER_MEASUREMENT_CAPTURING.featureName)) {
-                        onCameraModsChange(CameraMods.MARKER_DETECT_MODE, false)
-                        addMarkerModeLayoutBlockerCL.isVisible = true
-                    } else {
-                        addMarkerModeLayoutBlockerCL.isVisible = false
-                    }
-
-                    if (!availableFeatures.contains(SdkFeature.FRONTAL_CAMERA.featureName)) {
-                        WoundGeniusSDK.setIsFrontCameraUsageAllowed(false)
-                        addCameraSwitchLayoutBlockerCL.isVisible = true
-                    } else {
-                        addCameraSwitchLayoutBlockerCL.isVisible = false
-                    }
-
-                    if (!availableFeatures.contains(SdkFeature.WOUND_DETECTION.featureName)) {
-                        WoundGeniusSDK.setWoundAutoDetectionMode(WoundAutoDetectionMode.NONE)
-                        machineLearningLayoutBlockerCL.isVisible = true
-                    } else {
-                        machineLearningLayoutBlockerCL.isVisible = false
-                    }
-
-                    if (!availableFeatures.contains(SdkFeature.BODY_PART_PICKER.featureName)) {
-                        WoundGeniusSDK.setIsAddBodyPickerAvailable(false)
-                        addBodyPickerOnCameraLayoutBlockerCL.isVisible = true
-                    } else {
-                        addBodyPickerOnCameraLayoutBlockerCL.isVisible = false
-                    }
-                    if (!availableFeatures.contains(SdkFeature.LOCAL_STORAGE_IMAGES.featureName)) {
-                        WoundGeniusSDK.setIsAddFromLocalStorageAvailable(false)
-                        addFromGalleryLayoutBlockerCL.isVisible = true
-                    } else {
-                        addFromGalleryLayoutBlockerCL.isVisible = false
-                    }
-
-                    if (!availableFeatures.contains(SdkFeature.LIVE_WOUND_DETECTION.featureName)) {
-                        WoundGeniusSDK.setIsLiveDetectionEnabled(false)
-                        liveDetectionLayoutBlockerCL.isVisible = true
-                    } else {
-                        liveDetectionLayoutBlockerCL.isVisible = false
-                    }
-
-                    if (!availableFeatures.contains(SdkFeature.MULTIPLE_WOUNDS_PER_IMAGE.featureName)) {
-                        WoundGeniusSDK.setIsMultipleOutlinesEnabled(false)
-                        isMultipleOutlinesEnabledLayoutBlockerCL.isVisible = true
-                    } else {
-                        isMultipleOutlinesEnabledLayoutBlockerCL.isVisible = false
-                    }
-                    if (!availableFeatures.contains(SdkFeature.STOMA_DOCUMENTATION.featureName)) {
-                        WoundGeniusSDK.setIsStomaFlow(false)
-                        stomaFlowLayoutBlockerCL.isVisible = true
-                    } else {
-                        stomaFlowLayoutBlockerCL.isVisible = false
-                    }
-
-                    if (!availableFeatures.contains(SdkFeature.DEBUG_MODE.featureName)) {
-                        WoundGeniusSDK.setIsDebugMode(false)
-                    } else {
-                        WoundGeniusSDK.setIsDebugMode(true)
-                    }
-                    featureStatusUi()
+                    WoundGeniusSDK.configure(
+                        isMultipleOutlinesEnabled = isEnabled
+                    )
+                    isMultipleOutlinesEnabledS.isChecked = isEnabled
+                } else {
+                    WoundGeniusSDK.configure(
+                        isMultipleOutlinesEnabled = false
+                    )
+                    isMultipleOutlinesEnabledS.isChecked =
+                        false
                 }
-                getUserId()
-                setupPrimaryColorUi()
-                setupLightBGUi()
+
+                isMultipleOutlinesEnabledLayoutBlockerCL.isVisible =
+                    !availableFeatures.contains(SdkFeature.MULTIPLE_WOUNDS_PER_IMAGE.featureName)
+
+                if (availableFeatures.contains(SdkFeature.WOUND_DETECTION.featureName)) {
+                    val woundAutoDetectionMode =
+                        sdkFeaturesStatus.autoDetectionMode
+
+                    WoundGeniusSDK.configure(
+                        woundAutoDetectionMode = if (WoundGeniusSDK.getIsStomaFlow()) WoundAutoDetectionMode.NONE else woundAutoDetectionMode
+                    )
+
+                    setupAutoDetectionModsUi()
+                } else {
+                    WoundGeniusSDK.configure(
+                        woundAutoDetectionMode = WoundAutoDetectionMode.NONE
+                    )
+                    autoDetectionSpinner.setSelection(0, false)
+                }
+
+                machineLearningLayoutBlockerCL.isVisible =
+                    !availableFeatures.contains(SdkFeature.WOUND_DETECTION.featureName)
+
+
+                if (availableFeatures.contains(SdkFeature.LIVE_WOUND_DETECTION.featureName)) {
+                    isEnabled =
+                        sdkFeaturesStatus.isLiveDetectionEnabled ?: false
+                    if (wasLicenseIncorrect){
+                        isEnabled = true
+                    }
+                    Log.d(
+                        "settings",
+                        "liveDetection license = ${if (WoundGeniusSDK.getIsStomaFlow()) false else isEnabled}"
+                    )
+                    liveDetectionS.isChecked =
+                        if (WoundGeniusSDK.getIsStomaFlow()) false else isEnabled
+                } else {
+                    liveDetectionS.isChecked = false
+                }
+                liveDetectionLayoutBlockerCL.isVisible =
+                    !availableFeatures.contains(SdkFeature.LIVE_WOUND_DETECTION.featureName)
+
+                maxMediaNumberValueACET.setText(sdkFeaturesStatus.maxNumberOfMedia.toString())
+
+                stomaFlowLayoutBlockerCL.isVisible =
+                    !availableFeatures.contains(SdkFeature.STOMA_DOCUMENTATION.featureName)
+
+
+                if (availableFeatures.contains(SdkFeature.LOCAL_STORAGE_IMAGES.featureName)) {
+                    isEnabled =
+                        sdkFeaturesStatus.isMediaFromGalleryAllowed ?: false
+                    if (wasLicenseIncorrect){
+                        isEnabled = true
+                    }
+                    WoundGeniusSDK.configure(
+                        isAddFromLocalStorageAvailable = isEnabled
+                    )
+                    addFromGalleryS.isChecked = isEnabled
+                } else {
+                    WoundGeniusSDK.configure(
+                        isAddFromLocalStorageAvailable = false
+                    )
+                    addFromGalleryS.isChecked = false
+                }
+                addFromGalleryLayoutBlockerCL.isVisible =
+                    !availableFeatures.contains(SdkFeature.LOCAL_STORAGE_IMAGES.featureName)
+
+                if (availableFeatures.contains(SdkFeature.BODY_PART_PICKER.featureName)) {
+                    isEnabled =
+                        sdkFeaturesStatus.isBodyPickerAllowed ?: false
+                    if (wasLicenseIncorrect){
+                        isEnabled = true
+                    }
+                    WoundGeniusSDK.configure(
+                        isAddBodyPickerOnCaptureScreenAvailable = isEnabled
+                    )
+                    addBodyPickerOnCameraS.isChecked = isEnabled
+                } else {
+                    WoundGeniusSDK.configure(
+                        isAddBodyPickerOnCaptureScreenAvailable = false
+                    )
+                    addBodyPickerOnCameraS.isChecked = false
+                }
+                addBodyPickerOnCameraLayoutBlockerCL.isVisible =
+                    !availableFeatures.contains(SdkFeature.BODY_PART_PICKER.featureName)
+
+                if (availableFeatures.contains(SdkFeature.FRONTAL_CAMERA.featureName)) {
+                    isEnabled =
+                        sdkFeaturesStatus.isFrontalCameraSupported ?: false
+                    if (wasLicenseIncorrect){
+                        isEnabled = true
+                    }
+                    WoundGeniusSDK.configure(
+                        isFrontCameraUsageAllowed = isEnabled
+                    )
+                    addCameraSwitchS.isChecked = isEnabled
+                } else {
+                    WoundGeniusSDK.configure(
+                        isFrontCameraUsageAllowed = false
+                    )
+                    addCameraSwitchS.isChecked = false
+                }
+                addCameraSwitchLayoutBlockerCL.isVisible =
+                    !availableFeatures.contains(SdkFeature.FRONTAL_CAMERA.featureName)
                 setupAutoDetectionModsUi()
+                if (availableFeatures.isNotEmpty()) {
+                    wasLicenseIncorrect = false
+                    saveFeatureStatus()
+                }
             }
-        }
-    }
-
-    private fun blockUi() {
-        binding.apply {
-            stomaFlowLayoutBlockerCL.isVisible = true
-            liveDetectionLayoutBlockerCL.isVisible = true
-            machineLearningLayoutBlockerCL.isVisible = true
-            addVideoModeLayoutBlockerCL.isVisible = true
-            addMarkerModeLayoutBlockerCL.isVisible = true
-            addPhotoModeLayoutBlockerCL.isVisible = true
-            addRulerModeLayoutBlockerCL.isVisible = true
-            addFromGalleryLayoutBlockerCL.isVisible = true
-            addBodyPickerOnCameraLayoutBlockerCL.isVisible = true
-            isMultipleOutlinesEnabledLayoutBlockerCL.isVisible = true
-            addCameraSwitchLayoutBlockerCL.isVisible = true
-
-            WoundGeniusSDK.configure(
-                isStomaFlow = false,
-                woundAutoDetectionMode = WoundAutoDetectionMode.NONE,
-                isLiveDetectionEnabled = false,
-                availableModes = emptyList(),
-                isMultipleOutlinesEnabled = false,
-                isFrontCameraUsageAllowed = false,
-                isAddFromLocalStorageAvailable = false,
-                isAddBodyPickerOnCaptureScreenAvailable = false
-            )
-        }
-    }
-
-    private fun featureStatusUi() {
-        binding.apply {
-            if (WoundGeniusSDK.getCustomerUserId().isNotEmpty()) {
-                userIdValueACET.setText(WoundGeniusSDK.getCustomerUserId())
-            }
-            val isAddMediaFromGallery = WoundGeniusSDK.getIsAddFromLocalStorageAvailable()
-            if (addFromGalleryS.isChecked != isAddMediaFromGallery) {
-                addFromGalleryS.isChecked = isAddMediaFromGallery
-            }
-            val isMultiOutlineEnable = WoundGeniusSDK.getIsMultipleOutlinesEnabled()
-            if (isMultipleOutlinesEnabledS.isChecked != isMultiOutlineEnable) {
-                isMultipleOutlinesEnabledS.isChecked = isMultiOutlineEnable
-            }
-            val isAddBodyPickerOnCamera = WoundGeniusSDK.getIsAddBodyPickerAvailable()
-            if (addBodyPickerOnCameraS.isChecked != isAddBodyPickerOnCamera) {
-                addBodyPickerOnCameraS.isChecked = isAddBodyPickerOnCamera
-            }
-            val iStomaFlow = WoundGeniusSDK.getIsStomaFlow()
-            if (stomaFlowS.isChecked != iStomaFlow) {
-                stomaFlowS.isChecked = iStomaFlow
-            }
-            val isLiveDetectionEnabled = WoundGeniusSDK.getIsLiveDetectionEnabled()
-            if (liveDetectionS.isChecked != isLiveDetectionEnabled) {
-                liveDetectionS.isChecked = isLiveDetectionEnabled
-            }
-            val addCameraSwitch = WoundGeniusSDK.getIsFrontCameraUsageAllowed()
-            if (addCameraSwitchS.isChecked != addCameraSwitch) {
-                addCameraSwitchS.isChecked = addCameraSwitch
-            }
-            val addVideoMode = WoundGeniusSDK.getAvailableModes().contains(CameraMods.VIDEO_MODE)
-            if (addVideoModeS.isChecked != addVideoMode) {
-                addVideoModeS.isChecked = addVideoMode
-            }
-            val addRulerMode =
-                WoundGeniusSDK.getAvailableModes().contains(CameraMods.MANUAL_MEASURE_MODE)
-            if (addRulerModeS.isChecked != addRulerMode) {
-                addRulerModeS.isChecked = addRulerMode
-            }
-            val addPhotoMode =
-                WoundGeniusSDK.getAvailableModes().contains(CameraMods.PHOTO_MODE)
-            if (addPhotoModeS.isChecked != addPhotoMode) {
-                addPhotoModeS.isChecked = addPhotoMode
-            }
-            val addMarkerMod =
-                WoundGeniusSDK.getAvailableModes().contains(CameraMods.MARKER_DETECT_MODE)
-            if (addMarkerModeS.isChecked != addMarkerMod) {
-                addMarkerModeS.isChecked = addMarkerMod
-            }
-            val maxMediaNumber = WoundGeniusSDK.getMaxNumberOfMedia()
-            maxMediaNumberValueACET.setText(maxMediaNumber.toString())
         }
     }
 

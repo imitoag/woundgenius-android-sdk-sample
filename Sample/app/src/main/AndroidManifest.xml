@@ -20,6 +20,7 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/sample_app_ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme"
         tools:ignore="LockedOrientationActivity">
 
@@ -37,6 +38,13 @@
 
         <activity android:name=".ui.screen.measurementresult.holder.MeasurementResultHolderActivity"
             android:screenOrientation="portrait" />
+
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="remove" />
 
     </application>
 

@@ -2,7 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homeScreenContainer"
     android:layout_width="match_parent"
+    android:background="@color/sample_app_tutorial_background"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -10,6 +12,7 @@
         android:id="@+id/toolbarCL"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
+        android:background="@color/sample_app_tutorial_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,7 +27,7 @@
             android:text="WoundSDK"
             tools:text="WoundGenius: 1.0.2 Build: 1.0.3.2"
             android:textAlignment="center"
-            android:textColor="@color/sample_app_black"
+            android:textColor="@color/sample_app_text_color"
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -39,7 +42,7 @@
             android:layout_marginEnd="5dp"
             android:padding="5dp"
             android:src="@drawable/sample_app_ic_icon_25_settings3x"
-            android:tint="@color/sample_app_red"
+            android:tint="@color/sample_app_button_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -51,8 +54,8 @@
         android:layout_width="wrap_content"
         android:textSize="17sp"
         android:layout_marginTop="10dp"
-        tools:text="@string/RESULT_TITLE"
-        android:textColor="@color/sample_app_black"
+        tools:text="@string/WOUND_GENIUS_SDK_RESULT_TITLE"
+        android:textColor="@color/sample_app_text_color"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +79,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:text="Measurement Chart"
-            android:textColor="@color/sample_app_black"
+            android:textColor="@color/sample_app_text_color"
             android:textSize="15sp"
             app:layout_constraintEnd_toStartOf="@+id/expandChartArrowIconACIV"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +111,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/cm_square_label" />
+                android:text="@string/WOUND_GENIUS_SDK_cm_square_label" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lineChart"
@@ -236,7 +239,7 @@
             android:layout_marginTop="14dp"
             android:layout_marginBottom="14dp"
             android:gravity="center"
-            android:text="Pick body Part"
+            android:text="Select Body Part"
             android:textColor="@color/sample_app_white"
             android:textSize="15sp"
             android:textStyle="bold"

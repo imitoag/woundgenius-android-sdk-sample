@@ -7,9 +7,9 @@ import com.example.samplewoundsdk.R
 import com.example.samplewoundsdk.databinding.SampleAppItemSampleMeasurementResultBinding
 import com.example.samplewoundsdk.ui.screen.view.SampleMeasurementResultItemView
 import com.example.woundsdk.data.pojo.measurement.MeasurementMetadata
+import com.example.woundsdk.di.WoundGeniusSDK
 import java.text.DecimalFormat
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Locale
 
 class MeasurementsItemsAdapter(
     private val needContinue: Boolean,
@@ -61,26 +61,38 @@ class MeasurementsItemsAdapter(
 
         fun bind(item: MeasurementMetadata) {
             itemBinding.apply {
-                val name = root.context.getString(R.string.WOUND_ITEM_NUMBER)
+                val name = root.context.getString(R.string.WOUND_GENIUS_SDK_WOUND_ITEM_NUMBER)
                     .replace(WOUND_ITEM_PATTERN, (bindingAdapterPosition + 1).toString())
+
+                var backgroundColor: Int? = null
+
+                backgroundColor = WoundGeniusSDK.getLightBackgroundColor()?.let {
+                    itemBinding.root.context.getColor(it.toInt())
+                } ?: itemBinding.root.context?.getColor(
+                    R.color.sample_app_background
+                )
+                backgroundColor?.let {
+                    measurementResultItemCL.setBackgroundColor(it)
+                }
+
                 measurementresultMRIV.tag = name
                 measurementresultMRIV.setMeasurementBlockValues(
                     needContinue = needContinue,
                     name = name,
                     areaValue = root.context.getString(
-                        R.string.cm_square,
+                        R.string.WOUND_GENIUS_SDK_cm_square,
                         decimalFormat.format(item.area)
                     ),
                     circumferenceValue = root.context.getString(
-                        R.string.cm,
+                        R.string.WOUND_GENIUS_SDK_cm,
                         decimalFormat.format(item.circumference)
                     ),
                     lengthValue = root.context.getString(
-                        R.string.cm,
+                        R.string.WOUND_GENIUS_SDK_cm,
                         decimalFormat.format(item.length)
                     ),
                     widthValue = root.context.getString(
-                        R.string.cm,
+                        R.string.WOUND_GENIUS_SDK_cm,
                         decimalFormat.format(item.width)
                     ),
                     depth = item.depth

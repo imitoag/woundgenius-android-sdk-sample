@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/sample_app_measurement_result_color">
+    android:id="@+id/measurementViewCL"
+    android:background="@color/sample_app_background">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/measurementItemLabelACTV"
@@ -14,7 +15,7 @@
         android:textSize="17sp"
         android:drawableStart="@drawable/sample_app_circle_shape_small_green"
         android:drawablePadding="5dp"
-        android:textColor="@color/sample_app_black"
+        android:textColor="@color/sample_app_text_color"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,8 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
-            android:text="@string/AREA"
-            android:textColor="@color/sample_app_black"
+            android:text="@string/WOUND_GENIUS_SDK_AREA"
+            android:textColor="@color/sample_app_text_color"
             android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -72,8 +73,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
-            android:text="@string/CIRCUMFERENCE"
-            android:textColor="@color/sample_app_black"
+            android:text="@string/WOUND_GENIUS_SDK_CIRCUMFERENCE"
+            android:textColor="@color/sample_app_text_color"
             android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/dv2" />
@@ -107,8 +108,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
-            android:text="@string/LENGTH"
-            android:textColor="@color/sample_app_black"
+            android:text="@string/WOUND_GENIUS_SDK_LENGTH"
+            android:textColor="@color/sample_app_text_color"
             android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/dv3" />
@@ -142,8 +143,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
-            android:text="@string/WIDTH"
-            android:textColor="@color/sample_app_black"
+            android:text="@string/WOUND_GENIUS_SDK_WIDTH"
+            android:textColor="@color/sample_app_text_color"
             android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/dv4" />
@@ -152,7 +153,6 @@
             android:id="@+id/widthItemValueACTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginEnd="15dp"
             android:inputType="number"
             android:textColor="@color/sample_app_measurement_value_text_color"
@@ -163,7 +163,7 @@
             tools:text="4.2 cm" />
 
         <View
-            android:id="@+id/dv5"
+            android:id="@+id/widthDividerV"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="15dp"
@@ -179,12 +179,13 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:text="@string/DEPTH_MM"
-            android:textColor="@color/sample_app_black"
+            android:text="@string/WOUND_GENIUS_SDK_DEPTH_MM"
+            tools:visibility="gone"
+            android:textColor="@color/sample_app_text_color"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/dv5" />
+            app:layout_constraintTop_toTopOf="@+id/widthDividerV" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/depthItemValueACET"
@@ -192,7 +193,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
             android:background="@null"
-            android:hint="@string/TAP_TO_ADD_DEPTH"
+            tools:visibility="gone"
+            android:hint="@string/WOUND_GENIUS_SDK_TAP_TO_ADD_DEPTH"
             android:inputType="numberDecimal"
             android:textAlignment="textEnd"
             android:textColor="@color/sample_app_measurement_value_text_color"
