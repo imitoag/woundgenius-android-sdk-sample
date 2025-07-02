@@ -24,6 +24,7 @@ import com.example.samplewoundsdk.ui.screen.base.AbsActivity
 import com.example.woundsdk.data.pojo.measurement.MeasurementMetadata
 import com.example.woundsdk.di.WoundGeniusSDK
 import com.example.woundsdk.utils.LandscapeUtils.isSDKSupportPortraitOnly
+import com.example.woundsdk.utils.LandscapeUtils.onConfigurationChange
 import java.io.Serializable
 import java.text.DecimalFormat
 
@@ -61,19 +62,36 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
         super.onCreate(savedInstanceState)
         binding = SampleAppActivityMeasurementResultHolderBinding.inflate(layoutInflater)
 
-        requestedOrientation = if (isSDKSupportPortraitOnly(WoundGeniusSDK.getIsLandscapeSupported(),this@MeasurementResultHolderActivity))
-            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT else
-            ActivityInfo.SCREEN_ORIENTATION_FULL_USER
+        val orientation = resources.configuration.orientation
 
-        val container = binding.measurementResultLayoutCL
-        container.addView(object : View(this) {
-            override fun onConfigurationChanged(newConfig: Configuration?) {
-                super.onConfigurationChanged(newConfig)
-                requestedOrientation = if (isSDKSupportPortraitOnly(WoundGeniusSDK.getIsLandscapeSupported(),this@MeasurementResultHolderActivity))
-                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT else
-                    ActivityInfo.SCREEN_ORIENTATION_FULL_USER
+        if (!WoundGeniusSDK.getIsLandscapeSupported()) {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        } else {
+            if (isSDKSupportPortraitOnly(
+                    WoundGeniusSDK.getIsLandscapeSupported(),
+                    this@MeasurementResultHolderActivity
+                )
+            ) {
+                if (orientation != Configuration.ORIENTATION_PORTRAIT) {
+                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                }
+            } else {
+                val container = binding.measurementResultLayoutCL
+                container.addView(object : View(this) {
+                    override fun onConfigurationChanged(newConfig: Configuration?) {
+                        super.onConfigurationChanged(newConfig)
+                        onConfigurationChange(this@MeasurementResultHolderActivity)
+                    }
+                })
+
+                if (orientation != Configuration.ORIENTATION_LANDSCAPE) {
+                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_USER
+                }
             }
-        })
+        }
+
+
+
 
         setContentView(binding.root)
 

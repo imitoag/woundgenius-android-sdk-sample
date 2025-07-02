@@ -5,28 +5,80 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/imageBorderCL"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.example.woundsdk.utils.image.drawstroke.StrokeScalableImageView
+            android:id="@+id/imageSSIV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/hidePhotoACIV"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:adjustViewBounds="true"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/imageSSIV"
-        app:layout_constraintEnd_toEndOf="@+id/imageSSIV"
-        app:layout_constraintStart_toStartOf="@+id/imageSSIV"
-        app:layout_constraintTop_toTopOf="@+id/imageSSIV"
-        tools:src="@tools:sample/backgrounds/scenic"
-        tools:visibility="visible" />
-
-    <com.example.woundsdk.utils.image.drawstroke.StrokeScalableImageView
-        android:id="@+id/imageSSIV"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="wrap"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/backgrounds/scenic" />
+        app:layout_constraintWidth_default="wrap"
+        tools:src="@drawable/land"
+        tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/zoomenContainerCL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/wound_genius_sdk_background_zoom_in"
+        android:elevation="2dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/hidePhotoACIV"
+        app:layout_constraintTop_toTopOf="@+id/hidePhotoACIV"
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/zoomenIconACIV"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_zoom_in"
+            android:tint="@color/WOUND_GENIUS_SDK_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/appCompatTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:elevation="4dp"
+            android:text="@string/WOUND_GENIUS_SDK_MEASUREMENT_RESULTS_ZOOM"
+            android:textColor="@color/WOUND_GENIUS_SDK_white"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@+id/zoomenIconACIV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/zoomenIconACIV" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/videoPlayerContainerCl"

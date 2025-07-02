@@ -404,24 +404,6 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                 imageSSIV.isNeedFillPolygon(false)
                 imageSSIV.isNeedWhiteStrokesOnVertex(true)
 
-                if (context?.resources?.configuration?.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE) {
-                    imageSSIV.post {
-                        val layoutParams =
-                            imageSSIV?.layoutParams as ConstraintLayout.LayoutParams
-                        layoutParams.width =
-                            (((imageSSIV?.measuredHeight ?: 0) * 4f) / 3f).toInt()
-                        imageSSIV?.layoutParams = layoutParams
-                    }
-                } else {
-
-                    imageSSIV.post {
-                        val layoutParams =
-                            imageSSIV?.layoutParams as ConstraintLayout.LayoutParams
-                        layoutParams.height =
-                            (((imageSSIV?.measuredWidth ?: 0) * 4f) / 3f).toInt()
-                        imageSSIV?.layoutParams = layoutParams
-                    }
-                }
             }
         }
     }
@@ -486,7 +468,9 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                                         resource.let { bitmap ->
                                             currentPictureSize =
                                                 ImageResolution(bitmap.width, bitmap.height)
+                                            hidePhotoACIV.setImageBitmap(bitmap)
                                             imageSSIV.setImage(ImageSource.bitmap(bitmap))
+                                            zoomenContainerCL.isVisible = true
                                             setUpMetadataUi()
                                         }
                                         return true

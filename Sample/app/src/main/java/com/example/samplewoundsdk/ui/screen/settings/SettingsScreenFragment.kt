@@ -4,7 +4,6 @@ import android.content.pm.ActivityInfo
 import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +25,7 @@ import com.example.woundsdk.data.pojo.camera.cameramod.CameraMods
 import com.example.woundsdk.di.WoundGeniusSDK
 import com.example.woundsdk.utils.LandscapeUtils.isSupportPortraitOnly
 import com.example.woundsdk.utils.LandscapeUtils.onConfigurationChange
-import com.example.woundsdk.utils.SdkFeature
+import com.example.woundsdk.data.pojo.license.SdkFeature
 
 
 class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {

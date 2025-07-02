@@ -20,7 +20,6 @@ import com.example.woundsdk.data.pojo.camera.cameramod.CameraMods
 import com.example.woundsdk.data.pojo.entity.MediaModel
 import com.example.woundsdk.data.pojo.measurement.ImageResolution
 import com.example.woundsdk.di.WoundGeniusSDK
-import com.orhanobut.hawk.Hawk
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -46,7 +45,6 @@ class SampleWoundSDKApplication : MultiDexApplication(), HasAndroidInjector {
     override fun onCreate() {
         super.onCreate()
 
-        Hawk.init(this).build()
         MultiDex.install(this)
         Timber.plant(Timber.DebugTree())
         Timber.plant(FileLogTree(this).apply {

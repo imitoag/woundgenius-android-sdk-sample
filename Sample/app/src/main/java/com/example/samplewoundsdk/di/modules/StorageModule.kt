@@ -26,5 +26,5 @@ class StorageModule {
 
     @Singleton
     @Provides
-    fun providesSharedMemory(): SharedMemory = SharedMemoryImpl()
+    fun providesSharedMemory(context: Context): SharedMemory = SharedMemoryImpl(context)
 }

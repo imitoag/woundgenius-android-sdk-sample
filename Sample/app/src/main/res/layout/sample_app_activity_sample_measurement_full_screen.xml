@@ -31,7 +31,7 @@
         android:id="@+id/boundaryLabelListRV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+        app:layoutManager="com.example.woundsdk.ui.view.flexbox.FlexboxLayoutManager"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"/>
 

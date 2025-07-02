@@ -7,7 +7,6 @@ import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +24,6 @@ import com.example.samplewoundsdk.ui.screen.base.AbsFragment
 import com.example.samplewoundsdk.ui.screen.main.MainBridge
 import com.example.samplewoundsdk.ui.screen.measurementresult.holder.MeasurementResultHolderActivity
 import com.example.samplewoundsdk.utils.data.LineChartData
-import com.example.woundsdk.data.pojo.WoundGeniusOperatingMode
 import com.example.woundsdk.data.pojo.assessment.entity.AssessmentEntity
 import com.example.woundsdk.data.pojo.autodetectionmod.WoundAutoDetectionMode
 import com.example.woundsdk.data.pojo.camera.cameramod.CameraMods
@@ -35,11 +33,10 @@ import com.example.woundsdk.ui.screen.bodypicker.BodyPartContract
 import com.example.woundsdk.ui.screen.bodypicker.BodyPickerActivity
 import com.example.woundsdk.ui.screen.measurecamera.MeasureCameraActivity
 import com.example.woundsdk.ui.screen.measurecamera.MeasureCameraContract
-import com.example.woundsdk.utils.ConverterUtil
-import com.example.woundsdk.utils.LandscapeUtils.isSDKSupportPortraitOnly
+import com.example.woundsdk.utils.bodypicker.ConverterUtil
 import com.example.woundsdk.utils.LandscapeUtils.isSupportPortraitOnly
 import com.example.woundsdk.utils.LandscapeUtils.onConfigurationChange
-import com.example.woundsdk.utils.SdkFeature
+import com.example.woundsdk.data.pojo.license.SdkFeature
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
