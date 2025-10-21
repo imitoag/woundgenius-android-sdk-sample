@@ -1,11 +1,9 @@
 package com.example.samplewoundsdk.core
 
-import android.graphics.Bitmap
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.example.samplewoundsdk.AppLifecycleObserver
-import com.example.samplewoundsdk.R
 import com.orhanobut.hawk.Hawk
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -16,12 +14,14 @@ import com.example.samplewoundsdk.BuildConfig
 import com.example.woundsdk.SdkCaptureMediaListener
 import com.example.woundsdk.data.pojo.autodetectionmod.AutoDetectionMod
 import com.example.woundsdk.data.pojo.cameramod.CameraMods
+import com.example.woundsdk.data.pojo.entity.MediaModel
+import com.example.woundsdk.data.pojo.measurement.ImageResolution
 import com.example.woundsdk.di.WoundGeniusSDK
-import com.example.woundsdk.utils.mediapicker.MediaFile
-import io.reactivex.disposables.CompositeDisposable
+import com.example.woundsdk.ui.screen.measurecamera.MeasureCameraActivity
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
+import java.io.File
 import java.io.IOException
 import java.net.SocketException
 import javax.inject.Inject
@@ -53,13 +53,10 @@ class SampleWoundSDKApplication : MultiDexApplication(), HasAndroidInjector {
             appBundleId = BuildConfig.APPLICATION_ID,
             licenseKey = yearLicenseKey
         )
-        // Configuration settings for SDK, comment to use default settings
-        WoundGeniusSDK.configure(
-            isAddBodyPickerOnCaptureScreenAvailable = true,
-            maxNumberOfMedia = 2,
-            isMultipleOutlinesEnabled = true,
-            autoDetectionMod = AutoDetectionMod.WOUND
-        )
+
+        WoundGeniusSDK.configure(maxNumberOfMedia = 2, autoDetectionMod = AutoDetectionMod.WOUND)
+
+
         RxJavaPlugins.setErrorHandler { e: Throwable ->
             var error = e
             if (error is UndeliverableException) {
