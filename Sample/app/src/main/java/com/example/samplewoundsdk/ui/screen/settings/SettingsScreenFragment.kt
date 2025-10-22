@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import com.example.samplewoundsdk.R
@@ -149,6 +150,13 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             }
             false
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val window = requireActivity().window
+        WindowInsetsControllerCompat(window, binding.root).isAppearanceLightStatusBars = true
     }
 
     override fun onCreateView(

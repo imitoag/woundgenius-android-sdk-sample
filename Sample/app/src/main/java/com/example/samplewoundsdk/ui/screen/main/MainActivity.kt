@@ -4,6 +4,7 @@ package com.example.samplewoundsdk.ui.screen.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.samplewoundsdk.R
 import com.example.samplewoundsdk.databinding.SampleAppActivityMainBinding
 import com.example.samplewoundsdk.ui.screen.homescreen.HomeScreenFragment
@@ -40,6 +41,9 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
 
     override fun onResume() {
         super.onResume()
+
+        val window = this.window
+        WindowInsetsControllerCompat(window, binding.root).isAppearanceLightStatusBars = true
     }
 
 

@@ -182,6 +182,7 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
             val sdkVersionTitle = "${getString(R.string.APP_NAME)} (${BuildConfig.VERSION_NAME})"
             sampleSdkVersionLabelACTV.text = sdkVersionTitle
             assessmentsRV.adapter = assessmentsAdapter
+
             val primaryButtonColor = context?.getColor(
                 WoundGeniusSDK.getPrimaryButtonColor()?.toInt() ?: R.color.sample_app_red
             )
