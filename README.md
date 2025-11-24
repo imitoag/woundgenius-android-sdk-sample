@@ -84,6 +84,22 @@ To launch the SampleRN App, perform the following actions:
 8. Switch back to AndroidStudio to run the Android app on your device/emulator or press a keybutton in terminal to run app on Android from React Native.
 9. Click "Start Capturing". Allow access to Camera.
 
+# WoundGenius SDK Flutter Sample App
+
+This repository contains the React Native Sample (SampleRN folder).
+
+## Initial Setup
+To launch the Sample Flutter App, perform the following actions:
+
+1. Pull the repository.
+2. Navigate to the SampleFlutter -> imito_dart_ffi_investigation
+3. Open terminal in this folder using VS code on native terminal. 
+4. Run ```flutter doctor``` to make sure your environment is ready. If you see any red 'X' marks, follow the suggested commands to fix them
+5. Connect device to your machine using cable or use ```flutter devices``` command to selected prefered device if it's already connected
+6. Open the android folder and update the license key in the MainApplication class file, if necessary.
+7. Execute ```flutter run``` commad if you do not have Android Studio installed. Otherwise, run it through Android Studio.
+8. Click "Start Capturing". Allow access to Camera.
+
 
 # WoundGenius SDK Ionic Angular Sample App
 
