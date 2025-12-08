@@ -2,11 +2,11 @@ package io.ionic.starter
 
 import android.app.Application
 import android.content.pm.PackageManager
-import com.example.woundsdk.data.pojo.WoundGeniusOperatingMode
 import com.example.woundsdk.data.pojo.autodetectionmod.WoundAutoDetectionMode
-import com.example.woundsdk.data.pojo.cameramod.CameraMods
+import com.example.woundsdk.data.pojo.camera.cameramod.CameraMods
+
 import com.example.woundsdk.di.WoundGeniusSDK
-import com.orhanobut.hawk.Hawk
+
 
 class WoundGeniusSdkManager {
   fun init(application: Application) {

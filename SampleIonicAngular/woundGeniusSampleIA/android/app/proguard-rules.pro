@@ -1,21 +1,75 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+-keepattributes SourceFile,LineNumberTable,*Annotation*,Signature,InnerClasses,EnclosingMethod
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-keep class com.example.woundsdk.data.pojo.** { *; }
+-keepclassmembers class com.example.woundsdk.data.pojo.** { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+
+-keep class com.example.woundsdk.ui.** { *; }
+-keepclassmembers class com.example.woundsdk.ui.** { *; }
+
+-keep class com.example.woundsdk.ui.screen.measurecamera.MeasureCameraActivity$Companion {
+    public *;
+}
+
+-keep class com.example.woundsdk.storage.shared.SharedMemoryImpl { *; }
+
+-keep class com.example.woundsdk.storage.shared.SharedMemory { *; }
+
+-keepclassmembers class com.example.woundsdk.ui.screen.measurecamera.MeasureCameraActivity {
+    static ** Companion;
+}
+
+-keepnames class com.example.woundsdk.ui.screen.measurecamera.MeasureCameraActivity$Companion$Arguments {
+    <fields>;
+}
+
+-keepnames class com.example.woundsdk.ui.screen.measurecamera.MeasureCameraActivity$Companion$ResArgs {
+    <fields>;
+}
+
+-keep class com.example.woundsdk.ui.screen.whatsnew.WhatsNewActivity { *; }
+
+
+-keep class com.example.woundsdk.ui.screen.videotutorial.VideoPlayerActivity$Companion {
+    public *;
+}
+
+
+-keepclassmembers class com.example.woundsdk.ui.screen.videotutorial.VideoPlayerActivity {
+    public static final ** Companion;
+}
+
+-keep class com.example.woundsdk.ui.screen.bodypicker.BodyPickerActivity$Companion {
+   public *;
+}
+
+
+-keepclassmembers class com.example.woundsdk.ui.screen.bodypicker.BodyPickerActivity {
+    public static final ** Companion;
+}
+
+
+-keepnames class com.example.woundsdk.ui.screen.bodypicker.BodyPickerActivity$Companion$Args {
+    <fields>;
+}
+
+
+-keepnames class com.example.woundsdk.ui.screen.bodypicker.BodyPickerActivity$Companion$ResArgs {
+    <fields>;
+}
+
+
+-keepclassmembers class ** {
+    public static final *** *;
+}
+
+-keep @androidx.annotation.Keep class * { *; }
+-keepclassmembers class * {
+    @androidx.annotation.Keep *;
+}
+
+
+-keep class com.example.woundsdk.di.** { *; }
+-keep class com.example.woundsdk.storage.** { *; }
+-keep class com.example.woundsdk.utils.** { *; }
