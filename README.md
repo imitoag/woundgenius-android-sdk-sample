@@ -69,24 +69,24 @@ To launch the Sample App, perform the following actions:
 
 # WoundGenius SDK React Native Sample App
 
-This repository contains the React Native Sample (SampleRN folder).
+This repository contains the React Native Sample (SampleReactNative folder).
 
 ## Initial Setup
-To launch the SampleRN App, perform the following actions:
+To launch the SampleReactNative App, perform the following actions:
 
 1. Pull the repository.
-2. Navigate to the SampleRN -> AwesomeProject.
+2. Navigate to the SampleReactNative.
 3. In terminal run a command npm install. That should setup the node_modules.
 4. Open the android folder using AndroidStudio.
 5. Follow one of the options for integrating WoundGenius SDk into the Sample app.
 6. Update the license key in AndroidStudio in the MainApplication class file.
-7. Navigate out of android folder in terminal, to the AwesomeProject folder. Run the npm start command in terminal. This should start the dev server usually on port 8081.
+7. Navigate out of android folder in terminal, to the SampleReactNative folder. Run the ```npx react-native run-android``` command in terminal. This should start the dev server usually on port 8081.
 8. Switch back to AndroidStudio to run the Android app on your device/emulator or press a keybutton in terminal to run app on Android from React Native.
 9. Click "Start Capturing". Allow access to Camera.
 
 # WoundGenius SDK Flutter Sample App
 
-This repository contains the React Native Sample (SampleRN folder).
+This repository contains the Flutter Sample (SampleFlutter folder).
 
 ## Initial Setup
 To launch the Sample Flutter App, perform the following actions:
