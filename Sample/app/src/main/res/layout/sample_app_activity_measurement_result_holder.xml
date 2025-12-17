@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
     android:id="@+id/measurementResultLayoutCL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -60,7 +61,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.example.woundsdk.ui.view.scrollingpagerindicator.ScrollingPagerIndicator
+            <io.imito.woundgenius.sdk.ui.view.scrollingpagerindicator.ScrollingPagerIndicator
                 android:id="@+id/indicatorSPI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,6 +96,8 @@
                     android:id="@+id/woundContainerCL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -194,134 +197,17 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/stomaContainerCL"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/woundContainerCL">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/stomaMeasurementItemLabelACTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:drawableStart="@drawable/wound_genius_sdk_circle_shape_small_green"
-                        android:drawablePadding="5dp"
-                        android:text="@string/WOUND_GENIUS_SDK_STOMA_ITEM_NUMBER"
-                        android:textColor="@color/sample_app_text_color"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/stomaDetailsCL"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/wound_genius_sdk_background_rounded_white_grey_border"
-                        android:visibility="visible"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/stomaMeasurementItemLabelACTV">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/stomaDiameterLabelTV"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginEnd="20dp"
-                            android:layout_marginBottom="5dp"
-                            android:text="@string/WOUND_GENIUS_SDK_STOMA_DIAMETER"
-                            android:textColor="@color/sample_app_text_color"
-                            android:textSize="17sp"
-                            app:layout_constraintEnd_toStartOf="@+id/stomaDiameterValueACTV"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/stomaDiameterValueACTV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:textColor="@color/sample_app_measurement_value_text_color"
-                            android:textSize="17sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/stomaDiameterLabelTV"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/stomaDiameterLabelTV"
-                            tools:text="20.3 cm2" />
-
-                        <View
-                            android:id="@+id/stomaDiameterSeparatorV"
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="15dp"
-                            android:background="@color/WOUND_GENIUS_SDK_grey"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/stomaDiameterLabelTV"
-                            app:layout_constraintTop_toBottomOf="@+id/stomaDiameterLabelTV" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/stomaHeightLabelACTV"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginEnd="20dp"
-                            android:layout_marginBottom="15dp"
-                            android:text="@string/WOUND_GENIUS_SDK_HEIGHT"
-                            android:textColor="@color/sample_app_text_color"
-                            android:textSize="17sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/stomaHeightValueACET"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/stomaDiameterSeparatorV" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/stomaHeightValueACET"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="3dp"
-                            android:background="@null"
-                            android:hint="0.0"
-                            android:inputType="number"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/sample_app_measurement_value_text_color"
-                            android:textSize="17sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/stomaHeightLabelACTV"
-                            app:layout_constraintEnd_toStartOf="@+id/stomaHeightMmACTV"
-                            app:layout_constraintTop_toTopOf="@+id/stomaHeightLabelACTV"
-                            tools:text="34.1" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/stomaHeightMmACTV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:text="mm"
-                            android:textColor="@color/sample_app_measurement_value_text_color"
-                            android:textSize="17sp"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/stomaHeightValueACET"
-                            app:layout_constraintEnd_toEndOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/measurementsItemsRV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:visibility="gone"
+                    tools:visibility="visible"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/stomaContainerCL" />
+                    app:layout_constraintTop_toBottomOf="@+id/woundContainerCL" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     android:background="@color/sample_app_black">
 
@@ -19,7 +20,7 @@
         tools:src="@tools:sample/backgrounds/scenic"
         tools:visibility="visible" />
 
-    <com.example.woundsdk.utils.image.drawstroke.StrokeScalableImageView
+    <io.imito.woundgenius.sdk.utils.image.drawstroke.StrokeScalableImageView
         android:id="@+id/imageSSIV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,7 +32,7 @@
         android:id="@+id/boundaryLabelListRV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layoutManager="com.example.woundsdk.ui.view.flexbox.FlexboxLayoutManager"
+        app:layoutManager="io.imito.woundgenius.sdk.ui.view.flexbox.FlexboxLayoutManager"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"/>
 

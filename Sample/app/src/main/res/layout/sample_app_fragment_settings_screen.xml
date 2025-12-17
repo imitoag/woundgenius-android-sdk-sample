@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:id="@+id/settingScreenContainer"
     android:background="@color/sample_app_tutorial_background"
     android:orientation="vertical">
@@ -1201,6 +1202,124 @@
                 app:layout_constraintStart_toStartOf="@+id/isLandscapeSupportedLayoutCL"
                 app:layout_constraintTop_toTopOf="@+id/isLandscapeSupportedLayoutCL" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/isMeasurementLineEnabledLayoutCL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/isLandscapeSupportedLayoutCL">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/isMeasurementLineEnabledLabelACTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="Measurement Line"
+                    android:textColor="@color/sample_app_text_color"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/isMeasurementLineEnabledS"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/isMeasurementLineEnabledS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/isMeasurementLineEnabledLabelACTV"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/isMeasurementLineEnabledLabelACTV" />
+
+                <View
+                    android:id="@+id/isMeasurementLineEnabledBottomV"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/sample_app_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/isMeasurementLineEnabledLabelACTV"
+                    app:layout_constraintTop_toBottomOf="@+id/isMeasurementLineEnabledLabelACTV" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/isMeasurementLineEnabledBlockerCL"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/sample_app_color_black_opacity_cc"
+                android:clickable="true"
+                android:elevation="7dp"
+                android:focusable="true"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/isMeasurementLineEnabledLayoutCL"
+                app:layout_constraintEnd_toEndOf="@+id/isMeasurementLineEnabledLayoutCL"
+                app:layout_constraintStart_toStartOf="@+id/isMeasurementLineEnabledLayoutCL"
+                app:layout_constraintTop_toTopOf="@+id/isMeasurementLineEnabledLayoutCL" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/isSingleAreaEnabledLayoutCL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/isMeasurementLineEnabledLayoutCL">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/isSingleAreaEnabledLabelACTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="Single Area"
+                    android:textColor="@color/sample_app_text_color"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/isSingleAreaEnabledS"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/isSingleAreaEnabledS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/isSingleAreaEnabledLabelACTV"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/isSingleAreaEnabledLabelACTV" />
+
+                <View
+                    android:id="@+id/isSingleAreaEnabledBottomV"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/sample_app_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/isSingleAreaEnabledLabelACTV"
+                    app:layout_constraintTop_toBottomOf="@+id/isSingleAreaEnabledLabelACTV" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/isSingleAreaEnabledBlockerCL"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/sample_app_color_black_opacity_cc"
+                android:clickable="true"
+                android:elevation="7dp"
+                android:focusable="true"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/isSingleAreaEnabledLayoutCL"
+                app:layout_constraintEnd_toEndOf="@+id/isSingleAreaEnabledLayoutCL"
+                app:layout_constraintStart_toStartOf="@+id/isSingleAreaEnabledLayoutCL"
+                app:layout_constraintTop_toTopOf="@+id/isSingleAreaEnabledLayoutCL" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/colorLabelACTV"
                 android:layout_width="wrap_content"
@@ -1213,7 +1332,7 @@
 
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/isLandscapeSupportedLayoutCL" />
+                app:layout_constraintTop_toBottomOf="@+id/isSingleAreaEnabledLayoutCL" />
 
             <View
                 android:id="@+id/colorValueTopV"

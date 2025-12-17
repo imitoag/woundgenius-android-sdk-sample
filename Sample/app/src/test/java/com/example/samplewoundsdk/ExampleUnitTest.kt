@@ -1,4 +1,4 @@
-package com.example.samplewoundsdk
+package io.imito.woundgenius.sample
 
 import org.junit.Test
 

@@ -3,13 +3,13 @@
 
     <dimen name="stroke_circle_radius">12dp</dimen>
     <dimen name="stroke_text_size">16sp</dimen>
-    <dimen name="stroke_line_width">2dp</dimen>
+    <dimen name="wound_genius_sdk_stroke_line_width">2dp</dimen>
     <dimen name="stroke_min_distance">24dp</dimen>
 
     <dimen name="manual_measure_point_radius">60dp</dimen>
     <dimen name="manual_measure_line_width">4dp</dimen>
 
-    <dimen name="clear_button_padding">6dp</dimen>
+    <dimen name="outline_label_padding">6dp</dimen>
     <dimen name="measurement_label_round">2dp</dimen>
     <dimen name="textSize14">14dp</dimen>
     <dimen name="text_size_medium">14sp</dimen>

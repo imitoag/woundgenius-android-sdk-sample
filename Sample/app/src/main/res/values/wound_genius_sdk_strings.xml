@@ -39,7 +39,7 @@
     "Complete the path to proceed with measurement."
   </string>
   <string name="WOUND_GENIUS_SDK_TAP_MEASURE_TO_COUNTINUE">
-    "All good. Tap Confirm to continue with assessment."
+    "Ensure accurate detection of wound edges, and make adjustments as needed. Tap Confirm to proceed."
   </string>
   <string name="WOUND_GENIUS_SDK_RESULT_TITLE">
     "Measurement Results"
@@ -162,7 +162,7 @@
     "Medial"
   </string>
   <string name="WOUND_GENIUS_SDK_ENSURE_ACCURATE_DETECTION">
-    "Ensure accurate detection of wound edges and make adjustments as needed. Tap Measure to finalise measurement."
+    "Ensure accurate detection of wound edges and make adjustments as needed. Tap Confirm to finalise measurement."
   </string>
   <string name="WOUND_GENIUS_SDK_REVIEW_CONTOURS">
     "Review"
@@ -186,7 +186,7 @@
     "Edit"
   </string>
   <string name="WOUND_GENIUS_SDK_EDITING">
-    "Editing %s"
+    "Measuring %s"
   </string>
   <string name="WOUND_GENIUS_SDK_HIDE_ALL">
     "Hide All"
@@ -750,7 +750,7 @@
     "Confirm"
   </string>
   <string name="WOUND_GENIUS_SDK_REVIEW_OUTLINES_POPUP_DESCRIPTION">
-    "Make sure wound edges and tissue types are detected correctly before proceeding."
+    "Make sure wound edges are detected correctly before proceeding."
   </string>
   <string name="WOUND_GENIUS_SDK_PINS_SCREEN_SUBTITLE">
     "10.12.2000, P1234"
@@ -1074,9 +1074,6 @@
   <string name="WOUND_GENIUS_SDK_SELECT">
     "Select"
   </string>
-  <string name="WOUND_GENIUS_SDK_CALIBRATION">
-    "Calibration"
-  </string>
   <string name="WOUND_GENIUS_SDK_TAKE_PHOTO">
     "Take a Photo"
   </string>
@@ -1150,18 +1147,130 @@
     "Line Measurement"
   </string>
   <string name="WOUND_GENIUS_SDK_LINE_MEASUREMENT_POPUP_DESCRIPTION">
-    "Measure post-operative seams and other features using the new line measurement mode."
+    "Measure post-operative seams and other features using the new line measurement mode."
   </string>
   <string name="WOUND_GENIUS_SDK_OUTLINE">
     "Outline"
   </string>
   <string name="WOUND_GENIUS_SDK_NO_OPEN_WOUND_DETECTED">
-    "No open wound detected. Consider Re-taking a photo or add measurements manually by using buttons above."
+    "No open wound detected. Consider Re-taking a photo or add measurements manually by using buttons above."
   </string>
   <string name="WOUND_GENIUS_SDK_START_DRAWING_LINE">
-    "Start drawing to measure lines or curves or drag points of an exiting ones to adjust. Tap Done to proceed."
+    "Start drawing to measure lines or curves or drag points of an existing ones to adjust. Tap Done to proceed."
   </string>
   <string name="WOUND_GENIUS_SDK_MEASUREMENT_RESULTS_ZOOM">
     "Zoom"
+  </string>
+  <string name="WOUND_GENIUS_SDK_QR_CODE_NOT_SUPPORTED">
+    "Use a calibration marker"
+  </string>
+  <string name="WOUND_GENIUS_SDK_LINE_ITEM_NUMBER">
+    "Line L%d"
+  </string>
+  <string name="WOUND_GENIUS_SDK_REVIEW_OUTLINES_WITH_TISSUE_TYPES_POPUP_DESCRIPTION">
+    "Make sure wound edges and tissue types are detected correctly before proceeding."
+  </string>
+  <string name="WOUND_GENIUS_SDK_PLEASE_ALLOW_PHOTO_LIBRARY_USAGE">
+    "Allow WoundGenius to access the photo library in the General Settings."
+  </string>
+  <string name="WOUND_GENIUS_SDK_PLEASE_ALLOW_MICROPHONE_USAGE">
+    "Allow WoundGenius to access the microphone in the General Settings."
+  </string>
+  <string name="WOUND_GENIUS_SDK_SINGLE_AREA_DIALOG_title">
+    "Select one of the areas or draw your own"
+  </string>
+  <string name="WOUND_GENIUS_SDK_SINGLE_AREA_DIALOG_description">
+    "Multiple areas have been detected. Select a single area to proceed with measurement.
+Alternatively, delete all detected areas and draw the new one by yourself."
+  </string>
+  <string name="WOUND_GENIUS_SDK_SINGLE_AREA_OPTION_VALUE">
+    "Area %1$s (%2$s)"
+  </string>
+  <string name="WOUND_GENIUS_SDK_SELECT_AN_AREA">
+    "Select an Area"
+  </string>
+  <string name="WOUND_GENIUS_SDK_DELETE_AND_DRAW">
+    "Delete All and Draw Manually"
+  </string>
+  <string name="WOUND_GENIUS_SDK_AREA_ITEM_NUMBER">
+    "Area A%d"
+  </string>
+  <string name="WOUND_GENIUS_SDK_DIVIDER_VIEW_OR_LABEL">
+    "or"
+  </string>
+  <string name="WOUND_GENIUS_SDK_GET_CALIBRATION_MARKERS_URL">
+    "https://www.cutimed.co.uk/wound-management/wound-navigator"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_FULL_FACE_FRONT">
+    "Full Face Front"
+  </string>
+  <string name="WOUND_GENIUS_SDK_TITLE_WITH_INDEX_facial_surgery_mode">
+    "%@ (%d of %d)"
+  </string>
+  <string name="WOUND_GENIUS_SDK_ASTERISKS_INDICATE_FOCUS_POINT">
+    "* Asterisks indicate focus point"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_SMILING">
+    "Smiling"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_FRONT_VIEW_WITH_CLOSED_EYES">
+    "Front View with Closed Eyes"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_OBLIQUE">
+    "Oblique"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_PROFILE">
+    "Profile"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_BACK_VIEW_WITH_EARS_VISIBLE">
+    "Back View with Ears Visible"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_FRONT_VIEW_WITH_LIP_RETRACTOR">
+    "Front View with Lip Retractor"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_FRONT_VIEW_WITH_SPATULA_IN_OCCLUSAL_PLANE">
+    "Front View with Spatula in Occlusal Plane"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_SUBMENTAL_OBLIQUE_VIEW">
+    "Submental Oblique View"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_SUBMENTAL_VERTICAL_VIEW">
+    "Submental Vertical View"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_SUPRACRANIAL_OBLIQUE">
+    "Supracranial Oblique"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_INTRAORAL_UPPER_OCCLUSAL_SURFACE">
+    "Intraoral Upper Occlusal Surface"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_INTRAORAL_BUCCAL_LEFT">
+    "Intraoral Buccal Left"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_INTRAORAL_FRONTAL">
+    "Intraoral Frontal"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_INTRAORAL_BUCCAL_RIGHT">
+    "Intraoral Buccal Right"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_INTRAORAL_LOWER_OCCLUSAL_SURFACE">
+    "Intraoral Lower Occlusal Surface"
+  </string>
+  <string name="WOUND_GENIUS_SDK_POSE_OTHER">
+    "Other"
+  </string>
+  <string name="WOUND_GENIUS_SDK_LANDSCAPE_ORIENTATION_POSE_HINT_VIEW_title">
+    "Make this photo in \nlandscape mode"
+  </string>
+  <string name="WOUND_GENIUS_SDK_PORTRAIT_ORIENTATION_POSE_HINT_VIEW_title">
+    "Make this photo in \nportrait mode"
+  </string>
+  <string name="WOUND_GENIUS_SDK_THREE_D">
+    "3D"
+  </string>
+  <string name="WOUND_GENIUS_SDK_SELECT_ALL_DIALOG_title">
+    "Select all"
+  </string>
+  <string name="WOUND_GENIUS_SDK_SELECT_ALL_DIALOG_description">
+    "Use this menu to select an entire body part currently displayed on the screen."
   </string>
 </resources>

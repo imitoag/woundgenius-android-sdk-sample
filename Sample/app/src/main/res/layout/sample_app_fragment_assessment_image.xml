@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.example.woundsdk.utils.image.drawstroke.StrokeScalableImageView
+        <io.imito.woundgenius.sdk.utils.image.drawstroke.StrokeScalableImageView
             android:id="@+id/imageSSIV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -6,10 +6,10 @@
     "Pronto"
   </string>
   <string name="WOUND_GENIUS_SDK_MANUAL_MEASUREMENT">
-    "Governante"
+    "Régua"
   </string>
   <string name="WOUND_GENIUS_SDK_MEASUREMENT">
-    "Marcador de Calibração"
+    "Marcador"
   </string>
   <string name="WOUND_GENIUS_SDK_VIDEO">
     "Vídeo"
@@ -33,13 +33,13 @@
     "Use o dedo para circundar a área de medição."
   </string>
   <string name="WOUND_GENIUS_SDK_PLEASE_START_DRAWING_WITH_AUTODETECT">
-    "Use your finger to outline areas or tap Auto-detect for automatic edges detection."
+    "Use o dedo para circundar a área a ser medida ou toque em Detecção automática para a detecção automática da borda da ferida."
   </string>
   <string name="WOUND_GENIUS_SDK_PLEASE_CLOSE_THE_PATH">
     "Por favor, feche o caminho para prosseguir com a medição."
   </string>
   <string name="WOUND_GENIUS_SDK_TAP_MEASURE_TO_COUNTINUE">
-    "Tudo bom. Toque em Medir para continuar com a avaliação."
+    "Tudo bom. Toque em Confirmar para continuar com a avaliação."
   </string>
   <string name="WOUND_GENIUS_SDK_RESULT_TITLE">
     "Resultados de medição"
@@ -72,7 +72,7 @@
     "Posicione os marcadores para que a distância entre eles corresponda ao tamanho do mundo real. Toque no marcador verde acima para ajustar o valor ou as unidades."
   </string>
   <string name="WOUND_GENIUS_SDK_TAP_TO_ADD_DEPTH">
-    "Clique para adicionar a profundidade."
+    "Adicionar profundidade"
   </string>
   <string name="WOUND_GENIUS_SDK_DEPTH_MM">
     "Profundidade, mm"
@@ -162,7 +162,7 @@
     "Dorso"
   </string>
   <string name="WOUND_GENIUS_SDK_ENSURE_ACCURATE_DETECTION">
-    "Ensure accurate detection of wound edges and make adjustments as needed. Tap Measure to finalise measurement."
+    "Verifique a precisão do contorno da borda da ferida e faça os ajustes necessários. Toque em Medir para concluir a medição."
   </string>
   <string name="WOUND_GENIUS_SDK_REVIEW_CONTOURS">
     "Revise"
@@ -174,7 +174,7 @@
     "Editar"
   </string>
   <string name="WOUND_GENIUS_SDK_AUTO_DETECT_PROCESSING">
-    "Analyzing ..."
+    "Analisando..."
   </string>
   <string name="WOUND_GENIUS_SDK_AUTO_DETECT">
     "Auto-detect"
@@ -186,13 +186,13 @@
     "Editar"
   </string>
   <string name="WOUND_GENIUS_SDK_EDITING">
-    "Editar %s"
+    "Medir %s"
   </string>
   <string name="WOUND_GENIUS_SDK_HIDE_ALL">
-    "Hide All"
+    "Ocultar Tudo"
   </string>
   <string name="WOUND_GENIUS_SDK_SHOW_ALL">
-    "Show All"
+    "Mostrar tudo"
   </string>
   <string name="WOUND_GENIUS_SDK_GRANULATION">
     "Granulação"
@@ -203,7 +203,7 @@
   <string name="WOUND_GENIUS_SDK_NECROSIS"/>
   <string name="WOUND_GENIUS_SDK_FIBRIN"/>
   <string name="WOUND_GENIUS_SDK_EPITHELIALIZATION">
-    "Epithelialization"
+    "Epitelização"
   </string>
   <string name="WOUND_GENIUS_SDK_BONE_AND_TENDON"/>
   <string name="WOUND_GENIUS_SDK_FASCIA"/>
@@ -215,17 +215,19 @@
   </string>
   <string name="WOUND_GENIUS_SDK_SKIN_GRAFT"/>
   <string name="WOUND_GENIUS_SDK_OTHER"/>
-  <string name="WOUND_GENIUS_SDK_WOUND"/>
+  <string name="WOUND_GENIUS_SDK_WOUND">
+    "Ferida"
+  </string>
   <string name="WOUND_GENIUS_SDK_EDIT_DETECTED_AREAS"/>
   <string name="WOUND_GENIUS_SDK_ADD_NEW_AREAS"/>
   <string name="WOUND_GENIUS_SDK_WOUND_SIZE">
-    "Wound size"
+    "Tamanho da ferida"
   </string>
   <string name="WOUND_GENIUS_SDK_TISSUE_DISTRIBUTION">
     "Tissue Distribution"
   </string>
   <string name="WOUND_GENIUS_SDK_DETAILS">
-    "Details"
+    "Detalhes"
   </string>
   <string name="WOUND_GENIUS_SDK_ADD_MANUALLY">
     "Adicionar Manualmente"
@@ -261,8 +263,12 @@
   <string name="WOUND_GENIUS_SDK_LANGUAGE_CODE">
     "pt"
   </string>
-  <string name="WOUND_GENIUS_SDK_THERE_IS_A_LIMITATION_FOR_VIDEO_LENGTH_BEFORE_FIRST_CAPTURING_10MIN"/>
-  <string name="WOUND_GENIUS_SDK_DONT_SHOW_THIS_MESSAGE_AGAIN"/>
+  <string name="WOUND_GENIUS_SDK_THERE_IS_A_LIMITATION_FOR_VIDEO_LENGTH_BEFORE_FIRST_CAPTURING_10MIN">
+    "A duração máxima de um vídeo que pode ser gravado é de 10 minutos. Esta mensagem não será mais exibida."
+  </string>
+  <string name="WOUND_GENIUS_SDK_DONT_SHOW_THIS_MESSAGE_AGAIN">
+    "Não mostrar mais esta mensagem."
+  </string>
   <string name="WOUND_GENIUS_SDK_PREPARING_VIDEO_TITLE">
     "Preparação do vídeo..."
   </string>
@@ -716,7 +722,7 @@
     "Revise os esboços"
   </string>
   <string name="WOUND_GENIUS_SDK_CONFIRM">
-    "Confirm"
+    "Confirmar"
   </string>
   <string name="WOUND_GENIUS_SDK_REVIEW_OUTLINES_POPUP_DESCRIPTION">
     "Certifique-se de que as bordas da ferida e os tipos de tecido sejam detectados corretamente antes de prosseguir."
@@ -1010,16 +1016,13 @@
     "Desmarcar tudo"
   </string>
   <string name="WOUND_GENIUS_SDK_SELECTED">
-    "Selected"
+    "Selecionado"
   </string>
   <string name="WOUND_GENIUS_SDK_DESELECT_ALL">
     "Desmarcar tudo"
   </string>
   <string name="WOUND_GENIUS_SDK_SELECT">
     "Selecionar"
-  </string>
-  <string name="WOUND_GENIUS_SDK_CALIBRATION">
-    "Calibration"
   </string>
   <string name="WOUND_GENIUS_SDK_TAKE_PHOTO">
     "Tirar Foto"
@@ -1058,7 +1061,7 @@
     "Capturando"
   </string>
   <string name="WOUND_GENIUS_SDK_HOLD_DEVICE_STEADY_STATUS">
-    "Hold device steady"
+    "Mantenha o dispositivo estável"
   </string>
   <string name="WOUND_GENIUS_SDK_DO_NOT_SHOW_AGAIN">
     "Não mostre de novo"
@@ -1082,22 +1085,22 @@
     "Medir linhas"
   </string>
   <string name="WOUND_GENIUS_SDK_ADD_AREA">
-    "Add Area"
+    "Adicionar área"
   </string>
   <string name="WOUND_GENIUS_SDK_ADD_LINE">
-    "Add Line"
+    "Adicionar linha"
   </string>
   <string name="WOUND_GENIUS_SDK_LINE">
-    "Line"
+    "Linha"
   </string>
   <string name="WOUND_GENIUS_SDK_LINE_MEASUREMENT">
-    "Line Measurement"
+    "Medição de linhas"
   </string>
   <string name="WOUND_GENIUS_SDK_LINE_MEASUREMENT_POPUP_DESCRIPTION">
-    "Measure post-operative seams and other features using the new line measurement mode."
+    "Medir costuras pós-operatórias e outras caraterísticas com o novo modo de medição de linhas."
   </string>
   <string name="WOUND_GENIUS_SDK_OUTLINE">
-    "Outline"
+    "Contorno"
   </string>
   <string name="WOUND_GENIUS_SDK_NO_OPEN_WOUND_DETECTED">
     "Nenhuma ferida aberta detectada. Considere tirar uma nova foto ou adicionar medidas manualmente usando os botões acima."
@@ -1108,4 +1111,63 @@
   <string name="WOUND_GENIUS_SDK_MEASUREMENT_RESULTS_ZOOM">
     "Ampliar"
   </string>
+  <string name="WOUND_GENIUS_SDK_QR_CODE_NOT_SUPPORTED">
+    "Usar marcador calibração"
+  </string>
+  <string name="WOUND_GENIUS_SDK_LINE_ITEM_NUMBER">
+    "Linha L%d"
+  </string>
+  <string name="WOUND_GENIUS_SDK_REVIEW_OUTLINES_WITH_TISSUE_TYPES_POPUP_DESCRIPTION">
+    "Certifique-se de que as bordas da ferida e os tipos de tecido sejam detectados corretamente antes de prosseguir."
+  </string>
+  <string name="WOUND_GENIUS_SDK_PLEASE_ALLOW_PHOTO_LIBRARY_USAGE">
+    "Permita que imitoWound acesse a biblioteca de fotos nas configurações gerais."
+  </string>
+  <string name="WOUND_GENIUS_SDK_PLEASE_ALLOW_MICROPHONE_USAGE">
+    "Allow WoundGenius to access the microphone in the General Settings."
+  </string>
+  <string name="WOUND_GENIUS_SDK_SINGLE_AREA_DIALOG_title"/>
+  <string name="WOUND_GENIUS_SDK_SINGLE_AREA_DIALOG_description"/>
+  <string name="WOUND_GENIUS_SDK_SINGLE_AREA_OPTION_VALUE">
+    "Área %1$s (%2$s)"
+  </string>
+  <string name="WOUND_GENIUS_SDK_SELECT_AN_AREA"/>
+  <string name="WOUND_GENIUS_SDK_DELETE_AND_DRAW">
+    "Apagar tudo e desenhar manualmente"
+  </string>
+  <string name="WOUND_GENIUS_SDK_AREA_ITEM_NUMBER">
+    "Área A%d"
+  </string>
+  <string name="WOUND_GENIUS_SDK_DIVIDER_VIEW_OR_LABEL"/>
+  <string name="WOUND_GENIUS_SDK_GET_CALIBRATION_MARKERS_URL"/>
+  <string name="WOUND_GENIUS_SDK_POSE_FULL_FACE_FRONT"/>
+  <string name="WOUND_GENIUS_SDK_TITLE_WITH_INDEX_facial_surgery_mode">
+    "%@ (%d de %d)"
+  </string>
+  <string name="WOUND_GENIUS_SDK_ASTERISKS_INDICATE_FOCUS_POINT"/>
+  <string name="WOUND_GENIUS_SDK_POSE_SMILING"/>
+  <string name="WOUND_GENIUS_SDK_POSE_FRONT_VIEW_WITH_CLOSED_EYES"/>
+  <string name="WOUND_GENIUS_SDK_POSE_OBLIQUE"/>
+  <string name="WOUND_GENIUS_SDK_POSE_PROFILE"/>
+  <string name="WOUND_GENIUS_SDK_POSE_BACK_VIEW_WITH_EARS_VISIBLE"/>
+  <string name="WOUND_GENIUS_SDK_POSE_FRONT_VIEW_WITH_LIP_RETRACTOR"/>
+  <string name="WOUND_GENIUS_SDK_POSE_FRONT_VIEW_WITH_SPATULA_IN_OCCLUSAL_PLANE"/>
+  <string name="WOUND_GENIUS_SDK_POSE_SUBMENTAL_OBLIQUE_VIEW"/>
+  <string name="WOUND_GENIUS_SDK_POSE_SUBMENTAL_VERTICAL_VIEW"/>
+  <string name="WOUND_GENIUS_SDK_POSE_SUPRACRANIAL_OBLIQUE"/>
+  <string name="WOUND_GENIUS_SDK_POSE_INTRAORAL_UPPER_OCCLUSAL_SURFACE"/>
+  <string name="WOUND_GENIUS_SDK_POSE_INTRAORAL_BUCCAL_LEFT"/>
+  <string name="WOUND_GENIUS_SDK_POSE_INTRAORAL_FRONTAL"/>
+  <string name="WOUND_GENIUS_SDK_POSE_INTRAORAL_BUCCAL_RIGHT"/>
+  <string name="WOUND_GENIUS_SDK_POSE_INTRAORAL_LOWER_OCCLUSAL_SURFACE"/>
+  <string name="WOUND_GENIUS_SDK_POSE_OTHER"/>
+  <string name="WOUND_GENIUS_SDK_LANDSCAPE_ORIENTATION_POSE_HINT_VIEW_title"/>
+  <string name="WOUND_GENIUS_SDK_PORTRAIT_ORIENTATION_POSE_HINT_VIEW_title"/>
+  <string name="WOUND_GENIUS_SDK_THREE_D">
+    "3D"
+  </string>
+  <string name="WOUND_GENIUS_SDK_SELECT_ALL_DIALOG_title">
+    "Selecionar todos"
+  </string>
+  <string name="WOUND_GENIUS_SDK_SELECT_ALL_DIALOG_description"/>
 </resources>

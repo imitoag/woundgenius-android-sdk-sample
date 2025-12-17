@@ -3,24 +3,58 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/main"
+  android:background="@color/WOUND_GENIUS_SDK_white"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   tools:context=".MainActivity">
 
   <androidx.appcompat.widget.AppCompatTextView
-    android:id="@+id/openSdkButtonACTV"
+    android:id="@+id/openCameraButtonACTV"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/wound_genius_sdk_icon_background_orange_rounded"
+    android:backgroundTint="@color/WOUND_GENIUS_SDK_light_red"
     android:gravity="center_horizontal"
     android:padding="10dp"
-    android:text="Open SDK"
+    android:text="Open SDK Camera"
     android:textColor="@color/white"
     android:textSize="25sp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
+
+  <androidx.appcompat.widget.AppCompatTextView
+    android:id="@+id/openBodyPickerButtonACTV"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/wound_genius_sdk_icon_background_orange_rounded"
+    android:backgroundTint="@color/WOUND_GENIUS_SDK_light_red"
+    android:gravity="center_horizontal"
+    android:padding="10dp"
+    android:text="Open SDK Body Picker"
+    android:textColor="@color/white"
+    android:textSize="25sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/openCameraButtonACTV" />
+
+  <androidx.appcompat.widget.AppCompatTextView
+    android:id="@+id/openHelpScreenButtonACTV"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/wound_genius_sdk_icon_background_orange_rounded"
+    android:backgroundTint="@color/WOUND_GENIUS_SDK_light_red"
+    android:gravity="center_horizontal"
+    android:padding="10dp"
+    android:text="Open SDK Help Screen"
+    android:textColor="@color/white"
+    android:textSize="25sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/openBodyPickerButtonACTV" />
 
   <androidx.appcompat.widget.AppCompatImageView
     android:id="@+id/androidIconACTV"
@@ -32,15 +66,31 @@
     app:layout_constraintTop_toTopOf="parent" />
 
   <androidx.appcompat.widget.AppCompatTextView
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
+    android:id="@+id/titleACTV"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:padding="10dp"
     android:text="@string/test_string"
     android:textColor="@color/black"
-    android:layout_marginEnd="10dp"
     android:textSize="17sp"
     android:textStyle="bold"
     app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/androidIconACTV" />
+
+  <androidx.appcompat.widget.AppCompatTextView
+    android:id="@+id/descriptionACTV"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:padding="10dp"
+    android:text="Press on one of the options to launch the SDK screens."
+    android:textColor="@color/black"
+    android:textSize="14sp"
+    android:textStyle="bold"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/titleACTV">
+
+  </androidx.appcompat.widget.AppCompatTextView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

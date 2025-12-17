@@ -3,15 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name="com.example.samplewoundsdk.core.SampleWoundSDKApplication"
+        android:name="io.imito.woundgenius.sample.core.SampleWoundSDKApplication"
         android:allowBackup="false"
         android:dataExtractionRules="@xml/sample_app_data_extraction_rules"
         android:fullBackupContent="@xml/sample_app_backup_rules"
@@ -25,7 +24,7 @@
         tools:ignore="LockedOrientationActivity">
 
         <activity
-            android:name="com.example.samplewoundsdk.ui.screen.main.MainActivity"
+            android:name="io.imito.woundgenius.sample.ui.screen.main.MainActivity"
             android:exported="true"
             android:theme="@style/AppTheme">
             <intent-filter>

@@ -9,7 +9,7 @@
     "Regla"
   </string>
   <string name="WOUND_GENIUS_SDK_MEASUREMENT">
-    "Marcador de calibración"
+    "Marcador"
   </string>
   <string name="WOUND_GENIUS_SDK_VIDEO">
     "Video"
@@ -30,19 +30,19 @@
     "Medida"
   </string>
   <string name="WOUND_GENIUS_SDK_PLEASE_START_DRAWING">
-    "Utiliza el dedo para rodear la zona a medir."
+    "Utilice el dedo para rodear la zona a medir."
   </string>
   <string name="WOUND_GENIUS_SDK_PLEASE_START_DRAWING_WITH_AUTODETECT">
-    "Use your finger to outline areas or tap Auto-detect for automatic edges detection."
+    "Utiliza el dedo para delinear áreas o pulse en Detección automática para detectar los bordes automáticamente."
   </string>
   <string name="WOUND_GENIUS_SDK_PLEASE_CLOSE_THE_PATH">
     "Por favor, cierre la ruta para proceder a la medición."
   </string>
   <string name="WOUND_GENIUS_SDK_TAP_MEASURE_TO_COUNTINUE">
-    "Todo bien. Pulse Medir para continuar con la evaluación."
+    "Todo bien. Pulse Confirmar para continuar con la evaluación."
   </string>
   <string name="WOUND_GENIUS_SDK_RESULT_TITLE">
-    "Resultados de medición"
+    "Resultados medición"
   </string>
   <string name="WOUND_GENIUS_SDK_CONTINUE_BUTTON">
     "Continuar"
@@ -69,10 +69,10 @@
     "Máx. profundidad"
   </string>
   <string name="WOUND_GENIUS_SDK_DESCRIPTION_MESSAGE_FOR_MANUAL_MEASUREMENT">
-    "Coloca los marcadores de manera que la distancia entre ellos coincida con el tamaño del mundo real. Toca el marcador verde de arriba para ajustar el valor o las unidades."
+    "Coloque los marcadores de manera que la distancia entre ellos coincida con el tamaño del mundo real. Toca el marcador verde de arriba para ajustar el valor o las unidades."
   </string>
   <string name="WOUND_GENIUS_SDK_TAP_TO_ADD_DEPTH">
-    "Toque para agregar profundidad"
+    "Toque para añadir"
   </string>
   <string name="WOUND_GENIUS_SDK_DEPTH_MM">
     "Profundidad, mm"
@@ -132,7 +132,7 @@
     "https://imito.io/en/wound-measurement-modes#calibration-marker-mode"
   </string>
   <string name="WOUND_GENIUS_SDK_TUTORIAL_place_ruler_next_to_wound">
-    "Coloca una regla junto a la herida y haz una foto."
+    "Coloque una regla junto a la herida y haz una foto."
   </string>
   <string name="WOUND_GENIUS_SDK_TUTORIAL_if_you_dont_have_our_calibration_marker">
     "Si no dispone de nuestros marcadores de calibración, pero aún así quiere utilizar nuestro software de cálculo preciso. Es más preciso que el cálculo del tamaño basado en fórmulas para una forma elíptica. Sólo tarda un poco más que la medición con nuestros marcadores de calibración."
@@ -141,13 +141,13 @@
     "La aplicación utiliza una distancia establecida en la regla como tamaño de referencia, y luego nuestro software calcula el área y la circunferencia de la herida."
   </string>
   <string name="WOUND_GENIUS_SDK_WHOLE_BODY">
-    "Seleccione todo"
+    "Seleccionar todo"
   </string>
   <string name="WOUND_GENIUS_SDK_CLEAR_SELECTION">
     "Borrar"
   </string>
   <string name="WOUND_GENIUS_SDK_HIDE">
-    "Esconder"
+    "Ocultar"
   </string>
   <string name="WOUND_GENIUS_SDK_LEFT_SHORT_TEXT">
     "I"
@@ -162,13 +162,13 @@
     "Medio"
   </string>
   <string name="WOUND_GENIUS_SDK_ENSURE_ACCURATE_DETECTION">
-    "Ensure accurate detection of wound edges and make adjustments as needed. Tap Measure to finalise measurement."
+    "Compruebe que el contorno de la herida es exacto y realice los ajustes necesarios. Pulse Medir para completar la medición."
   </string>
   <string name="WOUND_GENIUS_SDK_REVIEW_CONTOURS">
     "Revisa"
   </string>
   <string name="WOUND_GENIUS_SDK_CLEAR_CONTOURS">
-    "Limpiar todo"
+    "Borrar todo"
   </string>
   <string name="WOUND_GENIUS_SDK_EDIT_CONTOURS">
     "Editar"
@@ -186,7 +186,7 @@
     "Editar"
   </string>
   <string name="WOUND_GENIUS_SDK_EDITING">
-    "Modificación de %s"
+    "Medida de %s"
   </string>
   <string name="WOUND_GENIUS_SDK_HIDE_ALL">
     "Ocultar todo"
@@ -258,10 +258,10 @@
     "Medida ya tomada."
   </string>
   <string name="WOUND_GENIUS_SDK_CONTINUE_WITHOUT_MEDIA">
-    "¿Continuar sin medios?"
+    "¿Continuar sin archivos?"
   </string>
   <string name="WOUND_GENIUS_SDK_WOULD_YOU_LIKE_TO_CONTINUE_WITH_AN_ASSESSMENT">
-    "¿Desea continuar con una evaluación sin medios de comunicación?"
+    "¿Desea continuar con una evaluación sin archivos multimedia?"
   </string>
   <string name="WOUND_GENIUS_SDK_ERROR">
     "Error"
@@ -291,7 +291,7 @@
     "Preparando el vídeo..."
   </string>
   <string name="WOUND_GENIUS_SDK_PREPARING_VIDEO_SUBTITLE">
-    "Compresión del vídeo. Esto puede tardar hasta 2 minutos. No salgas de la aplicación hasta que el vídeo se haya procesado."
+    "Compresión del vídeo. Esto puede tardar hasta 2 minutos. No salga de la aplicación hasta que el vídeo se haya procesado."
   </string>
   <string name="WOUND_GENIUS_SDK_BACK_BUTTON">
     "Volver"
@@ -328,7 +328,7 @@
     "Nombre del Paciente"
   </string>
   <string name="WOUND_GENIUS_SDK_HELP_BUTTON">
-    "Help"
+    "Ayuda"
   </string>
   <string name="WOUND_GENIUS_SDK_CHECK_DETECTION_AND_TAKE_PHOTO">
     "Verifique la detección y tome una foto"
@@ -340,7 +340,7 @@
     "Revisar contornos"
   </string>
   <string name="WOUND_GENIUS_SDK_CHECK_DETECTION_AND_TAKE_PHOTO_DESCRIPTION">
-    "Mejore la iluminación o reposicione su dispositivo para una mejor detección de heridas. Podrás editar esquemas en el siguiente paso."
+    "Mejore la iluminación o reposicione su dispositivo para una mejor detección de heridas. Podrá editar contornos en el siguiente paso."
   </string>
   <string name="WOUND_GENIUS_SDK_OUTLINE_SCREEN_SUBTITLE"/>
   <string name="WOUND_GENIUS_SDK_IMPROVE_LIGHTING_OR_MOVE_CLOSER">
@@ -350,7 +350,7 @@
     "No se detecta la herida. Considere tomar una fotografía y delinear manualmente la herida en el siguiente paso."
   </string>
   <string name="WOUND_GENIUS_SDK_RESULTS_SCREEN_TITLE">
-    "Resultados de medición"
+    "Resultados medición"
   </string>
   <string name="WOUND_GENIUS_SDK_RESULTS_SCREEN_SUBTITLE"/>
   <string name="WOUND_GENIUS_SDK_CALIBRATION_MARKER_HELP_JSON">
@@ -499,7 +499,7 @@
 &lt;body&gt;
     &lt;section&gt;
         &lt;p&gt;
-            Utilice este modo para una medición rápida, precisa y sin contacto de heridas planas.
+            Utilice este modo para una medición de heridas planas rápida, precisa y sin contacto.
         &lt;/p&gt;
         &lt;ol&gt;
             &lt;li&gt;
@@ -561,7 +561,7 @@
     "Altura"
   </string>
   <string name="WOUND_GENIUS_SDK_TAP_TO_ADD_HEIGHT">
-    "Toque para agregar"
+    "Toque para añadir"
   </string>
   <string name="WOUND_GENIUS_SDK_SCROLL_DOWN_TO_ADD_HEIGHT">
     "Desplácese hacia abajo para añadir altura"
@@ -613,7 +613,7 @@
 &lt;body&gt;
     &lt;section&gt;
         &lt;p&gt;
-            Utilice este modo para una medición rápida, precisa y sin contacto de heridas planas.
+            Utilice este modo para una medición de heridas planas rápida, precisa y sin contacto.
         &lt;/p&gt;
         &lt;ol&gt;
             &lt;li&gt;
@@ -1040,7 +1040,7 @@
     "Deseleccionar todo"
   </string>
   <string name="WOUND_GENIUS_SDK_SELECTED">
-    "Selected"
+    "Seleccionado"
   </string>
   <string name="WOUND_GENIUS_SDK_DESELECT_ALL">
     "Deseleccionar todo"
@@ -1048,14 +1048,11 @@
   <string name="WOUND_GENIUS_SDK_SELECT">
     "Escoger"
   </string>
-  <string name="WOUND_GENIUS_SDK_CALIBRATION">
-    "Calibration"
-  </string>
   <string name="WOUND_GENIUS_SDK_TAKE_PHOTO">
     "Tomar foto"
   </string>
   <string name="WOUND_GENIUS_SDK_NEED_HELP_DIALOG_title">
-    "Precisa de ajuda?"
+    "¿Necesita ayuda?"
   </string>
   <string name="WOUND_GENIUS_SDK_NEED_HELP_DIALOG_description">
     "Pulse aquí para consultar la guía rápida sobre el uso de los Marcadores de Calibración y otros modos de Captura"
@@ -1091,7 +1088,7 @@
     "Mantenga el dispositivo fijo"
   </string>
   <string name="WOUND_GENIUS_SDK_DO_NOT_SHOW_AGAIN">
-    "No mostrar de nuevo"
+    "No volver a mostrar"
   </string>
   <string name="WOUND_GENIUS_SDK_COMMON_CSS_PART3">
     "KkuK0vbh2O2x2fb/9oACAEDEQE/Ael6YfikxARTtDtDHBG7KNp8PUwobgHGd98PW9ObepxF6sSjJlaSXcUE35fZ4slAj4DPIb22nKfzTM/miR/Nx5f6uPIwxVym3efVEncWW4/1cvV7Dy/rJyHJ4Y7ixjL+yjFL1f0pHq4se1hP+Y9BN6YsaZJAZhIcmIFph4QgsZIQxZRcuMB6mD1MHrMFuXAzxliLceA3aRuFPViYlx4RF2phwn8KOXp6oO5J0AQUj8nJ0JkbJYdNENMQ0Awj6nSePbN+Kz8PR5eLcc0+Es06EBggoYliUILblxiXly9OKp6nC9QHJFyQt21wxTLa9ZkHgsdIp8oi9PGhptdpeq6kg7Q4+vB8uDPu8JBdha0BCIsg5cBPL8ZlInT0k+HFJtkWTJOkSgoKCxKCiSClljeqjT1UL8PyB2SfdtiLfJp3c7S5hc9Igpab4cXDCSXIdotErlbGESbemh66bfz0KNInlzzjGBL8dgsmT0vhxaEpTqNAUFBRJBYy0MXqMYI5ephztAfkOktlEx4Y5Pt4R/VjA+454fdYYtNcMkhw2Qx8O2uWQvksojy4f6uIca0iKEIlt5LlynLPaHocG0OAAOMaEskpLaDqEFBYyQWJ0ywc2N6rA/I9N6hx5dpZHjhyy2/c4z6llEVaBpDFbHCgaSIep6gCJA0xsL0A1kgPUZzIvx3T3y9LjlbHphLygIZJTqG9AUFBQUSYnSQc0XN0/wDjPXdNb1nT1yHp5ejmnzT6XTutOFjhDHHWu963JzSMiTbgYltAbQ8sBYL0mDfK3pOmp6fAA44oDaS32DS9BoCxLEo0lF6vp94p6jAXrOlHlyx2y4emlEm5OWdoCXHqZcPvWHJG5cuxx16sXDk/N/wJfbLtThBijEJfbF6XoQA4MLixIglJTqdBrHQFCCiTGTek4vV4jXDm6PaC9b0d8hFwk+eU8pDBkEl6zJxtRH8m74RSfzRIoJ2uGXDdo8JAZ7p/ZF6bpK4Dix048fNMYNskpTraO4HQFiWMkJcoc+B6rp3ruitw5K+yTKhpjOknqvxWw8Im2kIxfm4j6MJVKgw58ICMZlOg9N0biwMMDGFakp0OhOg7A25/k+mxfxMgH+Ehz/vx8Ti/F1Mf8xv/AGjn/wBxW+Gh4yGX+CJ/3zTn/wBxp6Afw8Uz/rD/AHyUf7i91mX/ACXoSf8AXP8AtAy/ff8AeqUTkh0VAf7ll/vN/cf974/MdH7+3bIGiP8AePRkA5cVvUYHqsNcSeu6L1cM/wCyWQp8cpzOXL+TkBtlL8mOQ3y+1uTjIFIxW44FxdHklKx4TAQIdkp8B6XoqcXTFjipxC2tJJZdh0Gn74fvKPi+jPUVZPAH9XF1n73dXAZMYEYn/f0f7Wyn92v3ly/xutEf+Cj/AL4Cf9w3zZP8q68n/XP+1Lh/3C74uP8AEyzP+sP98OH9xPhIf7JMv8Mj/vhxfA/FYvwdJH/Pz/tXpzjh/AxRj/gAcnWdRXl+P6uZzx3Sf9wi/wBT9f1/Q/kf/QSR/vl/wpDlxvU9GJT3F6rpg9X0dchxZ932ydvHLTlEoGki/D7THFTtY8xouLp4+bcQAlZRHNL8PAen+O55en6YW4enceGnYxx0kpZFJSew9n+4tdNv+K3/AOLIH/aj/fL8b1Hu/H9Nl/OA/wBoiAq5P2FwYI+rtiHLt22yB4hFMDj5SRHJGYfhZfpf3yzY/wDdwH/YgS/3wg3pKLkxvVYRTnwkjkPU9KYm2Et8aL7VeGWKMvxOToYnwz6KQPBccIDy+2TxFxfGSPlw/Fc8uH4uNsekAcXSuDpubYYiHamLJmWTJP0f396b3fiOoj/S/wDWNv7k5/c+Ew/7lsf7EshxEvUSjTCOSRjHGOXP+53V4+mn1WXjaLr1Y/O4y4sscsRPGWe+XlzeX95p/p/3l6Hqv8YR/wBqY/7QoKClkHPDcac2Bz9GJOT40x8PtTB5Z9PY+1HRTl6uP4z82PxsRJh0XqAw6Vh0tsOnD+mDDAwgxx00kM2ZSWSU6k6jT5Xp/e6XLi/xokf64f8AcLs+74vLj/xZ/wC1AekwymDTmgMZ+4P7jy6H2TnGQGfr/R+U/eDqusvp+kx/abH+F+R/czJhJieCH4joM8J2eA/FxhPJtyPzHTD29w9H/cUQY4ej6uP9kkf7Qj/aOHKJxEx6ok7mYfbtyYnJiosuktPRuTpqFhj0d+XH0L+hF2x6djgY4fRy4uQ7bRBARoXIWTLuOo1/3DiPtdX1/R/l/wC0kh+F/DJ+fvc/CZZDroEGuX9244Y4MWSU+a4fmvi+inP3OolR/wALKIEpAfm9HKs8S9bzik/7iFg934SR/wASQP8Avj/fL+53We98X0+T/co/2HCCg6GSa8vter1GGZH2scBrlGAIxObFKxTHHwjG+07Ha012SLMpSnU9lsJWNfhB7H72dTi/xwf9jUn4idTMS/NYriJOD91+qyddWAcXduHqf00RCceR6v745ZfNxhh6YEEF6L/cP8OLoQM8qn+bHF7eWxyAXqPkN2Mgh+awe98X1WL/AHLf+ty/7hT1fufDwj/ikj/fP++USYlt58MA/wBEJi+3+TEMsZt2uMD1ZgejEMg1odJyZyZHSRT2HUzYzIYybfkenEf3pxZR5I/3wQyJjkJDM3yXFLZ90WM7D+6vUmGGVD1f3v8Ams5kMF1EohulywjUtrgxAmcD4IL/ALhLD2+mzQHjd/vh3MZl6iZpjkNMchd77hfdLHKU5SjKX3Sylb7hp94vvF90vul90pylOUsspd6Zpkyk27klJSWUtP/aAAgBAhEBPwHNm9A7im20STkPhNo5PL1EK4tnLhz2yBryyyyHq+5I+rCRvywMii74LISIslyExN2mR/Nx5JWRaJH83p80hKrZTl+bLqJPun833D+bvP5omfzfdNeXfKvLnyyuonl++7Jsu2fqWMfW0gk+WOUjwXDOVMZlxTLAsC2hDHKRpLzoUhOpTFyRc+PhzY6SEYQnBR4YcBukT+1y8+WU6Dvluv0cZ+5DMnUBvQS/NyZLFB2ITpMu16eVh28sCwLA6BGgky1KR2XTNyReowOSFO6uSmXNomyKNxjYZS5cmO+HJDnhwihy7ndadLZZalTGN8hlCu4lOTa9H1VmigcONxsNB2HUjStSzZwcsH2RIOfBTta2oPqzNY6DCNJpjH83wxFyQmKEU9SeXpslRp9dLrtyvS4iZB38U4nGx7QnsI0I1LJnDi0mnLC3Lj2lu2f4WZSNdjj4thL89LcxfcO6i4zyk9l6FhDc9Nh2Bjy4YFxsUdlJ7SOwsnJG3JFAeq6fcGUCCiNuQO5MkI58IxgaU8pnzTu54QjQ6GSC5Ho+n2hl+TjiHCSPDiCEI+kQ1rIOxy/0THTrcP8AaR4aBap3UxiHj07BkkDQZ4rHDGFOMAy1OsTEeU7SQA7aDEMAwixGo0HZXYRpWhCQ+OXJFkC5Mdjl6vGR4YCk+UjhiNQGca5Rl4TL0cl/2WeSUfuDh6ne2iTuSm/R6TEY8yY2XHBxxYRQhGo+jWtJDIJi5OS3XDnxCQpnDbw+GPhKEBnIxFhln+2igUbTLl3c0mIcswJgW9P1N8F26beHpsH9osYOHCwx8MIsRoOwfSI0pMUhMLZxZwQaes6a/uijGyCDoGU74cv4gzjQt2sfPKcg9HqsFi3ounuVl2UwFoxCmMXFiYRYwYx7B9GtMnV4ofjkB/ncv7w9FDzlDl/fLoI+JX/mcv7+dP8A2IEv+3nmn/B6f/eP9Zl878sfuGCh/gL8J8uOtw+5VEeXayiygyx/kgvV4KO4O9B5Rj4tnLaGMhTGLkw8UxntHKDGX3O4ByYdw8PTdMIhxjcHFgEUQtxY2GNEGIRqE9/z3y46LB7tWfAcef53OBKAoH/Aj4D5vL+PNX+c/wC+Aj9wuqyfxs5/3j/O4v8AcNcP9qZcX+4f9FHyP9iXD+5/Qx8Yww+I6bH+GIYYMX5PUYY+2aD+538vqOo6f8v98EhP9EhlFyCo0yiXz5eq6SuYo4DvkA37g/q7q8sMvLI2bSPRyY5CYI5fYyHyGOA7AAxwQ8lAY4iwxsIsRoAjUfQ/fnFu6K/yI/3k/uzm9zo8cv6BJN0Hlz5ZP3Fxg3T6bmMtzVxIej/k/OZIf43+8rSyCYs4ssbOASAXP0+yVhlZ8shIH7Q4spHBDhx45Dw5fj8hPDi+LA5kWEIR/C2aeXHiJY4kQYwYxQEIRqO46fvNi39BlH9P9py/uDn3dDAflf8AtX83HEsjHzLw/wB5472xCJ/m/wBEEDw4394I+z8zhyfnX+1rQhMUxZwoMsTKNMqPll08fRhg/wAZGKMfRsu2VMcX5owcow0wwuODGD7eg0CNB9LrcXuYZw/MF/3DbP8AyZQ/r/vhzZRHyx+8cF+S6XqN4Eo0PRh0mLHzkcdZI7ovTdAZxt+TM4QuD8Vn+/afV/3EXHsnizD0P+8mEhIbhoRpMMoJxWyxPsscHKMb7X5MYGmOBGKn2/VjHhjF2tdgCAjUJ7Tr+4p9rrM+D+v+0JD8h5D8b4fnoAdDKh6PVznIkegei6vNEbYeH4ifBD87jH3vQ/xQ/wC4idPu6Pd+RH+8v98vweb3OjxS/oNZBplBlH0YxA8pgH232QxgAEQdrtdrSB3DsHZWgckaOvxn8n53LD87/wB8F66NxEn4+fo/vJ/uJPx/x3xgl1huRFbfUvxPzPT/ACkh1HT5a/OJ9H4kDp5bjy4OrlAmf5vXZfev+rg+P2TBBf3v6f3OhyD+h/3m/uXm3dAB+RI/3z/vntkkJiiLSYpCItI7D2gd9ajGygD5ZQDT1eAD5qEx/vHBYC4i2L+8HwXTdfgOLqRf+1D1XxGPDlIgTw/7hlOX920TfJ8uSRpmaS/IQEsJiX9x8W3DkiPzdrtcUUxZQTBEAnGHYHYnGEQDVMYuxMA7HaiDsRBMEQdqItIi007WmEANP//aAAgBAQAGPwIrWaJHEsosvo0ftnifk8ppVr+ZfB8HwfB8HwYShD9jV4crV8HwfQNXzVI4cWuUaulWcuLrLqXweaBwer4P5Onar0Haqn8HV1Pk60fWKOqXVY4PMMq81P8AstOI182kOgTq60ZCE6Kp2xAZrHT017dL+L1D4MqOlHpwerASKvnZBX9TBQmkfmXKIuoa0+HxLiRpTTqdcaJ/a/uP2a/a6JGR+DylFVelXQCr4OpfBnq1DoX9EnT1ejNXWmheo7dIAo/V8HQB1IfB8HwfB+y+D6aj5F/RzFY9F6vAjCUcU/3O3uSPYj1X8T6PR0+/k+rg6MHMa9tNXyKVza011ZkWqheVXqah/JkUakH2VMhevenbTtR8vhV8Xk6VCk+o4MYppiGudQoOA+JaWAH8X82KPhqGT6PEDi+YTRUX8DrCFGj5mrOrBpV6F1eNHp5OlXq9X0v4K9ocH0posgVa7ic6r0ZvEfm4B0TqXnMpkRaOgVWr9WcQHmvixR6CqXUh1S+DUoMI83jxdGHqKv2HVX5nj5Pode2nenn2EkWi0agtE6fzfwuWY/nWXX+a07aPjR1dCqoLCVdLUlBrQ8XR8XSlHUeTpwU6OgdXklL6hR69iSK0fwZWo0CR+LyQANfPg+ddr5q/1PNT5lHrwZEfk0lWpdWU4alkedGVH8XWXqSOLNuFHlgnEMJZ+5q6JLqrtTjTsUimLoVUq85yFK9WpcJ6UshJqe1VF1r21dPNqx0ZQo1QRqPN49uDVEWFB6sF4UdE6ugdSwlI6mAn7un3FxfyyWn+aqxT7nq9NC8lBnV/HtT8rKUh5peQerJqwk6M65UeQfSC+tlJ82QrgzEgZtOZ0po8ODpUn59gaaP91ka0efAHg9fVqWX+1np9rw/a4tPLOnYKBoS9e1B3oXqKl+i/N+rq9HV8K1eop39l6aMvXQB5rNEsRxiiR6Oqu3SxKPPsMiwAGmnFgp4OryJr/NqAYP3KfzVO2TqoVYMYp6s1GVWDxL6hSnYghkOnbI0VV5R+ye1Q830uofU8dHWMUeS9XjxLSngEsJ4hOrSgHQCjxPq1mjBq8S/5Q76vUugdfLsEo4l9NFSejKcdX8U+T6uJ1eXk9GcmAHQvTtQOhfT29l5JY9SxNLqTwS6Ggx1Ao8JPJ4oePssBZqwEv4uqu1f5ksfz9e3UHSjJOjqn2nRTGOjqDWrLKD2IDIV2r+p6PTR8yTRXowAws+b00ZT69tS8jrUtOY0eKaijqOFHVTBak8O3xPanbFD0LkmkFcRQfMtFCxigZyaVHF8g15XtVeCIkpHr5vkLHB1S9X09iVPQvi9Xk+DyVwdA0VLQrPpHkw1TpHm+HnxeBLrXJhRdODGGrq+Pen3i0/6hCXy8KqLIW/k8asU4B9Pl2Wa5avTvTsVI8vjr2pxroHzBx+L5n6nQl1dfV1aUvqoQHQAChda9qq8ms+p7aDtU+TyefqyniykcfNxqHyaVL8ny0jQM1al0rV8OLq6q4M6V+x1GnfE8Xo6nuPQMDy7KQNAHJmnVXBiecY/B/Rp07VrXto9P5lTT/qDg6urqtTqHUlqTKmrNHxoy6h4l6OjooVeaH1sl0U8QNHV0HbR69jTur5MvJ1dR+DydAwhiZfspZli/M+p6s6vBPtF04vrdEfd0ep7FKe9Xo8+JePrqWmJfDz+TACQqjqE0dO1XQF8Hr/MKY/1Dqwkey+lOKR26CwVOgTQPCM1LxA0LOOrqOIYPq6kUeSXitlCq83yPlRl0L1eJ4Onm6/j2CVeTJ4U7B9Pk0n1ZPFJfGgDp5Pi/pBUDyeKBrWrUVvFB0OgaAdahhDNOLKlcSytXm9HQefbX7lX0uhFQ/g6svLsUni8zxUXzKVJdadsvN1o8T/NqY/1Jp2Tm/odGVJ1fXxasQ/i8FPpePq8ksB09WmjCB7T6e2J83i6V7ZPLzfVxLAPkyk6PTzdXQ6vR9TIA+xx48KvHzSHWtas1ZD18u3x7dXfXtXt06urwGpLCeJaCqgUBwD1YTXg6Di9XieLqX06Oqi9RX+aU0/6lxpq+kOrPoXpqyks0dXieIaZBxSyXq+nUI4urokVea+wWrgl6+fbF9Tq+L6dHqde1PN1V2r2AHlq0g+bURwdBoHq1/N6jsPuUfxdC6d6eb5x/eK4MyyqqS6Ee28aaqagri6U1YUfJqSdVkOr0717V+8pj/U9BxfKU6yPhkHzI9CzUPNOnbRmjBGivV071ePq9e1eHag4d/j2yPbmKYxYUfZdaUPqw6gunY1dXq+l6svXvkXn5MdslcEas1PSODxTwHF8x0GrVTi8V6urr96n3y0/6nGL5siNB6MxpjDyTowtRFXzEitGfJIdfLto9H1J+3twdC9XQvi00TwdKfc07gFi3RwDWgpy/reKR+DTQ9TxPavo/m6/d0dHTtiGIo/J1Vp83oQftcgIpVJdPi9Hy0HR8Gko1yZUpOh7afzpY/wBT/wCxGqPLRTqBoH8mBVqKBk8vi+nWjBPF5nsQpmnZT1dfug/c4sJckh8+n8HIvyDqeLStZ4dkvE+b19O2mj1eQdD31dAHXzLJA+kPB/S9ReiWQDQJ4BoRjRXGvzYxFX0h68XUvXV0/nlNP+ptHUvFPFrjUlmhoGAofFlCfzOhGjKV6JDql1Rx82QOLKlMjtTtQ/zBDyLo0QniBr9rCE+jqfZSwB5sZcGT6PP9l4kf6DQo+f4F9TqHUvJHB4qeXapYq/m604PVhIT9GxnxDpRih1dKuvmXr/PqY/1Rk+LqfJ5FVSWFKGhfDR4pV1MISKl6cDxYlGtXRLz7VLNe1fvCjSqM0V8GmlVfBpSpP2Op1zL6eCXRhI4B0B4MqkfDjxdHyl6B5pOSP4GCfNkPi6ji6PR69xGjUl5zcXQpqHwp2xpq9dWAdXT+fLH+qvi9TRIfKGuD5g9kOpPU/VYZWrzfKVwdHQOp7Fk+jqXp2qHQ9tXlIKmjUCKHV5oHtebMiH8S8zq8Us58Xo8iNHT0eNNWEg6l4KHm6B8XgfN0evcIQKqL5svVIe2moeodEh0CXrqp179I/nVMf6rKYmoF8s8CyE9TNEuq9HkeJdPMOqu9Gp0enbR1eJcaP2i9OLJjeBZSriXy42fV/AMYeXm6K4MFOr4MpPEMrlDK06pPFlCnkdXkrp7UDoOLSZTQnyZV5l0Zz0ZxTowfxfLg1+LGZfLh1/1Cpj/VejKPMvjV8al6PUMpdXXtQdqHz++q5P5NA6l0ZPq8kjRyVdV+y1pT56NIHsh6MUdFBgjh25g09GghPtB9TXkaBKavB9HFpkP7w+TK5eL0YT5s6vDJ5KLyQ6/6iUx/qnV0DykNF+Q7UdaMhWjSh0ZCuDoeDr2qw6+fbT7gB8zV6OiXq8R5Mjyav5AYuFefl6BmqsAGYzrTtVQpR6unmwmv5nHFGoFQLpk6+Sg1LKdB5sIRqXzpdVdsuDr5M5CtXxxfGqWKavQUDqp5Op/n1Mf6qq69j06+rqo1CXjGKJJ0DIUnV9WheJDPwfVwPfPyHB69qurxSNWK+ywE+XY+jqOD5kZeK9EUdCgVPm6F5efbpfUdS8QwSyhLrNHr6ugGYB0fMpioF0GiS8iNWce2SldL6T0vFPkw1Jo6vR1PH/UKmP5zUvj34fzQAdT7TPwdHQirz/O8jxU+ap0Aq8TxeB4vkze15MJSKHvywK1axcHHF9JUV14H0aER8VaqPoPR8uPQDtVTHo+vSrqz8mk0y1o8nUjpeY4PNbzGlH1j4PFRo6J1LxrRD+jTRPqWgS9XLD0dH0skF9KcnQdLpKdH0F1Aoe3x/wBRKY+7UvTV6JfAduPbg+D4vVT6al9MKi/3OPzfUtCX9JcfgH1KWp/ucvmS7ZUEYjSrIGnapZW8U6fc14uM8XyQ+l5MLTwDqNCGDNxdAywuvBj1LFeKWBGOr1ZCg/RnMOrCl6kMJiOID5aPzebx9X0jJ1UGAfwZQrQOnF8yZf2BqjQc1eTyu+mno8igaPFAdSaHtSOpZ/adFHUtSFMYpAAeTCYxkA6nR5V71/1AWPu4+SXkTSr8y+mJRekH4vglL6pQH1ykvXJT/dPpiT+D6QA+L18mYIK3UqeOHD8X1bf0/wBpi3krayq4BfA/b2RJ/pcg/Xp2o6Ov3dCypRq6er6Dk+p1QNXpxDSF8Q8Q/gHkniyVPDgR+tolHAvN0Q/VRfRUOq1ng8D7T5h0dSXgHnlq/oR9rGQo+TwJ4lgn2g+Gj04P4PFHmyTxefAl5sqXqXgnQOh0YwNQ+hOIYSNHxdSHr/qEsfdLtK6gqCf6noAO2V/OI/h5uiI5VD1oxHDPy5D+VehdVmj+jT+L9qj9svRZYSlVWNisV0WRWZQ9PRpvd24K1CPh8X7pSDL0y1a9x2TUIGRi9R/Jf6FvlZkCsSjx/su4H7Iy/DX+Z9irOZxfrRqTSpU81B4tU/k6h8NX9OkgB0h9mtaUeodQNWmGbydSapfSkPjQPR4BXBlFKfF+2AO1GdGAHiXqqjVTUMqLo1KVppQB6PmSrquvBhINQ8I9WTNoo8H8WdK1Dr5MRo0dVH+ap/NFj7oPqGiT/S1A/rdWZx1TSdMY+LVuF/IcK9Sz/AHy5dVfFTVd7IvIp15Z4/YX+g93XUnSFauIUPyl0UNQ+D4OtHX0Dl5/57k/gk/6Dg2+1Jj96Jqofsp8n8XLtt0rmcjVBPGno5Rb9KUTJkTT0Xq5I/8ATEkfiGPv6BkHUlklmpo6qOgZhS9WY1cC8o9Qxi/VL0NO2gfV2xS+BYRGelnnLFVF9aq1fSHo6PFPF1TxLpMrV9IeNGVMSE0SWpJPssJeIPk6cKOo4l9etHkdB201dXU8O2v+oix91JciXDJ+0hP8DtLM+zFHl9qj/oMS2w6o40gf2lebM9zMtchNa1L/AERdrMsah0E8UkOO6tugXSeZp5LBoXDek/vo0qPzo9Evg+DySmhclwodAm5o+KFuC725QVLF1x+igryfJXbLyHwcl1e0TLINf5KWu4h1RLKEp/sp8+08P7Eih+v7urpxfF1B1eZ1pq6oTxfWessqdHQPA6uNESQKcS6Dg6utWBweVfuej6y61dE9T5MegGryWWVo8tXo5FS6rPBpqvRWujKj58GrI0o0pBKk/wBbKj5uqS+YpOhdaGjx4yOpevBgDyemnan3df59TH3a+hak+ocP8mqfwLst1SOhaeWT8Qah+7pX1LQE/wBmRLNtc26gofDQv9KXiOWEjpB4klx28HULROGn7Si4PfZMOUhI+JNGUbZHyU/tK4tS13i6/DR5JvVsC6CblH4Fp9xVyNzgFUpXpkP2WqwuoiuFJ/dK0x/sl9VtKFelH7jZxmCBfkNVKaZr6ibqYdCP2R2uB+1RX4j7le9e3HpaiNaPm0ol0HFqy4uieCRXtVipdHq8/J0GofLSXinV+1V1eIPFlCi4+VoUiha5E+0rRgLOrUhPmPJrEnHFiMGtXy6sSqFdGpHxfTohhKK1LSfJhCfbHk0o/Mp5KfT31/1MWPuqY+Llj/YkP63Jt9zoF+yf2VeRakKTWNR1H5Fj1YN3BJGv0pkzbbNCY8tOYv8AqDPiPegcEdSEn2pJGby8VUngnySwiJORLzUBHX9ovJATJ8i+XdxKiPxYljJSpPAjixte/RpXdJHQo8Vj+68hEofCrKNrsgiThkviH7ytdZONWicfmH63FJ/pkdPwP3te5Sge00pKeDTyk+y8kh6ngHoeL/ksKBq1mQ9Xk9PaJaaHL1eANApqiR1L8n1a04vBA638aVfUwtGgSyVuoYDAUmlGVo6g/ZpV8yUUIGjSuXzZQyliisqvgx+yl19svraJCrVXk9OHeg1/1MWPukNPzd1F/ZU6+jmh3GBN7aqWopSrikV8mPoJoFK8vJiWG3yV6q1YtkH6K1H+9FphQmqiaNC7nquV/j9jt1JhVJ7yjMeVNaOdKIAhSI1LTrxKQ/0ZvNqEc72TxFf6niOu3m/dq/qLTcRrxWg1SfSjgvh7ShRfwUOLE6eEw/WO0kH7OodvN6KI/Ef6H8zkryeStas4hjDzZQeL0FWi3xop414Ovq4xH7XBnzNXj9ujkVP6aV9WpX7RYAHWXoXzVp4ukoZ5bEsh+xqVLwHANMYTQebq0hQ/lfY8kcKMLj0xeXM0alxahTqeLrTpejISnU+bRIeK3Xi8X69tHp/qVTH3j8C6f6ZGf1au4X+zGo/qY+Tt0HzWGXNOrjIol88p/dCv2v3vcLpMcUaBRH5j9j56U4RIARGn0SGi4uP3WoV8i0qh569fSjlhA1XHnGfMKAqHUu7sVHTRY/gYX/pagfx07Y/tAtav9LUlX3wGSo6vTuaOvFphQr6QqalqXWQFhCvaWWEkVLqjgWlYHHV5JPUXmVVU1GjKq+y+vVKHxZZCU9ZYEnB+jyDzlNKtXVw0eStC8qnQasa8S5cT7LUuXyGjJoaAv4l0LFVUSjg9HU/dr9zX/UBY+8p2a/Xp/EUd0j9qNf8AA0/J2qlcM0/wtYZSeIJDuI/VLt5o0ZcyOn4Fq3GSPGJHq8E8S9ICHBFcii400P2OXHhmun4uWnDllzfZ/D2jdxH6oLSfu6fd6fJqUeIYqQxLKdFavEni+pWsb5cui2FHQBiprRqlfClWUvpOvozMD1KfUWBTgwurr5AOr+byDMyxVR4My3CqD0DEdvUV41deOrqdcmcdGck1JdaULoxno+k6VdAa/wCqVOaH9hZH3vmHBL/pax/C1J9XNbq4xLUn8C0SD8pq47hPCVIU7iKnSo5p+SnFc/k4K+RaLi1AV8aV0L3CCZWRMRP4OOQfAuHkSrEckSDRLVzV/TrSQmvHJT/aDub0jyCP62UIFclAPqBDSr0ZSfNlB4oJH4Mj+ZxR7TlKVVpR5LDCa1Z8iHkzXj2zI0chriAKtPTXF0jFC1HzaUsllpRXR8iMZHzLSIUVPmyhQ+lVT8HgfwfMWvVXk0i4PSyiGOtAzg0hL5aU1LUZBqH0JeTorg9Pv/D/AFGuX+WQ/fkDok0X8D6/eSWsejRJ+0kH8Q1XFOi7Gf8AlDQ9lWMoIVB7P9ktN3aprPD5ftJYuL7rX5J8g+Wv2WpSEjrFC9LdI+bylUkyJFEpTqp8+fpQn2EejRDEnJSjSjj22Ec+6A6kJ9fi62kKIx8E5PDdbWOdHyxLVPtx5c1OqJXEdrpH8uv46/zHB+zVkjRmhpVgMnyA1avOroniylQrkwWhCfaZDok1o6405hZTTgXQihdO1Hy0K09XSMal5KFWANTSlXiH9N7IcmKaKPmXnTixQOlKFrB1KtXq8QGK8f8AVQiiFVr0DRAn8o/WyhYySriGV2P0iP2DxHydJoVo+aXxfF8WDXgWtNfJwVVqE0/DRmOM/TxHKP8Aufa0qvR75fqFRF5J+bpYxIgT5BCasC9QmVPxFHlbnk3H5oj/AFPUv2ndBCzkkBXn5F1YjiFSXJfIIk3CT6OP+SVNd/uiiYwan+Wpi1FMk/lQng1Wyglav2FJor7HHd7ZIeSTWJfof2S4bytFKHUPRXm1KSdJEA/1Mavi+L4vj24tfNk1J/U1oQfN8e5Sk8WTXV5Ma6lhK1UAfqGhFKatICvafLQdEtSqey9P3pLoe1Vng1JGhU+SdaME8Hxpo+XBqvzYyUwteo8gzQdR0DSjL2ePzdAatOPBnGPSj+b1LqXxfF6l8XxfF8XxfF8XxfF8XxftPi/aftPi+L4vi+kFX2P6OIoHqvR5k5ynir+52//EADMQAQADAAICAgICAwEBAAACCwERACExQVFhcYGRobHB8NEQ4fEgMEBQYHCAkKCwwNDg/9oACAEBAAE/IQrFlOApE+kn4nX3Zn5K/wAXyz7bFz92xsfzaSXP23/7LU/+2lb0ay3Y6663tQ9tOvXzed/k1Dfym44HNLYBkTHNYbz4lqBEGhNQl4SWwDmfLeUGz5Pqv5ipMqK8vbdOOalMm9s/myJ4pF5L093MIRfNU7OlNAb6rWRGgHmPFU6KebqOI45rfEjnzWSOJdvVYfzC/wC7IGQy86X88k2PwRsdk2fjf3Y+knHNmTl9zY+JcBB992bXl+W6MJa14n1YxRWIcUeWqM3lc0L7oWPFNBTHnv2k5ZA9YRZ9/dJJ0Lhk79GXQN0hmCkRAYUuh2PDWpiDiUR7fd7F/aLCqvEmX8eBajK4oixng7vEqO2xRAOFSiiy+lqrDyL/ABS9HuhoR3TXkP4stxXsH7ohGDlXac0l6bPSc+2xAQe7P0x7al4x7aE/7t/9q05H92k2fs0L/wBt5ip5Cnkh6r98lGexT+V2f8Ctke44+lMHpVwd0pU7tJo6rLC8bHxl5us86f8AOp+/oWDnMWYMJWKdndEwYK1ybHCtUh4p5gGPdMA8V4wvsWDdI9GvzFEpyXBIsqCOKLREVPE60w70qGvCqxKGts33wXgEPNP+15nwlO2pERA0OJBP82SfzYmuWZDFATMR9VdSlBtC+Qixm8SPdADASrGQG0dknh8VPoroYbetC6Z+bwQnmmFQc2yPQGKIGoiKKkSuM7YmYRSDbzr/ABeaZBHrwcZXcBQYkh5ksWAHrn6oMXpLlh+7BFDtulvJZ7OXM3nsQBOhHijTLugiPByUmqWK6jH/ACAIU1evhucY9qseLmtzYmiBkUZ6HquKyb2WqWBijd4OZvYOaYb3e61QjKOE+di69P8A9C4IQ08DE/N88v8AU5WJC8hmpY11LkXq1EebghR+C+LAQuaKJaMY0NdnSyhsSoGdGry3DQzGA8iws5NRo5RRkIq3mLGgIkPxV3n+LGcBYgp9XWCav+YQYJWyxiKNzn1tfTWQO3iz081xtFI9/wDF4aGMDgPVj0N0PHibMHm24qnevISyR5nbXujsnkog4YPzQCpetUDyVU00lzWvtljiyDlKo5YlHdEhKrzieqrgDdHnvJHV7iazaaUbDVDg1F79WYKe9jJEQ2T6KJHonH5vsIJZmGCySVqjIReW2jlHFQYTQoIoyKxwxTJevi7IkOK5YWUwqePVaSBGxdV61g8DfpL5uw+eXqoClsyMm8mDlpppTmgr2WBRzcLnFEFEpFw6SB8IVyXz/NwQ680412KLG1h4qbRfGlK947vJVJvHFCAaaAnMoYyV33d5h2jZSxhvWQZNCP3WUMe715Oa50TY8ZfN5soxWNz81Aiv42HFk3qVFXZS0ZDHY6bIuXg3IJM8w2XzQRXqjMX4Y12MjysOfE3nYsvv1SMS+Tgmnh/g5i8DlJewOLvAGYsUD2OStOggQerH5n+bJUe6j/NzY++nd/4OnEy0OElreIcUz9BUeGftXImFjzxDZH8KLkUBKFKft2GoafFHyhKiEPtYmOdVsV2s7rpF/J8V+Az/AOqWSG4ndeJrmYP53vLy4jPxTyg7vmMatYMSL5SfBXKsszZWMx3TtTNkO0h0vPFB6p5vro/i67zP81PPd4Q93RqnF3inam3nfK6kvksvVVg3YRVNeErn3mbxxdXcQPSrJwd1kCTgLDvWFhHBX/hZZfHVWJDiuvFNiTo9VOIHrS8ZZ8Bm1gAyea0Glp5g81Pna/AiPlsjPd1iKD5LA3/0plLzGpkoR8qKYyHmzTY0vzYAlLNx+olsiWbsyv6IrG0pLsXLxqsoOVNVSEUYnmw9lIKa4aZc/my6twiaerMSGZlXlqdj7rwlTcZygSF4c4mb54KkiLIGsZPxW2Q65DmsCkhYUM+mOaSyiwYlIO//AL5KymM4FcjCobNfKV4Ej8tZsdOBqICPBQwYryCaQ5+qs+r/AMA3FDujxQoN24+v+Ln7/wCa1LDxXaD7ribjf+ALG9NU5eouLBXhdMUUFiTp0XWjzzQMg8XfssLLX5m8rR+Kb5xf4hek1uFS5G+dFXLa0yD6ZZkFF8FlxxQ+Yjn4uhLlGFDyHspB8lX38YqedDtyJBsxJzrz/Y+6EEj1juvvIUT4qJNLzGtWxjapoCD5Ly/NdjxrkR+ayOqkVG58Z48FKHkNnxSplPSl00V4oLz9H3XrxkJ/as2QXXkoly7TlavKUDJlaUIgKmS2WVF1kIC6kNrMHuKaljQTYynow/ViiebEa7WG7HBQ6M7Nozg3zyXQIHxR3KPFPms/IvDNB2wUNoTqhPqwTTzxdu3z/H8WMHe/zXbxQJGucVr5qLzYiF87BZ3a5reNrPN4+KzzO1YlMBXzSEI9DZCGO18K0VCrNfZt4DxRyaV3u5z1QMF5A5q7WrGHsQPwrkI/DQVrFo8PVgYII8Jpn+Xge6HMefmkfRxd6Q6+7HByLCLi6nc2cLoa4iE8/wBXvAKvo6pCvCb50T8XEaaZI2l7i3isvSrHg1vbfXuzhQJYSv8AMoR7K1r3Xqzpfxshhdt32x1BcPGXjYcovU0p4niyoBEA0ihD9UpJeUzDZ4GO6RDjSQkusiLwjZA5CwIgNSw4i9KConJDqnnJHCy6wfNiBgC7oSgcGxieFBXmpLxY7u2wuJSzhXMnr+L0vf8AN2nNjgvk1GaMytUff/Gv/O2f+U7KTfJzZpquUSJqBPSvJk9t/sCyEo5vpHk6r5iTwUAlmi4ZllYsZWUs/NemC+t8V/E8RMWESKbEpIn4pirCMztaZx48nxXgceRoPLndHU2k/lpBcnj1YpmHFUgsbyPNIgOiSzn3H93yjauvE0ZGF49vXpQZ/NUlIk8HzxWBXnjtfHxeDF782FhwzeM5JZPYfmr/APEFREJNRBS8fFxqJpB/V0cY93T5r6lL2mQlpMT081/sL0HV9CzcRXR7USfoPdVAbguQAZ+Cm+I1X/6FJBEX9Vjnj4oYYLBOS8Uf8djQjD/kHFjxWw/F/F/n/wA33eeKnPiwvNSJbzlRUN8VKk1vLaYy91NsYqwB6T5po4iebDXDW2f4ry8c+6O8qpeLNLkCnLSGCKDSErK8+FCxF1xfVZULO2An8l2nxWDqo3yomo6UNv18ixc2zY1qsYx80SgJPNTA90BwVWC5B/FSrJ58UkInnzsYXFUiB1SlgjpgbD3pKN3r4vPWxvjdrQH8pVa5FkXhvwGfMVmlJk7QUnpSRq8mfNnQ9nWyGH5slDQpNa78ZRCQf8kbA8XIFnJl5jPFfcPiiDTgs/h0bcGAoFgVMLaSQS593uxR6pHNmuKv/AaeTb7o78VsT6P4v8n+aXiwCOX/AJkNf+DlC/8AHmh2UBEUFE28XyXefNga3ghVys7PDs2WElzHFm4B5uEEq75lZMspPSw6x2f8QIWYLm0LcEsX0bAIGTBytnSlzQ4/aq47sozHY8oywspqHzP4quX1UTWrihiqdKnO6ZGoaW8z4sSuLQP/AFWI8rK3sWYFsUe7xR4aJHyP1V3TVkQefzZgOvFnvB/pVNmmA47oYVhVwZYDam2SOVAMJlCQLsJvIyT92X0yojy56KAhJcIR8W+avV+auJTY8UqsgsryeKnpPC9WqPOVeb3y11lskp3V9KmazNiCDf8Agzbl2/wv4v8AI/mlTuzWvFiC7uj/AIiZvarhVvqsVB82VrRLTHihTSqU/gvy1EyQ7LHcunRZ8X7JBRvhY4kW589FEDjcXpUUPIqVZD4swler6LxDTf5u4Rp82SoU+miaT6oKfpRR0vkSeNqGPtZpmVK5rYWUS4avYYsX03PInPxYynumhJv/AFR8ts16f1rVRn45UUbUh5KSemiJdUlbeXzeSZNUYUIJtbAi5ehQV2COaUx1XO2R/v8A5MIvI+3moZmAcVKp9a0JezR2lQ0HgCjho8GNji5+LrjYS+K3BFyw/wCOG8tvxfV/gfxf5v8ANgV6V/71ZRFRO/8AnJ2+tQiRre+zZ815/wAaIVdq9UBxRXIvAYGYsfo80eGBTPoLKDCdWUIwsVOp+63qEsou1lcckeWfJ6pvlc6N/wCQMWyIqEAYfdWwaNSdxUSlmuLRUuKOuc1u6rnYbOE6UJFJ1RTfE+CxAfjYrKcrnL+QJ8FA0Fo8nNSEbzZQpeb4bmLx+9hS2CvjWyAd1hHBvyIrlvdiEbWpBysjHzeJ1ZVx6vq87tA8BRgTC/CicOIConkdzYE586pfnZBTUhFin/IymziLLlfDxQvzXpYvnL/D/i/yv5sRZr/+BL/z1F7mvmzldNqRdQX1Xmr9UTzXLxthM9U3Eio88uR1YiAvLzRuVH5qXISxd1q46aD0H2K7WGqM0K7jl3An93wt4VWkMvnqReHqn9GskkFlzyOrAAO3usxCrKaGbwix8k18FEh82FK5mbvgplIRr2eKsELjMVWIB58zzUqXj8RVCHzBxV4NrmO8/V4/zeYxKDm9zNlB6u17S85yvMbdOtRoKSZo5hxXy02YxOo/mjT8XqukVQUXFC7kSGiNzkChiafNb1hpcBFFACT1QdMbETeA83lTtTnGkKDzSRuG+qef+J/H/F/m/wA18X7q3mp1f5vFXbPVcrtFNW9zY83kvtWr8VE2t4oGTlND3l2Q156MIkeFRGf4oREDmOK46O3iK34PDim4xzXfY5pQnNR1eStDxWsEVz8KIulHhw2fnVcypQ9VSAqhhsSXuxObF1L6sC4jz3Tk8/7L6Cx9ZdXYrmU8LDRw90ECVi6PcKkAzhX8vq6IU6PKvMfNTg28hOKizjWH3qss3HgPu66NEuDzSxa3lrWEYrrVafs+KnUCXk1kA7oegvEmaYpPV71rEDW6xzFOJixR1Z80nmhsXiI4sHV9zer6odzZYPj+L/O/m8VdVpZs9XhQJ/yKrX3YjmxaPNGXSyd8/wDHjYMauZiLtc0ScrqyYlmVu+isXm6cReEHllgs8nDYBk6YO6ApQWgONg8f8ExSeaAnBF2+7se9adD3ZOpQj80lQslhxUXmphJqOWEZn1UaEVux/dJHmw86oKQNB8kiluJ2Y9X5vXB/e9rQquMpz5eqLkQ17DssL4njWjUAMHu/hlsDo+Hi+UaxI858U2zEDl1CzToXe7qKgnyvRi311j7r8cc7rCU4Ir2dcnioDkxZM0FeLdKO0evFNp4vm0FYvFM2zTj1T3T/AI/0fxX+/wDmu/8AH/k/8TizWu1+LK6qi9XCar3dXVkVJV5iszL3YcNaEwRyVpRA3kG6KDiHh6KCmcDwVlBtktZHZnHUXCg5Sun13quWAmgUkT2grvFcg6XiK/gF0OGjnSGqbkqcLMSiYA40kxK6Du9BjKuo2wRUg+gLhfMouUFAV3q315WibPBdZx+yoL0Xu8ZDiLu+c+axKmhKQnma5v5UosOVljcuNdImm23LulLx45ZGT4UZqKKmrYCY7qQJT5Lw0mwUYqgHNlyhgXWUZFCuRTxvtZp58Uvf/Y/j/ir9/wDP/H/8Cq9f85f890DJrL/zZWXFC5W62xcLXy2ZVnV2iR83ioG9iXxZoxmIqwITLPza0wSkh/m6Bl6UZ/8ABTmM/wCkGUQKzVTK4FIosbLJtgKxHJevKjps3hBE5vn+vzVBRh9NazsKtbxITJ9tPt2pcB/FWowthdihGNr2Tw81ZCGimeC/xhO8S2IemuYEU5rbNT04fdw62iKrwrhuoVN7h49FxOJrEMGVyTCXnHPd5NvPukEJzWgOlJAvdhYw0q8FybduKTSrv/C9RZXabcYeP4vZ9/z/AMWzVvAqhXdrTZrxF8KDM/4n/NDLwps1g/48mod13iszcqnQd+awWpeAnzdXBFTURs3CQHEd1qDz54rIvFZc/wBXgv8AlKhcRWcTKm60GzYbYXezJI7uErDP92MTcwk+3ihoSVXDweq0dl/ikIJRRSZqrSrvjjKi15LeJIeOKRwFOqod663JoY11Zj9rJnQ0IFi1AvolWHXLkc1+aIv3XVPms8Hq8AATNhDLO1xcO11QRUjYT+qHYDuyRPFKUeCyRBYnxTkjWwc83Sa5cXH6pRyKvRQiWmVfo/i/y/5q5e6u2a3R/wA4R/0/9Re/dZ4vCyr7rDX0vtq7fSvG0PV4GL4MW+K8UfhcC0NumabBQVMuaVXPm4VzxSRPGictcq1v0aaJOOLxk2wPF5jd2a7TYvI1x+3mo3ZUNNvmntZojhNk1ykbZcPgH90BIcJ7WxwQbQInDH4oxzrVE8WJKs1oNOy0CF5w4zmbD3zEoMBlLke8Zik9uGK3Hjs9ibK5EOk+QvCTS4oFNJf6V64nqkhgtVYtcWDJuhJj+6eBxcPFD1zT96Hb/nOFnXlY/wCT5ssf8/AP4v8AL/mtVGw1/wCRX/reLFYmDm9bY7/5EU7thMVKhXa5kVP3d7RKmtP+CidNLA0nJmJ+qIST37oYc+Whgip1SUhcPmyf/JRyBxYMDxeps2H6KzoTY0rhNAYY1kZgK7DbHIxZAJ91emVy+4fVVfFs2Bs091bEvDqn90DCiNqBHl8leRz1ZRBim0T4ay8+QlLeHT4LKwSM4C7QHs6H4sVCMVG0GKH2d4K7ek9VSTCqMoXTYO64hhwocqgSfhVEgy6aJLSi5pYD4dUBgHVCOGkvFCOLrmk0MikG13iz/wCbd/51f4X8Ufv/AJrxWta8f8f+JTFcyx5vFQmmt46sn/hNsf8ADFU7U+1RCkSMqv1pmF5RTPjcxFx6oaSkNSnOyAim2R4F1TDs9xZBPx+r1O6Ax3cKk+xRDPbksDi8I2JIo2QuikXBz6v30xQc/NMikuXk2TEXmLD+TkcjdQv43FTkilnmoCPGT6vQGdtRhIcWZmx+rBFAbZAYzfdf7mS/3f6WWpSEqPCWWnjyeYoC5rcXqq3h2ykHpNIogWCbmZvKOvV7Iniqy93hHLxQaOBS8ovKKQouCnFMRX9X5ynFm7e4vnaWX4P4v8/+ata1rYrWtwTer4jKmym+RNfE1fVKeKp3VOW7fR/wlfnCxRMMt60WlmR+i1ADiozvcfN+NcPFVpLWS/JPup8t3XR8Jyr5XlkYI83v1QSg2BQsSXgu0pcIrBF4G0O5hBlC06R8FCYelz80BA8fq8r4bdHz6aoShgLjwNVQwGLDxCROrNAU8c3C5PdEBRCYp4QnV2hJ8teSAqIoTwxNTN5IpsF4p1pIkuQyltwCwpMfFaJN932E5rNATTloN9gFKsFst4XSc92FxCPTUmP3QKMlmz+r5th90Nx/6DzTN/7zzeoef+H/AAZsPxfxf5v8/wDBWpVzwFNwa/8AQajgqt3H1XlOz5WnEdE8KdoKCicXxljN71f7YF4Gfmb2b/PzYP8APgfov9nT+7nKBYlIT+7zfgKnCXq+GKLyDy3Vo69FgIZTnxZ0EEWuNjuKkHjtkVq0cID83EqOaHBNZeaKofloywrLfv8AV5wSE02EiXtNJiCfxeIkvFAYMxE3aDDq9DeCc2zFOR8XriY9aQN8LA5XuqIA610GhB6eaOk/FGpQKpk2Czo8pKOK5HoDtSCUXLtDgXzSqqTkfFWIhk1BCPKe7uENGxCs7NEH7zqWMy7Yvy591fqaqAB4s3u4cUrovOf8iz/wsUJaf84vD7vr/nu+7M/j+L/J/mp/xvNdf/ZRkVTu/gK1H0beQD8K3n5zWfryaX9MRfCTy3jy/KtzBnwqw+AAs1ENR7XhWgcT7rQX99fX2RPBwo++b5Tb9F/lFOLN+FVk4mbLIivMjDRB8XRFjBmgFgU5omMW8Sc9a4mxQwRFUYFGI9b6R0+bD+aszSBajDwXvG2Mb0vTxSLJYXubHhLZwkUgk8zaeWM75LIeMfixYkZNkGI4mhpEVe7bwvOfVVpoYJjikwzBJM7eAlL8lJL5KgwJSdG1hjHm7JJSMDHi4VgdWASzxYl5urxIHFBtwcljJQeKIQ/bUjje/NSoBOLzwf4pzPKtaBVZ/wCGZYN8e6Xn/nunu80L83+P/FX7/wCb3/x5it+Rw1yIuDptfq9ArBjZMB45P6LBLvSUAX+Pm5wK5k3utx+qriZfm9lPmsNTHNWYQzouD83egXVfZ12ZGYf2qpvZJDVX9XfvhHHK+Oq/LP7Uo4GiyrTzH/L4oHmjvPFLJVJoE1FlGjPG9VyMe7G0AO+SqpKoDI0XAOitLmLg0iQm5SDu5wLWTtbC8PVGoVU1Hjmt+C92FwVxHN44HKqQSHU7VyFfjaASzcfVk8kWUHa2aQUNAFs5eofd5UgfuigdOBUSKBZ7h1Q8sN/zXg3J4ixhwKmkKaQyKw682a44PuxXBWKEQTF7rdVSb5X41EYUvFN3/i35ilDv7uCb/FWzZu/9KP1/xf5P81a7WvFgpP8A5RgbBId0lhU/t9/BZT6uWr4aNm4JAZsyJfNR4u6fZ8YMkrPYR92IqbJK6EilKEslMrmCnwo/FPNODEjx8zTn/LuqAgG5lYV8U8aA6QM/mwjyoS15MvVHXmjakVk5wqDapCS8eK8ZiigXjWKPjFKBzfunD843a5RZoz0F132+rE+2PxYIpY1o8N62aN6Dv3Y8RbMeL6fZcBNhST5/uiOQHOCzhmeFRk/muE51FfL3uJQ3j2OIs3G4/BSUJo7a+UkN9TRijF6Dp+avEfvm5jKXYrCKFbEc+f8AlYEWupQ/AeagO39f8VRQyx3S/oqRnVV9L0KCO/8AHNfF5ruUNihZUiqT8f8ANZYZvzYvVn+P+L/P/mv/AFm/c0p/JXYudTER+aZP4oRfB+Mz9mzbVHzeiyw6WyBMS9NxlCOdIPnGhFQE9tUaAX3tAYA+q5ER8WDDyFd19yEv93Sm3ONv+O7NBtxOq1xCeDd9+bAFbv1/oLQPVesYD4lFVEm3sLzUmMl74Uw6FQsT0/duzClw80cQef8A4oBBL3USMTZOCbOe6D3YRJNHJh9WanavjqDemySXbu6ogHNjW8Js6RBtxDvt1KNzzX76fhF5ADMfVGvmEvV7y8IYLnBovwVtsxKocGsQyMvr0vsHK+L438XejtNKkHl1SRJPzTHnpIlJ0sAvKZ82SlD1lTMv3VIhlj0245p2vhQig4/5IsLmn/OaiM/4eeP+ReX/AI/0fxeL8/zYvVbKX4AVf4jLo+R+aP4u6I/5NQtjQHifBn7LgYGRPsGmELcUCJjwVjjZdpifWUJHCdDgFP7rGr+DqhhkUkA+q3q+0aOUYyfvoXFLSdkuzxVKwnUvNJitMAfnbIaEOTemLLaKdnb9teb4yj/R/dUNd1qTTCGwixcYERWyXEc2KpwA7bNezDxRIcXuwIK9LyVfhd9zQyU0qmJ7oZxhbjgix8XjcOUnFpP4ppVhy+rCToiyCZnLl9PuzZvdIVoJtBo+7IFDirRvZ6N554EebgRh+W8vogisgDo2NWlIHs8HKl89IqqGnPdR2FpCcaWwwyF5W+tpsS/VBNb6cpUQ0ji5IpiJojCh9X3oUbq8tlmP+TstgLti8MXHhucOaUn4/wCL/P8A5r6/41sF9T+LAXgllB8D0Bp+8oeQ4Pi8mXiY3R6aUBel9NUHFXIDSRwe1WmPU2YwZ6joCuyXgErcZVhA3PG61vxJlB+a/t5VAfTcpPGAPfhQ590sdSVbIUOo0HwvvIP5WLePyP8A2pzTiOamc3WeawywqKj8V40y7nNmOZJ92ewHI8tdlMNksJl9tx8uXxVEyj9N1UtY43MycHxSamMPTdSI2pOUIhxLRU2WkEVuvqo8RLiqEG4ZiwdkrERNUnkoxCIZsP3PcsAlHxReJJXasZ+d1D5bYxyZsn+WwGOn1FgyAeYqunUPmxQkeauJ0owVaVZRUwvbRiku6azXN2134/486J0/4eafzc6/7zeL834oUTYA/H8X+T/P/Wu32uNm/pZg7/uKDPjTctf4MwL4s2IOIsmokAEf0rIkKQccz+CpgGB7bA72AlvgeCxlkNJBwNlsKk9CH5sHCEdo98rxSE7H1/2FY8eXtTccQPS/2pIROf3VnKqh3+h5uKOf/NWFS0TWKZ2+XNh5a6ZBmjDS4ervSFZFb49V3XCZquXHqt+A62EZVx6mAxDXisLs/mblWr+CtVxQWPxGL9675uQ08MfxQ0+OHz3ZsHsoYPugCSa4w8BY6zy7y+vTny1idEze4WEUsn3UcRAvMSjOU4oUD2WbyqgzMY5xNw+C00H+3SafXdhMr7HzYHGVGCOKZkFiM5XoWJ1FEc7/AMGUBKRXUYvf/DeP+eTTdf8AIW/N6vHNht6/ir9v831Y/wCNSaY3+BZnqT8ioPYZr4V0vkUtMH/ZQT8/q7JL/tr8DOc7YWOMRJOise1FvxDRfbZcFEMlgjinw4uAdZsro7v8EQ1pcnfzZCgh/tT7X6bS8Pqr4Aq4n/oQ/wA0/lZ8Km192UQVw4qDwf8ANSkx2qRl2jIqec81Gl6FbuRGfDcmKxZRsDPqgtAsaMMPFdLOg0iaSHwVL0GlOizi5CGNpj7zzfAI4/4tFA7vVZSFBxQzPip7iwMnFcESnFWZpl8NmSIHHuzrzS9tlQmRE10ozM/NnUyAQ90zIYPDUSA8cdU0Zgfq9e7rlsJnhXPmpk0R9X91XRl6KiTNIQUFcop1SDbM1NFiWm8X3SzeMpNyJmzOCarepsX+H/FGXif5/wCL/wDggvufzZ97y+6nA5F+9z8SoRH9JVN7G93kfI03ZFPpr3krgnZj+axmErh1ikNsisCd5cuCjeZ/xFU3+uTinzSf8l2Hr+CyqOrzzzYiJYfyEn8X5qXT9WQVk/5R4aggZUj/AJSbj3xYwiIfut00MfNTCUbTeAQjmbJia1vagj3nFURSIqqcImsPTHxW1Gdd1j6iyC2SM8ViDa34Vdk2oKCKO98zfKVq0PWpEjqrifb4K0dhP0UcHj4Hikxm45GgZgPJU3KQIp+0ApEF4/bYSkBF0DwgqmNmz7Jap4okzZF+a5YTy2VOhVxuVHjaR8/8Z83xsX4X03H3X/nJ7/5EelmCnr/nG/8AFA9fxWQx+inP/wADv/NnwX2C/wAX4xkfmldDQ+SslCH4Xff8kNuDXyTT+ayjp/nrxh9lgGJV+k3pMkFiE80OTHp2kN7Tskrh/HNQj7CxViB8urNY4I+Zb+wwrEcBbBwKY/dfkBftFhpX2z/j5KwKmeZ/4fFfAeabAn9KUxbHbeHXgqTkDj1QkNqVzKzNO3E81SY2K0KBQGKT3FYbjSTvuyuA1Qpoh+6fqLqHKxhxNVCE+fFSiSsokcrq6KEHfwpHDDkeCr9AHq/VxXLAYTYbMQmY15LJhnK00CaTzedb4OvmyhIfM1SSlLJMPIoVwD7sHjKeXzSTOKBAbHlELH/BU5/4LH/IO2xeoP8AkDh/wp5uf8zqrx5A+AKU4FF08fbi87ZL1/362l+Xqoe/zRQBAY/A/wB1FXMEp76PpviabynJ9c0KJz/ynmnFjxPV3rgDhHmmQYVx+yqA4CievlwXt912QQHbRCzjTnyvqv3dkEx7aRcOSb/mp8RM3vDs+LDc+iGfj/2vX5vVH/GRYYvG+KhkcXCRpzXMgt5EjlR98s78nNhAfxFWhVEHRFbPrtS9Ab2Ymfiu+XBPVD4VzliIcSeChIB5I9VgRjKNDKcYle7CNgWobuKWyBhaU9R6bFgfzD3ROiUA8TjzUyUZ4LkAPXgyylJvPlpAwNn3SDNh7sIfteRJnmoCT4dU7jIsY25ssHBzYi91k54pDhlIyLD7pMzSiDD/AJxYe7w7Sx3/APiGiVng/v6u53M+Vq/mh/BCcJXI7ZY+Y8/dckPsj82HmH03/KN/wjSt9R7s1cvBvYOuPd/pQp6qHnvh0rgOgP5FaofhX3SLjqf+a/iBPJ+V2VXifhoFSH004zMiHEtTzL3Vd+IU/ZmDHgT4Nu3VJKprvizLGG5+VSkDftFKpcrSXPmz8l44/jcOF9Rpnkn+lOnl4b/8dr/8DXo/Rqz/AEaxTP6adn6WYm98fpfkgL1pNwB2mkNnwVhr4sKiyzjisjyTi8hDho7GhA2LIDVJd5R5oBV/bck5dm9v8CoiQ9lDisFPzAmPN8x59BdU9DcCxZwzdRRqKOkogmV8cF6CPsaYYEh8T5o44cFAcT3SCUFFyhABxmzRBLvpZVNZvZjSSoo/RWZv6aDOHeNw/wBG/wDwmi/8tIPf00/+Np/8re3+rZ//AC2Pj9W/4Bv+cb/mG6R/Bv8AnG9f8Wv/AMbT/wCNuN8Qmpw49U+uWzfYp/A6P+f/2gAMAwEAAhEDEQAAENKsMMfhctg9kK9wdLBMtKt9iGwWa3bHRgO+FfE+JfJo63dQwcEYERQX/Rs8k/PJwwZeQrRf735o1pme6yK+bH27qytPQtxn/wCFyLowgQAU5emL+V9DOxrHVN4N0+kUVkQV3xpJAcj6fE5kmiuWcMu0OT1x3aDSL/w+MwOKd6nDs3ThOAo6Uzj0Y0WMq8plhxVNAwB8uLA2m9fKv0sXC9/UrkHAzPd/sI/fbNI1D3PoKr9wnXURDQ4gkw3EGhUvowLersGb6wbJpj/10Cx7MxpSpx/xhHzhP9jNtcvitMkq05Bw9aAdJ1gPw27pubT3ceLtuuyugLYZwTHiUtgWZWM2rMYPwGXHPgGPlngYJ3+UV+5Km8wEn5SK1RcnLoZS9l0Lej80Iz133itKoICBng9Vn8xI3pdBXDit2Aug05qDigkC13y8S1ce98Wpdb6h9a2wPycEKI3wCMgH9ZODfjyOqzCjS2LsITptHALbFKtjzcXwhbf2h0bDPxRZlQwToyyl1yYrdjVX+fGkvqhzCGKfG6jpEaLs7IB7lzHPMwuInHTaV9rTR7ofnJClV8/quKanOxDRmsnXxGtUaKCgDfOCIZcHWPWJO2Til+smu50IXuEOh9lXUpCf6zNklP8A7gViO2q1lUcY7fR84gQzUMPRk8TN4ToOfGGSVkZKoIMDLXBxYrn6ah+qPRhv/SUpocH6JHx56kNsZHJzwYXA07oP3cN/auNcqVfRNxYImMF9S9TuMRqfa0+d7YYmcS9b6Gv4vsUE0LPeig2RigonIs8CWwgNeO1MIl4DeZJeYAAD1LGcUubbVEhrw9RlN2jQlJeENMEQiwz2/r4uZA//xAAzEQEBAQADAAECBQUBAQABAQkBABEhMRBBUWEgcfCRgaGx0cHh8TBAUGBwgJCgsMDQ4P/aAAgBAxEBPxBJA+Aj9EJ8R9C+rcx0W7yrEuhNGPF8C4muQT2xztn68/AthunkZ2f3joLC+vSgXl+dnHU4ixH5g3p1+8sd2XacN2c9tyur+0CAeu/qziYT4uhOO37zAEy7hZd5nS7824R3F1Z+lk3II4DjuUcXAXfz1JSmZEmMBhxDly2HZDkjGjKIU7g+IlrF+83KRrnLt5cuHxFjbHzPjXZLS1U4SHe/0u/5j4ZxFuJPzGTX5IfjJmtzvxaH67Yx/ALWbVLjzXh8M/izjcYniaDmcQimQ8lqydd85Ne7bn1nZAw4uuS58MV4nFq7YMDs/JbV4vpRtgOYbYHEy+9b6LM7kGQHUjgORjm+i8WLaOHixdlzdJsC0fwhPwXFOyXOoeT1aWMCQPz3etczlr6mTlOp5LZLgzjIMgxIAQriWF4tf5XLZSzqz0ysh4mgcSF5s7xcfFhuQk8hcDxPCHObWflclultzfhUMLdiOZkDSM6Cc8zmrgJhoHz6bhmTUDTWwc2OEscJsMjye4pmylTBTiyIfmXxMBBdzwySGHkfoI1wFmAWRshDZ8X1eMJ53F4M3v0i+Y2488BMj5uBWx4OZn04+YUMFfUloobO4PFOLRsfyRnVju/Ehxbngug2A8QHEacMDHMccMMyDtsGPBKvru4yyH42PUi7bHfCSF8I8YXzeHye2PgWZm7OiAwgHESY3NwgBuW4hiFxSPd2dywdJOYn4WqDwTibBz+YZm2l9FlvhLI+Tq0W2ljgjBhOb82NwbKzZ+51MknN0PMxLIvivhvjnzNtOnxjOfFzwSP9FsjmcP0sg3xwNl8YSWUd2X6DuOYnxDk3l/EmY4xCBOGPkjlczmVeLJBZ8WdxXHi+K5vjNnu6fhauS9AUhwjbyGd5yDsvGuVeIQnwgr7eBEzw+hD+bPrOOjDvRc+HfiE0Nbcr3GEtEDN7ix1fLHwOoMic3ExYXAmPE587LxXuXt09I9B8Mbgl83SL5tNgzq7gc2mMHFulqZbYO7SxFGbc2ZHfeJ84kwJz76sUN5h04MbwXxI+sYkBwXy7YoMs+sV1n1pJdLfVl01v6L6/uwX6o/Nfq4H2C4X89/zH9Lg/pLv9D/bHjNru2HfZX+DZN0MuQcET50PG8jpzmouWKaihBjsb4Hd3zgFO4+CBcJXiN7yAnaRqaXEWTMuOy6XzdaIOLrCAMGIgF0CwYEQ24yT+J8ZL4mXwZN0858cO6ULz9gFfr1xuxbFE44Hk4+B9ebqcfoH9CP63J/UcP63+m5x37f5F+nQ/MX9ir/NIZ+TL+xctvPtkcMi5y/W5L8WH5v8A2SDNjxAfBczjudsqflOro+E83Hi1LkfIw8DFwzbgaHERkywCjXn54yCAQ+Xk/W+Oiu1K0+kRwuS73JfN5L6MZjrzgX+WP9CXW+T+YB/rcxcRlhpMXu30BLTA2rhXFHT5vqgD/Wy7g/kf7VeIfLfZS2VtL62/jB6oU+iW1JEscuIf7S3B8YbkcQdBD8wHOSkYAXMxg4lYMlNndZ6n1ZCOvODuv6V/rbf5T/vH9Eg0df8AZ3GcIszDubECLW8C4p0jCKX2MtY44s04CL91H9C5+LWGwZzLkMD5vijUsqhGeLERj82QvC3TEUDv6S52viUD62jMjYvzfEkGcxJoZ5EXySuS4rtLXwh5h43W2/8AcSC2vvT+P9gY+Oh8XIkfvd+XxppPjPj73Pxyj8Mdzr4t/gCij3+U1bHh+/5f5kHN9P4kks/0u9z+e/yF1GgT8k3zOloXAMK5GGFk4tnkkUd+1iEZKcs8Kc2ByQJyRCY4gcuiStL4osghzLk/rZN38Lr4+MOfG6WQ821/Lg/TdkD+QsCn0ZKOuWKb3w/Z6ifLwHDN4Q+79ZlujOgOTv6Cx+22IfWwB+jfVH92rSnnN/Ma/qPnqwpFDoOYG56+YQuwPlls4ufm514lxt9Cxuxwj5vg4QSy/N8/ipOXSbePS7MwgfQZ6/oX+tj+bf6jB7P7SjAcH0G6fm/abY0EH57dmuh8n04nOAa63OOn6/e5n6B60J8YU/MuHvmPz4/6hc4/5+y8A/NqeHEnIwCvwh8ZfFdt7QdPcrZEXy8L7qWDrH34PC2HFx4WrLnm/iySZ+L9bkmeJU5tzboDfo7/AG07eIzh51+sr6X+k5qQQX8PsR9HYz5+zz1Cwm4I8XRgD+Sc2z1Aefq4f7Fu4VipMO+YX0sGE4gOEJcLZlwXQSCARBD5DWKZAtybLrLDy1L5Pk7x5//aAAgBAhEBPxBxtTtl9Ur6ynbL4PFlwsOBWnEYQbv52A6shcv3uT1n52zlfuxXi/eIzX92Z5H7zxX73InfzinC6+sPYzv5luK/e0tY/e+oTeNb7r94XpfvK/L947yv3ggaCE3/AHXIN/NxIvspzwf5h3mP5lO397QL/e4BD+YndtHd9TKncn1hSe5sxj1DvMtXh/CBfO83O2iJfOruaRcGNtsEprYQzgNkSnl/T/2z0/MQR+kjubNsLBZYZiDpLJzcepJzCsbgfFy5hGSTmy4vAl7XC7eJDHyT3XSOqx23Mz2eojYB4Lg0nAVGm3ZdWWl8XAdpxw+WIfpAJTJxxsA14iWLcQn0gN2zeYE5ne4R15hruDvEYwQjiGDi7yebSbP1SeDi5Ez0WHcoiSvTqWuThyQPDr5LSbFuIM8uWui3cZVbIZkEWyOGDdA2ac/R1NyJVS2EfBPNjMnzHXIiLgIOYxiC+CJGS59S45Nvg8YxTkmUm1cEXS1VkKY8Tm2wTqwhTiFHbkaxEvn4tTY8uw8tDC0+MkQNtHiLYZiyyJYdx6y7so4h8QhBMEcLt6nj9ySRGGWi5MIjRhhHsx34sONhPHwX1ZGxTnhksTg4i5+403pbyJhtxvHrktIucWbvdwCH6IWcMYeXwOJ78M8SbKflZJx4uuYVjlsXhnGLLqyNdG+BO7HmQAmpDJli7v5trWSbPiwR8QWZLbJ4gPrl2hsYj5tnmdA+LPwCCE2IOJOfwMs8E8J6bjx3Gm/MKKzoDiFT5SP5ZgNiyNcbE/C3Sd3EruxQELADcxlHcD4Oz1BA+ZJt8zcN8EIy5nrwwcS82kM/gdSyT6k91m8xIGp2p0ruUg+Xz7J5i0CQt9soM7t8k3iXeBtfz2Msd4juiPr/ABM8vzaGtzWw8A8ZL5jqAyzmfE9fcPj8Cn8fPt0JfrI957mzi3OYYqxLXRIcDghBvcrdObDCFYJl5OSQk5zYXNNLVtkL+1tzlwjdJkR4BEQ5s8COvxEy/ryA/u39qbv9tuwfyL/eQePzLD/bdZH+V/t/tFuc55/3J/Qsw0sH3+p9n/JKTCwt+7bUcEnTL+4yHgbGLyRfenbTlgXmBf8ATB8EmkFkx+bsFjEtESdBuczZ1rH8ltYceBg9r0Y6vnxzyCB93Xn7AL/SDoTTg8P5639gQf2C5RX8L/eE7v8AIf6but/P/Ql2a/M3++xfC/ID+wXwP3RMCG58v7h/cth69MHzCJcZHeXHzLZ+ZJHuCj0P6wuHctsZLyMtk7LGx05yGn9mEHj87aO1voHFmvr3DkIcRz49Ig8LvpHU9+fmvfvv+0XyX9bAf6k7+rhHbsRM4JfqWXpjBLlvmE/ymP0QP9R/eML5LS45viM4QOXDHEfspIcDFY2VaxvpX9/LR+CE4dwMlOC5chzMi7bk8RzD0fiHV28+3ev3H+l+RB+y/wBJZgCAwxoYdW/xbvCcOXUGh5sZm6/NhnBh/Uv6JZfUvpWnBF9ZZHmV9WhxMPjIL2Loo/EQnTiHQhPTzLjhIHFyQBzbNjMOZwejksPA8Die/PtuP3Etn/D/AKj/AGM2b7sfARE6/Rwn1jRuYJPgn2/ytsZjjONP+pu3p/sf2YD0Jv7ybC2c3ZcG2JW5urGcW4GEULD0uEbmtmkCZL72ZkeDnwQfggR4s9EQ8Xb37JfoH5l/RWEj9bCxwZ9ujT+LJnJfyZcTKfs2A/bZYp9b84z+rH5A38hj/U91hvErxb8jm2szFyX2+DAi7PJMd"
@@ -1112,22 +1109,22 @@
     "Medir líneas"
   </string>
   <string name="WOUND_GENIUS_SDK_ADD_AREA">
-    "Add Area"
+    "Añadir área"
   </string>
   <string name="WOUND_GENIUS_SDK_ADD_LINE">
-    "Add Line"
+    "Añadir línea"
   </string>
   <string name="WOUND_GENIUS_SDK_LINE">
-    "Line"
+    "Línea"
   </string>
   <string name="WOUND_GENIUS_SDK_LINE_MEASUREMENT">
-    "Line Measurement"
+    "Medición de línea"
   </string>
   <string name="WOUND_GENIUS_SDK_LINE_MEASUREMENT_POPUP_DESCRIPTION">
-    "Measure post-operative seams and other features using the new line measurement mode."
+    "Mida suturas postoperatorias y otras características con el nuevo modo de medición de línea."
   </string>
   <string name="WOUND_GENIUS_SDK_OUTLINE">
-    "Outline"
+    "Contorno"
   </string>
   <string name="WOUND_GENIUS_SDK_NO_OPEN_WOUND_DETECTED">
     "No se detectó ninguna herida abierta. Considere tomar otra foto o agregar las medidas manualmente usando los botones de arriba."
@@ -1138,4 +1135,70 @@
   <string name="WOUND_GENIUS_SDK_MEASUREMENT_RESULTS_ZOOM">
     "Ampliar"
   </string>
+  <string name="WOUND_GENIUS_SDK_QR_CODE_NOT_SUPPORTED">
+    "Usar marcador calib."
+  </string>
+  <string name="WOUND_GENIUS_SDK_LINE_ITEM_NUMBER">
+    "Línea L%d"
+  </string>
+  <string name="WOUND_GENIUS_SDK_REVIEW_OUTLINES_WITH_TISSUE_TYPES_POPUP_DESCRIPTION">
+    "Por favor, asegúrese de que los bordes de la herida y los tipos de tejido sean detectados correctamente antes de proceder."
+  </string>
+  <string name="WOUND_GENIUS_SDK_PLEASE_ALLOW_PHOTO_LIBRARY_USAGE">
+    "Allow WoundGenius to access the photo library in the General Settings."
+  </string>
+  <string name="WOUND_GENIUS_SDK_PLEASE_ALLOW_MICROPHONE_USAGE">
+    "Permita el acceso al micrófono para WoundGenius en Configuración General."
+  </string>
+  <string name="WOUND_GENIUS_SDK_SINGLE_AREA_DIALOG_title">
+    "Seleccione una de las zonas o dibuje la suya"
+  </string>
+  <string name="WOUND_GENIUS_SDK_SINGLE_AREA_DIALOG_description">
+    "Se han detectado varias zonas. Seleccione una sola zona para continuar con la medición.
+O bien, elimine todas las zonas detectadas y dibuje una nueva ud. mismo."
+  </string>
+  <string name="WOUND_GENIUS_SDK_SINGLE_AREA_OPTION_VALUE">
+    "Área %1$s (%2$s)"
+  </string>
+  <string name="WOUND_GENIUS_SDK_SELECT_AN_AREA"/>
+  <string name="WOUND_GENIUS_SDK_DELETE_AND_DRAW">
+    "Eliminar todo y dibujar manualmente"
+  </string>
+  <string name="WOUND_GENIUS_SDK_AREA_ITEM_NUMBER">
+    "Área A%d"
+  </string>
+  <string name="WOUND_GENIUS_SDK_DIVIDER_VIEW_OR_LABEL"/>
+  <string name="WOUND_GENIUS_SDK_GET_CALIBRATION_MARKERS_URL"/>
+  <string name="WOUND_GENIUS_SDK_POSE_FULL_FACE_FRONT"/>
+  <string name="WOUND_GENIUS_SDK_TITLE_WITH_INDEX_facial_surgery_mode">
+    "%@ (%d de %d)"
+  </string>
+  <string name="WOUND_GENIUS_SDK_ASTERISKS_INDICATE_FOCUS_POINT"/>
+  <string name="WOUND_GENIUS_SDK_POSE_SMILING"/>
+  <string name="WOUND_GENIUS_SDK_POSE_FRONT_VIEW_WITH_CLOSED_EYES"/>
+  <string name="WOUND_GENIUS_SDK_POSE_OBLIQUE"/>
+  <string name="WOUND_GENIUS_SDK_POSE_PROFILE"/>
+  <string name="WOUND_GENIUS_SDK_POSE_BACK_VIEW_WITH_EARS_VISIBLE"/>
+  <string name="WOUND_GENIUS_SDK_POSE_FRONT_VIEW_WITH_LIP_RETRACTOR"/>
+  <string name="WOUND_GENIUS_SDK_POSE_FRONT_VIEW_WITH_SPATULA_IN_OCCLUSAL_PLANE"/>
+  <string name="WOUND_GENIUS_SDK_POSE_SUBMENTAL_OBLIQUE_VIEW"/>
+  <string name="WOUND_GENIUS_SDK_POSE_SUBMENTAL_VERTICAL_VIEW"/>
+  <string name="WOUND_GENIUS_SDK_POSE_SUPRACRANIAL_OBLIQUE"/>
+  <string name="WOUND_GENIUS_SDK_POSE_INTRAORAL_UPPER_OCCLUSAL_SURFACE"/>
+  <string name="WOUND_GENIUS_SDK_POSE_INTRAORAL_BUCCAL_LEFT"/>
+  <string name="WOUND_GENIUS_SDK_POSE_INTRAORAL_FRONTAL"/>
+  <string name="WOUND_GENIUS_SDK_POSE_INTRAORAL_BUCCAL_RIGHT"/>
+  <string name="WOUND_GENIUS_SDK_POSE_INTRAORAL_LOWER_OCCLUSAL_SURFACE"/>
+  <string name="WOUND_GENIUS_SDK_POSE_OTHER">
+    "Otro"
+  </string>
+  <string name="WOUND_GENIUS_SDK_LANDSCAPE_ORIENTATION_POSE_HINT_VIEW_title"/>
+  <string name="WOUND_GENIUS_SDK_PORTRAIT_ORIENTATION_POSE_HINT_VIEW_title"/>
+  <string name="WOUND_GENIUS_SDK_THREE_D">
+    "3D"
+  </string>
+  <string name="WOUND_GENIUS_SDK_SELECT_ALL_DIALOG_title">
+    "Seleccionar todo"
+  </string>
+  <string name="WOUND_GENIUS_SDK_SELECT_ALL_DIALOG_description"/>
 </resources>
