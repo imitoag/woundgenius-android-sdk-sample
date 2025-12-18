@@ -60,12 +60,11 @@ To launch the Sample App, perform the following actions:
 6. Run the application.
 7. After you launch the application, go to Settings or press "License Key" button, and paste the license key you've received at Step 1.
 
-<img width="300" alt="image" src="https://github.com/imitoag/woundgenius-android-sdk-sample/assets/139133999/c405785e-e0c5-41ba-8116-6681f2d4a171">
-<img width="300" alt="image" src="https://github.com/imitoag/woundgenius-android-sdk-sample/assets/139133999/1a2ef027-3c1d-4122-91c3-37d58c4ed7c9">
+<img width="300"  alt="image" src="https://github.com/user-attachments/assets/5ad8f1fc-f7ee-46e0-a220-15a2e2882352" />
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/0d3a60ce-3550-4e8a-b0ec-1ee841d642bb" />
 
 8. Navigate back from Settings Screen. Click Start Capturing. Grant the permission for the app to access the Camera.
- <img width="300" alt="image" src="https://github.com/imitoag/woundgenius-android-sdk-sample/assets/139133999/f8fd1408-19eb-46da-835b-7001d3ac8e31">
-
+<img width="300"  alt="image" src="https://github.com/user-attachments/assets/5df9a748-0ce7-4f93-8730-cae3d4704012" />
 
 # WoundGenius SDK React Native Sample App
 
