@@ -394,37 +394,34 @@
 &lt;/head&gt;
 &lt;body&gt;
     &lt;section&gt;
-  &lt;a href=\"watchVideoTutorial\" class=\"video-thumb\"&gt;
-            &lt;span&gt;Ver vídeo&lt;/span&gt;
-        &lt;/a&gt;
         &lt;p&gt;
-            Utilize este modo para uma medição rápida, precisa e sem contacto de feridas planas.
+            Use este modo para uma medição rápida, precisa e sem contato de feridas planas.
         &lt;/p&gt;
         &lt;ol&gt;
             &lt;li&gt;
-                Coloque um Marcador de Calibração junto à ferida.
+                Coloque um Marcador de Calibração próximo à ferida.
             &lt;/li&gt;
             &lt;li&gt;
-                Assegurar uma visibilidade e iluminação óptimas para toda a ferida.
+                Garanta a visibilidade e a iluminação ideais para toda a ferida.
                 &lt;ul&gt;
                     &lt;li class=\"icon-sun\"&gt;
-                        Mantenha uma iluminação uniforme, evitando sombras fortes, realces e sobre-exposição.
+                        Mantenha a iluminação uniforme, evitando sombras fortes, destaques e superexposição.
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Segure o dispositivo paralelamente ao marcador e suficientemente perto da ferida, assegurando que a ferida ocupa pelo menos 1/3 do ecrã.
+                Segure o dispositivo paralelo e próximo o suficiente da ferida, garantindo que a ferida ocupe pelo menos 1/3 da tela.
                 &lt;ul&gt;
                     &lt;li class=\"icon-nonparallel\"&gt;
-                        A aplicação notificá-lo-á quando o dispositivo não estiver paralelo ao marcador.
+                        O aplicativo o notificará quando o dispositivo não estiver paralelo ao marcador.
                     &lt;/li&gt;
                     &lt;li class=\"icon-zoom\"&gt;
-                        Para feridas mais pequenas, mantenha uma distância mais próxima da ferida.
+                        Para feridas menores, mantenha uma distância menor da ferida. 
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Capturar a fotografia.
+                Segure o dispositivo com firmeza e toque no botão &lt;b&gt;Capturar&lt;/b&gt; para tirar uma foto.
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
@@ -498,7 +495,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Capture a foto.
+                Segure o dispositivo com firmeza e toque no botão &lt;b&gt;Capturar&lt;/b&gt; para tirar uma foto.
                 &lt;ul&gt;
                     &lt;li class=\"icon-pin\"&gt;
                         Na fotografia, posicione os marcadores de distância verdes na régua da fotografia para indicar o tamanho do mundo real.
@@ -507,8 +504,7 @@
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
-&lt;/body&gt;
-"
+&lt;/body&gt;"
   </string>
   <string name="WOUND_GENIUS_SDK_RULER_HOW_WOUND_SIZE_CALCULATED_HTML">
     "&lt;!DOCTYPE html&gt;
@@ -611,7 +607,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Verifique se a detecção da ferida exibe os resultados esperados com a sobreposição verde. Lembre-se de que você pode ajustar a borda da ferida detectada depois de capturar a foto.
+                Verifique se a detecção da ferida exibe os resultados esperados com a sobreposição verde. &lt;b&gt;Lembre-se de que você pode ajustar a borda da ferida detectada depois de capturar a foto&lt;/b&gt;.
                 &lt;ul&gt;
                     &lt;li class=\"icon-detection\"&gt;
                         Se os resultados da detecção não forem os esperados, tente reposicionar o dispositivo ou melhorar a iluminação.
@@ -619,7 +615,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Capture a foto.
+                Segure o dispositivo com firmeza e toque no botão &lt;b&gt;Capturar&lt;/b&gt; para tirar uma foto.
                 &lt;ul&gt;
                     &lt;li class=\"icon-pin\"&gt;
                         Na fotografia, posicione os marcadores de distância verdes na régua da fotografia para indicar o tamanho do mundo real.
@@ -628,8 +624,7 @@
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
-&lt;/body&gt;
-"
+&lt;/body&gt;"
   </string>
   <string name="WOUND_GENIUS_SDK_CALIBRATION_MARKER_HOW_TO_USE_LIVE_WOUND_AUTODETECT_HTML">
     "&lt;!DOCTYPE html&gt;
@@ -699,12 +694,12 @@
                         O aplicativo o notificará quando o dispositivo não estiver paralelo ao marcador.
                     &lt;/li&gt;    
                     &lt;li class=\"icon-zoom\"&gt;
-                        Para feridas menores, mantenha uma distância menor da ferida.
+                        Para feridas menores, mantenha uma distância menor da ferida. 
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Verifique se a detecção da ferida exibe os resultados esperados com a sobreposição verde. Lembre-se de que você pode ajustar a borda da ferida detectada depois de capturar a foto.
+                Verifique se a detecção da ferida exibe os resultados esperados com a sobreposição verde. &lt;b&gt;Lembre-se de que você pode ajustar a borda da ferida detectada depois de capturar a foto&lt;/b&gt;.
                 &lt;ul&gt;
                     &lt;li class=\"icon-detection\"&gt;
                         Se os resultados da detecção não forem os esperados, tente reposicionar o dispositivo ou melhorar a iluminação.
@@ -712,7 +707,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Capture a foto.
+                &lt;b&gt;Segure seu dispositivo firmemente.&lt;/b&gt; A foto será capturada automaticamente. Você também pode tirar a foto manualmente tocando no botão &lt;b&gt;Capturar&lt;/b&gt;.
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
@@ -1170,4 +1165,11 @@
     "Selecionar todos"
   </string>
   <string name="WOUND_GENIUS_SDK_SELECT_ALL_DIALOG_description"/>
+  <string name="WOUND_GENIUS_SDK_CAPTURE_STOMA_AND_RULER_STATUS">
+    "Captura de Estoma e Régua"
+  </string>
+  <string name="WOUND_GENIUS_SDK_WEEK"/>
+  <string name="WOUND_GENIUS_SDK_TWO_WEEKS"/>
+  <string name="WOUND_GENIUS_SDK_MONTH"/>
+  <string name="WOUND_GENIUS_SDK_YEAR"/>
 </resources>

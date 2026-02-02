@@ -420,9 +420,6 @@
 &lt;/head&gt;
 &lt;body&gt;
     &lt;section&gt;
-   &lt;a href=\"watchVideoTutorial\" class=\"video-thumb\"&gt;
-            &lt;span&gt;Watch Video&lt;/span&gt;
-        &lt;/a&gt;
         &lt;p&gt;
             Use this mode for a fast, accurate, contactless measurement of planar wounds.
         &lt;/p&gt;
@@ -450,7 +447,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Capture the photo.
+                Hold your device steady and tap the &lt;b&gt;Capture&lt;/b&gt; button to make a photo.
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
@@ -524,17 +521,16 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Capture the photo.
+                Hold your device steady and tap the &lt;b&gt;Capture&lt;/b&gt; button to make a photo.
                 &lt;ul&gt;
                     &lt;li class=\"icon-pin\"&gt;
-                        In the photograph, position the green distance markers on the ruler in the photograph to indicate real-world size.
+                        After photo was taken, adjust the position of the green distance markers on the ruler to indicate real-world size.
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
-&lt;/body&gt;
-"
+&lt;/body&gt;"
   </string>
   <string name="WOUND_GENIUS_SDK_RULER_HOW_WOUND_SIZE_CALCULATED_HTML">
     "&lt;!DOCTYPE html&gt;
@@ -637,7 +633,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Verify that wound detection displays the expected results with the green overlay. Remember, you can adjust the detected wound border after capturing the photo.
+                Verify that wound detection displays the expected results with the green overlay. &lt;b&gt;Remember, you can adjust the detected wound border after capturing the photo&lt;/b&gt;.
                 &lt;ul&gt;
                     &lt;li class=\"icon-detection\"&gt;
                         If detection results are not as expected, try repositioning the device or enhancing the lighting.
@@ -645,10 +641,10 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Capture the photo.
+                Hold your device steady and tap the &lt;b&gt;Capture&lt;/b&gt; button to make a photo.
                 &lt;ul&gt;
                     &lt;li class=\"icon-pin\"&gt;
-                        In the photograph, position the green distance markers on the ruler in the photograph to indicate real-world size.
+                        After photo was taken, adjust the position of the green distance markers on the ruler to indicate real-world size.
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
@@ -718,7 +714,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Hold your device parallel and close enough to the wound, ensuring the wound occupies at least 1/3 of the screen.
+                Hold your device parallel to the marker and close enough to the wound, ensuring the wound occupies at least 1/3 of the screen.
                 &lt;ul&gt;
                    &lt;li class=\"icon-nonparallel\"&gt;
                         The app will notify you when the device is not parallel to the marker.
@@ -729,7 +725,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Verify that wound detection displays the expected results with the green overlay. Remember, you can adjust the detected wound border after capturing the photo.
+                Verify that wound detection displays the expected results with the green overlay. &lt;b&gt;Remember, you can adjust the detected wound border after capturing the photo&lt;/b&gt;.
                 &lt;ul&gt;
                     &lt;li class=\"icon-detection\"&gt;
                         If detection results are not as expected, try repositioning the device or enhancing the lighting.
@@ -737,7 +733,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Capture the photo.
+                &lt;b&gt;Hold your device steady.&lt;/b&gt; The photo will be captured automatically. You can take a photo manually by tapping the &lt;b&gt;Capture&lt;/b&gt; button.
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
@@ -1272,5 +1268,20 @@ Alternatively, delete all detected areas and draw the new one by yourself."
   </string>
   <string name="WOUND_GENIUS_SDK_SELECT_ALL_DIALOG_description">
     "Use this menu to select an entire body part currently displayed on the screen."
+  </string>
+  <string name="WOUND_GENIUS_SDK_CAPTURE_STOMA_AND_RULER_STATUS">
+    "Capture Stoma &amp; Ruler"
+  </string>
+  <string name="WOUND_GENIUS_SDK_WEEK">
+    "Week"
+  </string>
+  <string name="WOUND_GENIUS_SDK_TWO_WEEKS">
+    "2 Weeks"
+  </string>
+  <string name="WOUND_GENIUS_SDK_MONTH">
+    "Month"
+  </string>
+  <string name="WOUND_GENIUS_SDK_YEAR">
+    "Year"
   </string>
 </resources>

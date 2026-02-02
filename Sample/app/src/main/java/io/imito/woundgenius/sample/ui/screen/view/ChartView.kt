@@ -30,7 +30,7 @@
 //        xAxis.position = XAxis.XAxisPosition.BOTTOM
 //        xAxis.setDrawGridLines(false)
 //        xAxis.valueFormatter = DateValueFormatter()
-//        xAxis.granularity = 86400f // 60 * 60 * 24 (один день)
+//        xAxis.granularity = 86400f
 //    }
 //
 //    fun updateChartData(assessmentList: List<SampleAssessmentEntity>) {

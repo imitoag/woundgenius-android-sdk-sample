@@ -33,7 +33,7 @@
     "Umranden Sie mit dem Finger die zu messende Fläche."
   </string>
   <string name="WOUND_GENIUS_SDK_PLEASE_START_DRAWING_WITH_AUTODETECT">
-    "Verwenden Sie Ihren Finger, um Bereiche zu umranden, oder tippen Sie auf Auto-Erkennung, um die Ränder automatisch zu erkennen."
+    "Bereiche manuell umranden oder mit \"Auto-Erkennung\" automatisch erfassen."
   </string>
   <string name="WOUND_GENIUS_SDK_PLEASE_CLOSE_THE_PATH">
     "Schliessen Sie die Umrandung, damit die Messung durchgeführt werden kann."
@@ -162,7 +162,7 @@
     "Medial"
   </string>
   <string name="WOUND_GENIUS_SDK_ENSURE_ACCURATE_DETECTION">
-    "Stellen Sie sicher, dass die Wundränder genau erfasst werden, und nehmen Sie bei Bedarf Anpassungen vor. Tippen Sie auf Bestätigen, um die Messung abzuschliessen."
+    "Wundränder genau erfassen, bei Bedarf anpassen und die Messung durch Bestätigen abschliessen."
   </string>
   <string name="WOUND_GENIUS_SDK_REVIEW_CONTOURS">
     "Review"
@@ -418,9 +418,6 @@
 &lt;/head&gt;
 &lt;body&gt;
     &lt;section&gt;
-  &lt;a href=\"watchVideoTutorial\" class=\"video-thumb\"&gt;
-            &lt;span&gt;Video anzeigen&lt;/span&gt;
-        &lt;/a&gt;
         &lt;p&gt;
             Verwenden Sie diesen Modus für eine schnelle, akkurate &amp; kontaktlose Vermessung von flachen Wunden.
         &lt;/p&gt;
@@ -448,7 +445,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Nehmen Sie ein Foto auf. Danach können Sie durch Ziehen der grünen Linien die Wundranderkennung bei Bedarf anpassen.
+                Halten Sie Ihr Gerät ruhig und tippen Sie auf die Schaltfläche &lt;b&gt;Aufnehmen&lt;/b&gt;, um ein Foto zu machen.
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
@@ -522,17 +519,16 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Nehmen Sie ein Foto auf. Danach können Sie durch Ziehen der grünen Linien die Wundranderkennung bei Bedarf anpassen.
+                Halten Sie Ihr Gerät ruhig und tippen Sie auf die Schaltfläche &lt;b&gt;Aufnehmen&lt;/b&gt;, um ein Foto zu machen.
                 &lt;ul&gt;
                     &lt;li class=\"icon-pin\"&gt;
-                        Positionieren Sie die beiden grünen Entfernungsmarker im realitätsgetreuen Abstand auf dem Lineal im Foto. Der Standardabstand beträgt 5 cm, falls Sie diesen nicht personalisiert haben. Damit kann unsere Software die Wundfläche berechnen.
+                        Positionieren Sie die beiden grünen Entfernungsmarker im realitätsgetreuen Abstand auf dem Lineal im Foto.
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
-&lt;/body&gt;
-"
+&lt;/body&gt;"
   </string>
   <string name="WOUND_GENIUS_SDK_RULER_HOW_WOUND_SIZE_CALCULATED_HTML">
     "&lt;!DOCTYPE html&gt;
@@ -635,7 +631,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Prüfen Sie, ob die grüne Fläche die Wunde korrekt erfasst.
+                Prüfen Sie, ob die grüne Fläche die Wunde korrekt erfasst. &lt;b&gt;Denken Sie dran, Sie können den erkannten Wundrand nach der Aufnahme des Fotos noch anpassen&lt;/b&gt;.
                 &lt;ul&gt;
                     &lt;li class=\"icon-detection\"&gt;
                         Wenn die Wunde nicht komplett erfasst wird, versuchen Sie, das Gerät neu zu positionieren oder die Beleuchtung zu verbessern.
@@ -643,24 +639,23 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Nehmen Sie ein Foto auf. Danach können Sie durch Ziehen der grünen Linien die Wundranderkennung bei Bedarf anpassen.
+                Halten Sie Ihr Gerät ruhig und tippen Sie auf die Schaltfläche &lt;b&gt;Aufnehmen&lt;/b&gt;, um ein Foto zu machen.
                 &lt;ul&gt;
                     &lt;li class=\"icon-pin\"&gt;
-                        Positionieren Sie die beiden grünen Entfernungsmarker im realitätsgetreuen Abstand auf dem Lineal im Foto. Der Standardabstand beträgt 5 cm, falls Sie diesen nicht personalisiert haben. Damit kann unsere Software die Wundfläche berechnen.
+                        Positionieren Sie die beiden grünen Entfernungsmarker im realitätsgetreuen Abstand auf dem Lineal im Foto.
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
-&lt;/body&gt;
-"
+&lt;/body&gt;"
   </string>
   <string name="WOUND_GENIUS_SDK_CALIBRATION_MARKER_HOW_TO_USE_LIVE_WOUND_AUTODETECT_HTML">
     "&lt;!DOCTYPE html&gt;
 &lt;head&gt;
     &lt;meta charset=\"utf-8\" /&gt;
     &lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" /&gt;
-   &lt;style&gt; {$COMMON_CSS_PART1$}{$COMMON_CSS_PART2$}{$COMMON_CSS_PART3$}{$COMMON_CSS_PART4$}
+    &lt;style&gt; {$COMMON_CSS_PART1$}{$COMMON_CSS_PART2$}{$COMMON_CSS_PART3$}{$COMMON_CSS_PART4$}
 /* Container to position the image and button */
         .image-container {
             position: relative;
@@ -706,7 +701,7 @@
         &lt;/p&gt;
         &lt;ol&gt;
             &lt;li&gt;
-                Legen Sie ein Lineal neben die Wunde.
+                Legen Sie einen Kalibrierungsmarker neben die Wunde.
             &lt;/li&gt;
             &lt;li&gt;
                 Die gesamte Wunde sollte sichtbar und gut beleuchtet sein.
@@ -717,15 +712,18 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Halten Sie Ihr Gerät parallel zur Wunde und nahe genug, sodass die Wunde mindestens 1/3 des Bildschirms einnimmt.
+                Halten Sie Ihr Gerät parallel zum Kalibrierungsmarker und nahe genug an die Wunde, sodass diese mindestens 1/3 des Bildschirms einnimmt.
                 &lt;ul&gt;
+                   &lt;li class=\"icon-nonparallel\"&gt;
+                        Die App zeigt an, falls Sie das Gerät nicht parallel zum Marker halten.
+                    &lt;/li&gt;    
                     &lt;li class=\"icon-zoom\"&gt;
                         Bei kleineren Wunden benötigt es einen geringeren Abstand zur Wunde. 
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Prüfen Sie, ob die grüne Fläche die Wunde korrekt erfasst.
+                Prüfen Sie, ob die grüne Fläche die Wunde korrekt erfasst. &lt;b&gt;Denken Sie dran, Sie können den erkannten Wundrand nach der Aufnahme des Fotos noch anpassen&lt;/b&gt;.
                 &lt;ul&gt;
                     &lt;li class=\"icon-detection\"&gt;
                         Wenn die Wunde nicht komplett erfasst wird, versuchen Sie, das Gerät neu zu positionieren oder die Beleuchtung zu verbessern.
@@ -733,17 +731,11 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Nehmen Sie ein Foto auf. Danach können Sie durch Ziehen der grünen Linien die Wundranderkennung bei Bedarf anpassen.
-                &lt;ul&gt;
-                    &lt;li class=\"icon-pin\"&gt;
-                        Positionieren Sie die beiden grünen Entfernungsmarker im realitätsgetreuen Abstand auf dem Lineal im Foto. Der Standardabstand beträgt 5 cm, falls Sie diesen nicht personalisiert haben. Damit kann unsere Software die Wundfläche berechnen.
-                    &lt;/li&gt;
-                &lt;/ul&gt;
+                &lt;b&gt;Halten Sie Ihr Gerät still.&lt;/b&gt; Das Foto wird automatisch aufgenommen. Sie können ein Foto manuell aufnehmen, indem Sie auf den Aufnahme-Button tippen.
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
-&lt;/body&gt;
-"
+&lt;/body&gt;"
   </string>
   <string name="WOUND_GENIUS_SDK_REVIEW_OUTLINES">
     "Wundränder überprüfen"
@@ -1155,7 +1147,7 @@
     "Keine offene Wunde erkannt. Erwägen Sie, ein neues Foto aufzunehmen oder Messungen manuell über die obigen Schaltflächen hinzuzufügen."
   </string>
   <string name="WOUND_GENIUS_SDK_START_DRAWING_LINE">
-    "Beginnen Sie zu zeichnen, um Linien oder Kurven zu messen, oder ziehen Sie vorhandene Punkte, um sie anzupassen. Tippen Sie auf „Fertig“, um fortzufahren."
+    "Linien zeichnen oder Punkte zum Anpassen ziehen. Zum Fortfahren auf \"Fertig\" tippen."
   </string>
   <string name="WOUND_GENIUS_SDK_MEASUREMENT_RESULTS_ZOOM">
     "Zoomen"
@@ -1194,7 +1186,9 @@ Alternativ können Sie auch alle erkannten Bereiche löschen und die Wunde selbs
   <string name="WOUND_GENIUS_SDK_AREA_ITEM_NUMBER">
     "Areal A%d"
   </string>
-  <string name="WOUND_GENIUS_SDK_DIVIDER_VIEW_OR_LABEL"/>
+  <string name="WOUND_GENIUS_SDK_DIVIDER_VIEW_OR_LABEL">
+    "oder"
+  </string>
   <string name="WOUND_GENIUS_SDK_GET_CALIBRATION_MARKERS_URL"/>
   <string name="WOUND_GENIUS_SDK_POSE_FULL_FACE_FRONT">
     "Frontalansicht des gesamten Gesichts"
@@ -1224,7 +1218,7 @@ Alternativ können Sie auch alle erkannten Bereiche löschen und die Wunde selbs
     "Frontalansicht mit Lippenhalte"
   </string>
   <string name="WOUND_GENIUS_SDK_POSE_FRONT_VIEW_WITH_SPATULA_IN_OCCLUSAL_PLANE">
-    "Frontalansicht mit Spatel in der Okklusionsebene"
+    "Frontalansicht mit Spatel in Okklusionsebene"
   </string>
   <string name="WOUND_GENIUS_SDK_POSE_SUBMENTAL_OBLIQUE_VIEW">
     "submentale Schrägansicht"
@@ -1265,5 +1259,14 @@ Alternativ können Sie auch alle erkannten Bereiche löschen und die Wunde selbs
   <string name="WOUND_GENIUS_SDK_SELECT_ALL_DIALOG_title">
     "Alles auswählen"
   </string>
-  <string name="WOUND_GENIUS_SDK_SELECT_ALL_DIALOG_description"/>
+  <string name="WOUND_GENIUS_SDK_SELECT_ALL_DIALOG_description">
+    "Verwenden Sie dieses Menü, um einen gesamten Körperteil auszuwählen, der derzeit auf dem Bildschirm angezeigt wird."
+  </string>
+  <string name="WOUND_GENIUS_SDK_CAPTURE_STOMA_AND_RULER_STATUS">
+    "Stoma &amp; Lineal erfassen"
+  </string>
+  <string name="WOUND_GENIUS_SDK_WEEK"/>
+  <string name="WOUND_GENIUS_SDK_TWO_WEEKS"/>
+  <string name="WOUND_GENIUS_SDK_MONTH"/>
+  <string name="WOUND_GENIUS_SDK_YEAR"/>
 </resources>

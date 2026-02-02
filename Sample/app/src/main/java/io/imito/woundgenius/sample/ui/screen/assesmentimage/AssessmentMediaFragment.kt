@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,8 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
     private var isStartingRequest = false
     private var currentPictureSize: ImageResolution? = null
     private var player: ExoPlayer? = null
+
+    private var playerView: PlayerView? = null
     private var playbackPosition: Long = 0
     private var isPlaying: Boolean = true
 
@@ -438,6 +441,7 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
         if (args?.media?.measurementMethod == CameraMods.VIDEO_MODE) {
             initPlayer(file)
         } else {
+            releasePlayer()
             initStrokeScalableImageView()
             viewModel?.apply {
                 args?.apply {
@@ -488,9 +492,32 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
         }
     }
 
+    private fun releasePlayer() {
+        player?.let {
+            it.stop()
+            it.release()
+        }
+        player = null
+        playerView?.player = null
+    }
+
     @OptIn(UnstableApi::class)
     private fun initPlayer(url: String?) {
         context?.let { context ->
+
+            releasePlayer()
+
+            if (playerView == null) {
+                playerView = PlayerView(context).apply {
+                    layoutParams = ConstraintLayout.LayoutParams(
+                        ConstraintLayout.LayoutParams.MATCH_PARENT,
+                        ConstraintLayout.LayoutParams.MATCH_PARENT
+                    )
+                }
+                binding.videoPlayerContainerCl.removeAllViews()
+                binding.videoPlayerContainerCl.addView(playerView)
+            }
+
             player = ExoPlayer.Builder(context).apply {
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
                     setRenderersFactory(DefaultRenderersFactory(context))
@@ -505,21 +532,12 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
 
                     override fun onPlayerError(error: PlaybackException) {
                         super.onPlayerError(error)
-                        initPlayer(url)
+                        Log.e("ExoPlayer", "Error playing: $url", error)
                     }
                 })
             }
 
-            val playerView = PlayerView(context)
-            val layoutParams = ConstraintLayout.LayoutParams(
-                ConstraintLayout.LayoutParams.MATCH_PARENT,
-                ConstraintLayout.LayoutParams.MATCH_PARENT
-            )
-            playerView.layoutParams = layoutParams
-            binding.videoPlayerContainerCl.removeAllViews()
-            binding.videoPlayerContainerCl.addView(playerView)
-
-            playerView.player = player
+            playerView?.player = player
         }
     }
 
@@ -550,9 +568,7 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
     }
 
     override fun onDestroyView() {
-        // Ensure proper release when view is destroyed
-        player?.release()
-        player = null
+        releasePlayer()
         super.onDestroyView()
     }
 

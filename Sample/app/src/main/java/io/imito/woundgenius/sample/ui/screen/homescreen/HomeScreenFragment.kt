@@ -219,7 +219,6 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
 
         binding.apply {
 
-
             val sdkVersionTitle =
                 "WoundGenius: ${woundGeniusSDK.sdkReleaseVersion} Build: ${BuildConfig.VERSION_NAME}"
             toolbarLabelACTV.text = sdkVersionTitle

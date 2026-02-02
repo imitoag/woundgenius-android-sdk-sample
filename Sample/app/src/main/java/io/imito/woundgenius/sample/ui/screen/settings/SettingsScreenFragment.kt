@@ -666,6 +666,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                 primaryButtonColor?.let {
                     context.getColor(it).let {
                         editSelectionButtonACTV.setTextColor(it)
+                        shareLogsTextACTV.setTextColor(it)
                         editSelectionArrowIconACTV.backgroundTintList =
                             ColorStateList.valueOf(it)
                     }
@@ -791,6 +792,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             }
             primaryButtonColor?.let { primaryButtonColor ->
                 editSelectionButtonACTV.setTextColor(primaryButtonColor)
+                shareLogsTextACTV.setTextColor(primaryButtonColor)
                 editSelectionArrowIconACTV.backgroundTintList =
                     ColorStateList.valueOf(primaryButtonColor)
             }

@@ -33,7 +33,6 @@ abstract class AbsViewModel(
         throwable: Throwable,
         isShowDefaultDialog: Boolean = true
     ): ErrorType {
-
         Timber.e(throwable)
         return parseError(throwable).apply {
             when (this) {

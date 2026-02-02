@@ -30,10 +30,10 @@
     "Medida"
   </string>
   <string name="WOUND_GENIUS_SDK_PLEASE_START_DRAWING">
-    "Utilice el dedo para rodear la zona a medir."
+    "Utiliza el dedo para rodear la zona a medir."
   </string>
   <string name="WOUND_GENIUS_SDK_PLEASE_START_DRAWING_WITH_AUTODETECT">
-    "Utiliza el dedo para delinear áreas o pulse en Detección automática para detectar los bordes automáticamente."
+    "Utiliza el dedo para delinear áreas o pulsa en Detección automática para detectar los bordes automáticamente."
   </string>
   <string name="WOUND_GENIUS_SDK_PLEASE_CLOSE_THE_PATH">
     "Por favor, cierre la ruta para proceder a la medición."
@@ -418,37 +418,34 @@
 &lt;/head&gt;
 &lt;body&gt;
     &lt;section&gt;
-   &lt;a href=\"watchVideoTutorial\" class=\"video-thumb\"&gt;
-            &lt;span&gt;Ver el vídeo&lt;/span&gt;
-        &lt;/a&gt;
         &lt;p&gt;
-            Utilice este modo para una medición rápida, precisa y sin contacto de heridas planas.
+            Utiliza este modo para una medición rápida, precisa y sin contacto de heridas planas.
         &lt;/p&gt;
         &lt;ol&gt;
             &lt;li&gt;
-                Coloque un marcador de calibración junto a la herida.
+                Colocar un marcador de calibración junto a la herida.
             &lt;/li&gt;
             &lt;li&gt;
-                Asegure una visibilidad y una iluminación óptimas para toda la herida.
+                Asegurar que toda la herida tenga una visibilidad y una iluminación óptimas.
                 &lt;ul&gt;
                     &lt;li class=\"icon-sun\"&gt;
-                        Mantenga una iluminación uniforme,  evitando sombras fuertes, reflejos y sobreexposición.
+                        Mantener una iluminación uniforme, evitando sombras marcadas, reflejos y sobreexposición.
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Sostenga su dispositivo paralelo al marcador y lo suficientemente cerca de la herida, asegurándose de que la herida ocupa al menos 1/3 de la pantalla.
+                Mantener el dispositivo paralelo al marcador y lo suficientemente cerca de la herida, asegurando que ésta ocupe al menos 1/3 de la pantalla.
                 &lt;ul&gt;
                     &lt;li class=\"icon-nonparallel\"&gt;
-                        La aplicación le notificará si el dispositivo no está paralelo al marcador.
+                        La aplicación notificará cuando el dispositivo no esté paralelo al marcador.
                     &lt;/li&gt;
                     &lt;li class=\"icon-zoom\"&gt;
-                        Para heridas más pequeñas,  acerque más el dispositivo.
+                        Para heridas más pequeñas, acercar más el dispositivo. 
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Capture la foto.
+                Mantener el dispositivo firme y pulsar el botón &lt;b&gt;Capturar&lt;/b&gt; para hacer una foto.
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
@@ -522,18 +519,16 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Capture la foto.
+                Mantener el dispositivo firme y pulsar el botón &lt;b&gt;Capturar&lt;/b&gt; para hacer una foto.
                 &lt;ul&gt;
                     &lt;li class=\"icon-pin\"&gt;
-                        En la fotografía, coloque los marcadores de distancia verdes sobre la regla para indicar el tamaño real.
+                        En la fotografía, colocar los marcadores de distancia verdes sobre la regla para indicar el tamaño real.
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
-&lt;/body&gt;
-
-"
+&lt;/body&gt;"
   </string>
   <string name="WOUND_GENIUS_SDK_RULER_HOW_WOUND_SIZE_CALCULATED_HTML">
     "&lt;!DOCTYPE html&gt;
@@ -636,15 +631,15 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Verifique que la detección de la herida muestre los resultados esperados con la superposición verde. Recuerde que puede ajustar el borde detectado de la herida después de capturar la foto.
+                Verificar que la detección de la herida muestra los resultados esperados con la superposición verde. &lt;b&gt;Se puede ajustar el borde detectado de la herida después de capturar la foto&lt;/b&gt;.
                 &lt;ul&gt;
                     &lt;li class=\"icon-detection\"&gt;
-                        Si los resultados de la detección no son los esperados, intente reposicionar el dispositivo o mejorar la iluminación.
+                        Si los resultados de la detección no son los esperados, reposicionar el dispositivo o mejorar la iluminación.
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Capture la foto.
+                Mantener el dispositivo firme y pulsar el botón &lt;b&gt;Capturar&lt;/b&gt; para hacer una foto.
                 &lt;ul&gt;
                     &lt;li class=\"icon-pin\"&gt;
                         En la fotografía, coloque los marcadores de distancia verdes sobre la regla para indicar el tamaño real.
@@ -699,44 +694,44 @@
 &lt;body&gt;
     &lt;section&gt;
    &lt;a href=\"watchVideoTutorial\" class=\"video-thumb\"&gt;
-            &lt;span&gt;Ver Video&lt;/span&gt;
+            &lt;span&gt;Ver el vídeo&lt;/span&gt;
         &lt;/a&gt;
         &lt;p&gt;
-            Utilice este modo para una medición rápida, precisa y sin contacto de heridas planas.
+            Utiliza este modo para una medición rápida, precisa y sin contacto de heridas planas.
         &lt;/p&gt;
         &lt;ol&gt;
             &lt;li&gt;
-                Coloque un marcador de calibración junto a la herida.
+                Colocar un marcador de calibración junto a la herida.
             &lt;/li&gt;
             &lt;li&gt;
-                Asegure una visibilidad y una iluminación óptimas para toda la herida.
+                Asegurar que toda la herida tenga una visibilidad y una iluminación óptimas.
                 &lt;ul&gt;
                     &lt;li class=\"icon-sun\"&gt;
-                        Mantenga una iluminación uniforme, evitando sombras fuertes, reflejos y sobreexposición.
+                        Mantener una iluminación uniforme, evitando sombras marcadas, reflejos y sobreexposición.
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Sostenga su dispositivo paralelo y lo suficientemente cerca de la herida, asegurándose de que ocupe al menos 1/3 de la pantalla.
+                Mantener el dispositivo paralelo al marcador y lo suficientemente cerca de la herida, asegurando que ésta ocupe al menos 1/3 de la pantalla.
                 &lt;ul&gt;
                    &lt;li class=\"icon-nonparallel\"&gt;
-                        La aplicación le notificará si el dispositivo no está paralelo al marcador.
+                        La aplicación notificará cuando el dispositivo no esté paralelo al marcador.
                     &lt;/li&gt;    
                     &lt;li class=\"icon-zoom\"&gt;
-                        Para heridas más pequeñas, acerque más el dispositivo.
+                        Para heridas más pequeñas, acercar más el dispositivo. 
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Verifique que la detección de la herida muestre los resultados esperados con la superposición verde. Recuerde que puede ajustar el borde detectado de la herida después de capturar la foto.
+                Verificar que la detección de la herida muestra los resultados esperados con la superposición verde. &lt;b&gt;Se puede ajustar el borde detectado de la herida después de capturar la foto&lt;/b&gt;.
                 &lt;ul&gt;
                     &lt;li class=\"icon-detection\"&gt;
-                        Si los resultados de la detección no son los esperados, intente reposicionar el dispositivo o mejorar la iluminación.
+                        Si los resultados de la detección no son los esperados, reposicionar el dispositivo o mejorar la iluminación.
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Capture la foto.
+                &lt;b&gt;Mantener el dispositivo firme.&lt;/b&gt; La foto se tomará automáticamente. También se puede tomar manualmente tocando el botón de &lt;b&gt;captura&lt;/b&gt;.
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
@@ -1130,7 +1125,7 @@
     "No se detectó ninguna herida abierta. Considere tomar otra foto o agregar las medidas manualmente usando los botones de arriba."
   </string>
   <string name="WOUND_GENIUS_SDK_START_DRAWING_LINE">
-    "Comience a dibujar para medir líneas o curvas, o arrastre los puntos existentes para ajustarlos. Toque en Listo para continuar."
+    "Comienza a dibujar para medir líneas o curvas, o arrastra los puntos existentes para ajustarlos. Toca en Listo para continuar."
   </string>
   <string name="WOUND_GENIUS_SDK_MEASUREMENT_RESULTS_ZOOM">
     "Ampliar"
@@ -1201,4 +1196,11 @@ O bien, elimine todas las zonas detectadas y dibuje una nueva ud. mismo."
     "Seleccionar todo"
   </string>
   <string name="WOUND_GENIUS_SDK_SELECT_ALL_DIALOG_description"/>
+  <string name="WOUND_GENIUS_SDK_CAPTURE_STOMA_AND_RULER_STATUS">
+    "Captura de Estoma y Regla"
+  </string>
+  <string name="WOUND_GENIUS_SDK_WEEK"/>
+  <string name="WOUND_GENIUS_SDK_TWO_WEEKS"/>
+  <string name="WOUND_GENIUS_SDK_MONTH"/>
+  <string name="WOUND_GENIUS_SDK_YEAR"/>
 </resources>

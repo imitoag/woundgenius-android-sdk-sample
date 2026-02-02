@@ -104,7 +104,6 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
                         }
                     }
                 } else {
-
                     if (existingFragment == null) {
                         this@MainActivity.openHomeScreen()
                     }
@@ -128,9 +127,11 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
 
 
             openHomeScreenLD.observe(this@MainActivity) {
+
                 it ?: return@observe
                 val existingFragment = supportFragmentManager.findFragmentByTag(currentFragmentTag)
                 if (existingFragment == null) {
+
                     this@MainActivity.openHomeScreen()
                 }
             }

@@ -30,10 +30,10 @@
     "Mesurer"
   </string>
   <string name="WOUND_GENIUS_SDK_PLEASE_START_DRAWING">
-    "Utilisez votre doigt pour tracer le contour."
+    "Utilisez votre doigt pour encercler la zone à mesurer."
   </string>
   <string name="WOUND_GENIUS_SDK_PLEASE_START_DRAWING_WITH_AUTODETECT">
-    "Utilisez votre doigt pour délimiter les zones ou appuyez sur Auto-détecter pour une détection automatique des bords."
+    "Délimitez la zone au doigt ou utilisez Détection auto pour détecter les bords."
   </string>
   <string name="WOUND_GENIUS_SDK_PLEASE_CLOSE_THE_PATH">
     "Fermez le contour pour procéder à la mesure."
@@ -162,7 +162,7 @@
     "Médian"
   </string>
   <string name="WOUND_GENIUS_SDK_ENSURE_ACCURATE_DETECTION">
-    "Assurez-vous que les bords de la plaie sont détectés avec précision et apportez les ajustements nécessaires. Appuyez sur « Confirmer» pour finaliser la mesure."
+    "Vérifiez la détection des bords de la plaie et ajustez si nécessaire. Appuyez sur Confirmer pour finaliser la mesure."
   </string>
   <string name="WOUND_GENIUS_SDK_REVIEW_CONTOURS">
     "Revoir"
@@ -420,9 +420,6 @@
 &lt;/head&gt;
 &lt;body&gt;
     &lt;section&gt;
-  &lt;a href=\"watchVideoTutorial\" class=\"video-thumb\"&gt;
-            &lt;span&gt;Regarder la vidéo&lt;/span&gt;
-        &lt;/a&gt;
         &lt;p&gt;
             Utiliser ce mode pour une mesure rapide, précise et sans contact des plaies planes.
         &lt;/p&gt;
@@ -450,7 +447,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Prendre la photo.
+                Maintenez votre appareil immobile et appuyez sur le bouton &lt;b&gt;Capturer&lt;/b&gt; pour prendre une photo.
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
@@ -525,7 +522,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Prenez la photo.
+                Maintenez votre appareil immobile et appuyez sur le bouton &lt;b&gt;Capturer&lt;/b&gt; pour prendre une photo.
                 &lt;ul&gt;
                     &lt;li class=\"icon-pin\"&gt;
                         Sur la photo, placez les repères de distance verts sur la règle dans la photo pour indiquer la taille dans le monde réel.
@@ -534,8 +531,7 @@
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
-&lt;/body&gt;
-"
+&lt;/body&gt;"
   </string>
   <string name="WOUND_GENIUS_SDK_RULER_HOW_WOUND_SIZE_CALCULATED_HTML">
     "&lt;!DOCTYPE html&gt;
@@ -639,7 +635,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Vérifiez que la détection de la plaie affiche les résultats attendus avec la superposition verte. Le bord de la plaie peut être ajusté après avoir pris la photo.
+                Vérifiez que la détection de la plaie affiche les résultats attendus avec la superposition verte. &lt;b&gt;Le bord de la plaie peut être ajusté après avoir pris la photo&lt;/b&gt;.
                 &lt;ul&gt;
                     &lt;li class=\"icon-detection\"&gt;
                         Si les résultats de la détection ne sont pas comme prévu, essayez de repositionner l'appareil ou d'améliorer l'éclairage.
@@ -647,7 +643,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Prenez la photo.
+                Maintenez votre appareil immobile et appuyez sur le bouton &lt;b&gt;Capturer&lt;/b&gt; pour prendre une photo.
                 &lt;ul&gt;
                     &lt;li class=\"icon-pin\"&gt;
                         Sur la photo, placez les repères de distance verts sur la règle dans la photo pour indiquer la taille dans le monde réel.
@@ -701,38 +697,37 @@
 &lt;/head&gt;
 &lt;body&gt;
     &lt;section&gt;
-  &lt;a href=\"watchVideoTutorial\" class=\"video-thumb\"&gt;
+   &lt;a href=\"watchVideoTutorial\" class=\"video-thumb\"&gt;
             &lt;span&gt;Regarder la vidéo&lt;/span&gt;
         &lt;/a&gt;
         &lt;p&gt;
-            Utilisez ce mode pour une mesure rapide, précise et sans contact des plaies planes.
+            Utiliser ce mode pour une mesure rapide, précise et sans contact des plaies planes.
         &lt;/p&gt;
         &lt;ol&gt;
             &lt;li&gt;
                 Placer un marqueur de calibrage à côté de la plaie.
             &lt;/li&gt;
             &lt;li&gt;
-                Assurez-vous d'une visibilité et d'un éclairage optimaux pour l'ensemble de la plaie.
+                Assurer une visibilité et un éclairage optimaux pour l'ensemble de la plaie.
                 &lt;ul&gt;
                     &lt;li class=\"icon-sun\"&gt;
-                        Maintenez un éclairage uniforme, évitant les ombres dures, les points lumineux excessifs et la surexposition.
-                    &lt;/li&gt;
+                        Maintenir un éclairage uniforme, en évitant les ombres et les lumières trop prononcées, ainsi que la surexposition.
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Tenez votre appareil parallèle et suffisamment près de la plaie, en veillant à ce que la plaie occupe au moins 1/3 de l'écran.
+                Tenir l'appareil parallèlement au marqueur et suffisamment près de la plaie, en veillant à ce que la plaie occupe au moins 1/3 de l'écran.
                 &lt;ul&gt;
-                    &lt;li class=\"icon-nonparallel\"&gt;
+                   &lt;li class=\"icon-nonparallel\"&gt;
                         L'application vous avertit lorsque l'appareil n'est pas parallèle au marqueur.
-                    &lt;/li&gt;
-		   &lt;li class=\"icon-zoom\"&gt;
-                        Pour les petites plaies, maintenez une distance plus proche de la plaie. 
+                    &lt;/li&gt;    
+                    &lt;li class=\"icon-zoom\"&gt;
+                        Pour les petites plaies, maintenir une distance plus proche de la plaie. 
                     &lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Vérifiez que la détection de la plaie affiche les résultats attendus avec la superposition verte. Le bord de la plaie peut être ajusté après avoir pris la photo.
+                Vérifiez que la détection de la plaie affiche les résultats attendus avec la superposition verte. &lt;b&gt;Le bord de la plaie peut être ajusté après avoir pris la photo&lt;/b&gt;.
                 &lt;ul&gt;
                     &lt;li class=\"icon-detection\"&gt;
                         Si les résultats de la détection ne sont pas comme prévu, essayez de repositionner l'appareil ou d'améliorer l'éclairage.
@@ -740,7 +735,7 @@
                 &lt;/ul&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                Prenez la photo.
+                Maintenez votre appareil immobile et appuyez sur le bouton &lt;b&gt;Capturer&lt;/b&gt; pour prendre une photo.
             &lt;/li&gt;
         &lt;/ol&gt;
     &lt;/section&gt;
@@ -1156,7 +1151,7 @@
     "Aucune plaie ouverte détectée. Envisagez de reprendre une photo ou d'ajouter des mesures manuellement en utilisant les boutons ci-dessus."
   </string>
   <string name="WOUND_GENIUS_SDK_START_DRAWING_LINE">
-    "Commencez à dessiner pour mesurer des lignes ou des courbes, ou faites glisser les points d’une mesure existante pour l’ajuster. Appuyez sur Terminer pour continuer."
+    "Dessinez des lignes ou des courbes, ou ajustez-les en déplaçant les points. Appuyez sur Terminer pour continuer."
   </string>
   <string name="WOUND_GENIUS_SDK_MEASUREMENT_RESULTS_ZOOM">
     "Zoomer"
@@ -1263,4 +1258,11 @@ Ou bien, supprimez toutes les zones détectées et dessinez-en une nouvelle vous
     "Tout sélectionner"
   </string>
   <string name="WOUND_GENIUS_SDK_SELECT_ALL_DIALOG_description"/>
+  <string name="WOUND_GENIUS_SDK_CAPTURE_STOMA_AND_RULER_STATUS">
+    "Capture Stomie et Règle"
+  </string>
+  <string name="WOUND_GENIUS_SDK_WEEK"/>
+  <string name="WOUND_GENIUS_SDK_TWO_WEEKS"/>
+  <string name="WOUND_GENIUS_SDK_MONTH"/>
+  <string name="WOUND_GENIUS_SDK_YEAR"/>
 </resources>
