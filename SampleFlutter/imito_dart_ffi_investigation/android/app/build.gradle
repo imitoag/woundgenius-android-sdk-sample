@@ -69,5 +69,5 @@ flutter {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-    implementation("io.imito.woundgenius:sdk:1.5.1")
+    implementation("io.imito.woundgenius:sdk:1.5.2")
 }

@@ -47,7 +47,7 @@ dependencies {
   implementation project(':capacitor-cordova-android-plugins')
 
 //  api 'com.example.woundsdk:woundgeniussdk:1.3.5'
-  api "io.imito.woundgenius:sdk:1.5.1"
+  api "io.imito.woundgenius:sdk:1.5.2"
 
 
 }
