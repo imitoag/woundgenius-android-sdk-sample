@@ -13,12 +13,14 @@ import android.view.ViewGroup
 import androidx.annotation.OptIn
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.DefaultRenderersFactory
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import androidx.media3.ui.PlayerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -439,7 +441,7 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
     private fun setupMediaFileUi() {
         val file = args?.media?.image
         if (args?.media?.measurementMethod == CameraMods.VIDEO_MODE) {
-            initPlayer(file)
+//            initPlayer(file)
         } else {
             releasePlayer()
             initStrokeScalableImageView()
@@ -517,16 +519,21 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                 binding.videoPlayerContainerCl.removeAllViews()
                 binding.videoPlayerContainerCl.addView(playerView)
             }
+            val trackSelector = DefaultTrackSelector(context).apply {
+                setParameters(buildUponParameters().setTrackTypeDisabled(C.TRACK_TYPE_AUDIO, true))
+            }
 
             player = ExoPlayer.Builder(context).apply {
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
                     setRenderersFactory(DefaultRenderersFactory(context))
                     setUseLazyPreparation(true)
                 }
+                    setTrackSelector(trackSelector)
             }.build().also { exoPlayer ->
                 exoPlayer.setMediaItem(MediaItem.fromUri(Uri.parse(url)))
                 exoPlayer.prepare()
-                exoPlayer.playWhenReady = true
+                exoPlayer.volume = 0f
+//                exoPlayer.playWhenReady = true
 
                 exoPlayer.addListener(object : Player.Listener {
 
@@ -549,23 +556,23 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                 isStartingRequest = true
             }
         }, GET_IMAGE_DELAY)
+
+
+        if (args?.media?.measurementMethod == CameraMods.VIDEO_MODE) {
+            val file = args?.media?.image
+            initPlayer(file)
+            player?.playWhenReady = true
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        // Pause the ExoPlayer when the fragment is paused
         getImageHandler.removeCallbacksAndMessages(null)
+
+
+        releasePlayer()
     }
 
-    override fun onStop() {
-        super.onStop()
-        // Release the ExoPlayer when the fragment is stopped
-        player?.let {
-            playbackPosition = it.currentPosition
-            isPlaying = it.isPlaying
-            it.pause()
-        }
-    }
 
     override fun onDestroyView() {
         releasePlayer()

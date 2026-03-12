@@ -39,7 +39,7 @@
     "Complete the path to proceed with measurement."
   </string>
   <string name="WOUND_GENIUS_SDK_TAP_MEASURE_TO_COUNTINUE">
-    "Ensure accurate detection of wound edges, and make adjustments as needed. Tap Confirm to proceed."
+    "All good. Tap Confirm to continue with assessment."
   </string>
   <string name="WOUND_GENIUS_SDK_RESULT_TITLE">
     "Measurement Results"
