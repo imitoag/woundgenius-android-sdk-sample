@@ -4,6 +4,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'kotlin-android'
     id 'com.google.devtools.ksp'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -11,25 +12,19 @@ android {
     compileSdk 36
 
     defaultConfig {
-        minSdk 26
+        minSdk 33
         targetSdk 36
-        versionCode 242
-        versionName "1.5.1.6"
+        versionCode 277
+        versionName "27.0.0.1"
         applicationId "io.imito.woundgenius.sample"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
-    // Define flavor dimensions (groups)
-    flavorDimensions "environment", "cpu"
+    flavorDimensions "cpu"
 
     productFlavors {
-        production {
-            dimension "environment"
-        }
-        internal {
-            dimension "environment"
-        }
+
+        // --- CPU ---
         universal {
             dimension "cpu"
             ndk {
@@ -61,6 +56,7 @@ android {
             }
         }
     }
+
     packagingOptions {
         exclude 'lib/**/lib*.so'
         pickFirst 'lib/x86_64/lib*.so' // Include only x86_64 for x86_64 flavor
@@ -106,18 +102,22 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.aar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
     implementation 'androidx.core:core-ktx:1.17.0'
     implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'com.google.android.material:material:1.13.0'
+    implementation 'androidx.test.espresso:espresso-contrib:3.7.0'
+    debugImplementation 'androidx.fragment:fragment-testing:1.8.9'
+    implementation 'androidx.test:rules:1.7.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
 
-    api "io.imito.woundgenius:sdk:1.5.2"
+    api "io.imito.woundgenius:sdk:27.0.0"
+
 
     implementation platform('com.google.firebase:firebase-bom:34.2.0')
     implementation("com.google.firebase:firebase-analytics")
@@ -136,9 +136,6 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:2.2.21"
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
-
-    //MPAndroidChart
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     ksp ("androidx.room:room-compiler:2.8.0")
     implementation ("androidx.room:room-ktx:2.8.0")

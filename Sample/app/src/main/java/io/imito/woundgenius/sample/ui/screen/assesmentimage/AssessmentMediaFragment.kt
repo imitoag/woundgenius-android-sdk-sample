@@ -1,11 +1,11 @@
 package io.imito.woundgenius.sample.ui.screen.assesmentimage
 
 import android.graphics.Bitmap
-import android.graphics.Point
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -31,26 +31,28 @@ import com.davemorrissey.labs.subscaleview.ImageSource
 import io.imito.woundgenius.sample.R
 import io.imito.woundgenius.sample.databinding.SampleAppFragmentAssessmentImageBinding
 import io.imito.woundgenius.sample.ui.screen.base.AbsFragment
-import io.imito.woundgenius.sdk.data.pojo.measurement.StrokeScalableMode
-import io.imito.woundgenius.sdk.data.pojo.camera.cameramod.CameraMods
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_AREA_TYPE
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_LENGTH_PREFIX
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_LINE_TYPE
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_MEASUREMENT_LINE_TYPE
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_OUTLINE_TYPE
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_WIDTH_PREFIX
-import io.imito.woundgenius.sdk.data.pojo.measurement.ImageResolution
-import io.imito.woundgenius.sdk.data.pojo.measurement.MeasurementMetadata
-import io.imito.woundgenius.sdk.data.pojo.measurement.OutlineModel
-import io.imito.woundgenius.sdk.data.pojo.measurement.Vertices
-import io.imito.woundgenius.sdk.ui.screen.measurementfullscreen.MeasurementFullScreenActivity
-import java.io.Serializable
+import io.imito.woundgenius.sdk.internal.data.pojo.mode.StrokeScalableMode
+import io.imito.woundgenius.sdk.internal.data.pojo.camera.mode.ImitoCameraMode
+import io.imito.woundgenius.sdk.internal.data.pojo.media.MediaModel
+import io.imito.woundgenius.sdk.internal.data.pojo.image.ImageResolution
+import io.imito.woundgenius.sdk.internal.data.pojo.measurement.MeasurementMetadata
+import io.imito.woundgenius.sdk.internal.data.pojo.measurement.OutlineModel
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_AREA_TYPE
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_LENGTH_PREFIX
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_LINE_TYPE
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_MEASUREMENT_LINE_TYPE
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_OUTLINE_TYPE
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_WIDTH_PREFIX
+import io.imito.woundgenius.sdk.internal.data.pojo.measurement.Vertices
+import io.imito.woundgenius.sdk.internal.ui.screen.measurementfullscreen.MeasurementFullScreenActivity
+import io.imito.woundgenius.sdk.internal.utils.media.MediaIUtils.isVideoFile
+import kotlinx.parcelize.Parcelize
 import kotlin.math.max
 
 class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
 
-    private val args by lazy { arguments?.getSerializable(ARGS_KEY) as? Args }
+    private val args by lazy { arguments?.getParcelable(ARGS_KEY) as? Args }
     private val getImageHandler = Handler()
     private var isStartingRequest = false
     private var currentPictureSize: ImageResolution? = null
@@ -106,13 +108,13 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                             val lengthLine = lines?.find { it?.prefix == ANNOTATION_LENGTH_PREFIX }
 
                             val widthA =
-                                pointsList?.indexOfFirst { it.pointX == widthLine?.pointA?.pointX && it.pointY == widthLine?.pointA?.pointY }
+                                pointsList?.indexOfFirst { it.x == widthLine?.pointA?.pointX?.toDouble() && it.y == widthLine?.pointA?.pointY?.toDouble() }
                             val widthB =
-                                pointsList?.indexOfFirst { it.pointX == widthLine?.pointB?.pointX?.toInt() && it.pointY == widthLine?.pointB?.pointY?.toInt() }
+                                pointsList?.indexOfFirst { it.x == widthLine?.pointB?.pointX?.toDouble() && it.y == widthLine?.pointB?.pointY?.toDouble() }
                             val lengthA =
-                                pointsList?.indexOfFirst { it.pointX == lengthLine?.pointA?.pointX && it.pointY == lengthLine?.pointA?.pointY }
+                                pointsList?.indexOfFirst { it.x == lengthLine?.pointA?.pointX?.toDouble() && it.y == lengthLine?.pointA?.pointY?.toDouble() }
                             val lengthB =
-                                pointsList?.indexOfFirst { it.pointX == lengthLine?.pointB?.pointX?.toInt() && it.pointY == lengthLine?.pointB?.pointY?.toInt() }
+                                pointsList?.indexOfFirst { it.x == lengthLine?.pointB?.pointX?.toDouble() && it.y == lengthLine?.pointB?.pointY?.toDouble() }
 
                             metadataList.add(
                                 MeasurementMetadata(
@@ -123,11 +125,11 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                                     circumference = areaAnnotationItem?.circumference ?: 0.0,
                                     length = lengthLine?.length ?: 0.0,
                                     width = widthLine?.width ?: 0.0,
-                                    depth = areaAnnotationItem?.depth ?: 0.0,
+                                    depth = (areaAnnotationItem?.depth ?: 0.0) / 10,
                                     vertices = pointsList?.map {
-                                        MeasurementMetadata.Point(
-                                            (it.pointX) ?: 0,
-                                            (it.pointY) ?: 0
+                                        PointD(
+                                            (it.x) ?: 0.0,
+                                            (it.y) ?: 0.0
                                         )
                                     } ?: emptyList(),
                                     lengthLine = MeasurementMetadata.Line(
@@ -150,9 +152,9 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                                     MeasurementMetadata(
                                         length = annotationItem?.length ?: 0.0,
                                         vertices = pointsList?.map {
-                                            MeasurementMetadata.Point(
-                                                (it.pointX) ?: 0,
-                                                (it.pointY) ?: 0
+                                            PointD(
+                                                (it.x) ?: 0.0,
+                                                (it.y) ?: 0.0
                                             )
                                         } ?: emptyList(),
                                         countPxInCm = (1.0 / (mediaModel.metadata?.measurementData?.calibration?.unitPerPixel
@@ -178,13 +180,13 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                                         )
 
                                     val widthA =
-                                        pointsList?.indexOfFirst { it.pointX == widthLine.first?.pointX?.toInt() && it.pointY == widthLine.first?.pointY?.toInt() }
+                                        pointsList?.indexOfFirst { it.x == widthLine.first?.pointX?.toDouble() && it.y == widthLine.first?.pointY?.toDouble() }
                                     val widthB =
-                                        pointsList?.indexOfFirst { it.pointX == widthLine.second?.pointX?.toInt() && it.pointY == widthLine.second?.pointY?.toInt() }
+                                        pointsList?.indexOfFirst { it.x == widthLine.second?.pointX?.toDouble() && it.y == widthLine.second?.pointY?.toDouble() }
                                     val lengthA =
-                                        pointsList?.indexOfFirst { it.pointX == lengthLine.first?.pointX?.toInt() && it.pointY == lengthLine.first?.pointY?.toInt() }
+                                        pointsList?.indexOfFirst { it.x == lengthLine.first?.pointX?.toDouble() && it.y == lengthLine.first?.pointY?.toDouble() }
                                     val lengthB =
-                                        pointsList?.indexOfFirst { it.pointX == lengthLine.second?.pointX?.toInt() && it.pointY == lengthLine.second?.pointY?.toInt() }
+                                        pointsList?.indexOfFirst { it.x == lengthLine.second?.pointX?.toDouble() && it.y == lengthLine.second?.pointY?.toDouble() }
 
                                     metadataList.add(
                                         MeasurementMetadata(
@@ -192,11 +194,11 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                                             circumference = annotationItem?.circumference ?: 0.0,
                                             length = annotationItem?.length ?: 0.0,
                                             width = annotationItem?.width ?: 0.0,
-                                            depth = annotationItem?.depth ?: 0.0,
+                                            depth = (annotationItem?.depth ?: 0.0) / 10,
                                             vertices = pointsList?.map {
-                                                MeasurementMetadata.Point(
-                                                    (it.pointX) ?: 0,
-                                                    (it.pointY) ?: 0
+                                                PointD(
+                                                    (it.x) ?: 0.0,
+                                                    (it.y) ?: 0.0
                                                 )
                                             } ?: emptyList(),
                                             lengthLine = MeasurementMetadata.Line(
@@ -274,13 +276,13 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                         val lengthLine = lines?.find { it?.prefix == ANNOTATION_LENGTH_PREFIX }
 
                         val widthA =
-                            pointsList?.indexOfFirst { it.pointX == widthLine?.pointA?.pointX && it.pointY == widthLine?.pointA?.pointY }
+                            pointsList?.indexOfFirst { it.x == widthLine?.pointA?.pointX?.toDouble() && it.y == widthLine?.pointA?.pointY?.toDouble() }
                         val widthB =
-                            pointsList?.indexOfFirst { it.pointX == widthLine?.pointB?.pointX?.toInt() && it.pointY == widthLine?.pointB?.pointY?.toInt() }
+                            pointsList?.indexOfFirst { it.x == widthLine?.pointB?.pointX?.toDouble() && it.y == widthLine?.pointB?.pointY?.toDouble() }
                         val lengthA =
-                            pointsList?.indexOfFirst { it.pointX == lengthLine?.pointA?.pointX && it.pointY == lengthLine?.pointA?.pointY }
+                            pointsList?.indexOfFirst { it.x == lengthLine?.pointA?.pointX?.toDouble() && it.y == lengthLine?.pointA?.pointY?.toDouble() }
                         val lengthB =
-                            pointsList?.indexOfFirst { it.pointX == lengthLine?.pointB?.pointX?.toInt() && it.pointY == lengthLine?.pointB?.pointY?.toInt() }
+                            pointsList?.indexOfFirst { it.x == lengthLine?.pointB?.pointX?.toDouble() && it.y == lengthLine?.pointB?.pointY?.toDouble() }
 
                         metadataList.add(
                             MeasurementMetadata(
@@ -288,9 +290,9 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                                 circumference = annotationItem?.circumference ?: 0.0,
                                 length = lengthLine?.length ?: 0.0,
                                 width = widthLine?.width ?: 0.0,
-                                depth = annotationItem?.depth ?: 0.0,
+                                depth = (annotationItem?.depth ?: 0.0) / 10,
                                 vertices = pointsList?.map {
-                                    MeasurementMetadata.Point(it.pointX ?: 0, it.pointY ?: 0)
+                                    PointD(it.x ?: 0.0, it.y ?: 0.0)
                                 } ?: emptyList(),
                                 lengthLine = MeasurementMetadata.Line(lengthA ?: -1, lengthB ?: -1),
                                 widthLine = MeasurementMetadata.Line(widthA ?: -1, widthB ?: -1),
@@ -312,7 +314,7 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                             MeasurementMetadata(
                                 length = annotationItem?.length ?: 0.0,
                                 vertices = pointsList?.map {
-                                    MeasurementMetadata.Point(it.pointX ?: 0, it.pointY ?: 0)
+                                    PointD(it.x ?: 0.0, it.y ?: 0.0)
                                 } ?: emptyList(),
                                 countPxInCm = (1.0 / (metadata.measurementData?.calibration?.unitPerPixel
                                     ?: 1.0)).toInt(),
@@ -329,13 +331,13 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                             Pair(annotationItem?.lengthPointA, annotationItem?.lengthPointB)
 
                         val widthA =
-                            pointsList?.indexOfFirst { it.pointX == widthLine.first?.pointX?.toInt() && it.pointY == widthLine.first?.pointY?.toInt() }
+                            pointsList?.indexOfFirst { it.x == widthLine.first?.pointX && it.y == widthLine.first?.pointY?.toDouble() }
                         val widthB =
-                            pointsList?.indexOfFirst { it.pointX == widthLine.second?.pointX?.toInt() && it.pointY == widthLine.second?.pointY?.toInt() }
+                            pointsList?.indexOfFirst { it.x == widthLine.second?.pointX?.toDouble() && it.y == widthLine.second?.pointY?.toDouble() }
                         val lengthA =
-                            pointsList?.indexOfFirst { it.pointX == lengthLine.first?.pointX?.toInt() && it.pointY == lengthLine.first?.pointY?.toInt() }
+                            pointsList?.indexOfFirst { it.x == lengthLine.first?.pointX?.toDouble() && it.y == lengthLine.first?.pointY?.toDouble() }
                         val lengthB =
-                            pointsList?.indexOfFirst { it.pointX == lengthLine.second?.pointX?.toInt() && it.pointY == lengthLine.second?.pointY?.toInt() }
+                            pointsList?.indexOfFirst { it.x == lengthLine.second?.pointX?.toDouble() && it.y == lengthLine.second?.pointY?.toDouble() }
 
                         metadataList.add(
                             MeasurementMetadata(
@@ -343,9 +345,9 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                                 circumference = annotationItem?.circumference ?: 0.0,
                                 length = annotationItem?.length ?: 0.0,
                                 width = annotationItem?.width ?: 0.0,
-                                depth = annotationItem?.depth ?: 0.0,
+                                depth = (annotationItem?.depth ?: 0.0) / 10,
                                 vertices = pointsList?.map {
-                                    MeasurementMetadata.Point(it.pointX ?: 0, it.pointY ?: 0)
+                                    PointD(it.x ?: 0.0, it.y ?: 0.0)
                                 } ?: emptyList(),
                                 lengthLine = MeasurementMetadata.Line(lengthA ?: -1, lengthB ?: -1),
                                 widthLine = MeasurementMetadata.Line(widthA ?: -1, widthB ?: -1),
@@ -372,7 +374,7 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                     boundaryMetadata.vertices?.let {
                         allOutlineList.add(ArrayList(it.map {
                             Vertices(
-                                Point(
+                                PointD(
                                     (it.x / scale).toInt(),
                                     (it.y / scale).toInt()
                                 )
@@ -395,7 +397,11 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                 }
             }
             binding.apply {
+
+
+
                 imageSSIV.setVertices(ArrayList(allOutlineList.mapIndexed { index, outline ->
+
                     OutlineModel(
                         id = index,
                         vertices = outline.first,
@@ -440,57 +446,54 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
 
     private fun setupMediaFileUi() {
         val file = args?.media?.image
-        if (args?.media?.measurementMethod == CameraMods.VIDEO_MODE) {
-//            initPlayer(file)
-        } else {
-            releasePlayer()
-            initStrokeScalableImageView()
-            viewModel?.apply {
-                args?.apply {
-                    binding.apply {
-                        activity?.let { ctx ->
-                            Glide.with(ctx)
-                                .asBitmap()
-                                .load(file)
-                                .listener(object : RequestListener<Bitmap> {
-                                    override fun onLoadFailed(
-                                        e: GlideException?,
-                                        model: Any?,
-                                        target: Target<Bitmap>,
-                                        isFirstResource: Boolean
-                                    ): Boolean {
-                                        return true
-                                    }
-
-                                    override fun onResourceReady(
-                                        resource: Bitmap,
-                                        model: Any,
-                                        target: Target<Bitmap>?,
-                                        dataSource: DataSource,
-                                        isFirstResource: Boolean
-                                    ): Boolean {
-                                        resource.let { bitmap ->
-                                            currentPictureSize =
-                                                ImageResolution(bitmap.width, bitmap.height)
-                                            hidePhotoACIV.setImageBitmap(bitmap)
-                                            imageSSIV.setImage(ImageSource.bitmap(bitmap))
-                                            zoomenContainerCL.isVisible = true
-                                            setUpMetadataUi()
+        if (args?.media?.measurementMethod != ImitoCameraMode.VIDEO_MODE && !isVideoFile(args?.media?.image?:"")) {
+                releasePlayer()
+                initStrokeScalableImageView()
+                viewModel?.apply {
+                    args?.apply {
+                        binding.apply {
+                            activity?.let { ctx ->
+                                Glide.with(ctx)
+                                    .asBitmap()
+                                    .load(file)
+                                    .listener(object : RequestListener<Bitmap> {
+                                        override fun onLoadFailed(
+                                            e: GlideException?,
+                                            model: Any?,
+                                            target: Target<Bitmap>,
+                                            isFirstResource: Boolean
+                                        ): Boolean {
+                                            return true
                                         }
-                                        return true
-                                    }
-                                }).into(hidePhotoACIV)
-                        }
 
+                                        override fun onResourceReady(
+                                            resource: Bitmap,
+                                            model: Any,
+                                            target: Target<Bitmap>?,
+                                            dataSource: DataSource,
+                                            isFirstResource: Boolean
+                                        ): Boolean {
+                                            resource.let { bitmap ->
+                                                currentPictureSize =
+                                                    ImageResolution(bitmap.width, bitmap.height)
+                                                hidePhotoACIV.setImageBitmap(bitmap)
+                                                imageSSIV.setImage(ImageSource.bitmap(bitmap))
+                                                zoomenContainerCL.isVisible = true
+                                                setUpMetadataUi()
+                                            }
+                                            return true
+                                        }
+                                    }).into(hidePhotoACIV)
+                            }
+
+                        }
                     }
                 }
             }
-        }
         binding.apply {
-            hidePhotoACIV.isVisible = args?.media?.measurementMethod != CameraMods.VIDEO_MODE
-            imageSSIV.isVisible = args?.media?.measurementMethod != CameraMods.VIDEO_MODE
-            videoPlayerContainerCl.isVisible =
-                args?.media?.measurementMethod == CameraMods.VIDEO_MODE
+            hidePhotoACIV.isVisible = true
+            imageSSIV.isVisible =  args?.media?.measurementMethod != ImitoCameraMode.VIDEO_MODE && !isVideoFile(args?.media?.image?:"")
+            videoPlayerContainerCl.isVisible = args?.media?.measurementMethod == ImitoCameraMode.VIDEO_MODE || isVideoFile(args?.media?.image?:"")
         }
     }
 
@@ -558,7 +561,7 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
         }, GET_IMAGE_DELAY)
 
 
-        if (args?.media?.measurementMethod == CameraMods.VIDEO_MODE) {
+        if (args?.media?.measurementMethod == ImitoCameraMode.VIDEO_MODE || isVideoFile(args?.media?.image?:"")) {
             val file = args?.media?.image
             initPlayer(file)
             player?.playWhenReady = true
@@ -582,17 +585,18 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
     companion object {
         private const val ARGS_KEY = "args_key"
 
+        @Parcelize
         private data class Args(
             val media: MediaModel,
             val isStoma: Boolean
-        ) : Serializable
+        ) : Parcelable
 
         private const val GET_IMAGE_DELAY = 500L
 
         fun newInstance(draftMedia: MediaModel, isStoma: Boolean) =
             AssessmentMediaFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(ARGS_KEY, Args(draftMedia, isStoma))
+                    putParcelable(ARGS_KEY, Args(draftMedia, isStoma))
                 }
             }
     }

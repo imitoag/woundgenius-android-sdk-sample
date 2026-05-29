@@ -1,11 +1,11 @@
 package io.imito.woundgenius.sample.data.pojo.assessment
 
+import android.os.Parcelable
 import androidx.room.*
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.io.Serializable
+import io.imito.woundgenius.sdk.internal.data.pojo.media.MediaModel
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "sample_assessment_entity")
 data class SampleAssessmentEntity(
     @PrimaryKey(autoGenerate = true)
@@ -61,6 +61,9 @@ data class SampleAssessmentEntity(
     var observationsJson: String? = null,
 
     @ColumnInfo(name = "stomaDocumentation")
-    var stomaDocumentation: Boolean? = null
+    var stomaDocumentation: Boolean? = null,
 
-    ) : Serializable
+    @ColumnInfo(name = "magicAssessment")
+    var magicAssessment: Boolean? = null
+
+    ) : Parcelable

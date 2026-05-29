@@ -1,7 +1,7 @@
 package io.imito.woundgenius.sample.data.pojo.converter
 
 import androidx.room.TypeConverter
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel
+import io.imito.woundgenius.sdk.internal.data.pojo.media.MediaModel
 import com.google.gson.Gson
 
 class ThumbnailsConverter {

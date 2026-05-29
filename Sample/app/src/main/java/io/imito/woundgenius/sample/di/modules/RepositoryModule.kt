@@ -4,17 +4,18 @@ import io.imito.woundgenius.sample.data.repo.SampleAppRepo
 import io.imito.woundgenius.sample.data.repo.impl.SampleAppRepoImpl
 import io.imito.woundgenius.sample.managers.SampleDateTimeManager
 import io.imito.woundgenius.sample.storage.db.AssessmentRoomDatabase
-import io.imito.woundgenius.sdk.storage.shared.SharedMemory
+import io.imito.woundgenius.sdk.internal.data.storage.shared.SharedMemory
 
 import dagger.Module
 import dagger.Provides
+import io.imito.woundgenius.sample.di.scope.AppScope
 import javax.inject.Singleton
 
 @Module
 class RepositoryModule {
 
     @Provides
-    @Singleton
+    @AppScope
     fun provideAssessmentsRepo(
         assessmentDB: AssessmentRoomDatabase,
         sampleDateTimeManager: SampleDateTimeManager,

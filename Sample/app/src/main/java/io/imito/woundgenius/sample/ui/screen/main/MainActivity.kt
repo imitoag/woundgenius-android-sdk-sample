@@ -5,18 +5,16 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import androidx.core.view.WindowInsetsControllerCompat
 import io.imito.woundgenius.sample.R
 import io.imito.woundgenius.sample.databinding.SampleAppActivityMainBinding
 import io.imito.woundgenius.sample.ui.screen.base.AbsActivity
 import io.imito.woundgenius.sample.ui.screen.homescreen.HomeScreenFragment
 import io.imito.woundgenius.sample.ui.screen.settings.SettingsScreenFragment
-import io.imito.woundgenius.sdk.data.pojo.WoundGeniusOperatingMode
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
-import io.imito.woundgenius.sdk.ui.screen.whatsnew.WhatsNewActivity
-import io.imito.woundgenius.sdk.utils.DarkModeUtils
-import timber.log.Timber
+import io.imito.woundgenius.sdk.internal.data.pojo.mode.OperatingMode
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
+import io.imito.woundgenius.sdk.internal.ui.screen.whatsnew.WhatsNewActivity
+import io.imito.woundgenius.sdk.internal.utils.system.DarkModeUtils
 import java.lang.reflect.Field
 import java.util.Locale
 
@@ -82,7 +80,7 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
 
                 WoundGeniusSDK.setCustomerUserId(userId)
                 val existingFragment = supportFragmentManager.findFragmentByTag(currentFragmentTag)
-                if (WoundGeniusSDK.getWoundGeniusOperatingMode() == WoundGeniusOperatingMode.SDK) {
+                if (WoundGeniusSDK.getConfiguration().operatingMode == OperatingMode.SDK) {
 
                     val isPresent = checkIfWhatsNewPresent()
 
@@ -91,17 +89,7 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
                             this@MainActivity.openHomeScreen()
                         }
                     } else {
-                        val currentAppVersion = WoundGeniusSDK.extractVersion(WoundGeniusSDK.sdkReleaseVersion ,3)
-
-                        val needToShow = WoundGeniusSDK.showWhatsNewIfNeeded(
-                            isNotePresent = true,
-                            currentAppVersion = currentAppVersion
-                        )
-                        if (needToShow) {
-                            openWhatNewScreen()
-                        } else {
-                            openHomeScreen()
-                        }
+                        openHomeScreen()
                     }
                 } else {
                     if (existingFragment == null) {
@@ -116,7 +104,7 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
                 val localization = getAllLocalizedStrings(this@MainActivity,Locale(getString(R.string.WOUND_GENIUS_SDK_LANGUAGE_CODE)) )
 
                 val currentAppVersion = WoundGeniusSDK.extractVersion(WoundGeniusSDK.sdkReleaseVersion.substringBefore("-") ,3)
-                val whatsNewFile = WHATS_NEW_ZIP_FILE_PATTERN.replace("$",currentAppVersion)
+                val whatsNewFile = WHATS_NEW_ZIP_FILE_PATTERN.replace("$","3.3.0")
                 WhatsNewActivity.open(
                     context = this@MainActivity,
                     whatNewContentPath = whatsNewFile,

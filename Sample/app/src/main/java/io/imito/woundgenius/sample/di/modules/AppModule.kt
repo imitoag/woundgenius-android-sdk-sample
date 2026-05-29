@@ -8,6 +8,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import io.imito.woundgenius.sample.di.scope.AppScope
 import javax.inject.Singleton
 
 @Module(
@@ -19,17 +20,17 @@ import javax.inject.Singleton
 )
 class AppModule {
 
-    @Singleton
+    @AppScope
     @Provides
     fun provideGson(): Gson = GsonBuilder()
         .registerTypeAdapterFactory(SerializableAsNullConverter())
         .create()
 
-    @Singleton
+    @AppScope
     @Provides
     fun provideContext(application: Application): Context = application.applicationContext
 
-    @Singleton
+    @AppScope
     @Provides
     fun provideResources(context: Context): Resources = context.resources
 }

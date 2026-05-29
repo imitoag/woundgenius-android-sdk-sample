@@ -3,6 +3,7 @@ package io.imito.woundgenius.sample.ui.screen.homescreen
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.imito.wizard.api.model.WizardAssessmentResult
 import io.imito.woundgenius.sample.data.pojo.assessment.SampleAssessmentEntity
 import io.imito.woundgenius.sample.data.pojo.license.SdkFeatureStatus
 import io.imito.woundgenius.sample.data.usecase.assessment.DeleteDraftAssessmentByIdUseCase
@@ -11,12 +12,12 @@ import io.imito.woundgenius.sample.data.usecase.assessment.SaveAssessmentToDBUse
 import io.imito.woundgenius.sample.data.usecase.license.GetLicenseKeyUseCase
 import io.imito.woundgenius.sample.data.usecase.license.GetSdkFeaturesUseCase
 import io.imito.woundgenius.sample.ui.screen.base.AbsViewModel
-import io.imito.woundgenius.sample.utils.toRoomLocalEntity
-import io.imito.woundgenius.sdk.data.pojo.assessment.entity.AssessmentEntity
-import io.imito.woundgenius.sdk.data.pojo.bodypart.WoundGeniusBodyPart
-import io.imito.woundgenius.sdk.data.pojo.license.LicenseErrorType
-import io.imito.woundgenius.sdk.data.pojo.license.LicenseValidateResult
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
+import io.imito.woundgenius.sample.utils.toSampleAssessmentEntity
+import io.imito.woundgenius.sdk.internal.data.pojo.bodypart.WoundGeniusBodyPart
+import io.imito.woundgenius.sdk.internal.data.pojo.license.LicenseErrorType
+import io.imito.woundgenius.sdk.internal.data.pojo.license.LicenseValidateResult
+import io.imito.woundgenius.sdk.internal.data.pojo.measurement.MeasurementResult
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
 import javax.inject.Inject
 
 class HomeScreenViewModel @Inject constructor(
@@ -40,7 +41,7 @@ class HomeScreenViewModel @Inject constructor(
     val assessmentProgress: LiveData<Boolean>
         get() = _assessmentProgress
 
-    private val _isMeasurementChartExpandLD = MutableLiveData<Boolean>()
+    private val _isMeasurementChartExpandLD = MutableLiveData(false)
     val isMeasurementChartExpandLD: LiveData<Boolean>
         get() = _isMeasurementChartExpandLD
 
@@ -87,7 +88,7 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     fun getFeatureStatus() {
-        
+
         val params = GetSdkFeaturesUseCase.Params.forGetSdkFeatures()
         add(
             getSdkFeaturesUseCase.execute(params)
@@ -172,13 +173,27 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     fun saveAssessmentToDB(
-        assessmentEntity: AssessmentEntity
+        measurements: List<MeasurementResult>
     ) {
-
-        val params =
-            SaveAssessmentToDBUseCase.Params.forSaveAssessmentToDB(
-                assessmentEntity.toRoomLocalEntity()
+        measurements.forEach {measurement ->
+            val params =
+                SaveAssessmentToDBUseCase.Params.forSaveAssessmentToDB(
+                    measurement.toSampleAssessmentEntity()
+                )
+            _assessmentProgress.value = false
+            add(
+                saveAssessmentToDBUseCase.execute(params)
+                    .subscribe({
+                    }, {
+                        Log.e("woundGeniusError", it.stackTraceToString())
+                    })
             )
+        }
+    }
+
+    fun saveMagicAssessmentToDB(result: WizardAssessmentResult.Success) {
+        val entity = result.toSampleAssessmentEntity()
+        val params = SaveAssessmentToDBUseCase.Params.forSaveAssessmentToDB(entity)
         _assessmentProgress.value = false
         add(
             saveAssessmentToDBUseCase.execute(params)

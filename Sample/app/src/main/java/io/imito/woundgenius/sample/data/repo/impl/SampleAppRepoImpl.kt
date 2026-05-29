@@ -5,9 +5,9 @@ import io.imito.woundgenius.sample.data.pojo.license.SdkFeatureStatus
 import io.imito.woundgenius.sample.data.repo.SampleAppRepo
 import io.imito.woundgenius.sample.managers.SampleDateTimeManager
 import io.imito.woundgenius.sample.storage.db.AssessmentRoomDatabase
-import io.imito.woundgenius.sdk.data.pojo.autodetectionmod.WoundAutoDetectionMode
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
-import io.imito.woundgenius.sdk.storage.shared.SharedMemory
+import io.imito.woundgenius.sdk.internal.data.pojo.autodetectionmod.WoundAutoDetectionMode
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
+import io.imito.woundgenius.sdk.internal.data.storage.shared.SharedMemory
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import java.io.File
@@ -43,55 +43,59 @@ class SampleAppRepoImpl(
     }.subscribeOn(Schedulers.io())
 
     override fun saveSdkFeaturesStatus(woundGeniusSDK: WoundGeniusSDK): Observable<Unit> = Observable.fromCallable {
-        if (woundGeniusSDK.getAvailableModes() != sharedMemory.getAvailableModes()) {
-            sharedMemory.setAvailableModes(woundGeniusSDK.getAvailableModes())
+        if (WoundGeniusSDK.getConfiguration().availableModes != sharedMemory.getAvailableModes()) {
+            sharedMemory.setAvailableModes(WoundGeniusSDK.getConfiguration().availableModes)
         }
 
-        if (woundGeniusSDK.getIsMultipleOutlinesEnabled() != sharedMemory.getIsMultipleOutlinesSupported()) {
-            sharedMemory.setIsMultipleOutlinesSupported(woundGeniusSDK.getIsMultipleOutlinesEnabled())
+        if (WoundGeniusSDK.getConfiguration().isMultipleOutlinesEnabled != sharedMemory.getIsMultipleOutlinesSupported()) {
+            sharedMemory.setIsMultipleOutlinesSupported(WoundGeniusSDK.getConfiguration().isMultipleOutlinesEnabled)
         }
 
-        if (woundGeniusSDK.getIsStomaFlow() != sharedMemory.getIsStomaFlowEnabled()) {
-            sharedMemory.setIsStomaFlowEnabled(woundGeniusSDK.getIsStomaFlow())
+        if (WoundGeniusSDK.getConfiguration().isStomaFlow != sharedMemory.getIsStomaFlowEnabled()) {
+            sharedMemory.setIsStomaFlowEnabled(WoundGeniusSDK.getConfiguration().isStomaFlow)
         }
 
-        val newAutoDetectionMode = woundGeniusSDK.getAutoDetectionMod() ?: WoundAutoDetectionMode.NONE
+        val newAutoDetectionMode = WoundGeniusSDK.getConfiguration().autoDetectionMode ?: WoundAutoDetectionMode.NONE
         if (newAutoDetectionMode != sharedMemory.getAutoDetectionMode()) {
             sharedMemory.setAutoDetectionMode(newAutoDetectionMode)
         }
 
-        if (woundGeniusSDK.getMaxNumberOfMedia() != sharedMemory.getMaxNumberOfMedia()) {
-            sharedMemory.setMaxNumberOfMedia(woundGeniusSDK.getMaxNumberOfMedia())
+        if (WoundGeniusSDK.getConfiguration().maxNumberOfMedia != sharedMemory.getMaxNumberOfMedia()) {
+            sharedMemory.setMaxNumberOfMedia(WoundGeniusSDK.getConfiguration().maxNumberOfMedia)
         }
 
-        val newIsLiveDetectionEnabled = woundGeniusSDK.getIsLiveDetectionEnabled() ?: false
+        if (WoundGeniusSDK.getConfiguration().minNumberOfMedia != sharedMemory.getMinNumberOfMedia()) {
+            sharedMemory.setMinNumberOfMedia(WoundGeniusSDK.getConfiguration().minNumberOfMedia)
+        }
+
+        val newIsLiveDetectionEnabled = WoundGeniusSDK.getConfiguration().isLiveWoundDetectionEnabled ?: false
         if (newIsLiveDetectionEnabled != sharedMemory.getIsLiveDetectionEnabled()) {
             sharedMemory.setIsLiveDetectionEnabled(newIsLiveDetectionEnabled)
         }
 
-        if (woundGeniusSDK.getIsAddFromLocalStorageAvailable() != sharedMemory.getIsMediaFromGalleryAllowed()) {
-            sharedMemory.setIsMediaFromGalleryAllowed(woundGeniusSDK.getIsAddFromLocalStorageAvailable())
+        if (WoundGeniusSDK.getConfiguration().isAddFromLocalStorageAvailable != sharedMemory.getIsMediaFromGalleryAllowed()) {
+            sharedMemory.setIsMediaFromGalleryAllowed(WoundGeniusSDK.getConfiguration().isAddFromLocalStorageAvailable)
         }
 
-        if (woundGeniusSDK.getIsAddBodyPickerAvailable() != sharedMemory.getIsBodyPickerAllowed()) {
-            sharedMemory.setIsBodyPickerAllowed(woundGeniusSDK.getIsAddBodyPickerAvailable())
+        if (WoundGeniusSDK.getConfiguration().isBodyPartPickerAvailable != sharedMemory.getIsBodyPickerAllowed()) {
+            sharedMemory.setIsBodyPickerAllowed(WoundGeniusSDK.getConfiguration().isBodyPartPickerAvailable)
         }
 
-        if (woundGeniusSDK.getIsFrontCameraUsageAllowed() != sharedMemory.getIsFrontalCameraSupported()) {
-            sharedMemory.setIsFrontalCameraSupported(woundGeniusSDK.getIsFrontCameraUsageAllowed())
+        if (WoundGeniusSDK.getConfiguration().isFrontCameraUsageAllowed != sharedMemory.getIsFrontalCameraSupported()) {
+            sharedMemory.setIsFrontalCameraSupported(WoundGeniusSDK.getConfiguration().isFrontCameraUsageAllowed)
 
         }
 
-        if (woundGeniusSDK.getIsLandscapeSupported() != sharedMemory.getIsLandScapeSupported()) {
-            sharedMemory.setIsLandScapeSupported(woundGeniusSDK.getIsLandscapeSupported())
+        if (WoundGeniusSDK.getConfiguration().isLandscapeSupported != sharedMemory.getIsLandScapeSupported()) {
+            sharedMemory.setIsLandScapeSupported(WoundGeniusSDK.getConfiguration().isLandscapeSupported)
         }
 
-        if (woundGeniusSDK.getIsMeasurementLineEnabled() != sharedMemory.getIsMeasurementLineEnabled()) {
-            sharedMemory.setIsMeasurementLineEnabled(woundGeniusSDK.getIsMeasurementLineEnabled())
+        if (WoundGeniusSDK.getConfiguration().isMeasurementLineEnabled != sharedMemory.getIsMeasurementLineEnabled()) {
+            sharedMemory.setIsMeasurementLineEnabled(WoundGeniusSDK.getConfiguration().isMeasurementLineEnabled)
         }
 
-        if (woundGeniusSDK.getIsSingleAreaEnabled() != sharedMemory.getIsSingleAreaEnabled()) {
-            sharedMemory.setIsSingleAreaEnabled(woundGeniusSDK.getIsSingleAreaEnabled())
+        if (WoundGeniusSDK.getConfiguration().isSingleAreaEnabled != sharedMemory.getIsSingleAreaEnabled()) {
+            sharedMemory.setIsSingleAreaEnabled(WoundGeniusSDK.getConfiguration().isSingleAreaEnabled)
         }
 
         Unit
@@ -104,6 +108,7 @@ class SampleAppRepoImpl(
             isStomaFlowEnable = sharedMemory.getIsStomaFlowEnabled(),
             autoDetectionMode = sharedMemory.getAutoDetectionMode(),
             maxNumberOfMedia = sharedMemory.getMaxNumberOfMedia(),
+            minNumberOfMedia = sharedMemory.getMinNumberOfMedia(),
             isLiveDetectionEnabled = sharedMemory.getIsLiveDetectionEnabled(),
             isMediaFromGalleryAllowed = sharedMemory.getIsMediaFromGalleryAllowed(),
             isBodyPickerAllowed = sharedMemory.getIsBodyPickerAllowed(),

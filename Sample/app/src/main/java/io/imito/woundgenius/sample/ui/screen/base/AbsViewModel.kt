@@ -3,7 +3,7 @@ package io.imito.woundgenius.sample.ui.screen.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.imito.woundgenius.sdk.data.pojo.ErrorType
+import io.imito.woundgenius.sdk.internal.data.pojo.error.ErrorType
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import retrofit2.HttpException

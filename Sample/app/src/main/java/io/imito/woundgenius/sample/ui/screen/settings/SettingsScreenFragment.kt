@@ -20,12 +20,12 @@ import io.imito.woundgenius.sample.data.pojo.license.SdkFeatureStatus
 import io.imito.woundgenius.sample.databinding.SampleAppFragmentSettingsScreenBinding
 import io.imito.woundgenius.sample.ui.screen.base.AbsFragment
 import io.imito.woundgenius.sample.utils.FileLogTree
-import io.imito.woundgenius.sdk.data.pojo.autodetectionmod.WoundAutoDetectionMode
-import io.imito.woundgenius.sdk.data.pojo.camera.cameramod.CameraMods
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
-import io.imito.woundgenius.sdk.utils.LandscapeUtils.isSupportPortraitOnly
-import io.imito.woundgenius.sdk.utils.LandscapeUtils.onConfigurationChange
-import io.imito.woundgenius.sdk.data.pojo.license.SdkFeature
+import io.imito.woundgenius.sdk.internal.data.pojo.autodetectionmod.WoundAutoDetectionMode
+import io.imito.woundgenius.sdk.internal.data.pojo.camera.mode.ImitoCameraMode
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
+import io.imito.woundgenius.sdk.internal.utils.system.LandscapeUtils.isSupportPortraitOnly
+import io.imito.woundgenius.sdk.internal.utils.system.LandscapeUtils.onConfigurationChange
+import io.imito.woundgenius.sdk.internal.data.pojo.license.SdkFeature
 
 
 class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
@@ -56,9 +56,12 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                 addBodyPickerOnCameraS.isChecked = !addBodyPickerOnCameraS.isChecked
             }
             addBodyPickerOnCameraS.setOnCheckedChangeListener { _, isChecked ->
-                woundGeniusSDK.configure(
-                    isAddBodyPickerOnCaptureScreenAvailable = isChecked
+                var config = WoundGeniusSDK.getConfiguration()
+                config = config.copy(
+                    isBodyPartPickerAvailable = isChecked
                 )
+                WoundGeniusSDK.updateConfig(config)
+
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                     viewModel?.saveFeatureStatus(woundGeniusSDK)
                 }
@@ -69,18 +72,22 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             }
 
             addCameraSwitchS.setOnCheckedChangeListener { _, isChecked ->
-                woundGeniusSDK.configure(
+                var config = WoundGeniusSDK.getConfiguration()
+                config = config.copy(
                     isFrontCameraUsageAllowed = isChecked
                 )
+                WoundGeniusSDK.updateConfig(config)
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                     viewModel?.saveFeatureStatus(woundGeniusSDK)
                 }
             }
 
             addFromGalleryLayoutCL.setOnClickListener {
-                woundGeniusSDK.configure(
+                var config = WoundGeniusSDK.getConfiguration()
+                config = config.copy(
                     isAddFromLocalStorageAvailable = !addFromGalleryS.isChecked
                 )
+                WoundGeniusSDK.updateConfig(config)
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                     viewModel?.saveFeatureStatus(woundGeniusSDK)
                 }
@@ -90,24 +97,30 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                 isMultipleOutlinesEnabledS.isChecked = !isMultipleOutlinesEnabledS.isChecked
             }
             addFromGalleryS.setOnCheckedChangeListener { _, isChecked ->
-                woundGeniusSDK.configure(
+                var config = WoundGeniusSDK.getConfiguration()
+                config = config.copy(
                     isAddFromLocalStorageAvailable = isChecked,
                 )
+                WoundGeniusSDK.updateConfig(config)
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                     viewModel?.saveFeatureStatus(woundGeniusSDK)
                 }
             }
+
             isMultipleOutlinesEnabledS.setOnCheckedChangeListener { _, isChecked ->
-                woundGeniusSDK.configure(
-                    isMultipleOutlinesEnabled = isMultipleOutlinesEnabledS.isChecked,
+                var config = WoundGeniusSDK.getConfiguration()
+                config = config.copy(
+                    isMultipleOutlinesEnabled = isMultipleOutlinesEnabledS.isChecked
                 )
+                WoundGeniusSDK.updateConfig(config)
+
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                     viewModel?.saveFeatureStatus(woundGeniusSDK)
                 }
             }
 
             addVideoModeS.setOnCheckedChangeListener { _, isChecked ->
-                onCameraModsChange(CameraMods.VIDEO_MODE, isChecked)
+                onCameraModsChange(ImitoCameraMode.VIDEO_MODE, isChecked)
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                     viewModel?.saveFeatureStatus(woundGeniusSDK)
                 }
@@ -117,7 +130,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             }
 
             addMarkerModeS.setOnCheckedChangeListener { _, isChecked ->
-                onCameraModsChange(CameraMods.MARKER_DETECT_MODE, isChecked)
+                onCameraModsChange(ImitoCameraMode.MARKER_DETECT_MODE, isChecked)
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                     viewModel?.saveFeatureStatus(woundGeniusSDK)
                 }
@@ -127,7 +140,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             }
 
             addPhotoModeS.setOnCheckedChangeListener { _, isChecked ->
-                onCameraModsChange(CameraMods.PHOTO_MODE, isChecked)
+                onCameraModsChange(ImitoCameraMode.PHOTO_MODE, isChecked)
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                     viewModel?.saveFeatureStatus(woundGeniusSDK)
                 }
@@ -141,13 +154,18 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             }
 
             addRulerModeS.setOnCheckedChangeListener { _, isChecked ->
-                onCameraModsChange(CameraMods.MANUAL_MEASURE_MODE, isChecked)
+                onCameraModsChange(ImitoCameraMode.MANUAL_MEASURE_MODE, isChecked)
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                     viewModel?.saveFeatureStatus(woundGeniusSDK)
                 }
             }
             liveDetectionS.setOnCheckedChangeListener { _, isChecked ->
-                woundGeniusSDK.configure(isLiveDetectionEnabled = isChecked)
+                var config = WoundGeniusSDK.getConfiguration()
+                config = config.copy(
+                    isLiveWoundDetectionEnabled = isChecked
+                )
+                WoundGeniusSDK.updateConfig(config)
+
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                     viewModel?.saveFeatureStatus(woundGeniusSDK)
                 }
@@ -157,11 +175,14 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             }
 
             stomaFlowS.setOnCheckedChangeListener { _, isChecked ->
-                woundGeniusSDK.configure(
-                    woundAutoDetectionMode = if (isChecked) WoundAutoDetectionMode.NONE else woundGeniusSDK.getAutoDetectionMod(),
-                    isLiveDetectionEnabled = if (isChecked) false else woundGeniusSDK.getIsLiveDetectionEnabled(),
+                var config = WoundGeniusSDK.getConfiguration()
+                config = config.copy(
+                    autoDetectionMode = if (isChecked) WoundAutoDetectionMode.NONE else WoundGeniusSDK.getConfiguration().autoDetectionMode,
+                    isLiveWoundDetectionEnabled = if (isChecked) false else WoundGeniusSDK.getConfiguration().isLiveWoundDetectionEnabled,
                     isStomaFlow = isChecked
                 )
+                WoundGeniusSDK.updateConfig(config)
+
                 if (isChecked) {
                     liveDetectionS.isChecked = false
                     setupAutoDetectionModsUi()
@@ -175,9 +196,12 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             }
 
             isLandScapeSupportedS.setOnCheckedChangeListener { _, isChecked ->
-                woundGeniusSDK.configure(
-                    isLandScapeSupported = isChecked
+                var config = WoundGeniusSDK.getConfiguration()
+                config = config.copy(
+                    isLandscapeSupported = isChecked
                 )
+                WoundGeniusSDK.updateConfig(config)
+
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                     viewModel?.saveFeatureStatus(woundGeniusSDK)
                 }
@@ -195,9 +219,12 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             }
 
             isMeasurementLineEnabledS.setOnCheckedChangeListener { _, isChecked ->
-                woundGeniusSDK.configure(
+                var config = WoundGeniusSDK.getConfiguration()
+                config = config.copy(
                     isMeasurementLineEnabled = isChecked
                 )
+                WoundGeniusSDK.updateConfig(config)
+
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                     viewModel?.saveFeatureStatus(woundGeniusSDK)
                 }
@@ -206,12 +233,26 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
 
             isSingleAreaEnabledLayoutCL.setOnClickListener {
                 isSingleAreaEnabledS.isChecked = !isSingleAreaEnabledS.isChecked
+
+                if (isSingleAreaEnabledS.isChecked) {
+                    isMeasurementLineEnabledS.isChecked = false
+                }
             }
 
             isSingleAreaEnabledS.setOnCheckedChangeListener { _, isChecked ->
-                woundGeniusSDK.configure(
-                    isSingleAreaEnabled = isChecked
-                )
+                var config = WoundGeniusSDK.getConfiguration()
+                config = if (isChecked){
+                    config.copy(
+                        isSingleAreaEnabled = true,
+                        isMeasurementLineEnabled = false
+                    )
+                } else {
+                    config.copy(
+                        isSingleAreaEnabled = false
+                    )
+                }
+
+                WoundGeniusSDK.updateConfig(config)
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                     viewModel?.saveFeatureStatus(woundGeniusSDK)
                 }
@@ -230,12 +271,37 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                         if (maxMediaNumberValueACET.text?.isNotEmpty() == true) {
                             maxMediaNumberValueACET.setSelection(maxMediaNumberValueACET.text.toString().length)
                         }
-                        woundGeniusSDK.configure(
+                        var config = WoundGeniusSDK.getConfiguration()
+                        config = config.copy(
                             maxNumberOfMedia = maxMediaNumberValueACET.text.toString().toInt()
                         )
+                        WoundGeniusSDK.updateConfig(config)
                     }
                 }
             )
+
+            minMediaNumberValueACET.addTextChangedListener(
+                onTextChanged = { _, _, _, _ ->
+                    if (minMediaNumberValueACET.text.toString().isNotEmpty()) {
+                        val sizeValue = maxMediaNumberValueACET.text.toString().toInt()
+                        if (sizeValue > 100) {
+                            minMediaNumberValueACET.setText(MAX_MEDIA_CAPTURE_SIZE)
+                        }
+                        if (sizeValue < 1) {
+                            minMediaNumberValueACET.setText("0")
+                        }
+                        if (minMediaNumberValueACET.text?.isNotEmpty() == true) {
+                            minMediaNumberValueACET.setSelection(minMediaNumberValueACET.text.toString().length)
+                        }
+                        var config = WoundGeniusSDK.getConfiguration()
+                        config = config.copy(
+                            minNumberOfMedia = minMediaNumberValueACET.text.toString().toInt()
+                        )
+                        WoundGeniusSDK.updateConfig(config)
+                    }
+                }
+            )
+
             licenseKeyValueACET.onDone {
                 woundGeniusSDK.setLicenseKey(licenseKeyValueACET.text.toString())
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
@@ -254,8 +320,8 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
         }
     }
 
-    private fun onCameraModsChange(cameraMod: CameraMods, isChecked: Boolean) {
-        val availableCameraMods = ArrayList(woundGeniusSDK.getAvailableModes())
+    private fun onCameraModsChange(cameraMod: ImitoCameraMode, isChecked: Boolean) {
+        val availableCameraMods = ArrayList(WoundGeniusSDK.getConfiguration().availableModes)
         if (isChecked) {
             if (!availableCameraMods.contains(cameraMod)) {
                 availableCameraMods.add(cameraMod)
@@ -266,9 +332,11 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             }
         }
 
-        woundGeniusSDK.configure(
+        var config = WoundGeniusSDK.getConfiguration()
+        config = config.copy(
             availableModes = availableCameraMods
         )
+        WoundGeniusSDK.updateConfig(config)
     }
 
 
@@ -365,7 +433,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                     colorNameList.add(it.first)
                 }
                 var textColor: Int? = null
-                woundGeniusSDK.getTextColor()?.let {
+                WoundGeniusSDK.getConfiguration().textColor?.let {
                     textColor = it.toInt()
                 }
                 val textColorAdapter = object : ArrayAdapter<String>(
@@ -402,7 +470,11 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                         parent: AdapterView<*>,
                         view: View, position: Int, id: Long
                     ) {
-                        woundGeniusSDK.setTextColor(textColors[position].second)
+                        var config = WoundGeniusSDK.getConfiguration()
+                        config = config.copy(
+                            textColor = textColors[position].second?.toString()
+                        )
+                        WoundGeniusSDK.updateConfig(config)
                         setUpUiTheme()
                     }
 
@@ -428,7 +500,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                     colorNameList.add(it.first)
                 }
                 var textColor: Int? = null
-                woundGeniusSDK.getFormsColor()?.let {
+                WoundGeniusSDK.getConfiguration().measurementFormsColor?.let {
                     textColor = it.toInt()
                 }
                 val textColorAdapter = object : ArrayAdapter<String>(
@@ -465,7 +537,11 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                         parent: AdapterView<*>,
                         view: View, position: Int, id: Long
                     ) {
-                        woundGeniusSDK.setFormsColor(textColors[position].second)
+                        var config = WoundGeniusSDK.getConfiguration()
+                        config = config.copy(
+                            measurementFormsColor = textColors[position].second?.toString()
+                        )
+                        WoundGeniusSDK.updateConfig(config)
                         setUpUiTheme()
                     }
 
@@ -491,7 +567,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                     colorNameList.add(it.first)
                 }
                 var textColor: Int? = null
-                woundGeniusSDK.getMeasurementResultColor()?.let {
+                WoundGeniusSDK.getConfiguration().measurementResultColor?.let {
                     textColor = it.toInt()
                 }
                 val textColorAdapter = object : ArrayAdapter<String>(
@@ -528,7 +604,11 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                         parent: AdapterView<*>,
                         view: View, position: Int, id: Long
                     ) {
-                        woundGeniusSDK.setMeasurementResultColor(textColors[position].second)
+                        var config = WoundGeniusSDK.getConfiguration()
+                        config = config.copy(
+                            measurementResultColor = textColors[position].second?.toString()
+                        )
+                        WoundGeniusSDK.updateConfig(config)
                         setUpUiTheme()
                     }
 
@@ -554,7 +634,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                     colorNameList.add(it.first)
                 }
                 var textColor: Int? = null
-                woundGeniusSDK.getValueDividersColor()?.let {
+                WoundGeniusSDK.getConfiguration().valueDividersColor?.let {
                     textColor = it.toInt()
                 }
                 val textColorAdapter = object : ArrayAdapter<String>(
@@ -591,7 +671,11 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                         parent: AdapterView<*>,
                         view: View, position: Int, id: Long
                     ) {
-                        woundGeniusSDK.setDividerColor(textColors[position].second)
+                        var config = WoundGeniusSDK.getConfiguration()
+                        config = config.copy(
+                            valueDividersColor = textColors[position].second?.toString()
+                        )
+                        WoundGeniusSDK.updateConfig(config)
                         setUpUiTheme()
                     }
 
@@ -612,7 +696,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
     private fun setUpPrimaryColorTheme(primaryColors: List<Pair<String, Int?>>) {
         binding.apply {
             context?.let { context ->
-                val primaryButtonColor = woundGeniusSDK.getPrimaryButtonColor()?.toInt()
+                val primaryButtonColor = WoundGeniusSDK.getConfiguration().primaryButtonColor?.toInt()
                 val colorNameList = ArrayList<String>()
 
                 primaryColors.forEach {
@@ -653,7 +737,12 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                         parent: AdapterView<*>,
                         view: View, position: Int, id: Long
                     ) {
-                        woundGeniusSDK.setPrimaryButtonColor(primaryColors[position].second)
+                        var config = WoundGeniusSDK.getConfiguration()
+                        config = config.copy(
+                            primaryButtonColor = primaryColors[position].second?.toString()
+                        )
+                        WoundGeniusSDK.updateConfig(config)
+
                         setUpUiTheme()
                     }
 
@@ -682,7 +771,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
     private fun setUpBackgroundColorTheme(lightBGColors: List<Pair<String, Int?>>) {
         binding.apply {
             context?.let { context ->
-                val lightBGColor = woundGeniusSDK.getLightBackgroundColor()?.toInt()
+                val lightBGColor = WoundGeniusSDK.getConfiguration().lightBackgroundColor?.toInt()
                     ?: context.getColor(R.color.sample_app_background)
                 val colorNameList = ArrayList<String>()
 
@@ -724,7 +813,11 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                         parent: AdapterView<*>,
                         view: View, position: Int, id: Long
                     ) {
-                        woundGeniusSDK.setLightBackgroundColor(lightBGColors[position].second)
+                        var config = WoundGeniusSDK.getConfiguration()
+                        config = config.copy(
+                            lightBackgroundColor = lightBGColors[position].second?.toString()
+                        )
+                        WoundGeniusSDK.updateConfig(config)
                         setUpUiTheme()
                     }
 
@@ -744,13 +837,15 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
 
     private fun setUpUiTheme() {
         binding.apply {
+            val config = WoundGeniusSDK.getConfiguration()
+            val ctx = context ?: return
 
             var backgroundColor: Int? = null
             var primaryButtonColor: Int? = null
             var textColor: Int? = null
             var dividerColor: Int? = null
 
-            backgroundColor = woundGeniusSDK.getLightBackgroundColor()?.let {
+            backgroundColor = config.lightBackgroundColor?.let {
                 context?.getColor(
                     it.toInt()
                 )
@@ -758,7 +853,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                 R.color.sample_app_background
             )
 
-            primaryButtonColor = woundGeniusSDK.getPrimaryButtonColor()?.let {
+            primaryButtonColor = config.primaryButtonColor?.let {
                 context?.getColor(
                     it.toInt()
                 )
@@ -766,7 +861,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                 R.color.sample_app_button_color
             )
 
-            textColor = woundGeniusSDK.getTextColor()?.let {
+            textColor = config.textColor?.let {
                 context?.getColor(
                     it.toInt()
                 )
@@ -775,7 +870,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             )
 
 
-            dividerColor = woundGeniusSDK.getValueDividersColor()?.let {
+            dividerColor = config.valueDividersColor?.let {
                 context?.getColor(
                     it.toInt()
                 )
@@ -808,6 +903,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                 addRulerModeLabelACTV.setTextColor(textColor)
                 maxMediaNumberValueLabelACTV.setTextColor(textColor)
                 maxMediaNumberValueACET.setTextColor(textColor)
+                minMediaNumberValueACET.setTextColor(textColor)
                 stomaFlowLabelACTV.setTextColor(textColor)
                 autoDetectionSelectorLabelACTV.setTextColor(textColor)
                 liveDetectionLabelACTV.setTextColor(textColor)
@@ -832,6 +928,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                 addRulerModeValueBottomV.setBackgroundColor(dividerColor)
                 maxMediaNumberValueTopV.setBackgroundColor(dividerColor)
                 maxMediaNumberValueBottomV.setBackgroundColor(dividerColor)
+                minMediaNumberValueBottomV.setBackgroundColor(dividerColor)
                 flowValueTopV.setBackgroundColor(dividerColor)
                 stomaFlowValueBottomV.setBackgroundColor(dividerColor)
                 machineLearningValueTopV.setBackgroundColor(dividerColor)
@@ -856,7 +953,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
     private fun setupAutoDetectionModsUi() {
         binding.apply {
             context?.let { context ->
-                val currentAutoDetectMod = woundGeniusSDK.getAutoDetectionMod()
+                val currentAutoDetectMod = WoundGeniusSDK.getConfiguration().autoDetectionMode
                 val autoDetectionModList = ArrayList<String>()
                 WoundAutoDetectionMode.values().forEach {
                     autoDetectionModList.add(it.modName)
@@ -895,7 +992,12 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                         parent: AdapterView<*>,
                         view: View, position: Int, id: Long
                     ) {
-                        woundGeniusSDK.configure(woundAutoDetectionMode = WoundAutoDetectionMode.values()[position])
+                        var config = WoundGeniusSDK.getConfiguration()
+                        config = config.copy(
+                            autoDetectionMode = WoundAutoDetectionMode.entries[position]
+                        )
+                        WoundGeniusSDK.updateConfig(config)
+
                         if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                             viewModel?.saveFeatureStatus(woundGeniusSDK)
                         }
@@ -923,17 +1025,28 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
         binding.apply {
             viewModel?.apply {
 
+                var config = WoundGeniusSDK.getConfiguration()
+                var isStomaFlow: Boolean
+                var isMultipleOutlinesEnabled: Boolean
+                var isAddFromLocalStorageAvailable: Boolean
+                var isBodyPartPickerAvailable: Boolean
+                var isMeasurementLineEnabled: Boolean
+                var isSingleAreaEnabled: Boolean
+                var isFrontCameraUsageAllowed: Boolean
+                var isLandScapeSupported = false
+                var autoDetectionMode: WoundAutoDetectionMode
+
                 var isEnabled =
-                    sdkFeaturesStatus.availableModes?.contains(CameraMods.VIDEO_MODE) ?: false
+                    sdkFeaturesStatus.availableModes?.contains(ImitoCameraMode.VIDEO_MODE) ?: false
 
                 if (availableFeatures.contains(SdkFeature.VIDEO_CAPTURING.featureName)) {
                     if (wasLicenseIncorrect) {
                         isEnabled = true
                     }
-                    onCameraModsChange(CameraMods.VIDEO_MODE, isEnabled)
+                    onCameraModsChange(ImitoCameraMode.VIDEO_MODE, isEnabled)
                     addVideoModeS.isChecked = isEnabled
                 } else {
-                    onCameraModsChange(CameraMods.VIDEO_MODE, false)
+                    onCameraModsChange(ImitoCameraMode.VIDEO_MODE, false)
                     addVideoModeS.isChecked = false
                 }
 
@@ -943,27 +1056,23 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                 if (availableFeatures.contains(SdkFeature.STOMA_DOCUMENTATION.featureName)) {
                     val isStomaFlowEnabled =
                         sdkFeaturesStatus.isStomaFlowEnable ?: false
-                    woundGeniusSDK.configure(
                         isStomaFlow = isStomaFlowEnabled
-                    )
                     stomaFlowS.isChecked = isStomaFlowEnabled
                 } else {
-                    woundGeniusSDK.configure(
                         isStomaFlow = false
-                    )
                     stomaFlowS.isChecked = false
                 }
 
                 if (availableFeatures.contains(SdkFeature.PHOTO_CAPTURING.featureName)) {
                     isEnabled =
-                        sdkFeaturesStatus.availableModes?.contains(CameraMods.PHOTO_MODE) ?: false
+                        sdkFeaturesStatus.availableModes?.contains(ImitoCameraMode.PHOTO_MODE) ?: false
                     if (wasLicenseIncorrect) {
                         isEnabled = true
                     }
-                    onCameraModsChange(CameraMods.PHOTO_MODE, isEnabled)
+                    onCameraModsChange(ImitoCameraMode.PHOTO_MODE, isEnabled)
                     addPhotoModeS.isChecked = isEnabled
                 } else {
-                    onCameraModsChange(CameraMods.PHOTO_MODE, false)
+                    onCameraModsChange(ImitoCameraMode.PHOTO_MODE, false)
                     addPhotoModeS.isChecked = false
                 }
 
@@ -973,15 +1082,15 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
 
                 if (availableFeatures.contains(SdkFeature.MARKER_MEASUREMENT_CAPTURING.featureName)) {
                     isEnabled =
-                        sdkFeaturesStatus.availableModes?.contains(CameraMods.MARKER_DETECT_MODE)
+                        sdkFeaturesStatus.availableModes?.contains(ImitoCameraMode.MARKER_DETECT_MODE)
                             ?: false
                     if (wasLicenseIncorrect) {
                         isEnabled = true
                     }
-                    onCameraModsChange(CameraMods.MARKER_DETECT_MODE, isEnabled)
+                    onCameraModsChange(ImitoCameraMode.MARKER_DETECT_MODE, isEnabled)
                     addMarkerModeS.isChecked = isEnabled
                 } else {
-                    onCameraModsChange(CameraMods.MARKER_DETECT_MODE, false)
+                    onCameraModsChange(ImitoCameraMode.MARKER_DETECT_MODE, false)
                     addMarkerModeS.isChecked = false
                 }
 
@@ -990,15 +1099,15 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
 
                 if (availableFeatures.contains(SdkFeature.RULER_MEASUREMENT_CAPTURING.featureName)) {
                     isEnabled =
-                        sdkFeaturesStatus.availableModes?.contains(CameraMods.MANUAL_MEASURE_MODE)
+                        sdkFeaturesStatus.availableModes?.contains(ImitoCameraMode.MANUAL_MEASURE_MODE)
                             ?: false
                     if (wasLicenseIncorrect) {
                         isEnabled = true
                     }
-                    onCameraModsChange(CameraMods.MANUAL_MEASURE_MODE, isEnabled)
+                    onCameraModsChange(ImitoCameraMode.MANUAL_MEASURE_MODE, isEnabled)
                     addRulerModeS.isChecked = isEnabled
                 } else {
-                    onCameraModsChange(CameraMods.MANUAL_MEASURE_MODE, false)
+                    onCameraModsChange(ImitoCameraMode.MANUAL_MEASURE_MODE, false)
                     addRulerModeS.isChecked = false
                 }
 
@@ -1011,14 +1120,12 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                     if (wasLicenseIncorrect) {
                         isEnabled = true
                     }
-                    woundGeniusSDK.configure(
+
                         isMultipleOutlinesEnabled = isEnabled
-                    )
                     isMultipleOutlinesEnabledS.isChecked = isEnabled
                 } else {
-                    woundGeniusSDK.configure(
+
                         isMultipleOutlinesEnabled = false
-                    )
                     isMultipleOutlinesEnabledS.isChecked =
                         false
                 }
@@ -1031,15 +1138,13 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                     val woundAutoDetectionMode =
                         sdkFeaturesStatus.autoDetectionMode
 
-                    woundGeniusSDK.configure(
-                        woundAutoDetectionMode = if (woundGeniusSDK.getIsStomaFlow()) WoundAutoDetectionMode.NONE else woundAutoDetectionMode
-                    )
+
+                        autoDetectionMode = if (WoundGeniusSDK.getConfiguration().isStomaFlow) WoundAutoDetectionMode.NONE else woundAutoDetectionMode
 
                     setupAutoDetectionModsUi()
                 } else {
-                    woundGeniusSDK.configure(
-                        woundAutoDetectionMode = WoundAutoDetectionMode.NONE
-                    )
+
+                        autoDetectionMode = WoundAutoDetectionMode.NONE
                     autoDetectionSpinner.setSelection(0, false)
                 }
 
@@ -1054,7 +1159,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                         isEnabled = true
                     }
                     liveDetectionS.isChecked =
-                        if (woundGeniusSDK.getIsStomaFlow()) false else isEnabled
+                        if (WoundGeniusSDK.getConfiguration().isStomaFlow) false else isEnabled
                 } else {
                     liveDetectionS.isChecked = false
                 }
@@ -1062,6 +1167,8 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                     !availableFeatures.contains(SdkFeature.LIVE_WOUND_DETECTION.featureName)
 
                 maxMediaNumberValueACET.setText(sdkFeaturesStatus.maxNumberOfMedia.toString())
+
+                minMediaNumberValueACET.setText(sdkFeaturesStatus.minNumberOfMedia.toString())
 
                 stomaFlowLayoutBlockerCL.isVisible =
                     !availableFeatures.contains(SdkFeature.STOMA_DOCUMENTATION.featureName)
@@ -1073,14 +1180,11 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                     if (wasLicenseIncorrect) {
                         isEnabled = true
                     }
-                    woundGeniusSDK.configure(
+
                         isAddFromLocalStorageAvailable = isEnabled
-                    )
                     addFromGalleryS.isChecked = isEnabled
                 } else {
-                    woundGeniusSDK.configure(
                         isAddFromLocalStorageAvailable = false
-                    )
                     addFromGalleryS.isChecked = false
                 }
                 addFromGalleryLayoutBlockerCL.isVisible =
@@ -1092,50 +1196,55 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                     if (wasLicenseIncorrect) {
                         isEnabled = true
                     }
-                    woundGeniusSDK.configure(
-                        isAddBodyPickerOnCaptureScreenAvailable = isEnabled
-                    )
+
+                        isBodyPartPickerAvailable = isEnabled
+
                     addBodyPickerOnCameraS.isChecked = isEnabled
                 } else {
-                    woundGeniusSDK.configure(
-                        isAddBodyPickerOnCaptureScreenAvailable = false
-                    )
+
+                        isBodyPartPickerAvailable = false
+
                     addBodyPickerOnCameraS.isChecked = false
                 }
 
-                if (true) {
+                if (availableFeatures.contains(SdkFeature.LINE_MEASUREMENT.featureName)) {
                     isEnabled =
                         sdkFeaturesStatus.isMeasurementLineEnabled ?: false
                     if (wasLicenseIncorrect) {
                         isEnabled = true
                     }
-                    woundGeniusSDK.configure(
+
                         isMeasurementLineEnabled = isEnabled
-                    )
                     isMeasurementLineEnabledS.isChecked = isEnabled
                 } else {
-                    woundGeniusSDK.configure(
-                        isMeasurementLineEnabled = false
-                    )
-                    isMeasurementLineEnabledS.isChecked = false
+                   
+                        isMeasurementLineEnabled = true
+
+                    isMeasurementLineEnabledS.isChecked = true
                 }
 
-                if (true) {
+                isMeasurementLineEnabledBlockerCL.isVisible = !availableFeatures.contains(SdkFeature.LINE_MEASUREMENT.featureName)
+
+
+
+                if (availableFeatures.contains(SdkFeature.SINGLE_AREA_MODE.featureName)) {
                     isEnabled =
                         sdkFeaturesStatus.isSingleAreaEnabled ?: false
                     if (wasLicenseIncorrect) {
                         isEnabled = true
                     }
-                    woundGeniusSDK.configure(
+                   
                         isSingleAreaEnabled = isEnabled
-                    )
+                    
                     isSingleAreaEnabledS.isChecked = isEnabled
                 } else {
-                    woundGeniusSDK.configure(
+                    
                         isSingleAreaEnabled = false
-                    )
                     isSingleAreaEnabledS.isChecked = false
                 }
+
+                isSingleAreaEnabledBlockerCL.isVisible =
+                    !availableFeatures.contains(SdkFeature.SINGLE_AREA_MODE.featureName)
 
                 addBodyPickerOnCameraLayoutBlockerCL.isVisible =
                     !availableFeatures.contains(SdkFeature.BODY_PART_PICKER.featureName)
@@ -1146,14 +1255,13 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                     if (wasLicenseIncorrect) {
                         isEnabled = true
                     }
-                    woundGeniusSDK.configure(
+                    
                         isFrontCameraUsageAllowed = isEnabled
-                    )
+                    
                     addCameraSwitchS.isChecked = isEnabled
                 } else {
-                    woundGeniusSDK.configure(
+                   
                         isFrontCameraUsageAllowed = false
-                    )
                     addCameraSwitchS.isChecked = false
                 }
 
@@ -1166,14 +1274,28 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                     if (isOnlyPortrait) {
                         isLandscapeSupportedBlockerCL.isVisible = true
                         isLandScapeSupportedS.isChecked = false
-                        woundGeniusSDK.configure(isLandScapeSupported = false)
+                       isLandScapeSupported = false
                         onConfigurationChange(it)
                     } else {
                         isLandScapeSupportedS.isChecked =
-                            woundGeniusSDK.getIsLandscapeSupported() && (
+                            WoundGeniusSDK.getConfiguration().isLandscapeSupported && (
                                     sdkFeaturesStatus.isLandScapeSupported || it.requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_FULL_USER)
                     }
                 }
+                
+                config = config.copy(
+                    isStomaFlow = isStomaFlow,
+                    isMultipleOutlinesEnabled = isMultipleOutlinesEnabled,
+                    isAddFromLocalStorageAvailable = isAddFromLocalStorageAvailable,
+                    isBodyPartPickerAvailable = isBodyPartPickerAvailable,
+                    isMeasurementLineEnabled = isMeasurementLineEnabled,
+                    isSingleAreaEnabled = isSingleAreaEnabled,
+                    isFrontCameraUsageAllowed = isFrontCameraUsageAllowed,
+                    isLandscapeSupported = isLandScapeSupported,
+                    autoDetectionMode = autoDetectionMode
+                )
+
+                WoundGeniusSDK.updateConfig(config)
 
                 setupAutoDetectionModsUi()
                 if (availableFeatures.isNotEmpty()) {

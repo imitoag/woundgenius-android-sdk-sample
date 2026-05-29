@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import io.imito.woundgenius.sample.data.usecase.license.GetLicenseKeyUseCase
 import io.imito.woundgenius.sample.data.usecase.user.GetUserIdUseCase
 import io.imito.woundgenius.sample.ui.screen.base.AbsViewModel
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -34,7 +34,7 @@ class MainViewModel @Inject constructor(
     val whatNewScreenIsShowed: LiveData<Boolean>
         get() = _whatNewScreenIsShowed
 
-    private val _userIdLD= MutableLiveData<String>()
+    private val _userIdLD = MutableLiveData<String>()
     val userIdLD: LiveData<String>
         get() = _userIdLD
 
@@ -46,10 +46,10 @@ class MainViewModel @Inject constructor(
                 .subscribe({
 
 //                    if (it.isNotEmpty()) {
-                        WoundGeniusSDK.setLicenseKey(it)
+                    WoundGeniusSDK.setLicenseKey(it)
 //                    }
                 }, {
-                     Log.e("woundGeniusError", it.stackTraceToString())
+                    Log.e("woundGeniusError", it.stackTraceToString())
                 })
         )
     }
@@ -58,25 +58,26 @@ class MainViewModel @Inject constructor(
         _whatNewScreenIsShowed.value = false
     }
 
-    fun setWhatNewScreenShowed(){
+    fun setWhatNewScreenShowed() {
         _whatNewScreenIsShowed.value = true
     }
 
-    fun openWhatNewScreen(){
+    fun openWhatNewScreen() {
         _showWhatNewScreenLD.postValue(Unit)
     }
-    fun openHomeScreen(){
+
+    fun openHomeScreen() {
         _openHomeScreenLD.postValue(Unit)
     }
 
-    fun getUserId(){
+    fun getUserId() {
         val params = GetUserIdUseCase.Params.forGetUserId()
         add(
             getUserIdUseCase.execute(params)
                 .subscribe({
                     _userIdLD.value = it
                 }, {
-                     Log.e("woundGeniusError", it.stackTraceToString())
+                    Log.e("woundGeniusError", it.stackTraceToString())
                 })
         )
     }

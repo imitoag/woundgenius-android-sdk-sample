@@ -1,6 +1,8 @@
 package io.imito.woundgenius.sample.ui.screen.homescreen
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -12,14 +14,15 @@ import com.bumptech.glide.request.RequestOptions
 import io.imito.woundgenius.sample.R
 import io.imito.woundgenius.sample.data.pojo.assessment.SampleAssessmentEntity
 import io.imito.woundgenius.sample.databinding.SampleAppLayoutAssessmentListItemBinding
-import io.imito.woundgenius.sdk.data.pojo.camera.cameramod.CameraMods
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
+import io.imito.woundgenius.sdk.internal.utils.media.MediaIUtils.isVideoFile
 
 class AssessmentsAdapter(
     private val onAssessmentClick: (
         draftAssessmentModel: SampleAssessmentEntity
     ) -> Unit,
-    private val onAssessmentDelete: (draftAssessmentModel: SampleAssessmentEntity) -> Unit
+    private val onAssessmentDelete: (draftAssessmentModel: SampleAssessmentEntity) -> Unit,
+    private val onAssessmentShare: (draftAssessmentModel: SampleAssessmentEntity) -> Unit
 ) : ListAdapter<SampleAssessmentEntity, AssessmentsAdapter.ViewHolder>(
     DiffCallback()
 ) {
@@ -73,28 +76,42 @@ class AssessmentsAdapter(
                         )
                     }
                 }
+                shareAssessmentACIV.setOnClickListener {
+                    getItem(bindingAdapterPosition)?.let { it1 ->
+                        onAssessmentShare(it1)
+                    }
+                }
             }
         }
 
         fun bind(item: SampleAssessmentEntity) {
             itemBinding.apply {
 
+                var primaryButtonColor: Int? = null
                 var textColor: Int? = null
                 var dividerColor: Int? = null
                 var measurementValueColor: Int? = null
 
-                WoundGeniusSDK.getValueDividersColor()?.let {
+                WoundGeniusSDK.getConfiguration().valueDividersColor?.let {
                     dividerColor = this.root.context?.getColor(
                         it.toInt()
                     )
                 }
 
-                WoundGeniusSDK.getMeasurementResultColor()?.let {
-                    measurementValueColor =this.root.context?.getColor(
+                primaryButtonColor = WoundGeniusSDK.getConfiguration().primaryButtonColor?.let {
+                    this.root.context?.  getColor(
+                        it.toInt()
+                    )
+                } ?: this.root.context?.getColor(
+                    io.imito.woundgenius.sample.R.color.sample_app_button_color
+                )
+
+                WoundGeniusSDK.getConfiguration().measurementResultColor?.let {
+                    measurementValueColor = this.root.context?.getColor(
                         it.toInt()
                     )
                 }
-                WoundGeniusSDK.getTextColor()?.let {
+                WoundGeniusSDK.getConfiguration().textColor?.let {
                     textColor = this.root.context?.getColor(
                         it.toInt()
                     )
@@ -102,6 +119,7 @@ class AssessmentsAdapter(
 
                 textColor?.let {
                     measurementMethodNameACTV.setTextColor(it)
+                    assessmentImageIV.imageTintList = ColorStateList.valueOf(textColor)
                 }
                 measurementValueColor?.let {
                     creationDateTv.setTextColor(it)
@@ -110,38 +128,64 @@ class AssessmentsAdapter(
                     view.setBackgroundColor(it)
                 }
 
+                primaryButtonColor?.let {
+                    shareAssessmentACIV.imageTintList = ColorStateList.valueOf(primaryButtonColor)
+                }
+
 
                 creationDateTv.text = item.uiDatetime
-                measurementMethodNameACTV.text =
-                    when (item.media?.firstOrNull()?.measurementMethod) {
-                        CameraMods.PHOTO_MODE -> {
-                            this.root.context.getString(R.string.WOUND_GENIUS_SDK_PHOTO)
-                        }
-                        CameraMods.MANUAL_MEASURE_MODE, CameraMods.MARKER_DETECT_MODE -> {
-                            MEASUREMENT
-                        }
-                        CameraMods.VIDEO_MODE -> {
-                            VIDEO
-                        }
 
-                        else -> {
-                            ""
-                        }
+                val hasImage = !item.media.isNullOrEmpty() &&
+                        !item.media?.firstOrNull()?.image.isNullOrEmpty()
+                val hasMeasurement =
+                    item.media?.find { it.metadata?.measurementData?.annotationList?.isNotEmpty() == true } != null
+                val hasForms = !item.observationsJson.isNullOrEmpty()
+
+                if (!hasMeasurement && !hasForms) {
+                    shareAssessmentACIV.visibility = View.INVISIBLE
+                }
+
+                measurementMethodNameACTV.text = if (item.magicAssessment == true) {
+                    when {
+                        hasImage && hasMeasurement && hasForms -> MEASUREMENTS_AND_FORMS
+                        !hasImage && !hasMeasurement -> FORMS
+                        else -> IMAGE_AND_FORMS
                     }
+                } else {
+                    if (hasMeasurement) {
+                        MEASUREMENT
+                    } else {
+                        if (item.media?.size == 1 && isVideoFile(item.media?.first()?.image ?: "")) {
+                            VIDEO
+                        } else MEDIA
+                    }
+                }
 
-                Glide.with(this.root.context)
-                    .load(item.media?.first()?.image)
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .apply(RequestOptions())
-                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
-                    .into(assessmentImageIV)
+                if (item.magicAssessment == true && !hasImage) {
+                    assessmentImageIV.setImageResource(
+                        R.drawable.ic_forms_document
+                    )
+                } else {
+                    Glide.with(this.root.context)
+                        .load(item.media?.firstOrNull()?.image)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .apply(RequestOptions())
+                        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
+                        .into(assessmentImageIV)
+                }
+
+
             }
         }
     }
 
     companion object {
         private const val MEASUREMENT = "Measurement"
+        private const val MEDIA = "Media"
         private const val VIDEO = "Video"
+        private const val IMAGE_AND_FORMS = "Image + Forms"
+        private const val FORMS = "Forms"
+        private const val MEASUREMENTS_AND_FORMS = "Measurements + Forms"
     }
 
 }

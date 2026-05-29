@@ -11,7 +11,7 @@ import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import io.imito.woundgenius.sample.R
 import io.imito.woundgenius.sample.databinding.SampleMeasurementResultItemBinding
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
 import java.util.Locale
 
 class SampleMeasurementResultItemView @JvmOverloads constructor(
@@ -60,7 +60,7 @@ class SampleMeasurementResultItemView @JvmOverloads constructor(
             widthItemValueACTV.text = widthValue
             depth?.let {
                 if (needContinue) {
-                    depth.toString()
+                    (depth * 10).toInt().toString()
                 } else {
                     val depthInMM = depth * 10
                     context.getString(
@@ -85,7 +85,7 @@ class SampleMeasurementResultItemView @JvmOverloads constructor(
                     depthItemValueACET.isEnabled = false
                 }
             }
-            if (!WoundGeniusSDK.getIsDepthInputIsEnabled()) {
+            if (!WoundGeniusSDK.getConfiguration().isDepthOrHeightInputEnabled) {
                 depthItemValueACET.visibility = View.GONE
                 depthItemACTV.visibility = View.GONE
                 widthDividerV.visibility = View.INVISIBLE
@@ -98,19 +98,19 @@ class SampleMeasurementResultItemView @JvmOverloads constructor(
             var formsColor: Int? = null
             var measurementValueColor: Int? = null
 
-            backgroundColor = WoundGeniusSDK.getLightBackgroundColor()?.let {
+            backgroundColor = WoundGeniusSDK.getConfiguration().lightBackgroundColor?.let {
                 context?.getColor(
                     it.toInt()
                 )
             }
-            primaryButtonColor = WoundGeniusSDK.getPrimaryButtonColor()?.let {
+            primaryButtonColor = WoundGeniusSDK.getConfiguration().primaryButtonColor?.let {
                 context?.getColor(
                     it.toInt()
                 )
             } ?: context?.getColor(
                 R.color.sample_app_button_color
             )
-            textColor = WoundGeniusSDK.getTextColor()?.let {
+            textColor = WoundGeniusSDK.getConfiguration().textColor?.let {
                 context?.getColor(
                     it.toInt()
                 )
@@ -124,18 +124,18 @@ class SampleMeasurementResultItemView @JvmOverloads constructor(
 
             }
 
-            dividerColor = WoundGeniusSDK.getValueDividersColor()?.let {
+            dividerColor = WoundGeniusSDK.getConfiguration().valueDividersColor?.let {
                 context?.getColor(
                     it.toInt()
                 )
             }
-            formsColor = WoundGeniusSDK.getFormsColor()?.let {
+            formsColor = WoundGeniusSDK.getConfiguration().measurementFormsColor?.let {
                 context?.getColor(
                     it.toInt()
                 )
             }
 
-            measurementValueColor = WoundGeniusSDK.getMeasurementResultColor()?.let {
+            measurementValueColor = WoundGeniusSDK.getConfiguration().measurementResultColor?.let {
                 context?.getColor(
                     it.toInt()
                 )
@@ -175,8 +175,7 @@ class SampleMeasurementResultItemView @JvmOverloads constructor(
             override fun afterTextChanged(p0: Editable?) {
                 if (needContinue) {
                     val depthInDouble = p0?.toString()?.toDoubleOrNull()
-                    this@SampleMeasurementResultItemView.depth =
-                        if (depthInDouble != null) depthInDouble / 10 else null
+                    this@SampleMeasurementResultItemView.depth = depthInDouble
                     callback?.onTextChanged(depth.toString())
                 }
             }

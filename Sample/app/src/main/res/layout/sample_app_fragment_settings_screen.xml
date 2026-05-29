@@ -610,6 +610,59 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/minMediaNumberContainerCL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/maxMediaNumberContainerCL">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/minMediaNumberValueLabelACTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="The minimal number of media \n to be captured during \n single camera launch"
+                    android:textColor="@color/sample_app_text_color"
+                    android:textSize="17sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintEnd_toStartOf="@+id/minMediaNumberValueACET"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/minMediaNumberValueACET"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="16dp"
+                    android:digits="0123456789"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textColor="@color/sample_app_text_color"
+                    app:layout_constraintBottom_toBottomOf="@+id/minMediaNumberValueLabelACTV"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/minMediaNumberValueLabelACTV"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="2" />
+
+                <View
+                    android:id="@+id/minMediaNumberValueBottomV"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/sample_app_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/minMediaNumberValueLabelACTV"
+                    app:layout_constraintTop_toBottomOf="@+id/minMediaNumberValueLabelACTV" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/flowLabelACTV"
@@ -622,7 +675,7 @@
                 android:textSize="18sp"
 
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/maxMediaNumberContainerCL" />
+                app:layout_constraintTop_toBottomOf="@+id/minMediaNumberContainerCL" />
 
             <View
                 android:id="@+id/flowValueTopV"
@@ -1329,7 +1382,6 @@
                 android:layout_marginEnd="20dp"
                 android:text="COLOR"
                 android:textColor="@color/sample_app_measurement_value_text_color"
-
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/isSingleAreaEnabledLayoutCL" />

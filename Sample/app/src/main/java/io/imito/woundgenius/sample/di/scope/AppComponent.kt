@@ -9,9 +9,9 @@ import io.imito.woundgenius.sample.di.modules.ActivityModule
 import io.imito.woundgenius.sample.di.modules.AppModule
 import io.imito.woundgenius.sample.di.modules.FragmentModule
 import io.imito.woundgenius.sample.di.modules.ViewModelModule
-import javax.inject.Singleton
+import io.imito.woundgenius.sdk.internal.managers.wizard.WizardAppComponent
 
-@Singleton
+@AppScope
 @Component(
     modules = [
         AppModule::class,
@@ -20,6 +20,7 @@ import javax.inject.Singleton
         FragmentModule::class,
         AndroidInjectionModule::class
     ]
+//    dependencies = [WizardAppComponent::class]
 )
 interface AppComponent {
 
@@ -28,6 +29,8 @@ interface AppComponent {
 
         @BindsInstance
         fun application(application: Application): Builder
+
+//        fun wizardAppComponent(component: WizardAppComponent): Builder
 
         fun build(): AppComponent
     }

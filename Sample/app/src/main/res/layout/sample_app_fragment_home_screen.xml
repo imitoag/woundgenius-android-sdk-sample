@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/homeScreenContainer"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/sample_app_tutorial_background"
     android:layout_height="match_parent"
+    android:background="@color/sample_app_tutorial_background"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +26,6 @@
             android:gravity="center"
             android:maxLines="1"
             android:text="WoundSDK"
-            tools:text="WoundGenius: 1.0.2 Build: 1.0.3.2"
             android:textAlignment="center"
             android:textColor="@color/sample_app_text_color"
             android:textSize="17sp"
@@ -34,7 +33,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="WoundGenius: 1.0.2 Build: 1.0.3.2" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/settingsButtonACIV"
@@ -53,32 +53,42 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/sampleSdkVersionLabelACTV"
         android:layout_width="wrap_content"
-        android:textSize="17sp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        tools:text="@string/WOUND_GENIUS_SDK_RESULT_TITLE"
         android:textColor="@color/sample_app_text_color"
+        android:textSize="17sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarCL"
-        android:layout_height="wrap_content"/>
+        tools:text="@string/WOUND_GENIUS_SDK_RESULT_TITLE" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/expandChartCL"
+        android:id="@+id/lineChartContainerCL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sampleSdkVersionLabelACTV">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/chartLabelContainerCL"
+            android:layout_width="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content">
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/expandChartLabelACTV"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
             android:text="Measurement Chart"
             android:textColor="@color/sample_app_text_color"
             android:textSize="15sp"
@@ -96,50 +106,42 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/expandChartLabelACTV" />
 
-        <LinearLayout
-            android:id="@+id/llChart"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <io.imito.woundgenius.sdk.internal.ui.view.chart.WoundGeniusChartLineView
+            android:id="@+id/chartWGCV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:layout_marginBottom="15dp"
             android:orientation="vertical"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/expandChartLabelACTV"
+            app:layout_constraintTop_toBottomOf="@+id/chartLabelContainerCL"
             tools:visibility="visible">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/WOUND_GENIUS_SDK_cm_square_label" />
-
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/lineChart"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </LinearLayout>
+        </io.imito.woundgenius.sdk.internal.ui.view.chart.WoundGeniusChartLineView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/assessmentsRV"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:scrollbars="vertical"
         android:visibility="gone"
-        android:layout_marginBottom="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/captureModeButtonCL"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expandChartCL" />
+        app:layout_constraintTop_toBottomOf="@+id/lineChartContainerCL" />
 
     <View
         android:id="@+id/recyclerLockerV"
@@ -158,10 +160,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:visibility="gone"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/sample_app_background_red_round"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/captureModeButtonCL"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -227,7 +229,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/sample_app_background_red_round"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/startMagicAssessmentButtonCL"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteX="15dp">
@@ -251,6 +253,39 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/startMagicAssessmentButtonCL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/sample_app_background_red_round"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteX="15dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/startMagicAssessmentLabelACTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
+            android:gravity="center"
+            android:text="Start Magic Assessment"
+            android:textColor="@color/sample_app_white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ProgressBar
         android:id="@+id/paginationProgressB"
         android:layout_width="wrap_content"
@@ -261,5 +296,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarCL" />
+
+    <io.imito.woundgenius.sdk.internal.ui.view.bodypart.WGBodyPartPickerFrontBackView
+        android:id="@+id/selectedBodyPartPreview"
+        android:layout_width="320dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        android:layout_height="240dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

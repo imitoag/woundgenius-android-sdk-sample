@@ -20,7 +20,7 @@
         tools:src="@tools:sample/backgrounds/scenic"
         tools:visibility="visible" />
 
-    <io.imito.woundgenius.sdk.utils.image.drawstroke.StrokeScalableImageView
+    <io.imito.woundgenius.sdk.internal.ui.view.outline.StrokeScalableImageView
         android:id="@+id/imageSSIV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,7 +32,7 @@
         android:id="@+id/boundaryLabelListRV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layoutManager="io.imito.woundgenius.sdk.ui.view.flexbox.FlexboxLayoutManager"
+        app:layoutManager="io.imito.woundgenius.sdk.internal.ui.view.flexbox.FlexboxLayoutManager"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"/>
 

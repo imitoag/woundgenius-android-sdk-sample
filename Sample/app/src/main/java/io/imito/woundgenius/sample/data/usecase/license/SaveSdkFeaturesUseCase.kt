@@ -2,7 +2,7 @@ package io.imito.woundgenius.sample.data.usecase.license
 
 import io.imito.woundgenius.sample.data.repo.SampleAppRepo
 import io.imito.woundgenius.sample.data.usecase.base.AbsUseCase
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
 import io.reactivex.Observable
 import javax.inject.Inject
 

@@ -5,39 +5,52 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.ColorStateList
 import android.content.res.Configuration
-import android.graphics.Point
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Parcelable
+import android.util.Log
 import android.view.View
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
+import com.davemorrissey.labs.subscaleview.ImageSource
 import io.imito.woundgenius.sample.R
 import io.imito.woundgenius.sample.data.pojo.assessment.SampleAssessmentEntity
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_AREA_TYPE
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_MEASUREMENT_LINE_TYPE
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_LENGTH_PREFIX
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_LINE_TYPE
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_OUTLINE_TYPE
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_WIDTH_PREFIX
+import io.imito.woundgenius.sdk.internal.data.pojo.media.MediaModel
 import io.imito.woundgenius.sample.databinding.SampleAppActivityMeasurementResultHolderBinding
 import io.imito.woundgenius.sample.ui.screen.base.AbsActivity
-import io.imito.woundgenius.sdk.data.pojo.measurement.MeasurementMetadata
-import io.imito.woundgenius.sdk.data.pojo.measurement.OutlineModel
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
-import io.imito.woundgenius.sdk.ui.screen.measurementresult.common.MeasurementsItemsAdapter
-import io.imito.woundgenius.sdk.utils.DarkModeUtils.isDarkModeEnabled
-import io.imito.woundgenius.sdk.utils.LandscapeUtils.isSDKSupportPortraitOnly
-import io.imito.woundgenius.sdk.utils.LandscapeUtils.onConfigurationChange
-import io.imito.woundgenius.sdk.utils.MeasurementMetadataUtils.groupAndIndexByType
-import java.io.Serializable
+import io.imito.woundgenius.sdk.internal.data.pojo.measurement.MeasurementMetadata
+import io.imito.woundgenius.sdk.internal.data.pojo.measurement.OutlineModel
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_AREA_TYPE
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_LENGTH_PREFIX
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_LINE_TYPE
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_MEASUREMENT_LINE_TYPE
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_OUTLINE_TYPE
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_WIDTH_PREFIX
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
+import io.imito.woundgenius.sdk.internal.data.pojo.image.ImageResolution
+import io.imito.woundgenius.sdk.internal.ui.screen.measurementresult.common.MeasurementsItemsAdapter
+import io.imito.woundgenius.sdk.internal.utils.system.DarkModeUtils.isDarkModeEnabled
+import io.imito.woundgenius.sdk.internal.utils.system.LandscapeUtils.isSDKSupportPortraitOnly
+import io.imito.woundgenius.sdk.internal.utils.system.LandscapeUtils.onConfigurationChange
+import io.imito.woundgenius.sdk.internal.utils.measurements.MeasurementMetadataUtils.groupAndIndexByType
+import kotlinx.parcelize.Parcelize
 import java.text.DecimalFormat
 
 class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewModel>() {
 
-    private val args by lazy { intent.getSerializableExtra(EXTRA_ARGS) as? Args }
+    private val args by lazy { intent.getParcelableExtra(EXTRA_ARGS) as? Args }
 
     override fun provideViewModelClass() = MeasurementResultHolderViewModel::class
     override fun provideLayoutId() = R.layout.sample_app_activity_measurement_result_holder
@@ -56,7 +69,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
 
     private val measurementsItemsAdapter by lazy {
         args?.run {
-        MeasurementsItemsAdapter(
+            MeasurementsItemsAdapter(
                 needContinue = false,
                 onDepthChange = { depthList ->
                 }
@@ -71,11 +84,11 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
 
         val orientation = resources.configuration.orientation
 
-        if (!WoundGeniusSDK.getIsLandscapeSupported()) {
+        if (!WoundGeniusSDK.getConfiguration().isLandscapeSupported) {
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         } else {
             if (isSDKSupportPortraitOnly(
-                    WoundGeniusSDK.getIsLandscapeSupported(),
+                    WoundGeniusSDK.getConfiguration().isLandscapeSupported,
                     this@MeasurementResultHolderActivity
                 )
             ) {
@@ -104,14 +117,28 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
 
         binding.measurementsItemsRV.adapter = measurementsItemsAdapter
         val draftMediaList = args?.assessmentEntity?.media ?: emptyList()
+        val hasMedia = draftMediaList.isNotEmpty() &&
+                !draftMediaList.firstOrNull()?.image.isNullOrEmpty()
+        val hasMeasurement = draftMediaList.any {
+            it.metadata?.measurementData?.annotationList?.isNotEmpty() == true
+        }
+        val isMagicAssessment = args?.assessmentEntity?.magicAssessment == true
+
         viewModel?.apply {
+            Log.d("Unit","hasMedia = ${hasMedia} isMagicAssessment = ${isMagicAssessment} hasMeasurement = ${hasMeasurement}")
             setUpAssessmentImagePager(
-                args?.assessmentEntity?.media ?: emptyList(),
+                draftMediaList,
                 args?.assessmentEntity?.stomaDocumentation ?: false
             )
 
-            val metadata = draftMediaList[0].metadata
-            prepareMediaMetaDataResultUi(metadata)
+            when {
+                !hasMedia -> showEmptyMediaPlaceholder()
+                isMagicAssessment && !hasMeasurement -> showImageOnly(draftMediaList.firstOrNull()?.image ?:"")
+                else -> {
+                    val metadata = draftMediaList[0].metadata
+                    prepareMediaMetaDataResultUi(metadata)
+                }
+            }
         }
         setUpUiTheme()
     }
@@ -126,7 +153,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
             var formsColor: Int? = null
             var measurementValueColor: Int? = null
 
-            backgroundColor = WoundGeniusSDK.getLightBackgroundColor()?.let {
+            backgroundColor = WoundGeniusSDK.getConfiguration().lightBackgroundColor?.let {
                 getColor(
                     it.toInt()
                 )
@@ -134,14 +161,14 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                 R.color.sample_app_background
             )
 
-            dividerColor = WoundGeniusSDK.getValueDividersColor()?.let {
+            dividerColor = WoundGeniusSDK.getConfiguration().valueDividersColor?.let {
                 getColor(
                     it.toInt()
                 )
             } ?: getColor(
                 R.color.sample_app_light_grey
             )
-            formsColor = WoundGeniusSDK.getFormsColor()?.let {
+            formsColor = WoundGeniusSDK.getConfiguration().measurementFormsColor?.let {
                 getColor(
                     it.toInt()
                 )
@@ -149,7 +176,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                 R.color.sample_app_forms_color
             )
 
-            measurementValueColor = WoundGeniusSDK.getMeasurementResultColor()?.let {
+            measurementValueColor = WoundGeniusSDK.getConfiguration().measurementResultColor?.let {
                 getColor(
                     it.toInt()
                 )
@@ -157,14 +184,14 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                 R.color.sample_app_measurement_value_text_color
             )
 
-            primaryButtonColor = WoundGeniusSDK.getPrimaryButtonColor()?.let {
+            primaryButtonColor = WoundGeniusSDK.getConfiguration().primaryButtonColor?.let {
                 getColor(
                     it.toInt()
                 )
             } ?: getColor(
                 R.color.sample_app_button_color
             )
-            textColor = WoundGeniusSDK.getTextColor()?.let {
+            textColor = WoundGeniusSDK.getConfiguration().textColor?.let {
                 getColor(
                     it.toInt()
                 )
@@ -189,7 +216,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
             textColor?.let { textColor ->
                 allAreasACTV.setTextColor(textColor)
                 areaACTV.setTextColor(textColor)
-                circumferenceACTV.setTextColor(textColor)
+                maxDepthACTV.setTextColor(textColor)
             }
             dividerColor?.let { dividerColor ->
                 totalAreaValueDividerV.setBackgroundColor(dividerColor)
@@ -199,7 +226,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
             }
             measurementValueColor?.let { measurementValueColor ->
                 totalAreaValueACTV.setTextColor(measurementValueColor)
-                totalCircumferenceValueACTV.setTextColor(measurementValueColor)
+                maxDepthValueACTV.setTextColor(measurementValueColor)
             }
         }
     }
@@ -208,120 +235,133 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
         super.onResume()
 
         val window = this.window
-        WindowInsetsControllerCompat(window, binding.root).isAppearanceLightStatusBars = !isDarkModeEnabled(this@MeasurementResultHolderActivity)
+        WindowInsetsControllerCompat(window, binding.root).isAppearanceLightStatusBars =
+            !isDarkModeEnabled(this@MeasurementResultHolderActivity)
     }
 
     private fun prepareMediaMetaDataResultUi(metadata: MediaModel.Metadata?) {
         args?.apply {
             val metadataList = ArrayList<MeasurementMetadata>()
-            metadata?.measurementData?.annotationList?.sortedBy { it?.id }?.forEach { annotationItem ->
-                when (annotationItem?.type) {
-                    ANNOTATION_AREA_TYPE -> {
-                        val pointsList = annotationItem?.points
-                        val lines =
-                            metadata.measurementData?.annotationList?.filter { it?.type == ANNOTATION_LINE_TYPE }
-                        val widthLine = lines?.find { it?.prefix == ANNOTATION_WIDTH_PREFIX }
-                        val lengthLine = lines?.find { it?.prefix == ANNOTATION_LENGTH_PREFIX }
+            metadata?.measurementData?.annotationList?.sortedBy { it?.id }
+                ?.forEach { annotationItem ->
+                    when (annotationItem?.type) {
+                        ANNOTATION_AREA_TYPE -> {
+                            val pointsList = annotationItem?.points
+                            val lines =
+                                metadata.measurementData?.annotationList?.filter { it?.type == ANNOTATION_LINE_TYPE }
+                            val widthLine = lines?.find { it?.prefix == ANNOTATION_WIDTH_PREFIX }
+                            val lengthLine = lines?.find { it?.prefix == ANNOTATION_LENGTH_PREFIX }
 
-                        val widthA =
-                            pointsList?.indexOfFirst { it.pointX == widthLine?.pointA?.pointX && it.pointY == widthLine?.pointA?.pointY }
-                        val widthB =
-                            pointsList?.indexOfFirst { it.pointX == widthLine?.pointB?.pointX?.toInt() && it.pointY == widthLine?.pointB?.pointY?.toInt() }
-                        val lengthA =
-                            pointsList?.indexOfFirst { it.pointX == lengthLine?.pointA?.pointX && it.pointY == lengthLine?.pointA?.pointY }
-                        val lengthB =
-                            pointsList?.indexOfFirst { it.pointX == lengthLine?.pointB?.pointX?.toInt() && it.pointY == lengthLine?.pointB?.pointY?.toInt() }
+                            val widthA =
+                                pointsList?.indexOfFirst { it.x == widthLine?.pointA?.pointX?.toDouble() && it.y == widthLine?.pointA?.pointY?.toDouble() }
+                            val widthB =
+                                pointsList?.indexOfFirst { it.x == widthLine?.pointB?.pointX?.toDouble() && it.y == widthLine?.pointB?.pointY?.toDouble() }
+                            val lengthA =
+                                pointsList?.indexOfFirst { it.x == lengthLine?.pointA?.pointX?.toDouble() && it.y == lengthLine?.pointA?.pointY?.toDouble() }
+                            val lengthB =
+                                pointsList?.indexOfFirst { it.x == lengthLine?.pointB?.pointX?.toDouble() && it.y == lengthLine?.pointB?.pointY?.toDouble() }
 
-                        metadataList.add(
-                            MeasurementMetadata(
-                                area = annotationItem?.area ?: 0.0,
-                                circumference = annotationItem?.circumference ?: 0.0,
-                                length = lengthLine?.length ?: 0.0,
-                                width = widthLine?.width ?: 0.0,
-                                depth =  if (args?.assessmentEntity?.stomaDocumentation == true) {
-                                    (annotationItem?.depth ?: 0.0) * 10
-                                } else {
-                                    annotationItem?.depth ?: 0.0
-                                },
-                                vertices = pointsList?.map {
-                                    MeasurementMetadata.Point(it.pointX ?: 0, it.pointY ?: 0)
-                                } ?: emptyList(),
-                                lengthLine = MeasurementMetadata.Line(lengthA ?: -1, lengthB ?: -1),
-                                widthLine = MeasurementMetadata.Line(widthA ?: -1, widthB ?: -1),
-                                countPxInCm = (1.0 / (metadata.measurementData?.calibration?.unitPerPixel
-                                    ?: 1.0)).toInt(),
-                                order = annotationItem?.order ?: (metadataList.lastIndex + 1),
-                                id = annotationItem?.id ?: (metadataList.lastIndex + 1),
-                                type = if (args?.assessmentEntity?.stomaDocumentation == true) {
-                                    OutlineModel.OutlineType.STOMA
-                                } else {
-                                    OutlineModel.OutlineType.WOUND
-                                }
+                            metadataList.add(
+                                MeasurementMetadata(
+                                    area = annotationItem?.area ?: 0.0,
+                                    circumference = annotationItem?.circumference ?: 0.0,
+                                    length = lengthLine?.length ?: 0.0,
+                                    width = widthLine?.width ?: 0.0,
+                                    depth = if (args?.assessmentEntity?.stomaDocumentation == true) {
+                                        (annotationItem?.depth ?: 0.0)
+                                    } else {
+                                        (annotationItem?.depth ?: 0.0) / 10
+                                    },
+                                    vertices = pointsList?.map {
+                                        PointD(it.x ?: 0.0, it.y ?: 0.0)
+                                    } ?: emptyList(),
+                                    lengthLine = MeasurementMetadata.Line(
+                                        lengthA ?: -1,
+                                        lengthB ?: -1
+                                    ),
+                                    widthLine = MeasurementMetadata.Line(
+                                        widthA ?: -1,
+                                        widthB ?: -1
+                                    ),
+                                    countPxInCm = (1.0 / (metadata.measurementData?.calibration?.unitPerPixel
+                                        ?: 1.0)).toInt(),
+                                    order = annotationItem?.order ?: (metadataList.lastIndex + 1),
+                                    id = annotationItem?.id ?: (metadataList.lastIndex + 1),
+                                    type = if (args?.assessmentEntity?.stomaDocumentation == true) {
+                                        OutlineModel.OutlineType.STOMA
+                                    } else {
+                                        OutlineModel.OutlineType.WOUND
+                                    }
+                                )
                             )
-                        )
-                    }
-                    ANNOTATION_MEASUREMENT_LINE_TYPE -> {
-                        val pointsList = annotationItem?.points
+                        }
 
-                        metadataList.add(
-                            MeasurementMetadata(
-                                length = annotationItem?.length ?: 0.0,
-                                vertices = pointsList?.map {
-                                    MeasurementMetadata.Point(it.pointX ?: 0, it.pointY ?: 0)
-                                } ?: emptyList(),
-                                countPxInCm = (1.0 / (metadata.measurementData?.calibration?.unitPerPixel
-                                    ?: 1.0)).toInt(),
-                                order = annotationItem?.order ?: (metadataList.lastIndex + 1),
-                                id = annotationItem?.id ?: (metadataList.lastIndex + 1),
-                                type = OutlineModel.OutlineType.MEASUREMENT_LINE
+                        ANNOTATION_MEASUREMENT_LINE_TYPE -> {
+                            val pointsList = annotationItem?.points
+
+                            metadataList.add(
+                                MeasurementMetadata(
+                                    length = annotationItem?.length ?: 0.0,
+                                    vertices = pointsList?.map {
+                                        PointD(it.x ?: 0.0, it.y ?: 0.0)
+                                    } ?: emptyList(),
+                                    countPxInCm = (1.0 / (metadata.measurementData?.calibration?.unitPerPixel
+                                        ?: 1.0)).toInt(),
+                                    order = annotationItem?.order ?: (metadataList.lastIndex + 1),
+                                    id = annotationItem?.id ?: (metadataList.lastIndex + 1),
+                                    type = OutlineModel.OutlineType.MEASUREMENT_LINE
+                                )
                             )
-                        )
-                    }
-                    ANNOTATION_OUTLINE_TYPE -> {
-                        val pointsList = annotationItem?.points
-                        val widthLine = Pair(annotationItem?.widthPointA, annotationItem?.widthPointB)
-                        val lengthLine =
-                            Pair(annotationItem?.lengthPointA, annotationItem?.lengthPointB)
+                        }
 
-                        val widthA =
-                            pointsList?.indexOfFirst { it.pointX == widthLine.first?.pointX?.toInt() && it.pointY == widthLine.first?.pointY?.toInt() }
-                        val widthB =
-                            pointsList?.indexOfFirst { it.pointX == widthLine.second?.pointX?.toInt() && it.pointY == widthLine.second?.pointY?.toInt() }
-                        val lengthA =
-                            pointsList?.indexOfFirst { it.pointX == lengthLine.first?.pointX?.toInt() && it.pointY == lengthLine.first?.pointY?.toInt() }
-                        val lengthB =
-                            pointsList?.indexOfFirst { it.pointX == lengthLine.second?.pointX?.toInt() && it.pointY == lengthLine.second?.pointY?.toInt() }
+                        ANNOTATION_OUTLINE_TYPE -> {
+                            val pointsList = annotationItem?.points
+                            val widthLine =
+                                Pair(annotationItem?.widthPointA, annotationItem?.widthPointB)
+                            val lengthLine =
+                                Pair(annotationItem?.lengthPointA, annotationItem?.lengthPointB)
 
-                        metadataList.add(
-                            MeasurementMetadata(
-                                area = annotationItem?.area ?: 0.0,
-                                circumference = annotationItem?.circumference ?: 0.0,
-                                length = annotationItem?.length ?: 0.0,
-                                width = annotationItem?.width ?: 0.0,
-                                depth =  if (args?.assessmentEntity?.stomaDocumentation == true) {
-                                    (annotationItem?.depth ?: 0.0) * 10
-                                } else {
-                                    annotationItem?.depth ?: 0.0
-                                },
-                                vertices = pointsList?.map {
-                                    MeasurementMetadata.Point(it.pointX ?: 0, it.pointY ?: 0)
-                                } ?: emptyList(),
-                                lengthLine = MeasurementMetadata.Line(lengthA ?: -1, lengthB ?: -1),
-                                widthLine = MeasurementMetadata.Line(widthA ?: -1, widthB ?: -1),
-                                countPxInCm = (1.0 / (metadata.measurementData?.calibration?.unitPerPixel
-                                    ?: 1.0)).toInt(),
-                                order = annotationItem?.order ?: (metadataList.lastIndex + 1),
-                                id = annotationItem?.id ?: (metadataList.lastIndex + 1),
-                                type = if (args?.assessmentEntity?.stomaDocumentation == true) {
-                                    OutlineModel.OutlineType.STOMA
-                                } else {
-                                    OutlineModel.OutlineType.WOUND
-                                }
+                            val widthA =
+                                pointsList?.indexOfFirst { it.x == widthLine.first?.pointX?.toDouble() && it.y == widthLine.first?.pointY?.toDouble() }
+                            val widthB =
+                                pointsList?.indexOfFirst { it.x == widthLine.second?.pointX?.toDouble() && it.y == widthLine.second?.pointY?.toDouble() }
+                            val lengthA =
+                                pointsList?.indexOfFirst { it.x == lengthLine.first?.pointX?.toDouble() && it.y == lengthLine.first?.pointY?.toDouble() }
+                            val lengthB =
+                                pointsList?.indexOfFirst { it.x == lengthLine.second?.pointX?.toDouble() && it.y == lengthLine.second?.pointY?.toDouble() }
+
+                            metadataList.add(
+                                MeasurementMetadata(
+                                    area = annotationItem?.area ?: 0.0,
+                                    circumference = annotationItem?.circumference ?: 0.0,
+                                    length = annotationItem?.length ?: 0.0,
+                                    width = annotationItem?.width ?: 0.0,
+                                    depth = (annotationItem?.depth ?: 0.0) / 10,
+                                    vertices = pointsList?.map {
+                                        PointD(it.x ?: 0.0, it.y ?: 0.0)
+                                    } ?: emptyList(),
+                                    lengthLine = MeasurementMetadata.Line(
+                                        lengthA ?: -1,
+                                        lengthB ?: -1
+                                    ),
+                                    widthLine = MeasurementMetadata.Line(
+                                        widthA ?: -1,
+                                        widthB ?: -1
+                                    ),
+                                    countPxInCm = (1.0 / (metadata.measurementData?.calibration?.unitPerPixel
+                                        ?: 1.0)).toInt(),
+                                    order = annotationItem?.order ?: (metadataList.lastIndex + 1),
+                                    id = annotationItem?.id ?: (metadataList.lastIndex + 1),
+                                    type = if (args?.assessmentEntity?.stomaDocumentation == true) {
+                                        OutlineModel.OutlineType.STOMA
+                                    } else {
+                                        OutlineModel.OutlineType.WOUND
+                                    }
+                                )
                             )
-                        )
+                        }
                     }
                 }
-            }
             setUpMetadataUi(metadataList)
         }
     }
@@ -331,19 +371,19 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
             val indexedMetadataList = groupAndIndexByType(metadataList)
 
 
-            val allVertexesList = ArrayList<List<Point>>()
+            val allVertexesList = ArrayList<List<PointD>>()
             val widthIndexes = ArrayList<Pair<Int?, Int?>>()
             val lengthIndexes = ArrayList<Pair<Int?, Int?>>()
             val areaList = ArrayList<Double>()
             var totalArea = 0.0
-            var totalCircumference = 0.0
+            var maxDepth: Double? = null
             metadataList.forEachIndexed { index, boundaryMetadata ->
                 boundaryMetadata.apply {
                     boundaryMetadata.vertices?.let {
                         allVertexesList.add(it.map {
-                            Point(
-                                (it.x),
-                                (it.y)
+                            PointD(
+                                (it.x ?: 0.0),
+                                (it.y ?: 0.0)
                             )
                         })
                     }
@@ -363,8 +403,8 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                     if (area != null) {
                         totalArea += area!!
                     }
-                    if (circumference != null) {
-                        totalCircumference += circumference!!
+                    if ((depth ?: 0.0) > (maxDepth ?: 0.0)) {
+                        maxDepth = depth
                     }
                 }
             }
@@ -377,12 +417,12 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
 
                         if (areaList.size <= 1) {
                             woundContainerCL.isVisible = false
-                            totalCircumferenceValueACTV.isVisible = false
-                            circumferenceACTV.isVisible = false
+                            maxDepthValueACTV.isVisible = false
+                            maxDepthACTV.isVisible = false
                         } else {
                             woundContainerCL.isVisible = true
-                            totalCircumferenceValueACTV.isVisible = true
-                            circumferenceACTV.isVisible = true
+                            maxDepthValueACTV.isVisible = true
+                            maxDepthACTV.isVisible = true
                         }
 
                         measurementsItemsAdapter?.setData(indexedMetadataList)
@@ -391,17 +431,23 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                                 io.imito.woundgenius.sdk.R.string.WOUND_GENIUS_SDK_cm_square,
                                 decimalFormat.format(totalArea)
                             )
-                        totalCircumferenceValueACTV.text =
-                            getString(
-                                io.imito.woundgenius.sdk.R.string.WOUND_GENIUS_SDK_cm_square,
-                                decimalFormat.format(totalCircumference)
-                            )
+                        maxDepthValueACTV.text =
+                            if (maxDepth != null) {
+                                getString(
+                                    io.imito.woundgenius.sdk.R.string.WOUND_GENIUS_SDK_mm,
+                                    decimalFormat.format((maxDepth ?: 0.0) * 10)
+                                )
+                            } else {
+                                getString(R.string.WOUND_GENIUS_SDK_not_a_number)
+                            }
 
-                        circumferenceACTV.isVisible = WoundGeniusSDK.getIsShowTotalCircumference()
-                        totalCircumferenceValueACTV.isVisible =
-                            WoundGeniusSDK.getIsShowTotalCircumference()
+
+                        maxDepthACTV.isVisible =
+                            WoundGeniusSDK.getConfiguration().showTotalCircumference
+                        maxDepthValueACTV.isVisible =
+                            WoundGeniusSDK.getConfiguration().showTotalCircumference
                         totalAreaValueDividerV.isInvisible =
-                            !WoundGeniusSDK.getIsShowTotalCircumference()
+                            !WoundGeniusSDK.getConfiguration().showTotalCircumference
                     }
                 }
             }
@@ -410,13 +456,24 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
 
     private fun setUpAssessmentImagePager(draftMediaList: List<MediaModel>, isStoma: Boolean) {
         binding.apply {
+            val mediaWithImage = draftMediaList.filter { !it.image.isNullOrEmpty() }
+
+            if (mediaWithImage.isEmpty()) {
+                imagesPagerVP2.isVisible = false
+                indicatorSPI.isVisible = false
+                return
+            }
+
+            emptyMediaPlaceholderACIV.isVisible = false
+            imagesPagerVP2.isVisible = true
+
             (imagesPagerVP2.getChildAt(0) as RecyclerView).layoutManager?.isItemPrefetchEnabled =
                 false
             (imagesPagerVP2.getChildAt(0) as RecyclerView).setItemViewCacheSize(1)
             imagesPagerVP2.adapter =
                 AssessmentImagesPagerAdapter(
                     this@MeasurementResultHolderActivity,
-                    ArrayList(draftMediaList),
+                    ArrayList(mediaWithImage),
                     isStoma
                 ).apply {
                     assessmentImagesPagerAdapter = this
@@ -424,19 +481,46 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
             indicatorSPI.attachToPager(imagesPagerVP2)
             indicatorSPI.invalidate()
             indicatorSPI.reattach()
-            if (draftMediaList.size == 1) {
+            if (mediaWithImage.size == 1) {
                 indicatorSPI.isVisible = false
             }
-            if (draftMediaList.isNotEmpty()) {
-                imagesPagerVP2.setCurrentItem(0, true)
-            }
+            imagesPagerVP2.setCurrentItem(0, true)
             imagesPagerVP2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    val metadata = draftMediaList[position].metadata
+                    val metadata = mediaWithImage[position].metadata
                     prepareMediaMetaDataResultUi(metadata)
                 }
             })
+        }
+    }
+
+    private fun showEmptyMediaPlaceholder() {
+        binding.apply {
+            emptyMediaPlaceholderACIV.isVisible = true
+            imagesPagerVP2.isVisible = false
+            indicatorSPI.isVisible = false
+            measurementsCL.isVisible = false
+            woundContainerCL.isVisible = false
+            measurementsItemsRV.isVisible = false
+            regularImageACIV.isVisible = false
+        }
+    }
+
+    private fun showImageOnly(imagePath: String) {
+        binding.apply {
+            Log.d("Unit","showImageOnly")
+            emptyMediaPlaceholderACIV.isVisible = false
+            measurementsCL.isVisible = false
+            woundContainerCL.isVisible = false
+            measurementsItemsRV.isVisible = false
+            imagesPagerVP2.isVisible = false
+            regularImageACIV.isVisible = true
+            Log.d("Unit","imagePath = ${imagePath}")
+                Glide.with(this@MeasurementResultHolderActivity)
+                    .load(imagePath)
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
+                    .into(regularImageACIV)
         }
     }
 
@@ -451,9 +535,10 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
         private const val STOMA_ITEM_PATTERN = "%d"
         private const val ONE = "1"
 
+        @Parcelize
         private data class Args(
             val assessmentEntity: SampleAssessmentEntity
-        ) : Serializable
+        ) : Parcelable
 
         fun open(
             context: Context,

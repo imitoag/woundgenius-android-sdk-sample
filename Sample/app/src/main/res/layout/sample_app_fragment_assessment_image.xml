@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <io.imito.woundgenius.sdk.utils.image.drawstroke.StrokeScalableImageView
+        <io.imito.woundgenius.sdk.internal.ui.view.outline.StrokeScalableImageView
             android:id="@+id/imageSSIV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
