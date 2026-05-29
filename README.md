@@ -19,7 +19,7 @@ To launch the Sample App, perform the following actions:
 
 • Add the properties username=GITHUB_USERID and token=PERSONAL_ACCESS_TOKEN. Replace GITHUB_USERID with personal / organisation Github User ID and PERSONAL_ACCESS_TOKEN with the token generated in Step 3.
 
-• Add the following code to build.gradle inside the project gradle
+• Add the following code to build.gradle inside the project gradle 
 
 ```ruby   
  repositories {
