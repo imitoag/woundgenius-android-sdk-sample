@@ -4,8 +4,6 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -17,8 +15,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import com.google.gson.Gson
-import io.imito.wizard.api.AssessmentWizardLauncher
-import io.imito.wizard.api.model.WizardAssessmentResult
+import io.imito.woundgenius.sdk.internal.managers.wizard.AssessmentWizardLauncher
+import io.imito.wizard.api.model.WizardInputConfig
+import io.imito.woundgenius.sdk.internal.managers.wizard.WizardAssessmentResult
 import io.imito.woundgenius.sample.BuildConfig
 import io.imito.woundgenius.sample.R
 import io.imito.woundgenius.sample.data.pojo.assessment.SampleAssessmentEntity
@@ -37,6 +36,7 @@ import io.imito.woundgenius.sdk.internal.data.pojo.measurement.MeasurementResult
 import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_AREA_TYPE
 import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_OUTLINE_TYPE
 import io.imito.woundgenius.sdk.internal.ui.dialog.center.ImitoCenterScreenDialog
+import io.imito.woundgenius.sdk.internal.ui.dialog.splashscreen.SplashScreenDialog
 import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPartContract
 import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPickerActivity
 import io.imito.woundgenius.sdk.internal.ui.screen.measurecamera.MeasureCameraActivity
@@ -48,7 +48,6 @@ import io.imito.woundgenius.sdk.internal.utils.keys.Constants.MIME_TYPE_JSON
 import io.imito.woundgenius.sdk.internal.utils.keys.Constants.UTC_DATE_FORMAT_PATTERN
 import io.imito.woundgenius.sdk.internal.utils.system.LandscapeUtils.isSupportPortraitOnly
 import io.imito.woundgenius.sdk.internal.utils.system.LandscapeUtils.onConfigurationChange
-import okhttp3.internal.toHexString
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -88,7 +87,7 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
         }
     }
 
-    private val magicAssessmentLauncher: ActivityResultLauncher<Unit> = registerForActivityResult(
+    private val magicAssessmentLauncher: ActivityResultLauncher<WizardInputConfig> = registerForActivityResult(
         AssessmentWizardLauncher.createContract()
     ) { wizardAssessmentResult: WizardAssessmentResult ->
         when (wizardAssessmentResult) {
@@ -97,11 +96,9 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                 Log.e("Unit",wizardAssessmentResult.toString())
                 viewModel?.saveMagicAssessmentToDB(wizardAssessmentResult)
             }
-
             is WizardAssessmentResult.Failure -> {
                 Log.e("woundGeniusError",wizardAssessmentResult.error.stackTraceToString())
             }
-
             is WizardAssessmentResult.Canceled -> {
 
             }
@@ -219,11 +216,17 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                         viewModel?.openNoLicenseKeyDialog()
                     } else {
                         if (woundGeniusSDK.getConfiguration()?.availableModes?.isNotEmpty() == true) {
-                            MeasureCameraActivity.openWithResult(
-                                launcher = measureCameraLauncher,
-                                fragment = this@HomeScreenFragment,
-                                mediaFolder = mediaFolder.absolutePath
-                            )
+                            context?.let {
+                                if (childFragmentManager.findFragmentByTag(SplashScreenDialog.TAG) == null) {
+                                    SplashScreenDialog.getInstance(onProceed = {
+                                        MeasureCameraActivity.openWithResult(
+                                            launcher = measureCameraLauncher,
+                                            fragment = this@HomeScreenFragment,
+                                            mediaFolder = mediaFolder.absolutePath
+                                        )
+                                    }).show(childFragmentManager, SplashScreenDialog.TAG)
+                                }
+                            }
                         } else {
                             ImitoCenterScreenDialog.getNoLicenseKeyDialog(
                                 titleText = getString(R.string.WOUND_GENIUS_SDK_SDK_NO_ENABLED_CAMERA_MODS_DIALOG_TITLE),
@@ -240,7 +243,17 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
             }
             startMagicAssessmentButtonCL.setOnClickListener {
                 context?.let { context ->
-                    magicAssessmentLauncher.launch(Unit)
+                    if (childFragmentManager.findFragmentByTag(SplashScreenDialog.TAG) == null) {
+                        SplashScreenDialog.getInstance(onProceed = {
+
+                            val inputConfig = WizardInputConfig(
+                                cacheFolder = context.cacheDir
+                            )
+
+                            magicAssessmentLauncher.launch(inputConfig)
+
+                        }).show(childFragmentManager, SplashScreenDialog.TAG)
+                    }
                 }
             }
             licenseKeyButtonCL.setOnClickListener {

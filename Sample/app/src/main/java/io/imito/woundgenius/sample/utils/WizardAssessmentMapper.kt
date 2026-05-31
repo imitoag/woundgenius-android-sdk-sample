@@ -1,11 +1,12 @@
 package io.imito.woundgenius.sample.utils
 
-import io.imito.wizard.api.model.WizardAssessmentResult
 import io.imito.wizard.api.model.WizardMediaModel
 import io.imito.woundgenius.sample.data.pojo.assessment.SampleAssessmentEntity
+import io.imito.woundgenius.sample.utils.toMediaMetadata
 import io.imito.woundgenius.sdk.internal.data.pojo.camera.mode.ImitoCameraMode
 import io.imito.woundgenius.sdk.internal.data.pojo.media.MediaModel
 import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD
+import io.imito.woundgenius.sdk.internal.managers.wizard.WizardAssessmentResult
 import io.imito.woundgenius.sdk.internal.utils.keys.Constants.SERVER_DATE_TIME_PATTERN
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -16,8 +17,8 @@ fun WizardAssessmentResult.Success.toSampleAssessmentEntity(
     patientId: String? = null,
     woundId: String? = null
 ): SampleAssessmentEntity {
-    val imagePath = imageOriginal?.absolutePath
-    val convertedMetadata = measurements?.toMediaMetadata()
+    val imagePath = image?.absolutePath
+    val convertedMetadata = measurements
 
     val media: ArrayList<MediaModel>? = if (imagePath != null) {
         val mediaModel = MediaModel(
@@ -79,7 +80,7 @@ private fun WizardMediaModel.Metadata.MeasurementData.Annotation.toMediaAnnotati
         prefix = prefix,
         length = length,
         width = width,
-        depth = depth,
+        depth = depthInCM,
         cluster = cluster,
         order = order,
         id = id,
