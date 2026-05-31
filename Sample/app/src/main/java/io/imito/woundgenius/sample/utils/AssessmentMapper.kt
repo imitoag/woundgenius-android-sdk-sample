@@ -25,20 +25,7 @@ fun MeasurementResult.toSampleAssessmentEntity(
 ): SampleAssessmentEntity {
 
 
-    val annotationList = this.outlines.map { it.toOldAnnotation() }
-    val mlAnnotationList = ArrayList(this.mlOutlines.map { it.toOldAnnotation() })
-
-
-    val oldMetadata = MediaModel.Metadata(
-        measurementData = MediaModel.Metadata.MeasurementData(
-            annotationList = annotationList,
-            mlAnnotationList = mlAnnotationList,
-            calibration = MediaModel.Metadata.MeasurementData.Calibration(
-                unit = "CM",
-                unitPerPixel = this.lengthOfOneCmInPixels
-            )
-        )
-    )
+    val oldMetadata = this.toMediaMetadata()
 
 
     val mediaModel = MediaModel(
@@ -101,6 +88,19 @@ fun getImageDimensions(filePath: String): ImageResolution {
         ImageResolution(0, 0)
     }
 }
+
+
+fun MeasurementResult.toMediaMetadata(): MediaModel.Metadata =
+    MediaModel.Metadata(
+        measurementData = MediaModel.Metadata.MeasurementData(
+            annotationList = outlines.map { it.toOldAnnotation() },
+            mlAnnotationList = ArrayList(mlOutlines.map { it.toOldAnnotation() }),
+            calibration = MediaModel.Metadata.MeasurementData.Calibration(
+                unit = "CM",
+                unitPerPixel = lengthOfOneCmInPixels
+            )
+        )
+    )
 
 
 private fun MeasuredOutline.toOldAnnotation(): MediaModel.Metadata.MeasurementData.Annotation {

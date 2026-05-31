@@ -3,6 +3,7 @@ package io.imito.woundgenius.sample.ui.screen.homescreen
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.imito.woundgenius.sdk.internal.managers.wizard.WizardAssessmentResult
 import io.imito.woundgenius.sample.data.pojo.assessment.SampleAssessmentEntity
 import io.imito.woundgenius.sample.data.pojo.license.SdkFeatureStatus
 import io.imito.woundgenius.sample.data.usecase.assessment.DeleteDraftAssessmentByIdUseCase
@@ -17,7 +18,6 @@ import io.imito.woundgenius.sdk.internal.data.pojo.license.LicenseErrorType
 import io.imito.woundgenius.sdk.internal.data.pojo.license.LicenseValidateResult
 import io.imito.woundgenius.sdk.internal.data.pojo.measurement.MeasurementResult
 import io.imito.woundgenius.sdk.api.WoundGeniusSDK
-import io.imito.woundgenius.sdk.internal.managers.wizard.WizardAssessmentResult
 import javax.inject.Inject
 
 class HomeScreenViewModel @Inject constructor(
