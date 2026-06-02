@@ -7,11 +7,6 @@
   <packaging>aar</packaging>
   <dependencies>
     <dependency>
-      <groupId>com.google.firebase</groupId>
-      <artifactId>firebase-crashlytics-buildtools</artifactId>
-      <version>3.0.6</version>
-    </dependency>
-    <dependency>
       <groupId>androidx.test.espresso</groupId>
       <artifactId>espresso-contrib</artifactId>
       <version>3.7.0</version>

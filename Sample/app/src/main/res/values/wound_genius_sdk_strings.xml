@@ -1284,4 +1284,10 @@ Alternatively, delete all detected areas and draw the new one by yourself."
   <string name="WOUND_GENIUS_SDK_YEAR">
     "Year"
   </string>
+  <string name="WOUND_GENIUS_SDK_ONBOARDING_DIALOG_watch_video">
+    "Watch Video"
+  </string>
+  <string name="WOUND_GENIUS_SDK_NO_OPEN_WOUND_DETECTED_TRACE_MANUALLY">
+    "No open wound detected. Consider Re-taking a photo or add measurements by tracing the wound area manually with your finger."
+  </string>
 </resources>

@@ -3,13 +3,13 @@ package io.imito.woundgenius.sample.utils
 import io.imito.woundgenius.sample.data.pojo.assessment.SampleAssessmentEntity
 import io.imito.woundgenius.sdk.internal.data.pojo.camera.mode.ImitoCameraMode
 import io.imito.woundgenius.sdk.internal.data.pojo.media.MediaModel
-import io.imito.woundgenius.sdk.internal.managers.wizard.WizardAssessmentResult
+import io.imito.woundgenius.sdk.internal.managers.wizard.AssessmentWizardResult
 import io.imito.woundgenius.sdk.internal.utils.keys.Constants.SERVER_DATE_TIME_PATTERN
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 
-fun WizardAssessmentResult.Success.toSampleAssessmentEntity(
+fun AssessmentWizardResult.Success.toSampleAssessmentEntity(
     userId: String? = null,
     patientId: String? = null,
     woundId: String? = null

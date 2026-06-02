@@ -268,9 +268,9 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                                     length = lengthLine?.length ?: 0.0,
                                     width = widthLine?.width ?: 0.0,
                                     depth = if (args?.assessmentEntity?.stomaDocumentation == true) {
-                                        (annotationItem?.depth ?: 0.0)
+                                        (annotationItem?.depth ?: 0.0f)
                                     } else {
-                                        (annotationItem?.depth ?: 0.0) / 10
+                                        (annotationItem?.depth ?: 0.0f) / 10
                                     },
                                     vertices = pointsList?.map {
                                         PointD(it.x ?: 0.0, it.y ?: 0.0)
@@ -336,7 +336,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                                     circumference = annotationItem?.circumference ?: 0.0,
                                     length = annotationItem?.length ?: 0.0,
                                     width = annotationItem?.width ?: 0.0,
-                                    depth = (annotationItem?.depth ?: 0.0) / 10,
+                                    depth = (annotationItem?.depth ?: 0.0f) / 10,
                                     vertices = pointsList?.map {
                                         PointD(it.x ?: 0.0, it.y ?: 0.0)
                                     } ?: emptyList(),
@@ -376,7 +376,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
             val lengthIndexes = ArrayList<Pair<Int?, Int?>>()
             val areaList = ArrayList<Double>()
             var totalArea = 0.0
-            var maxDepth: Double? = null
+            var maxDepth: Float? = null
             metadataList.forEachIndexed { index, boundaryMetadata ->
                 boundaryMetadata.apply {
                     boundaryMetadata.vertices?.let {
@@ -403,7 +403,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                     if (area != null) {
                         totalArea += area!!
                     }
-                    if ((depth ?: 0.0) > (maxDepth ?: 0.0)) {
+                    if ((depth ?: 0.0f) > (maxDepth ?: 0.0f)) {
                         maxDepth = depth
                     }
                 }
@@ -435,7 +435,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                             if (maxDepth != null) {
                                 getString(
                                     io.imito.woundgenius.sdk.R.string.WOUND_GENIUS_SDK_mm,
-                                    decimalFormat.format((maxDepth ?: 0.0) * 10)
+                                    decimalFormat.format((maxDepth ?: 0.0f) * 10)
                                 )
                             } else {
                                 getString(R.string.WOUND_GENIUS_SDK_not_a_number)
@@ -451,6 +451,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                     }
                 }
             }
+            Log.e("Unit",metadataList.toString())
         }
     }
 

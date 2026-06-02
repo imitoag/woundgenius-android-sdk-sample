@@ -14,8 +14,8 @@ android {
     defaultConfig {
         minSdk 33
         targetSdk 36
-        versionCode 281
-        versionName "27.0.0.3"
+        versionCode 284
+        versionName "27.0.0.6"
         applicationId "io.imito.woundgenius.sample"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

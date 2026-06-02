@@ -15,9 +15,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import com.google.gson.Gson
-import io.imito.woundgenius.sdk.internal.managers.wizard.AssessmentWizardLauncher
 import io.imito.wizard.api.model.WizardInputConfig
-import io.imito.woundgenius.sdk.internal.managers.wizard.WizardAssessmentResult
 import io.imito.woundgenius.sample.BuildConfig
 import io.imito.woundgenius.sample.R
 import io.imito.woundgenius.sample.data.pojo.assessment.SampleAssessmentEntity
@@ -35,6 +33,8 @@ import io.imito.woundgenius.sdk.internal.data.pojo.license.SdkFeature
 import io.imito.woundgenius.sdk.internal.data.pojo.measurement.MeasurementResult
 import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_AREA_TYPE
 import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_OUTLINE_TYPE
+import io.imito.woundgenius.sdk.internal.managers.wizard.AssessmentWizardLauncher
+import io.imito.woundgenius.sdk.internal.managers.wizard.AssessmentWizardResult
 import io.imito.woundgenius.sdk.internal.ui.dialog.center.ImitoCenterScreenDialog
 import io.imito.woundgenius.sdk.internal.ui.dialog.splashscreen.SplashScreenDialog
 import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPartContract
@@ -81,7 +81,7 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
         MeasureCameraContract()
     ) { measurements: List<MeasurementResult>? ->
         if (!measurements.isNullOrEmpty()) {
-
+            Log.e("Unit",measurements.toString())
             binding.recyclerLockerV.visibility = View.VISIBLE
             viewModel?.saveAssessmentToDB(measurements)
         }
@@ -89,17 +89,17 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
 
     private val magicAssessmentLauncher: ActivityResultLauncher<WizardInputConfig> = registerForActivityResult(
         AssessmentWizardLauncher.createContract()
-    ) { wizardAssessmentResult: WizardAssessmentResult ->
+    ) { wizardAssessmentResult: AssessmentWizardResult ->
         when (wizardAssessmentResult) {
-            is WizardAssessmentResult.Success -> {
+            is AssessmentWizardResult.Success -> {
                 binding.recyclerLockerV.visibility = View.VISIBLE
                 Log.e("Unit",wizardAssessmentResult.toString())
                 viewModel?.saveMagicAssessmentToDB(wizardAssessmentResult)
             }
-            is WizardAssessmentResult.Failure -> {
+            is AssessmentWizardResult.Failure -> {
                 Log.e("woundGeniusError",wizardAssessmentResult.error.stackTraceToString())
             }
-            is WizardAssessmentResult.Canceled -> {
+            is AssessmentWizardResult.Canceled -> {
 
             }
         }

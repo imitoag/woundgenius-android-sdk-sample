@@ -1072,7 +1072,7 @@
     "Brauchen Sie Hilfe?"
   </string>
   <string name="WOUND_GENIUS_SDK_NEED_HELP_DIALOG_description">
-    "Tippen Sie hier für eine Kurzanleitung zur Verwendung von Kalibrierungsmarkern und anderen Aufnahmemodi"
+    "Tippe hier, um Dir die Kurzanleitung zur Verwendung von Kalibrierungsmarkern anzusehen. Du hast keine Marker? Probiere den Lineal-Modus aus."
   </string>
   <string name="WOUND_GENIUS_SDK_ONBOARDING_DIALOG_title">
     "Schnelleinstieg"
@@ -1265,8 +1265,22 @@ Alternativ können Sie auch alle erkannten Bereiche löschen und die Wunde selbs
   <string name="WOUND_GENIUS_SDK_CAPTURE_STOMA_AND_RULER_STATUS">
     "Stoma &amp; Lineal erfassen"
   </string>
-  <string name="WOUND_GENIUS_SDK_WEEK"/>
-  <string name="WOUND_GENIUS_SDK_TWO_WEEKS"/>
-  <string name="WOUND_GENIUS_SDK_MONTH"/>
-  <string name="WOUND_GENIUS_SDK_YEAR"/>
+  <string name="WOUND_GENIUS_SDK_WEEK">
+    "Woche"
+  </string>
+  <string name="WOUND_GENIUS_SDK_TWO_WEEKS">
+    "2 Wochen"
+  </string>
+  <string name="WOUND_GENIUS_SDK_MONTH">
+    "Monat"
+  </string>
+  <string name="WOUND_GENIUS_SDK_YEAR">
+    "Jahr"
+  </string>
+  <string name="WOUND_GENIUS_SDK_ONBOARDING_DIALOG_watch_video">
+    "Video ansehen"
+  </string>
+  <string name="WOUND_GENIUS_SDK_NO_OPEN_WOUND_DETECTED_TRACE_MANUALLY">
+    "Keine offene Wunde erkannt. Nimm ein neues Foto auf oder füge Messungen hinzu, indem Du die Wunde mit dem Finger umrandest."
+  </string>
 </resources>

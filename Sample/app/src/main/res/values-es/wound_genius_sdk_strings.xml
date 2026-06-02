@@ -1050,13 +1050,13 @@
     "¿Necesita ayuda?"
   </string>
   <string name="WOUND_GENIUS_SDK_NEED_HELP_DIALOG_description">
-    "Pulse aquí para consultar la guía rápida sobre el uso de los Marcadores de Calibración y otros modos de Captura"
+    "Pulsa aquí para consultar la guía rápida sobre el uso de los Marcadores de Calibración. ¿No tienes marcadores? Prueba el modo regla."
   </string>
   <string name="WOUND_GENIUS_SDK_ONBOARDING_DIALOG_title">
     "Inicio rápido"
   </string>
   <string name="WOUND_GENIUS_SDK_ONBOARDING_DIALOG_description">
-    "Coloque el marcador de calibración cerca de la herida, alinee el dispositivo en consecuencia y manténgalo firme para capturar. No pierda de vista la superposición verde para mejorar la detección de la herida."
+    "Coloque el marcador cerca de la herida, alinee el dispositivo y manténgalo firme. No pierda de vista la superposición verde para mejorar la detección de la herida."
   </string>
   <string name="WOUND_GENIUS_SDK_ONBOARDING_DIALOG_replay_video">
     "Reproducir vídeo"
@@ -1203,4 +1203,10 @@ O bien, elimine todas las zonas detectadas y dibuje una nueva ud. mismo."
   <string name="WOUND_GENIUS_SDK_TWO_WEEKS"/>
   <string name="WOUND_GENIUS_SDK_MONTH"/>
   <string name="WOUND_GENIUS_SDK_YEAR"/>
+  <string name="WOUND_GENIUS_SDK_ONBOARDING_DIALOG_watch_video">
+    "Ver vídeo"
+  </string>
+  <string name="WOUND_GENIUS_SDK_NO_OPEN_WOUND_DETECTED_TRACE_MANUALLY">
+    "No se detectó ninguna herida abierta. Vuelve a tomar la foto o añade las medidas trazando manualmente el contorno de la herida con el dedo."
+  </string>
 </resources>

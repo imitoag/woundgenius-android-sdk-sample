@@ -107,11 +107,11 @@ private fun MeasuredOutline.toOldAnnotation(): MediaModel.Metadata.MeasurementDa
     return MediaModel.Metadata.MeasurementData.Annotation(
         id = this.id,
         order = this.order,
-        area = this.areaInCM?.div(10),
+        area = this.areaInCM,
         length = this.lengthInCM,
         width = this.widthInCM,
         circumference = this.circumferenceInCM,
-        depth = this.depthCM?.times(10)?.toDouble(),
+        depth = this.depthCM?.times(10),
         cluster = this.cluster.name,
         type = when (this.cluster) {
             ImitoOutlineCluster.WOUND -> ANNOTATION_OUTLINE_TYPE

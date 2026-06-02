@@ -125,7 +125,7 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                                     circumference = areaAnnotationItem?.circumference ?: 0.0,
                                     length = lengthLine?.length ?: 0.0,
                                     width = widthLine?.width ?: 0.0,
-                                    depth = (areaAnnotationItem?.depth ?: 0.0) / 10,
+                                    depth = (areaAnnotationItem?.depth ?: 0.0f) / 10,
                                     vertices = pointsList?.map {
                                         PointD(
                                             (it.x) ?: 0.0,
@@ -194,7 +194,7 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                                             circumference = annotationItem?.circumference ?: 0.0,
                                             length = annotationItem?.length ?: 0.0,
                                             width = annotationItem?.width ?: 0.0,
-                                            depth = (annotationItem?.depth ?: 0.0) / 10,
+                                            depth = (annotationItem?.depth ?: 0.0f) / 10,
                                             vertices = pointsList?.map {
                                                 PointD(
                                                     (it.x) ?: 0.0,
@@ -290,7 +290,7 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                                 circumference = annotationItem?.circumference ?: 0.0,
                                 length = lengthLine?.length ?: 0.0,
                                 width = widthLine?.width ?: 0.0,
-                                depth = (annotationItem?.depth ?: 0.0) / 10,
+                                depth = (annotationItem?.depth ?: 0.0f) / 10,
                                 vertices = pointsList?.map {
                                     PointD(it.x ?: 0.0, it.y ?: 0.0)
                                 } ?: emptyList(),
@@ -345,7 +345,7 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
                                 circumference = annotationItem?.circumference ?: 0.0,
                                 length = annotationItem?.length ?: 0.0,
                                 width = annotationItem?.width ?: 0.0,
-                                depth = (annotationItem?.depth ?: 0.0) / 10,
+                                depth = (annotationItem?.depth ?: 0.0f) / 10,
                                 vertices = pointsList?.map {
                                     PointD(it.x ?: 0.0, it.y ?: 0.0)
                                 } ?: emptyList(),
