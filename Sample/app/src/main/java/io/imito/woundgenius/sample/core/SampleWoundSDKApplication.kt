@@ -68,6 +68,7 @@ class SampleWoundSDKApplication : MultiDexApplication(), HasAndroidInjector {
             primaryButtonColor = R.color.sample_app_button_color.toString(),
             maxNumberOfMedia = 100,
             isDepthOrHeightInputEnabled = true,
+            showTotalCircumference = false,
             isDarkThemeSupported = true,
             minNumberOfMedia = 0,
             autoDetectionMode = WoundAutoDetectionMode.NONE,

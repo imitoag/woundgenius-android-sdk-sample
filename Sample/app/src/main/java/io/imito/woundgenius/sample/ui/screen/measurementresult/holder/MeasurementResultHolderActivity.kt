@@ -11,7 +11,6 @@ import android.os.Parcelable
 import android.util.Log
 import android.view.View
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -435,19 +434,11 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                             if (maxDepth != null) {
                                 getString(
                                     io.imito.woundgenius.sdk.R.string.WOUND_GENIUS_SDK_mm,
-                                    decimalFormat.format((maxDepth ?: 0.0f) * 10)
+                                    Math.round((maxDepth ?: 0.0f) * 10).toString()
                                 )
                             } else {
                                 getString(R.string.WOUND_GENIUS_SDK_not_a_number)
                             }
-
-
-                        maxDepthACTV.isVisible =
-                            WoundGeniusSDK.getConfiguration().showTotalCircumference
-                        maxDepthValueACTV.isVisible =
-                            WoundGeniusSDK.getConfiguration().showTotalCircumference
-                        totalAreaValueDividerV.isInvisible =
-                            !WoundGeniusSDK.getConfiguration().showTotalCircumference
                     }
                 }
             }

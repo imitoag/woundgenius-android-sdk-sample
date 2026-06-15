@@ -41,6 +41,7 @@ import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPartContract
 import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPickerActivity
 import io.imito.woundgenius.sdk.internal.ui.screen.measurecamera.MeasureCameraActivity
 import io.imito.woundgenius.sdk.internal.ui.screen.measurecamera.MeasureCameraContract
+import io.imito.woundgenius.sdk.internal.ui.view.bodypart.WGBodyPartPickerFrontBackView
 import io.imito.woundgenius.sdk.internal.utils.bodypicker.BodyPartConverterUtils
 import io.imito.woundgenius.sdk.internal.utils.chart.LineChartData
 import io.imito.woundgenius.sdk.internal.utils.keys.Constants.FORMS_FOLDER
@@ -81,29 +82,33 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
         MeasureCameraContract()
     ) { measurements: List<MeasurementResult>? ->
         if (!measurements.isNullOrEmpty()) {
-            Log.e("Unit",measurements.toString())
+            Log.e("Unit", measurements.toString())
             binding.recyclerLockerV.visibility = View.VISIBLE
             viewModel?.saveAssessmentToDB(measurements)
         }
     }
 
-    private val magicAssessmentLauncher: ActivityResultLauncher<WizardInputConfig> = registerForActivityResult(
-        AssessmentWizardLauncher.createContract()
-    ) { wizardAssessmentResult: AssessmentWizardResult ->
-        when (wizardAssessmentResult) {
-            is AssessmentWizardResult.Success -> {
-                binding.recyclerLockerV.visibility = View.VISIBLE
-                Log.e("Unit",wizardAssessmentResult.toString())
-                viewModel?.saveMagicAssessmentToDB(wizardAssessmentResult)
-            }
-            is AssessmentWizardResult.Failure -> {
-                Log.e("woundGeniusError",wizardAssessmentResult.error.stackTraceToString())
-            }
-            is AssessmentWizardResult.Canceled -> {
+    private val magicAssessmentLauncher: ActivityResultLauncher<WizardInputConfig> =
+        registerForActivityResult(
+            AssessmentWizardLauncher.createContract()
+        ) { wizardAssessmentResult: AssessmentWizardResult ->
+            Log.e("Unit", wizardAssessmentResult.toString())
+            when (wizardAssessmentResult) {
+                is AssessmentWizardResult.Success -> {
+                    binding.recyclerLockerV.visibility = View.VISIBLE
+                    Log.e("Unit", wizardAssessmentResult.toString())
+                    viewModel?.saveMagicAssessmentToDB(wizardAssessmentResult)
+                }
 
+                is AssessmentWizardResult.Failure -> {
+                    Log.e("Unit", wizardAssessmentResult.error.stackTraceToString())
+                }
+
+                is AssessmentWizardResult.Canceled -> {
+                    Log.e("Unit", "AssessmentWizardResult.Canceled")
+                }
             }
         }
-    }
 
     private val bodyPartLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
         BodyPartContract()
@@ -148,7 +153,8 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
         val json = gson.toJson(assessment)
 
         val timestamp = SimpleDateFormat(UTC_DATE_FORMAT_PATTERN, Locale.UK).format(Date())
-        val fileName = "${if (assessment.magicAssessment == true)"FormsModel_" else "Measurement_"}$timestamp.json"
+        val fileName =
+            "${if (assessment.magicAssessment == true) "FormsModel_" else "Measurement_"}$timestamp.json"
 
         val sharesDir = File(ctx.cacheDir, FORMS_FOLDER).apply { mkdirs() }
         val jsonFile = File(sharesDir, fileName)
@@ -333,24 +339,35 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                                 "Pick Body Part\n" + "Selected Body Part: $bodyRegion"
                         }
 
-                        val selectedBodyPartsColorInt = woundGeniusSDK.getConfiguration().primaryButtonColor?.let {
-                            context?.getColor(it.toInt())
-                        } ?: context?.getColor(R.color.sample_app_button_color)
+                        val selectedBodyPartsColorInt =
+                            woundGeniusSDK.getConfiguration().primaryButtonColor?.let {
+                                context?.getColor(it.toInt())
+                            } ?: context?.getColor(R.color.sample_app_button_color)
 
                         val selectedBodyPartsColor = selectedBodyPartsColorInt?.let {
-                             String.format("#%06X", 0xFFFFFF and it)
+                            String.format("#%06X", 0xFFFFFF and it)
                         }
 
                         val config = WGBodyPartPickerFrontBackConfig(
-                            bodyParts = bodyPart,
+                            bodyParts = listOf("upper-arm-right-front", "elbow-right-front"),
                             showBodyPartListView = true,
                             showOrientationLabels = true,
                             displayMode = BodyPreviewDisplayMode.BOTH,
                             selectedBodyPartsColor = selectedBodyPartsColor
                         )
 
-                        binding.selectedBodyPartPreview.isVisible = true
-                        binding.selectedBodyPartPreview.init(config)
+                        selectedBodyPartPreview.isVisible = true
+                        selectedBodyPartPreview.init(config)
+
+                        activity?.let {
+                            WGBodyPartPickerFrontBackView.convertBodyPartStringsToObjects(
+                                activity = it,
+                                listOf("upper-arm-right-front", "elbow-right-front")
+                            ) {
+                                Log.e("Unit", "converter = ${it}")
+                            }
+                        }
+
 
                         bodyPartHandler.postDelayed({
                             binding.selectedBodyPartPreview.isVisible = false

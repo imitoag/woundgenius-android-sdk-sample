@@ -14,8 +14,8 @@ fun AssessmentWizardResult.Success.toSampleAssessmentEntity(
     patientId: String? = null,
     woundId: String? = null
 ): SampleAssessmentEntity {
-    val imagePath = image?.absolutePath
-    val convertedMetadata = measurementResult?.toMediaMetadata()
+    val imagePath = assessmentData.images.firstOrNull()?.image?.absolutePath
+    val convertedMetadata = assessmentData.images?.firstOrNull()?.metadata?.toMediaMetadata()
 
     val media: ArrayList<MediaModel>? = if (imagePath != null) {
         val mediaModel = MediaModel(
