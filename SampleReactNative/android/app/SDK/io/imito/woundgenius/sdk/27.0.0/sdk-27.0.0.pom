@@ -29,7 +29,17 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>33.4.8-jre</version>
+      <version>33.4.8-android</version>
+    </dependency>
+    <dependency>
+      <groupId>io.coil-kt.coil3</groupId>
+      <artifactId>coil-core</artifactId>
+      <version>3.0.0-rc02</version>
+    </dependency>
+    <dependency>
+      <groupId>io.coil-kt.coil3</groupId>
+      <artifactId>coil-svg</artifactId>
+      <version>3.0.0-rc02</version>
     </dependency>
     <dependency>
       <groupId>androidx.lifecycle</groupId>
@@ -307,14 +317,19 @@
       <version>1.7.3</version>
     </dependency>
     <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>4.12.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>logging-interceptor</artifactId>
+      <version>4.12.0</version>
+    </dependency>
+    <dependency>
       <groupId>com.jakewharton.timber</groupId>
       <artifactId>timber</artifactId>
       <version>5.0.1</version>
-    </dependency>
-    <dependency>
-      <groupId>com.github.mhiew</groupId>
-      <artifactId>android-pdf-viewer</artifactId>
-      <version>3.2.0-beta.3</version>
     </dependency>
     <dependency>
       <groupId>androidx.compose.ui</groupId>
@@ -356,7 +371,6 @@
     <dependency>
       <groupId>androidx.compose.foundation</groupId>
       <artifactId>foundation-layout</artifactId>
-      <version>1.0.1</version>
     </dependency>
     <dependency>
       <groupId>androidx.lifecycle</groupId>
@@ -393,9 +407,21 @@
       <artifactId>backdrop</artifactId>
       <version>1.0.0</version>
     </dependency>
+    <dependency>
+      <groupId>me.saket.telephoto</groupId>
+      <artifactId>zoomable</artifactId>
+      <version>0.16.0</version>
+    </dependency>
   </dependencies>
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.squareup.okhttp3</groupId>
+        <artifactId>okhttp-bom</artifactId>
+        <version>4.12.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <dependency>
         <groupId>androidx.compose</groupId>
         <artifactId>compose-bom</artifactId>
