@@ -82,7 +82,6 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
         MeasureCameraContract()
     ) { measurements: List<MeasurementResult>? ->
         if (!measurements.isNullOrEmpty()) {
-            Log.e("Unit", measurements.toString())
             binding.recyclerLockerV.visibility = View.VISIBLE
             viewModel?.saveAssessmentToDB(measurements)
         }
@@ -92,20 +91,18 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
         registerForActivityResult(
             AssessmentWizardLauncher.createContract()
         ) { wizardAssessmentResult: AssessmentWizardResult ->
-            Log.e("Unit", wizardAssessmentResult.toString())
             when (wizardAssessmentResult) {
                 is AssessmentWizardResult.Success -> {
                     binding.recyclerLockerV.visibility = View.VISIBLE
-                    Log.e("Unit", wizardAssessmentResult.toString())
                     viewModel?.saveMagicAssessmentToDB(wizardAssessmentResult)
                 }
 
                 is AssessmentWizardResult.Failure -> {
-                    Log.e("Unit", wizardAssessmentResult.error.stackTraceToString())
+
                 }
 
                 is AssessmentWizardResult.Canceled -> {
-                    Log.e("Unit", "AssessmentWizardResult.Canceled")
+
                 }
             }
         }

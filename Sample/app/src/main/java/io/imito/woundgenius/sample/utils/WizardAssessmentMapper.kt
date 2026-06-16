@@ -42,7 +42,7 @@ fun AssessmentWizardResult.Success.toSampleAssessmentEntity(
             timeZone = TimeZone.getTimeZone("UTC")
         }.format(System.currentTimeMillis()),
         media = media,
-        observationsJson = json,
+        observationsJson = assessmentData.observationsJson,
         magicAssessment = true,
         stomaDocumentation = false
     )
