@@ -18,6 +18,7 @@ abstract class AbsViewModel(
         get() = _showUnknownError
 
     init {
+        // No-op: subclasses perform their own initialization; nothing required at the base level
     }
 
     private val disposable = CompositeDisposable()

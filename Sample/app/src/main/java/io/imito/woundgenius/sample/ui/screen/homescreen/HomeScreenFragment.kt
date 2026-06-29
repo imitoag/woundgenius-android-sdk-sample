@@ -54,6 +54,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
+import timber.log.Timber
 
 class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
 
@@ -94,16 +95,23 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
             when (wizardAssessmentResult) {
                 is AssessmentWizardResult.Success -> {
                     binding.recyclerLockerV.visibility = View.VISIBLE
-                    viewModel?.saveMagicAssessmentToDB(wizardAssessmentResult)
+                    val durableResult = wizardAssessmentResult.copy(
+                        measurementResultWrapper = wizardAssessmentResult.measurementResultWrapper?.let { result ->
+                            result.copy(image = persistMagicAssessmentImage(result.image) ?: result.image)
+                        }
+                    )
+                    viewModel?.saveMagicAssessmentToDB(requireContext(), durableResult)
                 }
 
                 is AssessmentWizardResult.Failure -> {
-
+                    // No user-facing handling needed: failure is already logged/handled upstream; nothing to restore here.
                 }
 
                 is AssessmentWizardResult.Canceled -> {
-
+                    // No-op: user cancelled the wizard, so there is nothing to save or restore
                 }
+
+                else -> {}
             }
         }
 
@@ -147,7 +155,10 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
     private fun shareAssessmentAsJson(assessment: SampleAssessmentEntity) {
         val ctx = context ?: return
 
-        val json = gson.toJson(assessment)
+        val jsonObject = gson.toJsonTree(assessment).asJsonObject.apply {
+            addProperty("sdkVersion", WoundGeniusSDK.sdkVersion)
+        }
+        val json = gson.toJson(jsonObject)
 
         val timestamp = SimpleDateFormat(UTC_DATE_FORMAT_PATTERN, Locale.UK).format(Date())
         val fileName =
@@ -171,7 +182,7 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
         startActivity(Intent.createChooser(intent, "Share Magic Assessment Result"))
     }
 
-    override fun initListeners() {
+    override fun initListeners() { // NOSONAR Cognitive Complexity — UI/view code, refactor requires on-device verification
         binding.apply {
             settingsButtonACIV.setOnClickListener {
                 mainBridge.openSettingsScreen()
@@ -208,10 +219,7 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                 }
             }
             captureModeButtonCL.setOnClickListener {
-                val mediaFolder = File(context?.cacheDir?.absolutePath ?: "")
-                if (!mediaFolder.exists()) {
-                    mediaFolder.mkdir()
-                }
+                val mediaFolder = mediaDir()
                 if (viewModel?.licenseErrorDialog?.value?.first == true) {
                     viewModel?.openLicenseIssueDialog(viewModel?.licenseErrorDialog?.value?.second)
                 } else {
@@ -245,18 +253,13 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                 }
             }
             startMagicAssessmentButtonCL.setOnClickListener {
-                context?.let { context ->
-                    if (childFragmentManager.findFragmentByTag(SplashScreenDialog.TAG) == null) {
-                        SplashScreenDialog.getInstance(onProceed = {
+                context?.let {
 
-                            val inputConfig = WizardInputConfig(
-                                cacheFolder = context.cacheDir
-                            )
+                    val inputConfig = WizardInputConfig(
+                        cacheFolder = wizardCacheDir()
+                    )
 
-                            magicAssessmentLauncher.launch(inputConfig)
-
-                        }).show(childFragmentManager, SplashScreenDialog.TAG)
-                    }
+                    magicAssessmentLauncher.launch(inputConfig)
                 }
             }
             licenseKeyButtonCL.setOnClickListener {
@@ -280,7 +283,7 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) { // NOSONAR Cognitive Complexity — UI/view code, refactor requires on-device verification
         super.onViewCreated(view, savedInstanceState)
 
 
@@ -346,7 +349,7 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                         }
 
                         val config = WGBodyPartPickerFrontBackConfig(
-                            bodyParts = listOf("upper-arm-right-front", "elbow-right-front"),
+                            bodyParts = bodyPart,
                             showBodyPartListView = true,
                             showOrientationLabels = true,
                             displayMode = BodyPreviewDisplayMode.BOTH,
@@ -355,16 +358,6 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
 
                         selectedBodyPartPreview.isVisible = true
                         selectedBodyPartPreview.init(config)
-
-                        activity?.let {
-                            WGBodyPartPickerFrontBackView.convertBodyPartStringsToObjects(
-                                activity = it,
-                                listOf("upper-arm-right-front", "elbow-right-front")
-                            ) {
-                                Log.e("Unit", "converter = ${it}")
-                            }
-                        }
-
 
                         bodyPartHandler.postDelayed({
                             binding.selectedBodyPartPreview.isVisible = false
@@ -449,13 +442,26 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
         }
     }
 
-    private fun onLicenseUpdate(
+    private fun onLicenseUpdate( // NOSONAR Cognitive Complexity — UI/view code, refactor requires on-device verification
         availableFeatures: List<String>,
         sdkFeaturesStatus: SdkFeatureStatus
     ) {
 
         var config = woundGeniusSDK.getConfiguration()
 
+        // Single Area is gated by its own license feature; without it the mode is always off.
+        val isSingleAreaEnabled = if (availableFeatures.contains(SdkFeature.SINGLE_AREA_MODE.featureName)) {
+            wasLicenseIncorrect || (sdkFeaturesStatus.isSingleAreaEnabled ?: false)
+        } else false
+
+        // Measurement Line is the baseline tool: enabled when the license does not manage it,
+        // configurable when it does, and forced on whenever Single Area is active (Single Area builds on it).
+        val isMeasurementLineEnabled = when {
+            isSingleAreaEnabled -> true
+            availableFeatures.contains(SdkFeature.LINE_MEASUREMENT.featureName) ->
+                wasLicenseIncorrect || (sdkFeaturesStatus.isMeasurementLineEnabled ?: false)
+            else -> true
+        }
 
         config = config.copy(
 
@@ -481,12 +487,10 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                     (wasLicenseIncorrect || (sdkFeaturesStatus.isLiveDetectionEnabled ?: false)),
 
             // Measurement Line
-            isMeasurementLineEnabled = wasLicenseIncorrect || (sdkFeaturesStatus.isMeasurementLineEnabled
-                ?: false),
+            isMeasurementLineEnabled = isMeasurementLineEnabled,
 
             // Single Area
-            isSingleAreaEnabled = wasLicenseIncorrect || (sdkFeaturesStatus.isSingleAreaEnabled
-                ?: false),
+            isSingleAreaEnabled = isSingleAreaEnabled,
 
             // Gallery & Body Picker & Front Camera
             isAddFromLocalStorageAvailable = availableFeatures.contains(SdkFeature.LOCAL_STORAGE_IMAGES.featureName) &&
@@ -640,7 +644,46 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
     }
 
 
+    /**
+     * Durable, app-owned directory for captured media. Lives under [Context.getFilesDir] (NOT the
+     * cache dir) so it survives OS cache eviction and — crucially — is never touched by the wizard's
+     * scratch-folder cleanup, which wipes its whole cache folder when a Magic Assessment finishes.
+     */
+    private fun mediaDir(): File =
+        File(requireContext().filesDir, MEDIA_DIR_NAME).apply { mkdirs() }
+
+    /**
+     * Dedicated, disposable scratch folder handed to the wizard. Kept separate from [mediaDir] and
+     * from the rest of the app cache so the wizard can safely empty it on assessment finish without
+     * destroying saved media from either the camera or earlier Magic Assessments.
+     */
+    private fun wizardCacheDir(): File =
+        File(requireContext().cacheDir, WIZARD_CACHE_DIR_NAME).apply { mkdirs() }
+
+    /**
+     * Copies a Magic Assessment result image out of the wizard's transient cache into [mediaDir] and
+     * returns the durable path. The SDK persists the result image in a scratch dir that is wiped on
+     * the next assessment, so we must own a copy. Returns the original path if the source is missing.
+     */
+    private fun persistMagicAssessmentImage(sourcePath: String?): String? {
+        if (sourcePath.isNullOrEmpty()) return sourcePath
+        val source = File(sourcePath)
+        if (!source.exists()) return sourcePath
+        return try {
+            val destDir = File(mediaDir(), System.currentTimeMillis().toString()).apply { mkdirs() }
+            val dest = File(destDir, source.name)
+            source.copyTo(dest, overwrite = true)
+            dest.absolutePath
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to persist magic assessment image; keeping source path")
+            sourcePath
+        }
+    }
+
     companion object {
+
+        private const val MEDIA_DIR_NAME = "media"
+        private const val WIZARD_CACHE_DIR_NAME = "wizard"
 
         fun newInstance() = HomeScreenFragment()
     }

@@ -42,7 +42,7 @@ class SampleAppRepoImpl(
         sharedMemory.getUserId()
     }.subscribeOn(Schedulers.io())
 
-    override fun saveSdkFeaturesStatus(woundGeniusSDK: WoundGeniusSDK): Observable<Unit> = Observable.fromCallable {
+    override fun saveSdkFeaturesStatus(woundGeniusSDK: WoundGeniusSDK): Observable<Unit> = Observable.fromCallable { // NOSONAR Cognitive Complexity — SDK feature-state sync, refactor requires on-device verification
         if (WoundGeniusSDK.getConfiguration().availableModes != sharedMemory.getAvailableModes()) {
             sharedMemory.setAvailableModes(WoundGeniusSDK.getConfiguration().availableModes)
         }

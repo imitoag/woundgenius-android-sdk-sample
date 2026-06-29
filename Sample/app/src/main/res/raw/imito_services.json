@@ -1,0 +1,10 @@
+{
+      "STANDALONE_PROD_URL": "https://api.wound.app/genius/api/v1/",
+      "STANDALONE_PROD_API_KEY": "05D14839-C0B5-42A1-BAA2-3DA5A83F33DA",
+
+      "STANDALONE_DEV_URL": "https://wg-backend-wg-dev-ch-367749462835.europe-west6.run.app/genius/api/v1/",
+      "STANDALONE_DEV_API_KEY": "1E193260-37B8-4B50-B1BC-2358868D14C0",
+
+      "STANDALONE_STAGING_URL": "https://wg-backend-wg-staging-ch-367749462835.europe-west6.run.app/genius/api/v1/",
+      "STANDALONE_STAGING_API_KEY": "C0558F94-E0E4-437A-9896-D1512CE4FB11"
+}

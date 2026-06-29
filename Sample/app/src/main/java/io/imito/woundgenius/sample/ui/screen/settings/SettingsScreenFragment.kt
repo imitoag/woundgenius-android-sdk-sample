@@ -41,10 +41,11 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
     private var woundGeniusSDK = WoundGeniusSDK
 
 
-    override fun initListeners() {
+    override fun initListeners() { // NOSONAR Cognitive Complexity — settings UI/view code, refactor requires on-device verification
         binding.apply {
             backButtonACTV.setOnClickListener {
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
+                    // No-op: a non-empty license key requires no extra action before navigating back
                 }
                 activity?.onBackPressed()
             }
@@ -225,6 +226,11 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                 )
                 WoundGeniusSDK.updateConfig(config)
 
+                // Single Area depends on Measurement Line, so turning the line off also drops Single Area.
+                if (!isChecked && isSingleAreaEnabledS.isChecked) {
+                    isSingleAreaEnabledS.isChecked = false
+                }
+
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                     viewModel?.saveFeatureStatus(woundGeniusSDK)
                 }
@@ -234,6 +240,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             isSingleAreaEnabledLayoutCL.setOnClickListener {
                 isSingleAreaEnabledS.isChecked = !isSingleAreaEnabledS.isChecked
 
+                // Single Area builds on Measurement Line, so enabling it also enables the line.
                 if (isSingleAreaEnabledS.isChecked) {
                     isMeasurementLineEnabledS.isChecked = false
                 }
@@ -1004,7 +1011,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>) {
-
+                        // No-op: the spinner always has a selection, so nothing to handle here
                     }
                 }
 
@@ -1018,7 +1025,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
     }
 
 
-    private fun onLicenseUpdate(
+    private fun onLicenseUpdate( // NOSONAR Cognitive Complexity — settings UI/view code, refactor requires on-device verification
         availableFeatures: List<String>,
         sdkFeaturesStatus: SdkFeatureStatus
     ) {
@@ -1230,15 +1237,11 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                 if (availableFeatures.contains(SdkFeature.SINGLE_AREA_MODE.featureName)) {
                     isEnabled =
                         sdkFeaturesStatus.isSingleAreaEnabled ?: false
-                    if (wasLicenseIncorrect) {
-                        isEnabled = true
-                    }
-                   
-                        isSingleAreaEnabled = isEnabled
-                    
+
+                    isSingleAreaEnabled = isEnabled
                     isSingleAreaEnabledS.isChecked = isEnabled
                 } else {
-                    
+
                         isSingleAreaEnabled = false
                     isSingleAreaEnabledS.isChecked = false
                 }

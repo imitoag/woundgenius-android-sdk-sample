@@ -1,5 +1,6 @@
 package io.imito.woundgenius.sample.ui.screen.homescreen
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -191,8 +192,11 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    fun saveMagicAssessmentToDB(result: AssessmentWizardResult.Success) {
-        val entity = result.toSampleAssessmentEntity()
+    fun saveMagicAssessmentToDB(
+        context: Context,
+        result: AssessmentWizardResult.Success
+    ) {
+        val entity = result.toSampleAssessmentEntity(context)
         val params = SaveAssessmentToDBUseCase.Params.forSaveAssessmentToDB(entity)
         _assessmentProgress.value = false
         add(

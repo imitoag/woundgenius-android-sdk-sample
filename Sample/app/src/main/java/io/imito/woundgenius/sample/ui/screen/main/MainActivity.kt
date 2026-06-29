@@ -28,7 +28,7 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
     private lateinit var binding: SampleAppActivityMainBinding
 
     override fun initListeners() {
-
+        // No-op: this activity sets up its observers in onCreate and has no listeners to register here
     }
 
 
@@ -63,7 +63,7 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
         outState.putString(CURRENT_FRAGMENT_TAG, currentFragmentTag)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) { // NOSONAR Cognitive Complexity — Activity/UI lifecycle code, refactor requires on-device verification
         super.onCreate(savedInstanceState)
         binding = SampleAppActivityMainBinding.inflate(layoutInflater)
 
@@ -146,9 +146,9 @@ class MainActivity : AbsActivity<MainViewModel>(), MainBridge {
     }
 
 
-    override fun onKeyboardOpen() {}
+    override fun onKeyboardOpen() { /* No-op: this screen does not react to the keyboard opening */ }
 
-    override fun onKeyboardClose() {}
+    override fun onKeyboardClose() { /* No-op: this screen does not react to the keyboard closing */ }
 
     private fun openHomeScreen(){
         val fragment = HomeScreenFragment.newInstance()

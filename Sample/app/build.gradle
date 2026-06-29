@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-android'
     id 'com.google.devtools.ksp'
     id 'kotlin-parcelize'
+    id 'org.sonarqube'
 }
 
 android {
@@ -14,8 +15,8 @@ android {
     defaultConfig {
         minSdk 33
         targetSdk 36
-        versionCode 286
-        versionName "27.0.0.8"
+        versionCode 301
+        versionName "27.0.0.22"
         applicationId "io.imito.woundgenius.sample"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -85,6 +86,7 @@ android {
         debug {
             minifyEnabled false
             debuggable true
+            enableUnitTestCoverage true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -100,6 +102,7 @@ android {
     }
     ndkVersion '27.0.11902834'
 }
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])

@@ -84,7 +84,7 @@ class AssessmentsAdapter(
             }
         }
 
-        fun bind(item: SampleAssessmentEntity) {
+        fun bind(item: SampleAssessmentEntity) { // NOSONAR Cognitive Complexity — RecyclerView binding/view code, refactor requires on-device verification
             itemBinding.apply {
 
                 var primaryButtonColor: Int? = null

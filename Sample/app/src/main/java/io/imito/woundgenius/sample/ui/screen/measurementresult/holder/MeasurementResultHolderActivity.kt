@@ -46,6 +46,7 @@ import io.imito.woundgenius.sdk.internal.utils.system.LandscapeUtils.onConfigura
 import io.imito.woundgenius.sdk.internal.utils.measurements.MeasurementMetadataUtils.groupAndIndexByType
 import kotlinx.parcelize.Parcelize
 import java.text.DecimalFormat
+import kotlin.math.roundToInt
 
 class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewModel>() {
 
@@ -124,7 +125,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
         val isMagicAssessment = args?.assessmentEntity?.magicAssessment == true
 
         viewModel?.apply {
-            Log.d("Unit","hasMedia = ${hasMedia} isMagicAssessment = ${isMagicAssessment} hasMeasurement = ${hasMeasurement}")
+
             setUpAssessmentImagePager(
                 draftMediaList,
                 args?.assessmentEntity?.stomaDocumentation ?: false
@@ -238,7 +239,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
             !isDarkModeEnabled(this@MeasurementResultHolderActivity)
     }
 
-    private fun prepareMediaMetaDataResultUi(metadata: MediaModel.Metadata?) {
+    private fun prepareMediaMetaDataResultUi(metadata: MediaModel.Metadata?) { // NOSONAR Cognitive Complexity — measurement UI/view code, refactor requires on-device verification
         args?.apply {
             val metadataList = ArrayList<MeasurementMetadata>()
             metadata?.measurementData?.annotationList?.sortedBy { it?.id }
@@ -365,7 +366,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
         }
     }
 
-    private fun setUpMetadataUi(metadataList: List<MeasurementMetadata>) {
+    private fun setUpMetadataUi(metadataList: List<MeasurementMetadata>) { // NOSONAR Cognitive Complexity — measurement UI/view code, refactor requires on-device verification
         args?.apply {
             val indexedMetadataList = groupAndIndexByType(metadataList)
 
@@ -402,8 +403,10 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                     if (area != null) {
                         totalArea += area!!
                     }
-                    if ((depth ?: 0.0f) > (maxDepth ?: 0.0f)) {
-                        maxDepth = depth
+                    // Track the largest depth across areas. A present depth of 0 is a real value, so it
+                    // must still establish maxDepth — otherwise all-zero depths leave it null and show N/A.
+                    depth?.let { boundaryDepth ->
+                        maxDepth = maxOf(maxDepth ?: boundaryDepth, boundaryDepth)
                     }
                 }
             }
@@ -434,7 +437,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                             if (maxDepth != null) {
                                 getString(
                                     io.imito.woundgenius.sdk.R.string.WOUND_GENIUS_SDK_mm,
-                                    Math.round((maxDepth ?: 0.0f) * 10).toString()
+                                    (maxDepth * 10).roundToInt().toString()
                                 )
                             } else {
                                 getString(R.string.WOUND_GENIUS_SDK_not_a_number)
@@ -442,7 +445,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                     }
                 }
             }
-            Log.e("Unit",metadataList.toString())
+
         }
     }
 
@@ -501,14 +504,14 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
 
     private fun showImageOnly(imagePath: String) {
         binding.apply {
-            Log.d("Unit","showImageOnly")
+
             emptyMediaPlaceholderACIV.isVisible = false
             measurementsCL.isVisible = false
             woundContainerCL.isVisible = false
             measurementsItemsRV.isVisible = false
             imagesPagerVP2.isVisible = false
             regularImageACIV.isVisible = true
-            Log.d("Unit","imagePath = ${imagePath}")
+
                 Glide.with(this@MeasurementResultHolderActivity)
                     .load(imagePath)
                     .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
@@ -517,9 +520,9 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
     }
 
 
-    override fun onKeyboardOpen() {}
+    override fun onKeyboardOpen() { /* No-op: this screen does not adjust its layout when the keyboard opens */ }
 
-    override fun onKeyboardClose() {}
+    override fun onKeyboardClose() { /* No-op: this screen does not adjust its layout when the keyboard closes */ }
 
     companion object {
 

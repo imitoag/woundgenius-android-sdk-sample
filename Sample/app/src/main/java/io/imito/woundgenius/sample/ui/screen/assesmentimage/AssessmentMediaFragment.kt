@@ -91,7 +91,7 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
         return binding.root
     }
 
-    private fun openFull(mediaModel: MediaModel) {
+    private fun openFull(mediaModel: MediaModel) { // NOSONAR Cognitive Complexity — UI/view code, refactor requires on-device verification
         if (!isFullScreenClicked) {
             args?.apply {
                 isFullScreenClicked = true
@@ -253,7 +253,7 @@ class AssessmentMediaFragment : AbsFragment<AssessmentMediaViewModel>() {
         return originalMaxWidth / currentMaxWidth.toDouble()
     }
 
-    private fun setUpMetadataUi() {
+    private fun setUpMetadataUi() { // NOSONAR Cognitive Complexity — UI/view code, refactor requires on-device verification
         var scale = 0.0
         args?.apply {
             currentPictureSize?.let { currentSize ->

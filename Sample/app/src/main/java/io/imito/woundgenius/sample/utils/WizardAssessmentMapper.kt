@@ -1,5 +1,7 @@
 package io.imito.woundgenius.sample.utils
 
+import android.content.Context
+import io.imito.wizard.api.model.mapper.AssessmentWizardMapper
 import io.imito.woundgenius.sample.data.pojo.assessment.SampleAssessmentEntity
 import io.imito.woundgenius.sdk.internal.data.pojo.camera.mode.ImitoCameraMode
 import io.imito.woundgenius.sdk.internal.data.pojo.media.MediaModel
@@ -10,12 +12,13 @@ import java.util.Locale
 import java.util.TimeZone
 
 fun AssessmentWizardResult.Success.toSampleAssessmentEntity(
+    context: Context,
     userId: String? = null,
     patientId: String? = null,
     woundId: String? = null
 ): SampleAssessmentEntity {
-    val imagePath = assessmentData.images.firstOrNull()?.image?.absolutePath
-    val convertedMetadata = assessmentData.images?.firstOrNull()?.metadata?.toMediaMetadata()
+    val imagePath = measurementResultWrapper?.image
+    val convertedMetadata = measurementResultWrapper?.toMediaMetadata()
 
     val media: ArrayList<MediaModel>? = if (imagePath != null) {
         val mediaModel = MediaModel(
@@ -42,7 +45,7 @@ fun AssessmentWizardResult.Success.toSampleAssessmentEntity(
             timeZone = TimeZone.getTimeZone("UTC")
         }.format(System.currentTimeMillis()),
         media = media,
-        observationsJson = assessmentData.observationsJson,
+        observationsJson = AssessmentWizardMapper.toJson(formData, context),
         magicAssessment = true,
         stomaDocumentation = false
     )

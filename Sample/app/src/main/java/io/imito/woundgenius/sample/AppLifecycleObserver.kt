@@ -14,6 +14,7 @@ class AppLifecycleObserver @Inject constructor() : LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onEnterBackground() {
+        // No-op: no cleanup required when the app enters the background
     }
 
     companion object {

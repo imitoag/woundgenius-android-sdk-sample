@@ -5,7 +5,7 @@
     android:id="@+id/measurementResultItemCL"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <io.imito.woundgenius.sample.ui.screen.view.SampleMeasurementResultItemView
+    <io.imito.woundgenius.sdk.internal.ui.view.measurement.MeasurementResultItemView
         android:id="@+id/measurementresultMRIV"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

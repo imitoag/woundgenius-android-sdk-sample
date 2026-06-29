@@ -170,8 +170,8 @@ class SampleMeasurementResultItemView @JvmOverloads constructor(
 
     private fun listenDepth() {
         binding.depthItemValueACET.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { /* No-op: depth is only processed in afterTextChanged */ }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { /* No-op: depth is only processed in afterTextChanged */ }
             override fun afterTextChanged(p0: Editable?) {
                 if (needContinue) {
                     val depthInDouble = p0?.toString()?.toDoubleOrNull()
