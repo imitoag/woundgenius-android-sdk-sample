@@ -46,7 +46,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
             backButtonACTV.setOnClickListener {
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                 }
-                activity?.onBackPressed()
+                activity?.onBackPressedDispatcher?.onBackPressed()
             }
             shareLogsButtonCL.setOnClickListener {
                 context?.let { FileLogTree.shareLogs(it) }
@@ -241,7 +241,7 @@ class SettingsScreenFragment : AbsFragment<SettingsScreenViewModel>() {
                 if (licenseKeyValueACET.text.toString().isNotEmpty()) {
                     viewModel?.saveFeatureStatus(woundGeniusSDK)
                 }
-                activity?.onBackPressed()
+                activity?.onBackPressedDispatcher?.onBackPressed()
             }
             licenseKeyValueACET.doOnTextChanged { text, start, before, count ->
                 woundGeniusSDK.setLicenseKey(licenseKeyValueACET.text.toString())

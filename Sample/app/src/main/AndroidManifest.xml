@@ -37,11 +37,20 @@
         <activity android:name=".ui.screen.measurementresult.holder.MeasurementResultHolderActivity" />
 
 
+        <!--
+            The host app keeps the bare androidx.core.content.FileProvider under its own
+            authority: the SDK now ships WoundGeniusFileProvider instead, so the two providers
+            no longer collide during manifest merge. This mirrors what a real integrator has.
+        -->
         <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.androidx-startup"
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
-            tools:node="remove" />
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/sample_app_file_provider_paths" />
+        </provider>
 
     </application>
 

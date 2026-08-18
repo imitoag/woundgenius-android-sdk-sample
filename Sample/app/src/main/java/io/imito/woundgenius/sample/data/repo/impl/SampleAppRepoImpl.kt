@@ -5,7 +5,6 @@ import io.imito.woundgenius.sample.data.pojo.license.SdkFeatureStatus
 import io.imito.woundgenius.sample.data.repo.SampleAppRepo
 import io.imito.woundgenius.sample.managers.SampleDateTimeManager
 import io.imito.woundgenius.sample.storage.db.AssessmentRoomDatabase
-import io.imito.woundgenius.sdk.data.pojo.autodetectionmod.WoundAutoDetectionMode
 import io.imito.woundgenius.sdk.di.WoundGeniusSDK
 import io.imito.woundgenius.sdk.storage.shared.SharedMemory
 import io.reactivex.Observable
@@ -55,18 +54,24 @@ class SampleAppRepoImpl(
             sharedMemory.setIsStomaFlowEnabled(woundGeniusSDK.getIsStomaFlow())
         }
 
-        val newAutoDetectionMode = woundGeniusSDK.getAutoDetectionMod() ?: WoundAutoDetectionMode.NONE
-        if (newAutoDetectionMode != sharedMemory.getAutoDetectionMode()) {
-            sharedMemory.setAutoDetectionMode(newAutoDetectionMode)
+        // Both detection settings are nullable in the SDK, and null means "not resolved yet" -
+        // the camera screen fills them in once it knows what the license unlocks. Writing that
+        // null through as NONE/false would record the settings as off whenever a snapshot is
+        // taken before the camera has run, which is every snapshot after a process restart.
+        woundGeniusSDK.getAutoDetectionMod()?.let { newAutoDetectionMode ->
+            if (newAutoDetectionMode != sharedMemory.getAutoDetectionMode()) {
+                sharedMemory.setAutoDetectionMode(newAutoDetectionMode)
+            }
         }
 
         if (woundGeniusSDK.getMaxNumberOfMedia() != sharedMemory.getMaxNumberOfMedia()) {
             sharedMemory.setMaxNumberOfMedia(woundGeniusSDK.getMaxNumberOfMedia())
         }
 
-        val newIsLiveDetectionEnabled = woundGeniusSDK.getIsLiveDetectionEnabled() ?: false
-        if (newIsLiveDetectionEnabled != sharedMemory.getIsLiveDetectionEnabled()) {
-            sharedMemory.setIsLiveDetectionEnabled(newIsLiveDetectionEnabled)
+        woundGeniusSDK.getIsLiveDetectionEnabled()?.let { newIsLiveDetectionEnabled ->
+            if (newIsLiveDetectionEnabled != sharedMemory.getIsLiveDetectionEnabled()) {
+                sharedMemory.setIsLiveDetectionEnabled(newIsLiveDetectionEnabled)
+            }
         }
 
         if (woundGeniusSDK.getIsAddFromLocalStorageAvailable() != sharedMemory.getIsMediaFromGalleryAllowed()) {

@@ -130,7 +130,7 @@ class AssessmentsAdapter(
                     }
 
                 Glide.with(this.root.context)
-                    .load(item.media?.first()?.image)
+                    .load(item.media?.firstOrNull()?.image)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .apply(RequestOptions())
                     .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))

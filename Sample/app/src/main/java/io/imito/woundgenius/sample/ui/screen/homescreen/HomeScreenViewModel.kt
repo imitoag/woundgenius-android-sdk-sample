@@ -17,6 +17,7 @@ import io.imito.woundgenius.sdk.data.pojo.bodypart.WoundGeniusBodyPart
 import io.imito.woundgenius.sdk.data.pojo.license.LicenseErrorType
 import io.imito.woundgenius.sdk.data.pojo.license.LicenseValidateResult
 import io.imito.woundgenius.sdk.di.WoundGeniusSDK
+import java.io.File
 import javax.inject.Inject
 
 class HomeScreenViewModel @Inject constructor(
@@ -162,7 +163,14 @@ class HomeScreenViewModel @Inject constructor(
         add(
             getAssessmentsUseCase.execute(param)
                 .subscribe({ draftAssessments ->
-                    val newList = ArrayList(draftAssessments.sortedBy { it.id })
+                    // A row outlives the files it points at: the database is durable storage, the
+                    // media folder is a directory on disk that the user, or the system reclaiming
+                    // space, can empty at any time. Listing a row whose media is all gone puts an
+                    // assessment on screen with nothing to show, so drop it rather than draw it.
+                    val (stored, orphaned) = draftAssessments.partition { it.hasStoredMedia() }
+                    orphaned.forEach { deleteAssessment(it.id) }
+
+                    val newList = ArrayList(stored.sortedBy { it.id })
                     _assessmentsResponseLD.value = newList
                 }, {
                     Log.e("woundGeniusError", it.stackTraceToString())
@@ -204,5 +212,13 @@ class HomeScreenViewModel @Inject constructor(
         )
     }
 
-
+    /**
+     * @return `true` while at least one of this assessment's media files is still readable.
+     *
+     * An assessment holding no media at all counts as nothing to show either. The list item is
+     * built around its first media - the thumbnail and the mode label both come from it - so a row
+     * without media is not a row this screen can draw, whether the media was lost or never there.
+     */
+    private fun SampleAssessmentEntity.hasStoredMedia(): Boolean =
+        media?.any { it.image?.let { path -> File(path).isFile } == true } == true
 }

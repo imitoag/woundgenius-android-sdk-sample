@@ -8,13 +8,15 @@ import io.imito.woundgenius.sample.R
 import io.imito.woundgenius.sample.di.scope.AppComponent
 import io.imito.woundgenius.sample.di.scope.DaggerAppComponent
 import io.imito.woundgenius.sample.utils.FileLogTree
+import io.imito.woundgenius.sample.utils.restoreSdkFeatureSettings
 import io.imito.woundgenius.sdk.data.pojo.WoundGeniusOperatingMode
-import io.imito.woundgenius.sdk.data.pojo.autodetectionmod.WoundAutoDetectionMode
 import io.imito.woundgenius.sdk.data.pojo.camera.cameramod.CameraMods
 import io.imito.woundgenius.sdk.di.WoundGeniusSDK
+import io.imito.woundgenius.sdk.storage.shared.SharedMemory
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import io.imito.woundgenius.sdk.data.pojo.autodetectionmod.WoundAutoDetectionMode
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
@@ -31,6 +33,9 @@ class SampleWoundSDKApplication : MultiDexApplication(), HasAndroidInjector {
 
     @Inject
     lateinit var appLifecycleObserver: AppLifecycleObserver
+
+    @Inject
+    lateinit var sharedMemory: SharedMemory
 
 
     override fun onCreate() {
@@ -75,6 +80,8 @@ class SampleWoundSDKApplication : MultiDexApplication(), HasAndroidInjector {
             resultScreenTitle = getString(R.string.WOUND_GENIUS_SDK_RESULTS_SCREEN_TITLE),
             resultScreenSubTitle = getString(R.string.WOUND_GENIUS_SDK_RESULTS_SCREEN_SUBTITLE),
         )
+
+        sharedMemory.restoreSdkFeatureSettings()
 
         RxJavaPlugins.setErrorHandler { e: Throwable ->
             var error = e

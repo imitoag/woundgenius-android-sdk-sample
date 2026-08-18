@@ -25,6 +25,7 @@ import io.imito.woundgenius.sample.databinding.SampleAppFragmentHomeScreenBindin
 import io.imito.woundgenius.sample.ui.screen.base.AbsFragment
 import io.imito.woundgenius.sample.ui.screen.main.MainBridge
 import io.imito.woundgenius.sample.ui.screen.measurementresult.holder.MeasurementResultHolderActivity
+import io.imito.woundgenius.sample.utils.captureMediaFolder
 import io.imito.woundgenius.sample.utils.data.LineChartData
 import io.imito.woundgenius.sdk.data.pojo.assessment.entity.AssessmentEntity
 import io.imito.woundgenius.sdk.data.pojo.autodetectionmod.WoundAutoDetectionMode
@@ -148,7 +149,7 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                 }
             }
             captureModeButtonCL.setOnClickListener {
-                val mediaFolder = File(context?.cacheDir?.absolutePath ?: "")
+                val mediaFolder = requireContext().captureMediaFolder()
                 if (!mediaFolder.exists()) {
                     mediaFolder.mkdir()
                 }
