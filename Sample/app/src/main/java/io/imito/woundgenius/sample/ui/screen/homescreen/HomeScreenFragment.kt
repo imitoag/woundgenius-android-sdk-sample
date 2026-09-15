@@ -15,7 +15,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import com.google.gson.Gson
-import io.imito.wizard.api.model.WizardInputConfig
 import io.imito.woundgenius.sample.BuildConfig
 import io.imito.woundgenius.sample.R
 import io.imito.woundgenius.sample.data.pojo.assessment.SampleAssessmentEntity
@@ -33,10 +32,7 @@ import io.imito.woundgenius.sdk.internal.data.pojo.license.SdkFeature
 import io.imito.woundgenius.sdk.internal.data.pojo.measurement.MeasurementResult
 import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_AREA_TYPE
 import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_OUTLINE_TYPE
-import io.imito.woundgenius.sdk.internal.managers.wizard.AssessmentWizardLauncher
-import io.imito.woundgenius.sdk.internal.managers.wizard.AssessmentWizardResult
 import io.imito.woundgenius.sdk.internal.ui.dialog.center.ImitoCenterScreenDialog
-import io.imito.woundgenius.sdk.internal.ui.dialog.splashscreen.SplashScreenDialog
 import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPartContract
 import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPickerActivity
 import io.imito.woundgenius.sdk.internal.ui.screen.measurecamera.MeasureCameraActivity
@@ -44,9 +40,9 @@ import io.imito.woundgenius.sdk.internal.ui.screen.measurecamera.MeasureCameraCo
 import io.imito.woundgenius.sdk.internal.ui.view.bodypart.WGBodyPartPickerFrontBackView
 import io.imito.woundgenius.sdk.internal.utils.bodypicker.BodyPartConverterUtils
 import io.imito.woundgenius.sdk.internal.utils.chart.LineChartData
-import io.imito.woundgenius.sdk.internal.utils.keys.Constants.FORMS_FOLDER
-import io.imito.woundgenius.sdk.internal.utils.keys.Constants.MIME_TYPE_JSON
-import io.imito.woundgenius.sdk.internal.utils.keys.Constants.UTC_DATE_FORMAT_PATTERN
+import io.imito.woundgenius.sample.utils.SampleConstants.FORMS_FOLDER
+import io.imito.woundgenius.sample.utils.SampleConstants.MIME_TYPE_JSON
+import io.imito.woundgenius.sample.utils.SampleConstants.UTC_DATE_FORMAT_PATTERN
 import io.imito.woundgenius.sdk.internal.utils.system.LandscapeUtils.isSupportPortraitOnly
 import io.imito.woundgenius.sdk.internal.utils.system.LandscapeUtils.onConfigurationChange
 import java.io.File
@@ -87,33 +83,6 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
             viewModel?.saveAssessmentToDB(measurements)
         }
     }
-
-    private val magicAssessmentLauncher: ActivityResultLauncher<WizardInputConfig> =
-        registerForActivityResult(
-            AssessmentWizardLauncher.createContract()
-        ) { wizardAssessmentResult: AssessmentWizardResult ->
-            when (wizardAssessmentResult) {
-                is AssessmentWizardResult.Success -> {
-                    binding.recyclerLockerV.visibility = View.VISIBLE
-                    val durableResult = wizardAssessmentResult.copy(
-                        measurementResultWrapper = wizardAssessmentResult.measurementResultWrapper?.let { result ->
-                            result.copy(image = persistMagicAssessmentImage(result.image) ?: result.image)
-                        }
-                    )
-                    viewModel?.saveMagicAssessmentToDB(requireContext(), durableResult)
-                }
-
-                is AssessmentWizardResult.Failure -> {
-                    // No user-facing handling needed: failure is already logged/handled upstream; nothing to restore here.
-                }
-
-                is AssessmentWizardResult.Canceled -> {
-                    // No-op: user cancelled the wizard, so there is nothing to save or restore
-                }
-
-                else -> {}
-            }
-        }
 
     private val bodyPartLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
         BodyPartContract()
@@ -228,15 +197,11 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                     } else {
                         if (woundGeniusSDK.getConfiguration()?.availableModes?.isNotEmpty() == true) {
                             context?.let {
-                                if (childFragmentManager.findFragmentByTag(SplashScreenDialog.TAG) == null) {
-                                    SplashScreenDialog.getInstance(onProceed = {
-                                        MeasureCameraActivity.openWithResult(
-                                            launcher = measureCameraLauncher,
-                                            fragment = this@HomeScreenFragment,
-                                            mediaFolder = mediaFolder.absolutePath
-                                        )
-                                    }).show(childFragmentManager, SplashScreenDialog.TAG)
-                                }
+                                MeasureCameraActivity.openWithResult(
+                                    launcher = measureCameraLauncher,
+                                    fragment = this@HomeScreenFragment,
+                                    mediaFolder = mediaFolder.absolutePath
+                                )
                             }
                         } else {
                             ImitoCenterScreenDialog.getNoLicenseKeyDialog(
@@ -250,16 +215,6 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                             }
                         }
                     }
-                }
-            }
-            startMagicAssessmentButtonCL.setOnClickListener {
-                context?.let {
-
-                    val inputConfig = WizardInputConfig(
-                        cacheFolder = wizardCacheDir()
-                    )
-
-                    magicAssessmentLauncher.launch(inputConfig)
                 }
             }
             licenseKeyButtonCL.setOnClickListener {
@@ -591,7 +546,6 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
             primaryButtonColor?.let { color ->
                 captureModeButtonCL.backgroundTintList = ColorStateList.valueOf(color)
                 bodyPickerButtonCL.backgroundTintList = ColorStateList.valueOf(color)
-                startMagicAssessmentButtonCL.backgroundTintList = ColorStateList.valueOf(color)
                 settingsButtonACIV.imageTintList = ColorStateList.valueOf(color)
             }
             textColor?.let { textColor ->
@@ -646,44 +600,14 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
 
     /**
      * Durable, app-owned directory for captured media. Lives under [Context.getFilesDir] (NOT the
-     * cache dir) so it survives OS cache eviction and — crucially — is never touched by the wizard's
-     * scratch-folder cleanup, which wipes its whole cache folder when a Magic Assessment finishes.
+     * cache dir) so it survives OS cache eviction.
      */
     private fun mediaDir(): File =
         File(requireContext().filesDir, MEDIA_DIR_NAME).apply { mkdirs() }
 
-    /**
-     * Dedicated, disposable scratch folder handed to the wizard. Kept separate from [mediaDir] and
-     * from the rest of the app cache so the wizard can safely empty it on assessment finish without
-     * destroying saved media from either the camera or earlier Magic Assessments.
-     */
-    private fun wizardCacheDir(): File =
-        File(requireContext().cacheDir, WIZARD_CACHE_DIR_NAME).apply { mkdirs() }
-
-    /**
-     * Copies a Magic Assessment result image out of the wizard's transient cache into [mediaDir] and
-     * returns the durable path. The SDK persists the result image in a scratch dir that is wiped on
-     * the next assessment, so we must own a copy. Returns the original path if the source is missing.
-     */
-    private fun persistMagicAssessmentImage(sourcePath: String?): String? {
-        if (sourcePath.isNullOrEmpty()) return sourcePath
-        val source = File(sourcePath)
-        if (!source.exists()) return sourcePath
-        return try {
-            val destDir = File(mediaDir(), System.currentTimeMillis().toString()).apply { mkdirs() }
-            val dest = File(destDir, source.name)
-            source.copyTo(dest, overwrite = true)
-            dest.absolutePath
-        } catch (e: Exception) {
-            Timber.w(e, "Failed to persist magic assessment image; keeping source path")
-            sourcePath
-        }
-    }
-
     companion object {
 
         private const val MEDIA_DIR_NAME = "media"
-        private const val WIZARD_CACHE_DIR_NAME = "wizard"
 
         fun newInstance() = HomeScreenFragment()
     }

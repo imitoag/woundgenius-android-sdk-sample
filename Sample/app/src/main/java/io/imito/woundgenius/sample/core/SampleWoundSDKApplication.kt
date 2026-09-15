@@ -7,7 +7,6 @@ import androidx.multidex.MultiDexApplication
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
-import io.imito.wizard.api.di.WizardSDK
 import io.imito.woundgenius.sample.AppLifecycleObserver
 import io.imito.woundgenius.sample.R
 import io.imito.woundgenius.sample.di.scope.AppComponent
@@ -25,7 +24,6 @@ import java.io.IOException
 import java.net.SocketException
 import javax.inject.Inject
 import io.imito.woundgenius.sample.di.scope.DaggerAppComponent as AppDaggerComponent
-//import io.imito.woundgenius.sdk.internal.managers.wizard.DaggerWizardAppComponent as WizardDaggerComponent
 
 class SampleWoundSDKApplication : MultiDexApplication(), HasAndroidInjector {
 

@@ -268,9 +268,9 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                                     length = lengthLine?.length ?: 0.0,
                                     width = widthLine?.width ?: 0.0,
                                     depth = if (args?.assessmentEntity?.stomaDocumentation == true) {
-                                        (annotationItem?.depth ?: 0.0f)
+                                        (annotationItem?.depth ?: 0.0)
                                     } else {
-                                        (annotationItem?.depth ?: 0.0f) / 10
+                                        (annotationItem?.depth ?: 0.0) / 10
                                     },
                                     vertices = pointsList?.map {
                                         PointD(it.x ?: 0.0, it.y ?: 0.0)
@@ -336,7 +336,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
                                     circumference = annotationItem?.circumference ?: 0.0,
                                     length = annotationItem?.length ?: 0.0,
                                     width = annotationItem?.width ?: 0.0,
-                                    depth = (annotationItem?.depth ?: 0.0f) / 10,
+                                    depth = (annotationItem?.depth ?: 0.0) / 10,
                                     vertices = pointsList?.map {
                                         PointD(it.x ?: 0.0, it.y ?: 0.0)
                                     } ?: emptyList(),
@@ -376,7 +376,7 @@ class MeasurementResultHolderActivity : AbsActivity<MeasurementResultHolderViewM
             val lengthIndexes = ArrayList<Pair<Int?, Int?>>()
             val areaList = ArrayList<Double>()
             var totalArea = 0.0
-            var maxDepth: Float? = null
+            var maxDepth: Double? = null
             metadataList.forEachIndexed { index, boundaryMetadata ->
                 boundaryMetadata.apply {
                     boundaryMetadata.vertices?.let {

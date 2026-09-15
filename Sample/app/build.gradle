@@ -16,7 +16,7 @@ android {
         minSdk 33
         targetSdk 36
         versionCode 301
-        versionName "27.0.0.22"
+        versionName "1.6.1.1"
         applicationId "io.imito.woundgenius.sample"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -119,7 +119,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
 
-    api "io.imito.woundgenius:sdk:27.0.0"
+    api "io.imito.woundgenius:sdk:1.6.1"
 
 
     implementation platform('com.google.firebase:firebase-bom:34.2.0')

@@ -5,14 +5,14 @@ import io.imito.woundgenius.sample.data.pojo.assessment.SampleAssessmentEntity
 import io.imito.woundgenius.sdk.internal.data.pojo.camera.mode.ImitoCameraMode
 import io.imito.woundgenius.sdk.internal.data.pojo.media.MediaModel
 import io.imito.woundgenius.sdk.internal.data.pojo.image.ImageResolution
-import io.imito.woundgenius.sdk.internal.data.pojo.cluster.ImitoOutlineCluster
+import io.imito.woundgenius.sdk.internal.data.pojo.cluster.OutlineCluster
 import io.imito.woundgenius.sdk.internal.data.pojo.measurement.MeasuredOutline
 import io.imito.woundgenius.sdk.internal.data.pojo.measurement.MeasurementResult
 import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD
 import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_MEASUREMENT_LINE_TYPE
 import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_OUTLINE_TYPE
-import io.imito.woundgenius.sdk.internal.utils.keys.Constants.SERVER_DATE_TIME_PATTERN
-import io.imito.woundgenius.sdk.internal.utils.keys.Constants.supportedVideoExtensions
+import io.imito.woundgenius.sample.utils.SampleConstants.SERVER_DATE_TIME_PATTERN
+import io.imito.woundgenius.sample.utils.SampleConstants.supportedVideoExtensions
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
@@ -50,7 +50,7 @@ fun MeasurementResult.toSampleAssessmentEntity(
 
 
     val mainOutline = outlines.firstOrNull()
-    val isStoma = outlines.find { it.cluster == ImitoOutlineCluster.STOMA } != null
+    val isStoma = outlines.find { it.cluster == OutlineCluster.STOMA } != null
 
     return SampleAssessmentEntity(
         userId = userId,
@@ -111,12 +111,12 @@ private fun MeasuredOutline.toOldAnnotation(): MediaModel.Metadata.MeasurementDa
         length = this.lengthInCM,
         width = this.widthInCM,
         circumference = this.circumferenceInCM,
-        depth = this.depthCM?.times(10),
+        depth = this.depthCM?.times(10)?.toDouble(),
         cluster = this.cluster.name,
         type = when (this.cluster) {
-            ImitoOutlineCluster.WOUND -> ANNOTATION_OUTLINE_TYPE
-            ImitoOutlineCluster.STOMA -> ANNOTATION_OUTLINE_TYPE
-            ImitoOutlineCluster.LINE -> ANNOTATION_MEASUREMENT_LINE_TYPE
+            OutlineCluster.WOUND -> ANNOTATION_OUTLINE_TYPE
+            OutlineCluster.STOMA -> ANNOTATION_OUTLINE_TYPE
+            OutlineCluster.LINE -> ANNOTATION_MEASUREMENT_LINE_TYPE
             else -> ANNOTATION_OUTLINE_TYPE
         },
 

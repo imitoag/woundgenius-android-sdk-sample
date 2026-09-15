@@ -1,9 +1,9 @@
 package io.imito.woundgenius.sampleFlutter
 
 import android.app.Application
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
-import io.imito.woundgenius.sdk.data.pojo.camera.cameramod.CameraMods
-import io.imito.woundgenius.sdk.data.pojo.autodetectionmod.WoundAutoDetectionMode
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
+import io.imito.woundgenius.sdk.api.models.configuration.WoundGeniusConfiguration
+import io.imito.woundgenius.sdk.api.models.presenter.WGPresenter
 
 class Application : Application() {
 
@@ -15,6 +15,12 @@ class Application : Application() {
             licenseKey = ""
         )
 
-        WoundGeniusSDK.configure(isMeasurementLineEnabled = true)
+        WoundGeniusSDK.configure(
+            presenter = WGPresenter(
+                configuration = WoundGeniusConfiguration(
+                    isMeasurementLineEnabled = true
+                )
+            )
+        )
     }
 }

@@ -6,18 +6,17 @@ import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 
-import io.imito.woundgenius.sdk.data.pojo.camera.cameramod.CameraMods;
-import io.imito.woundgenius.sdk.ui.screen.bodypicker.BodyPartContract;
-import io.imito.woundgenius.sdk.ui.screen.bodypicker.BodyPickerActivity;
-import io.imito.woundgenius.sdk.ui.screen.measurecamera.MeasureCameraActivity;
-import io.imito.woundgenius.sdk.ui.screen.measurecamera.MeasureCameraContract;
+import io.imito.woundgenius.sdk.internal.data.pojo.camera.mode.ImitoCameraMode;
+import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPartContract;
+import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPickerActivity;
+import io.imito.woundgenius.sdk.internal.ui.screen.measurecamera.MeasureCameraActivity;
+import io.imito.woundgenius.sdk.internal.ui.screen.measurecamera.MeasureCameraContract;
 
 import com.getcapacitor.BridgeActivity;
 
 import java.util.HashMap;
 
-import io.imito.woundgenius.sdk.ui.screen.support.MeasureSupportActivity;
-import io.imito.woundgenius.sdk.ui.screen.whatsnew.WhatsNewActivity;
+import io.imito.woundgenius.sdk.internal.ui.screen.support.HelpScreenActivity;
 import io.ionic.starter.databinding.ActivityMainBinding;
 
 public class MainActivity extends BridgeActivity {
@@ -65,9 +64,9 @@ public class MainActivity extends BridgeActivity {
     });
 
     binding.openHelpScreenButtonACTV.setOnClickListener(v -> {
-      MeasureSupportActivity.open(
+      HelpScreenActivity.open(
         MainActivity.this,
-        CameraMods.MARKER_DETECT_MODE);
+        ImitoCameraMode.MARKER_DETECT_MODE);
     });
   }
 }

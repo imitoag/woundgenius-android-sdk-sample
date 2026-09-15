@@ -18,7 +18,6 @@ import io.imito.woundgenius.sdk.internal.data.pojo.license.LicenseErrorType
 import io.imito.woundgenius.sdk.internal.data.pojo.license.LicenseValidateResult
 import io.imito.woundgenius.sdk.internal.data.pojo.measurement.MeasurementResult
 import io.imito.woundgenius.sdk.api.WoundGeniusSDK
-import io.imito.woundgenius.sdk.internal.managers.wizard.AssessmentWizardResult
 import javax.inject.Inject
 
 class HomeScreenViewModel @Inject constructor(
@@ -190,22 +189,6 @@ class HomeScreenViewModel @Inject constructor(
                     })
             )
         }
-    }
-
-    fun saveMagicAssessmentToDB(
-        context: Context,
-        result: AssessmentWizardResult.Success
-    ) {
-        val entity = result.toSampleAssessmentEntity(context)
-        val params = SaveAssessmentToDBUseCase.Params.forSaveAssessmentToDB(entity)
-        _assessmentProgress.value = false
-        add(
-            saveAssessmentToDBUseCase.execute(params)
-                .subscribe({
-                }, {
-                    Log.e("woundGeniusError", it.stackTraceToString())
-                })
-        )
     }
 
     fun deleteAssessment(id: Long) {

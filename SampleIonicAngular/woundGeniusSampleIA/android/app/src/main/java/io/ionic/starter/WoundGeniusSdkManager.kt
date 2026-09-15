@@ -2,9 +2,11 @@ package io.ionic.starter
 
 import android.app.Application
 import android.content.pm.PackageManager
-import io.imito.woundgenius.sdk.data.pojo.autodetectionmod.WoundAutoDetectionMode
-import io.imito.woundgenius.sdk.data.pojo.camera.cameramod.CameraMods
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
+import io.imito.woundgenius.sdk.api.models.configuration.WoundGeniusConfiguration
+import io.imito.woundgenius.sdk.api.models.presenter.WGPresenter
+import io.imito.woundgenius.sdk.internal.data.pojo.autodetectionmod.WoundAutoDetectionMode
+import io.imito.woundgenius.sdk.internal.data.pojo.camera.mode.ImitoCameraMode
 
 
 class WoundGeniusSdkManager {
@@ -13,32 +15,32 @@ class WoundGeniusSdkManager {
     WoundGeniusSDK.init(application, "")
 
     WoundGeniusSDK.configure(
-      availableModes = listOf(
-        CameraMods.MARKER_DETECT_MODE,
-        CameraMods.MANUAL_MEASURE_MODE,
-        CameraMods.PHOTO_MODE
-      ),
-      defaultMode = CameraMods.MARKER_DETECT_MODE,
-      woundAutoDetectionMode = WoundAutoDetectionMode.WOUND,
-      isLiveDetectionEnabled = true,
-      isAddFromLocalStorageAvailable = true,
-      isAddBodyPickerOnCaptureScreenAvailable = false,
-      isFrontCameraUsageAllowed = application.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT),
-      isFullHDVideoEnabled = false,
-      isCancelBarButtonItemVisible = true,
-      maxNumberOfMedia = 100,
-      isRightNavBarButtonAvailable = true,
-      completionButtonTitle = null,
-      isDepthInputEnabled = true,
-      showTotalCircumference = true,
-      isSendPrintablePDFHidden = false,
-      isResultsBottomBarHidden = false,
-      maxNumberOfCalibrationMedia = 1,
-      isMultipleOutlinesEnabled = true,
-      isMinNumberOfMediaRequired = false,
-      isStomaFlow = false,
-      lightBackgroundColor = null,
-      isMeasurementLineEnabled = true
+      presenter = WGPresenter(
+        configuration = WoundGeniusConfiguration(
+          availableModes = listOf(
+            ImitoCameraMode.MARKER_DETECT_MODE,
+            ImitoCameraMode.MANUAL_MEASURE_MODE,
+            ImitoCameraMode.PHOTO_MODE
+          ),
+          defaultMode = ImitoCameraMode.MARKER_DETECT_MODE,
+          autoDetectionMode = WoundAutoDetectionMode.WOUND,
+          isLiveWoundDetectionEnabled = true,
+          isAddFromLocalStorageAvailable = true,
+          isBodyPartPickerAvailable = false,
+          isFrontCameraUsageAllowed = application.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT),
+          isFullHDVideoEnabled = false,
+          isCancelBarButtonItemVisible = true,
+          maxNumberOfMedia = 100,
+          isDepthOrHeightInputEnabled = true,
+          showTotalCircumference = true,
+          maxNumberOfCalibrationMedia = 1,
+          isMultipleOutlinesEnabled = true,
+          minNumberOfMedia = 0,
+          isStomaFlow = false,
+          lightBackgroundColor = null,
+          isMeasurementLineEnabled = true
+        )
+      )
     )
 
   }

@@ -3,10 +3,10 @@ package com.samplereactnative
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
-import io.imito.woundgenius.sdk.data.pojo.assessment.entity.AssessmentEntity
-import io.imito.woundgenius.sdk.data.pojo.bodypart.WoundGeniusBodyPart
-import io.imito.woundgenius.sdk.ui.screen.bodypicker.BodyPartContract
-import io.imito.woundgenius.sdk.ui.screen.measurecamera.MeasureCameraContract
+import io.imito.woundgenius.sdk.internal.data.pojo.measurement.MeasurementResult
+import io.imito.woundgenius.sdk.internal.data.pojo.bodypart.WoundGeniusBodyPart
+import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPartContract
+import io.imito.woundgenius.sdk.internal.ui.screen.measurecamera.MeasureCameraContract
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.bridge.Callback
@@ -37,10 +37,10 @@ class MainActivity : ReactActivity() {
 
         cameraActivityResultLauncher = registerForActivityResult(
             MeasureCameraContract()
-        ) { assessment: AssessmentEntity? ->
+        ) { results: List<MeasurementResult>? ->
             //your code to handle SDK result
-            if (assessment != null) {
-                sdkCallback?.invoke(assessment.toString())
+            if (results != null) {
+                sdkCallback?.invoke(results.toString())
             } else {
                 sdkCallback?.invoke("SDK Camera no results")
             }

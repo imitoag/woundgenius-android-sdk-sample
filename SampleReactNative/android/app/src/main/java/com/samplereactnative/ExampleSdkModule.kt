@@ -1,14 +1,14 @@
 package com.samplereactnative
 
 import android.content.Intent
-import io.imito.woundgenius.sdk.ui.screen.measurecamera.MeasureCameraActivity
+import io.imito.woundgenius.sdk.internal.ui.screen.measurecamera.MeasureCameraActivity
 import com.facebook.react.bridge.Callback
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
-import io.imito.woundgenius.sdk.data.pojo.camera.cameramod.CameraMods
-import io.imito.woundgenius.sdk.ui.screen.bodypicker.BodyPickerActivity
-import io.imito.woundgenius.sdk.ui.screen.support.MeasureSupportActivity
+import io.imito.woundgenius.sdk.internal.data.pojo.camera.mode.ImitoCameraMode
+import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPickerActivity
+import io.imito.woundgenius.sdk.internal.ui.screen.support.HelpScreenActivity
 import java.io.File
 
 
@@ -87,9 +87,9 @@ class ExampleSdkModule(private val reactContext: ReactApplicationContext) :
         val currentActivity = reactContext.currentActivity
 
         if (currentActivity is MainActivity) {
-            MeasureSupportActivity.open(
+            HelpScreenActivity.open(
                 currentActivity,
-                CameraMods.MARKER_DETECT_MODE
+                ImitoCameraMode.MARKER_DETECT_MODE
             )
         }
     }

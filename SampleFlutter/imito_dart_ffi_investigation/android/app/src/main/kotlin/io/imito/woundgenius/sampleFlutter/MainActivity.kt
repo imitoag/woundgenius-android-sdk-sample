@@ -5,10 +5,10 @@ import android.util.Log
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
-import io.imito.woundgenius.sdk.data.pojo.camera.cameramod.CameraMods
-import io.imito.woundgenius.sdk.ui.screen.bodypicker.BodyPickerActivity
-import io.imito.woundgenius.sdk.ui.screen.measurecamera.MeasureCameraActivity
-import io.imito.woundgenius.sdk.ui.screen.support.MeasureSupportActivity
+import io.imito.woundgenius.sdk.internal.data.pojo.camera.mode.ImitoCameraMode
+import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPickerActivity
+import io.imito.woundgenius.sdk.internal.ui.screen.measurecamera.MeasureCameraActivity
+import io.imito.woundgenius.sdk.internal.ui.screen.support.HelpScreenActivity
 import java.io.File
 
 class MainActivity : FlutterActivity() {
@@ -49,9 +49,9 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun openSdkHelpScreen() {
-        MeasureSupportActivity.open(
+        HelpScreenActivity.open(
             this@MainActivity,
-            CameraMods.MARKER_DETECT_MODE
+            ImitoCameraMode.MARKER_DETECT_MODE
         )
     }
 

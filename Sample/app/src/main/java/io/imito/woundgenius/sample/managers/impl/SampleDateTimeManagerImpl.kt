@@ -3,8 +3,8 @@ package io.imito.woundgenius.sample.managers.impl
 import android.content.res.Resources
 import io.imito.woundgenius.sample.R
 import io.imito.woundgenius.sample.managers.SampleDateTimeManager
-import io.imito.woundgenius.sdk.internal.utils.keys.Constants.SERVER_DATE_PATTERN
-import io.imito.woundgenius.sdk.internal.utils.keys.Constants.SERVER_DATE_TIME_PATTERN
+import io.imito.woundgenius.sample.utils.SampleConstants.SERVER_DATE_PATTERN
+import io.imito.woundgenius.sample.utils.SampleConstants.SERVER_DATE_TIME_PATTERN
 import java.text.SimpleDateFormat
 import java.util.*
 

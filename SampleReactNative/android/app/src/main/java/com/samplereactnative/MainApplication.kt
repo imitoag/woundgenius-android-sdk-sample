@@ -12,8 +12,9 @@ import android.app.Application
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
-import io.imito.woundgenius.sdk.data.pojo.camera.cameramod.CameraMods
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
+import io.imito.woundgenius.sdk.api.models.configuration.WoundGeniusConfiguration
+import io.imito.woundgenius.sdk.api.models.presenter.WGPresenter
 import com.facebook.react.ReactNativeApplicationEntryPoint.loadReactNative
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 
@@ -64,6 +65,13 @@ class MainApplication : Application(), ReactApplication {
           licenseKey = ""
       )
 
-      WoundGeniusSDK.configure(isMeasurementLineEnabled = true, isSingleAreaEnabled = false)
+      WoundGeniusSDK.configure(
+          presenter = WGPresenter(
+              configuration = WoundGeniusConfiguration(
+                  isMeasurementLineEnabled = true,
+                  isSingleAreaEnabled = false
+              )
+          )
+      )
   }
 }
