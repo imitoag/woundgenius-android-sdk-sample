@@ -16,7 +16,7 @@ android {
         minSdk 33
         targetSdk 36
         versionCode 301
-        versionName "1.6.1.1"
+        versionName "1.6.1"
         applicationId "io.imito.woundgenius.sample"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
