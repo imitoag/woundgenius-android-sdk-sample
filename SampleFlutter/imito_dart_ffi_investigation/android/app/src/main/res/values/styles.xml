@@ -15,4 +15,7 @@
     <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
         <item name="android:windowBackground">?android:colorBackground</item>
     </style>
+    <!-- Theme applied to the application, referenced from AndroidManifest.
+         Must extend Theme.AppCompat - the WoundGenius SDK activities require it. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" />
 </resources>

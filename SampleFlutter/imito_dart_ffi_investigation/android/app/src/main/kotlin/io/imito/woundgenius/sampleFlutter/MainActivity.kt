@@ -60,9 +60,11 @@ class MainActivity : FlutterActivity() {
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 SDK_CAMERA_REQUEST_CODE -> {
-                    val result =
-                        data?.let { (it.getSerializableExtra(MeasureCameraActivity.KEY_RES_ARGS) as MeasureCameraActivity.Companion.ResArgs).assessment }
-                    Log.d("woundGeniusResult", result.toString())
+                    // As of SDK 1.6.1 the result payload (MeasureCameraActivity.ResArgs) is internal
+                    // and cannot be read here. To receive the measurement results, launch the camera
+                    // through MeasureCameraContract - that requires a ComponentActivity, i.e. extend
+                    // FlutterFragmentActivity instead of FlutterActivity.
+                    Log.d("woundGeniusResult", "Capture finished")
                 }
                 SDK_BODY_PICKER_REQUEST_CODE -> {
 //                    val result =
