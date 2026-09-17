@@ -3,7 +3,7 @@ package io.imito.woundgenius.sample.ui.screen.measurementresult.holder
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel
+import io.imito.woundgenius.sdk.internal.data.pojo.media.MediaModel
 import io.imito.woundgenius.sample.ui.screen.assesmentimage.AssessmentMediaFragment
 
 class AssessmentImagesPagerAdapter(

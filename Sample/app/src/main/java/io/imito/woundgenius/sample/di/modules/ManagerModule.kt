@@ -6,6 +6,7 @@ import io.imito.woundgenius.sample.managers.impl.SampleDateTimeManagerImpl
 
 import dagger.Module
 import dagger.Provides
+import io.imito.woundgenius.sample.di.scope.AppScope
 import javax.inject.Singleton
 
 
@@ -13,7 +14,7 @@ import javax.inject.Singleton
 class ManagerModule {
 
     @Provides
-    @Singleton
+    @AppScope
     fun provideSampleDateTimeManager(resources: Resources): SampleDateTimeManager =
         SampleDateTimeManagerImpl(resources)
 

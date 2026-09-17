@@ -1,5 +1,6 @@
 package io.imito.woundgenius.sample.ui.screen.homescreen
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,13 +12,12 @@ import io.imito.woundgenius.sample.data.usecase.assessment.SaveAssessmentToDBUse
 import io.imito.woundgenius.sample.data.usecase.license.GetLicenseKeyUseCase
 import io.imito.woundgenius.sample.data.usecase.license.GetSdkFeaturesUseCase
 import io.imito.woundgenius.sample.ui.screen.base.AbsViewModel
-import io.imito.woundgenius.sample.utils.toRoomLocalEntity
-import io.imito.woundgenius.sdk.data.pojo.assessment.entity.AssessmentEntity
-import io.imito.woundgenius.sdk.data.pojo.bodypart.WoundGeniusBodyPart
-import io.imito.woundgenius.sdk.data.pojo.license.LicenseErrorType
-import io.imito.woundgenius.sdk.data.pojo.license.LicenseValidateResult
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
-import java.io.File
+import io.imito.woundgenius.sample.utils.toSampleAssessmentEntity
+import io.imito.woundgenius.sdk.internal.data.pojo.bodypart.WoundGeniusBodyPart
+import io.imito.woundgenius.sdk.internal.data.pojo.license.LicenseErrorType
+import io.imito.woundgenius.sdk.internal.data.pojo.license.LicenseValidateResult
+import io.imito.woundgenius.sdk.internal.data.pojo.measurement.MeasurementResult
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
 import javax.inject.Inject
 
 class HomeScreenViewModel @Inject constructor(
@@ -41,7 +41,7 @@ class HomeScreenViewModel @Inject constructor(
     val assessmentProgress: LiveData<Boolean>
         get() = _assessmentProgress
 
-    private val _isMeasurementChartExpandLD = MutableLiveData<Boolean>()
+    private val _isMeasurementChartExpandLD = MutableLiveData(false)
     val isMeasurementChartExpandLD: LiveData<Boolean>
         get() = _isMeasurementChartExpandLD
 
@@ -88,7 +88,7 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     fun getFeatureStatus() {
-        
+
         val params = GetSdkFeaturesUseCase.Params.forGetSdkFeatures()
         add(
             getSdkFeaturesUseCase.execute(params)
@@ -163,14 +163,7 @@ class HomeScreenViewModel @Inject constructor(
         add(
             getAssessmentsUseCase.execute(param)
                 .subscribe({ draftAssessments ->
-                    // A row outlives the files it points at: the database is durable storage, the
-                    // media folder is a directory on disk that the user, or the system reclaiming
-                    // space, can empty at any time. Listing a row whose media is all gone puts an
-                    // assessment on screen with nothing to show, so drop it rather than draw it.
-                    val (stored, orphaned) = draftAssessments.partition { it.hasStoredMedia() }
-                    orphaned.forEach { deleteAssessment(it.id) }
-
-                    val newList = ArrayList(stored.sortedBy { it.id })
+                    val newList = ArrayList(draftAssessments.sortedBy { it.id })
                     _assessmentsResponseLD.value = newList
                 }, {
                     Log.e("woundGeniusError", it.stackTraceToString())
@@ -180,21 +173,22 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     fun saveAssessmentToDB(
-        assessmentEntity: AssessmentEntity
+        measurements: List<MeasurementResult>
     ) {
-
-        val params =
-            SaveAssessmentToDBUseCase.Params.forSaveAssessmentToDB(
-                assessmentEntity.toRoomLocalEntity()
+        measurements.forEach {measurement ->
+            val params =
+                SaveAssessmentToDBUseCase.Params.forSaveAssessmentToDB(
+                    measurement.toSampleAssessmentEntity()
+                )
+            _assessmentProgress.value = false
+            add(
+                saveAssessmentToDBUseCase.execute(params)
+                    .subscribe({
+                    }, {
+                        Log.e("woundGeniusError", it.stackTraceToString())
+                    })
             )
-        _assessmentProgress.value = false
-        add(
-            saveAssessmentToDBUseCase.execute(params)
-                .subscribe({
-                }, {
-                    Log.e("woundGeniusError", it.stackTraceToString())
-                })
-        )
+        }
     }
 
     fun deleteAssessment(id: Long) {
@@ -212,13 +206,5 @@ class HomeScreenViewModel @Inject constructor(
         )
     }
 
-    /**
-     * @return `true` while at least one of this assessment's media files is still readable.
-     *
-     * An assessment holding no media at all counts as nothing to show either. The list item is
-     * built around its first media - the thumbnail and the mode label both come from it - so a row
-     * without media is not a row this screen can draw, whether the media was lost or never there.
-     */
-    private fun SampleAssessmentEntity.hasStoredMedia(): Boolean =
-        media?.any { it.image?.let { path -> File(path).isFile } == true } == true
+
 }

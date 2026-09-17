@@ -2,12 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name="io.imito.woundgenius.sample.core.SampleWoundSDKApplication"
@@ -19,7 +25,7 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/sample_app_ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
+        android:usesCleartextTraffic="false"
         android:theme="@style/AppTheme"
         tools:ignore="LockedOrientationActivity">
 
@@ -36,12 +42,6 @@
 
         <activity android:name=".ui.screen.measurementresult.holder.MeasurementResultHolderActivity" />
 
-
-        <!--
-            The host app keeps the bare androidx.core.content.FileProvider under its own
-            authority: the SDK now ships WoundGeniusFileProvider instead, so the two providers
-            no longer collide during manifest merge. This mirrors what a real integrator has.
-        -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

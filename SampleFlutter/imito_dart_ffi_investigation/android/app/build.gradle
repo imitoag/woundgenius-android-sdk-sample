@@ -44,7 +44,7 @@ android {
         applicationId = "io.imito.woundgenius.sampleFlutter"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdk = 26
+        minSdk = 33
         targetSdk = 36
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
@@ -69,5 +69,5 @@ flutter {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-    implementation("io.imito.woundgenius:sdk:1.5.2")
+    implementation("io.imito.woundgenius:sdk:1.6.1")
 }

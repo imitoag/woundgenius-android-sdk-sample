@@ -2,7 +2,7 @@ package io.imito.woundgenius.sample.data.repo
 
 import io.imito.woundgenius.sample.data.pojo.assessment.SampleAssessmentEntity
 import io.imito.woundgenius.sample.data.pojo.license.SdkFeatureStatus
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
 
 import io.reactivex.Observable
 

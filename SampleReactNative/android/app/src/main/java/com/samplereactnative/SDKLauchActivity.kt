@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
-import io.imito.woundgenius.sdk.data.pojo.assessment.entity.AssessmentEntity
-import io.imito.woundgenius.sdk.data.pojo.camera.cameramod.CameraMods
-import io.imito.woundgenius.sdk.ui.screen.bodypicker.BodyPartContract
-import io.imito.woundgenius.sdk.ui.screen.bodypicker.BodyPickerActivity.Companion.openWithResult
-import io.imito.woundgenius.sdk.ui.screen.measurecamera.MeasureCameraActivity
-import io.imito.woundgenius.sdk.ui.screen.measurecamera.MeasureCameraContract
-import io.imito.woundgenius.sdk.ui.screen.support.MeasureSupportActivity
+import io.imito.woundgenius.sdk.internal.data.pojo.measurement.MeasurementResult
+import io.imito.woundgenius.sdk.internal.data.pojo.camera.mode.ImitoCameraMode
+import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPartContract
+import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPickerActivity.Companion.openWithResult
+import io.imito.woundgenius.sdk.internal.ui.screen.measurecamera.MeasureCameraActivity
+import io.imito.woundgenius.sdk.internal.ui.screen.measurecamera.MeasureCameraContract
+import io.imito.woundgenius.sdk.internal.ui.screen.support.HelpScreenActivity
 import java.io.File
 
 class SDKLauchActivity : AppCompatActivity() {
@@ -20,8 +20,8 @@ class SDKLauchActivity : AppCompatActivity() {
 
     private val measureCameraLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
         MeasureCameraContract()
-    ) { assessment: AssessmentEntity? ->
-        if (assessment != null) {
+    ) { results: List<MeasurementResult>? ->
+        if (results != null) {
 
         } else {
             finish()
@@ -64,9 +64,9 @@ class SDKLauchActivity : AppCompatActivity() {
 //        })
 //
 //        openHelpScreenButtonACTV.setOnClickListener({ v ->
-//            MeasureSupportActivity.open(
+//            HelpScreenActivity.open(
 //                this@MainActivity,
-//                CameraMods.MARKER_DETECT_MODE
+//                ImitoCameraMode.MARKER_DETECT_MODE
 //            )
 //        })
     }

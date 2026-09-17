@@ -9,9 +9,8 @@ import io.imito.woundgenius.sample.di.modules.ActivityModule
 import io.imito.woundgenius.sample.di.modules.AppModule
 import io.imito.woundgenius.sample.di.modules.FragmentModule
 import io.imito.woundgenius.sample.di.modules.ViewModelModule
-import javax.inject.Singleton
 
-@Singleton
+@AppScope
 @Component(
     modules = [
         AppModule::class,
@@ -28,6 +27,7 @@ interface AppComponent {
 
         @BindsInstance
         fun application(application: Application): Builder
+
 
         fun build(): AppComponent
     }

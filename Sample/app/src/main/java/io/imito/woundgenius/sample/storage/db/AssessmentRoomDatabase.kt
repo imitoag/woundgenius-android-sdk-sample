@@ -12,11 +12,11 @@ import io.imito.woundgenius.sample.data.pojo.converter.MetadataConverter
 import io.imito.woundgenius.sample.data.pojo.assessment.SampleAssessmentEntity
 import io.imito.woundgenius.sample.data.pojo.converter.AnnotationConverter
 import io.imito.woundgenius.sample.data.pojo.converter.ThumbnailsConverter
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel
+import io.imito.woundgenius.sdk.internal.data.pojo.media.MediaModel
 import io.imito.woundgenius.sample.storage.db.dao.MediaDao
 
 @Database(
-    entities = [SampleAssessmentEntity::class], version = 3, exportSchema = true
+    entities = [SampleAssessmentEntity::class], version = 4, exportSchema = true
 )
 @TypeConverters(
     MediaModelConverter::class,
@@ -106,6 +106,75 @@ abstract class AssessmentRoomDatabase : RoomDatabase() {
 
                 database.execSQL("DROP TABLE sample_assessment_entity")
 
+
+                database.execSQL("ALTER TABLE sample_assessment_entity_new RENAME TO sample_assessment_entity")
+            }
+        }
+
+        val migration3_4: Migration = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("""
+            CREATE TABLE sample_assessment_entity_new (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                userId TEXT,
+                patientId TEXT,
+                width_cm REAL,
+                datetime TEXT,
+                media TEXT,
+                area_cm_sq REAL,
+                wound_id TEXT,
+                circumference_cm REAL,
+                original_image_id TEXT,
+                length_cm REAL,
+                depth_cm REAL,
+                created_by_user_id TEXT,
+                created_by TEXT,
+                observationsJson TEXT,
+                stomaDocumentation INTEGER,
+                magicAssessment INTEGER
+            )
+        """.trimIndent())
+
+                database.execSQL("""
+            INSERT INTO sample_assessment_entity_new (
+                id,
+                userId,
+                patientId,
+                width_cm,
+                datetime,
+                media,
+                area_cm_sq,
+                wound_id,
+                circumference_cm,
+                original_image_id,
+                length_cm,
+                depth_cm,
+                created_by_user_id,
+                created_by,
+                observationsJson,
+                stomaDocumentation
+            )
+            SELECT
+                id,
+                userId,
+                patientId,
+                width_cm,
+                datetime,
+                media,
+                area_cm_sq,
+                wound_id,
+                circumference_cm,
+                original_image_id,
+                length_cm,
+                depth_cm,
+                created_by_user_id,
+                created_by,
+                observationsJson,
+                stomaDocumentation
+            FROM sample_assessment_entity
+        """.trimIndent())
+
+                database.execSQL("DROP TABLE sample_assessment_entity")
 
                 database.execSQL("ALTER TABLE sample_assessment_entity_new RENAME TO sample_assessment_entity")
             }

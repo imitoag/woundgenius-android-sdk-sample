@@ -12,8 +12,8 @@ import io.imito.woundgenius.sample.data.usecase.license.SaveSdkFeaturesUseCase
 import io.imito.woundgenius.sample.data.usecase.user.GetUserIdUseCase
 import io.imito.woundgenius.sample.data.usecase.user.SaveUserIdUseCase
 import io.imito.woundgenius.sample.ui.screen.base.AbsViewModel
-import io.imito.woundgenius.sdk.data.pojo.license.LicenseValidateResult
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
+import io.imito.woundgenius.sdk.internal.data.pojo.license.LicenseValidateResult
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
 import javax.inject.Inject
 
 class SettingsScreenViewModel @Inject constructor(

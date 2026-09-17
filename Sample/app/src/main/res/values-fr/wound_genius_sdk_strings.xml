@@ -1076,13 +1076,13 @@
     "Besoin d'aide ?"
   </string>
   <string name="WOUND_GENIUS_SDK_NEED_HELP_DIALOG_description">
-    "Cliquez ici pour consulter le guide rapide sur l'utilisation des marqueurs de calibration et d'autres modes de capture."
+    "Appuyez ici pour consulter le guide rapide d’utilisation des marqueurs de calibration. Vous n’avez pas de marqueur ? Essayez le mode Règle."
   </string>
   <string name="WOUND_GENIUS_SDK_ONBOARDING_DIALOG_title">
     "Démarrage rapide"
   </string>
   <string name="WOUND_GENIUS_SDK_ONBOARDING_DIALOG_description">
-    "Placez le marqueur de calibration près de la plaie, alignez votre appareil en conséquence et maintenez-le stable pour la capture. Gardez un œil sur le recouvrement vert pour améliorer la détection de la plaie."
+    "Placez le marqueur de calibration près de la plaie, alignez l’appareil et maintenez-le immobile. Surveillez le recouvrement vert pour améliorer la détection de la plaie."
   </string>
   <string name="WOUND_GENIUS_SDK_ONBOARDING_DIALOG_replay_video">
     "Relire la vidéo"
@@ -1265,4 +1265,10 @@ Ou bien, supprimez toutes les zones détectées et dessinez-en une nouvelle vous
   <string name="WOUND_GENIUS_SDK_TWO_WEEKS"/>
   <string name="WOUND_GENIUS_SDK_MONTH"/>
   <string name="WOUND_GENIUS_SDK_YEAR"/>
+  <string name="WOUND_GENIUS_SDK_ONBOARDING_DIALOG_watch_video">
+    "Regarder la vidéo"
+  </string>
+  <string name="WOUND_GENIUS_SDK_NO_OPEN_WOUND_DETECTED_TRACE_MANUALLY">
+    "Aucune plaie ouverte détectée. Reprenez une photo ou ajoutez les mesures en traçant manuellement la zone de la plaie avec votre doigt."
+  </string>
 </resources>

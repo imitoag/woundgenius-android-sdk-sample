@@ -70,7 +70,7 @@ class FileLogTree(val context: Context) : Timber.Tree() {
                 set(Calendar.WEEK_OF_YEAR, get(Calendar.WEEK_OF_YEAR) - 1)
             }
             if (date == null || date.before(calendarWeekAgo.time)) {
-                file.delete()
+                if (!file.delete()) Timber.w("Failed to delete: %s", file.path)
             }
         }
     }
@@ -195,9 +195,9 @@ class FileLogTree(val context: Context) : Timber.Tree() {
                     File(context.cacheDir, FOLDER_TIMBER_LOGS).listFiles() ?: emptyArray()
                 val destination = File(context.cacheDir, FILE_TIMBER_LOGS)
                 if (destination.exists()) {
-                    destination.delete()
+                    if (!destination.delete()) Timber.w("Failed to delete: %s", destination.path)
                 }
-                destination.createNewFile()
+                if (!destination.createNewFile()) Timber.w("Failed to create file: %s", destination.path)
 
                 Zipper.zip(destination, *sources)
 

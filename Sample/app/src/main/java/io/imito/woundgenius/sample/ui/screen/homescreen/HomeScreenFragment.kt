@@ -4,50 +4,53 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import androidx.activity.result.ActivityResultLauncher
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.LocaleListCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
+import com.google.gson.Gson
 import io.imito.woundgenius.sample.BuildConfig
 import io.imito.woundgenius.sample.R
 import io.imito.woundgenius.sample.data.pojo.assessment.SampleAssessmentEntity
 import io.imito.woundgenius.sample.data.pojo.license.SdkFeatureStatus
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_AREA_TYPE
-import io.imito.woundgenius.sdk.data.pojo.entity.MediaModel.Metadata.MeasurementData.Annotation.Companion.ANNOTATION_OUTLINE_TYPE
 import io.imito.woundgenius.sample.databinding.SampleAppFragmentHomeScreenBinding
 import io.imito.woundgenius.sample.ui.screen.base.AbsFragment
 import io.imito.woundgenius.sample.ui.screen.main.MainBridge
 import io.imito.woundgenius.sample.ui.screen.measurementresult.holder.MeasurementResultHolderActivity
-import io.imito.woundgenius.sample.utils.captureMediaFolder
-import io.imito.woundgenius.sample.utils.data.LineChartData
-import io.imito.woundgenius.sdk.data.pojo.assessment.entity.AssessmentEntity
-import io.imito.woundgenius.sdk.data.pojo.autodetectionmod.WoundAutoDetectionMode
-import io.imito.woundgenius.sdk.data.pojo.camera.cameramod.CameraMods
-import io.imito.woundgenius.sdk.di.WoundGeniusSDK
-import io.imito.woundgenius.sdk.dialog.ImitoCenterScreenDialog
-import io.imito.woundgenius.sdk.ui.screen.bodypicker.BodyPartContract
-import io.imito.woundgenius.sdk.ui.screen.bodypicker.BodyPickerActivity
-import io.imito.woundgenius.sdk.ui.screen.measurecamera.MeasureCameraActivity
-import io.imito.woundgenius.sdk.ui.screen.measurecamera.MeasureCameraContract
-import io.imito.woundgenius.sdk.utils.bodypicker.ConverterUtil
-import io.imito.woundgenius.sdk.utils.LandscapeUtils.isSupportPortraitOnly
-import io.imito.woundgenius.sdk.utils.LandscapeUtils.onConfigurationChange
-import io.imito.woundgenius.sdk.data.pojo.license.SdkFeature
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import timber.log.Timber
+import io.imito.woundgenius.sdk.api.WoundGeniusSDK
+import io.imito.woundgenius.sdk.internal.data.pojo.autodetectionmod.WoundAutoDetectionMode
+import io.imito.woundgenius.sdk.internal.data.pojo.bodypart.BodyPreviewDisplayMode
+import io.imito.woundgenius.sdk.internal.data.pojo.bodypart.WGBodyPartPickerFrontBackConfig
+import io.imito.woundgenius.sdk.internal.data.pojo.camera.mode.ImitoCameraMode
+import io.imito.woundgenius.sdk.internal.data.pojo.license.SdkFeature
+import io.imito.woundgenius.sdk.internal.data.pojo.measurement.MeasurementResult
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_AREA_TYPE
+import io.imito.woundgenius.sdk.internal.data.pojo.outline.point.PointD.Companion.ANNOTATION_OUTLINE_TYPE
+import io.imito.woundgenius.sdk.internal.ui.dialog.center.ImitoCenterScreenDialog
+import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPartContract
+import io.imito.woundgenius.sdk.internal.ui.screen.bodypicker.BodyPickerActivity
+import io.imito.woundgenius.sdk.internal.ui.screen.measurecamera.MeasureCameraActivity
+import io.imito.woundgenius.sdk.internal.ui.screen.measurecamera.MeasureCameraContract
+import io.imito.woundgenius.sdk.internal.ui.view.bodypart.WGBodyPartPickerFrontBackView
+import io.imito.woundgenius.sdk.internal.utils.bodypicker.BodyPartConverterUtils
+import io.imito.woundgenius.sdk.internal.utils.chart.LineChartData
+import io.imito.woundgenius.sample.utils.SampleConstants.FORMS_FOLDER
+import io.imito.woundgenius.sample.utils.SampleConstants.MIME_TYPE_JSON
+import io.imito.woundgenius.sample.utils.SampleConstants.UTC_DATE_FORMAT_PATTERN
+import io.imito.woundgenius.sdk.internal.utils.system.LandscapeUtils.isSupportPortraitOnly
+import io.imito.woundgenius.sdk.internal.utils.system.LandscapeUtils.onConfigurationChange
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
+import javax.inject.Inject
+import timber.log.Timber
 
 class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
 
@@ -57,11 +60,11 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
 
     override fun provideLayoutId() = R.layout.sample_app_fragment_home_screen
 
+    private val bodyPartHandler = Handler()
+
     private val objectAnimatorDownAnimator by lazy { ObjectAnimator.ofFloat(0f, 90f) }
 
     private val objectAnimatorUpAnimator by lazy { ObjectAnimator.ofFloat(90f, 0f) }
-
-    private lateinit var listEntry: ArrayList<Entry>
 
     lateinit var binding: SampleAppFragmentHomeScreenBinding
 
@@ -69,12 +72,15 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
 
     private var woundGeniusSDK = WoundGeniusSDK
 
+    @Inject
+    lateinit var gson: Gson
+
     private val measureCameraLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
         MeasureCameraContract()
-    ) { assessment: AssessmentEntity? ->
-        if (assessment != null) {
+    ) { measurements: List<MeasurementResult>? ->
+        if (!measurements.isNullOrEmpty()) {
             binding.recyclerLockerV.visibility = View.VISIBLE
-            viewModel?.saveAssessmentToDB(assessment)
+            viewModel?.saveAssessmentToDB(measurements)
         }
     }
 
@@ -108,11 +114,44 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                         )
                     }
                 }
+            },
+            onAssessmentShare = { assessment ->
+                shareAssessmentAsJson(assessment)
             }
         )
     }
 
-    override fun initListeners() {
+    private fun shareAssessmentAsJson(assessment: SampleAssessmentEntity) {
+        val ctx = context ?: return
+
+        val jsonObject = gson.toJsonTree(assessment).asJsonObject.apply {
+            addProperty("sdkVersion", WoundGeniusSDK.sdkVersion)
+        }
+        val json = gson.toJson(jsonObject)
+
+        val timestamp = SimpleDateFormat(UTC_DATE_FORMAT_PATTERN, Locale.UK).format(Date())
+        val fileName =
+            "${if (assessment.magicAssessment == true) "FormsModel_" else "Measurement_"}$timestamp.json"
+
+        val sharesDir = File(ctx.cacheDir, FORMS_FOLDER).apply { mkdirs() }
+        val jsonFile = File(sharesDir, fileName)
+        jsonFile.writeText(json)
+
+        val uri = FileProvider.getUriForFile(
+            ctx,
+            ctx.getString(R.string.file_provider),
+            jsonFile
+        )
+
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = MIME_TYPE_JSON
+            putExtra(Intent.EXTRA_STREAM, uri)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        startActivity(Intent.createChooser(intent, "Share Magic Assessment Result"))
+    }
+
+    override fun initListeners() { // NOSONAR Cognitive Complexity — UI/view code, refactor requires on-device verification
         binding.apply {
             settingsButtonACIV.setOnClickListener {
                 mainBridge.openSettingsScreen()
@@ -149,36 +188,21 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                 }
             }
             captureModeButtonCL.setOnClickListener {
-                val mediaFolder = requireContext().captureMediaFolder()
-                if (!mediaFolder.exists()) {
-                    mediaFolder.mkdir()
-                }
+                val mediaFolder = mediaDir()
                 if (viewModel?.licenseErrorDialog?.value?.first == true) {
                     viewModel?.openLicenseIssueDialog(viewModel?.licenseErrorDialog?.value?.second)
                 } else {
                     if (viewModel?.isNoLicenseError?.value == true) {
                         viewModel?.openNoLicenseKeyDialog()
                     } else {
-                        WoundGeniusSDK.configure(
-                            captureScreenTitle = getString(R.string.WOUND_GENIUS_SDK_CAPTURE_SCREEN_TITLE),
-                            captureScreenSubTitle = getString(R.string.WOUND_GENIUS_SDK_CAPTURE_SCREEN_SUBTITLE),
-
-                            pinsScreenTitle = getString(R.string.WOUND_GENIUS_SDK_PINS_SCREEN_TITLE),
-                            pinsScreenSubTitle = getString(R.string.WOUND_GENIUS_SDK_PINS_SCREEN_SUBTITLE),
-
-                            outlineScreenTitle = getString(R.string.WOUND_GENIUS_SDK_OUTLINE_SCREEN_TITLE),
-                            outlineScreenSubTitle = getString(R.string.WOUND_GENIUS_SDK_OUTLINE_SCREEN_SUBTITLE),
-
-                            resultScreenTitle = getString(R.string.WOUND_GENIUS_SDK_RESULTS_SCREEN_TITLE),
-                            resultScreenSubTitle = getString(R.string.WOUND_GENIUS_SDK_RESULTS_SCREEN_SUBTITLE)
-                        )
-
-                        if (WoundGeniusSDK.getAvailableModes().isNotEmpty()) {
-                            MeasureCameraActivity.openWithResult(
-                                launcher = measureCameraLauncher,
-                                fragment = this@HomeScreenFragment,
-                                mediaFolder = mediaFolder.absolutePath
-                            )
+                        if (woundGeniusSDK.getConfiguration()?.availableModes?.isNotEmpty() == true) {
+                            context?.let {
+                                MeasureCameraActivity.openWithResult(
+                                    launcher = measureCameraLauncher,
+                                    fragment = this@HomeScreenFragment,
+                                    mediaFolder = mediaFolder.absolutePath
+                                )
+                            }
                         } else {
                             ImitoCenterScreenDialog.getNoLicenseKeyDialog(
                                 titleText = getString(R.string.WOUND_GENIUS_SDK_SDK_NO_ENABLED_CAMERA_MODS_DIALOG_TITLE),
@@ -196,7 +220,7 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
             licenseKeyButtonCL.setOnClickListener {
                 mainBridge.openSettingsScreen()
             }
-            expandChartCL.setOnClickListener {
+            chartLabelContainerCL.setOnClickListener {
                 viewModel?.onExpandChartClick(viewModel?.isMeasurementChartExpandLD?.value ?: false)
             }
         }
@@ -214,7 +238,7 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) { // NOSONAR Cognitive Complexity — UI/view code, refactor requires on-device verification
         super.onViewCreated(view, savedInstanceState)
 
 
@@ -260,15 +284,39 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                                 "Pick body Part\n" + "Selected $selectedSize Body Parts"
                         } else {
                             val bodyRegion = context?.let {
-                                ConverterUtil.convertBodyPartServerToUiNew(
+                                BodyPartConverterUtils.convertBodyPartServerToUiNew(
                                     it,
                                     bodyPart[0].items?.get(0)?.itemId ?: ""
                                 )
                             }
 
                             bodyPickerButtonLabelACTV.text =
-                                "Pick body Part\n" + "Selected Body Part: $bodyRegion"
+                                "Pick Body Part\n" + "Selected Body Part: $bodyRegion"
                         }
+
+                        val selectedBodyPartsColorInt =
+                            woundGeniusSDK.getConfiguration().primaryButtonColor?.let {
+                                context?.getColor(it.toInt())
+                            } ?: context?.getColor(R.color.sample_app_button_color)
+
+                        val selectedBodyPartsColor = selectedBodyPartsColorInt?.let {
+                            String.format("#%06X", 0xFFFFFF and it)
+                        }
+
+                        val config = WGBodyPartPickerFrontBackConfig(
+                            bodyParts = bodyPart,
+                            showBodyPartListView = true,
+                            showOrientationLabels = true,
+                            displayMode = BodyPreviewDisplayMode.BOTH,
+                            selectedBodyPartsColor = selectedBodyPartsColor
+                        )
+
+                        selectedBodyPartPreview.isVisible = true
+                        selectedBodyPartPreview.init(config)
+
+                        bodyPartHandler.postDelayed({
+                            binding.selectedBodyPartPreview.isVisible = false
+                        }, 5000)
                     }
                 }
 
@@ -302,7 +350,7 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                             objectAnimatorUpAnimator.removeAllUpdateListeners()
                         }
                     }
-                    llChart.isVisible = isMeasurementChartExpand
+                    chartWGCV.isVisible = isMeasurementChartExpand
                 }
                 noLicenseKeyErrorDialog.observe(viewLifecycleOwner) {
                     it ?: return@observe
@@ -334,266 +382,125 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                         assessmentsRV.visibility = View.VISIBLE
                         val measurementMetaDataAmount =
                             assessments.filter { it.media?.find { !it.metadata?.measurementData?.annotationList.isNullOrEmpty() } != null }.size
-                        expandChartCL.isVisible =
+                        lineChartContainerCL.isVisible =
                             assessments.find { it.media?.find { !it.metadata?.measurementData?.annotationList.isNullOrEmpty() } != null } != null && measurementMetaDataAmount >= 2
                         assessmentsAdapter.submitList(assessments)
                         setAssessmentChartData(assessments)
                         assessmentsRV.scrollToPosition(0)
                     } else {
-                        expandChartCL.visibility = View.GONE
+                        lineChartContainerCL.visibility = View.GONE
                         assessmentsRV.visibility = View.GONE
+                        binding.chartWGCV.isVisible = false
                     }
                 }
             }
         }
     }
 
-    private fun onCameraModsChange(cameraMod: CameraMods, isChecked: Boolean) {
-        val availableCameraMods = ArrayList(woundGeniusSDK.getAvailableModes())
-        if (isChecked) {
-            if (!availableCameraMods.contains(cameraMod)) {
-                availableCameraMods.add(cameraMod)
-            }
-        } else {
-            availableCameraMods.removeIf {
-                it == cameraMod
-            }
-        }
-
-        woundGeniusSDK.configure(
-            availableModes = availableCameraMods
-        )
-    }
-
-    private fun onLicenseUpdate(
+    private fun onLicenseUpdate( // NOSONAR Cognitive Complexity — UI/view code, refactor requires on-device verification
         availableFeatures: List<String>,
         sdkFeaturesStatus: SdkFeatureStatus
     ) {
-        binding.apply {
-            viewModel?.apply {
 
-                var isEnabled =
-                    sdkFeaturesStatus.availableModes?.contains(CameraMods.VIDEO_MODE) ?: false
+        var config = woundGeniusSDK.getConfiguration()
 
-                if (availableFeatures.contains(SdkFeature.VIDEO_CAPTURING.featureName)) {
-                    if (wasLicenseIncorrect) {
-                        isEnabled = true
-                    }
-                    onCameraModsChange(CameraMods.VIDEO_MODE, isEnabled)
-                } else {
-                    onCameraModsChange(CameraMods.VIDEO_MODE, false)
+        // Single Area is gated by its own license feature; without it the mode is always off.
+        val isSingleAreaEnabled = if (availableFeatures.contains(SdkFeature.SINGLE_AREA_MODE.featureName)) {
+            wasLicenseIncorrect || (sdkFeaturesStatus.isSingleAreaEnabled ?: false)
+        } else false
 
-                }
+        // Measurement Line is the baseline tool: enabled when the license does not manage it,
+        // configurable when it does, and forced on whenever Single Area is active (Single Area builds on it).
+        val isMeasurementLineEnabled = when {
+            isSingleAreaEnabled -> true
+            availableFeatures.contains(SdkFeature.LINE_MEASUREMENT.featureName) ->
+                wasLicenseIncorrect || (sdkFeaturesStatus.isMeasurementLineEnabled ?: false)
+            else -> true
+        }
 
-                if (availableFeatures.contains(SdkFeature.STOMA_DOCUMENTATION.featureName)) {
-                    val isStomaFlowEnabled =
-                        sdkFeaturesStatus.isStomaFlowEnable ?: false
-                    woundGeniusSDK.configure(
-                        isStomaFlow = isStomaFlowEnabled
-                    )
-                } else {
-                    woundGeniusSDK.configure(
-                        isStomaFlow = false
-                    )
-                }
+        config = config.copy(
 
-                if (availableFeatures.contains(SdkFeature.PHOTO_CAPTURING.featureName)) {
-                    isEnabled =
-                        sdkFeaturesStatus.availableModes?.contains(CameraMods.PHOTO_MODE) ?: false
-                    if (wasLicenseIncorrect) {
-                        isEnabled = true
-                    }
-                    onCameraModsChange(CameraMods.PHOTO_MODE, isEnabled)
-                } else {
-                    onCameraModsChange(CameraMods.PHOTO_MODE, false)
-                }
+            availableModes = checkAvailableModes(availableFeatures, sdkFeaturesStatus),
 
-                if (availableFeatures.contains(SdkFeature.MARKER_MEASUREMENT_CAPTURING.featureName)) {
-                    isEnabled =
-                        sdkFeaturesStatus.availableModes?.contains(CameraMods.MARKER_DETECT_MODE)
-                            ?: false
-                    if (wasLicenseIncorrect) {
-                        isEnabled = true
-                    }
-                    onCameraModsChange(CameraMods.MARKER_DETECT_MODE, isEnabled)
-                } else {
-                    onCameraModsChange(CameraMods.MARKER_DETECT_MODE, false)
-                }
+            isStomaFlow = availableFeatures.contains(SdkFeature.STOMA_DOCUMENTATION.featureName) &&
+                    (sdkFeaturesStatus.isStomaFlowEnable ?: false),
 
-                if (availableFeatures.contains(SdkFeature.RULER_MEASUREMENT_CAPTURING.featureName)) {
-                    isEnabled =
-                        sdkFeaturesStatus.availableModes?.contains(CameraMods.MANUAL_MEASURE_MODE)
-                            ?: false
-                    if (wasLicenseIncorrect) {
-                        isEnabled = true
-                    }
-                    onCameraModsChange(CameraMods.MANUAL_MEASURE_MODE, isEnabled)
-                } else {
-                    onCameraModsChange(CameraMods.MANUAL_MEASURE_MODE, false)
-                }
-                !availableFeatures.contains(SdkFeature.RULER_MEASUREMENT_CAPTURING.featureName)
+            isMultipleOutlinesEnabled = if (availableFeatures.contains(SdkFeature.MULTIPLE_WOUNDS_PER_IMAGE.featureName)) {
+                wasLicenseIncorrect || (sdkFeaturesStatus.isMultipleOutlinesSupported ?: false)
+            } else false,
 
-                if (availableFeatures.contains(SdkFeature.MULTIPLE_WOUNDS_PER_IMAGE.featureName)) {
-                    isEnabled =
-                        sdkFeaturesStatus.isMultipleOutlinesSupported ?: false
-                    if (wasLicenseIncorrect) {
-                        isEnabled = true
-                    }
-                    woundGeniusSDK.configure(
-                        isMultipleOutlinesEnabled = isEnabled
-                    )
+            // Auto Detection
+            autoDetectionMode = if (availableFeatures.contains(SdkFeature.WOUND_DETECTION.featureName)) {
+                val mode =
+                    if (wasLicenseIncorrect) WoundAutoDetectionMode.WOUND else sdkFeaturesStatus.autoDetectionMode
 
-                } else {
-                    woundGeniusSDK.configure(
-                        isMultipleOutlinesEnabled = false
-                    )
-                }
+                if (config.isStomaFlow) WoundAutoDetectionMode.NONE else mode
+            } else WoundAutoDetectionMode.NONE,
 
-                if (availableFeatures.contains(SdkFeature.WOUND_DETECTION.featureName)) {
-                    var woundAutoDetectionMode =
-                        sdkFeaturesStatus.autoDetectionMode
+            // Live Detection
+            isLiveWoundDetectionEnabled = availableFeatures.contains(SdkFeature.LIVE_WOUND_DETECTION.featureName) &&
+                    (wasLicenseIncorrect || (sdkFeaturesStatus.isLiveDetectionEnabled ?: false)),
 
-                    if (wasLicenseIncorrect) {
-                        woundAutoDetectionMode = WoundAutoDetectionMode.WOUND
-                    }
+            // Measurement Line
+            isMeasurementLineEnabled = isMeasurementLineEnabled,
+
+            // Single Area
+            isSingleAreaEnabled = isSingleAreaEnabled,
+
+            // Gallery & Body Picker & Front Camera
+            isAddFromLocalStorageAvailable = availableFeatures.contains(SdkFeature.LOCAL_STORAGE_IMAGES.featureName) &&
+                    (wasLicenseIncorrect || (sdkFeaturesStatus.isMediaFromGalleryAllowed ?: false)),
+
+            isBodyPartPickerAvailable = availableFeatures.contains(SdkFeature.BODY_PART_PICKER.featureName) &&
+                    (wasLicenseIncorrect || (sdkFeaturesStatus.isBodyPickerAllowed ?: false)),
+
+            isFrontCameraUsageAllowed = availableFeatures.contains(SdkFeature.FRONTAL_CAMERA.featureName) &&
+                    (wasLicenseIncorrect || (sdkFeaturesStatus.isFrontalCameraSupported ?: false)),
+
+            // Limits
+            minNumberOfMedia = sdkFeaturesStatus.minNumberOfMedia,
+            maxNumberOfMedia = sdkFeaturesStatus.maxNumberOfMedia
+        )
 
 
-                    woundGeniusSDK.configure(
-                        woundAutoDetectionMode = if (woundGeniusSDK.getIsStomaFlow()) WoundAutoDetectionMode.NONE else woundAutoDetectionMode
-                    )
-                } else {
+        activity?.let { act ->
+            val isOnlyPortrait = isSupportPortraitOnly(act)
+            val shouldSupportLandscape = !isOnlyPortrait &&
+                    (config?.isLandscapeSupported == true && (sdkFeaturesStatus.isLandScapeSupported || act.requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_FULL_USER))
 
-                    woundGeniusSDK.configure(
-                        woundAutoDetectionMode = WoundAutoDetectionMode.NONE
-                    )
-                }
-
+            config = config.copy(isLandscapeSupported = shouldSupportLandscape)
+            onConfigurationChange(act)
+        }
 
 
-                if (availableFeatures.contains(SdkFeature.LIVE_WOUND_DETECTION.featureName)) {
-                    isEnabled = sdkFeaturesStatus.isLiveDetectionEnabled ?: false
-
-                    if (wasLicenseIncorrect) {
-                        isEnabled = true
-                    }
-
-                    woundGeniusSDK.configure(
-                        isLiveDetectionEnabled = isEnabled
-                    )
-                } else {
-
-                    woundGeniusSDK.configure(
-                        isLiveDetectionEnabled = false
-                    )
-                }
-
-                if (true) {
-                    isEnabled = sdkFeaturesStatus.isMeasurementLineEnabled ?: false
-
-                    if (wasLicenseIncorrect) {
-                        isEnabled = true
-                    }
-
-                    woundGeniusSDK.configure(
-                        isMeasurementLineEnabled = isEnabled
-                    )
-                } else {
-
-                    woundGeniusSDK.configure(
-                        isMeasurementLineEnabled = false
-                    )
-                }
-
-                if (true) {
-                    isEnabled = sdkFeaturesStatus.isSingleAreaEnabled ?: false
-
-                    if (wasLicenseIncorrect) {
-                        isEnabled = true
-                    }
-
-                    woundGeniusSDK.configure(
-                        isSingleAreaEnabled = isEnabled
-                    )
-                } else {
-
-                    woundGeniusSDK.configure(
-                        isSingleAreaEnabled = false
-                    )
-                }
-
-                if (availableFeatures.contains(SdkFeature.LOCAL_STORAGE_IMAGES.featureName)) {
-                    isEnabled =
-                        sdkFeaturesStatus.isMediaFromGalleryAllowed ?: false
-                    if (wasLicenseIncorrect) {
-                        isEnabled = true
-                    }
-                    woundGeniusSDK.configure(
-                        isAddFromLocalStorageAvailable = isEnabled
-                    )
-
-                } else {
-                    woundGeniusSDK.configure(
-                        isAddFromLocalStorageAvailable = false
-                    )
-
-                }
+        if (availableFeatures.isNotEmpty()) {
+            wasLicenseIncorrect = false
+        }
 
 
-                if (availableFeatures.contains(SdkFeature.BODY_PART_PICKER.featureName)) {
-                    isEnabled =
-                        sdkFeaturesStatus.isBodyPickerAllowed ?: false
-                    if (wasLicenseIncorrect) {
-                        isEnabled = true
-                    }
-                    woundGeniusSDK.configure(
-                        isAddBodyPickerOnCaptureScreenAvailable = isEnabled
-                    )
+        WoundGeniusSDK.updateConfig(config)
+    }
 
-                } else {
-                    woundGeniusSDK.configure(
-                        isAddBodyPickerOnCaptureScreenAvailable = false
-                    )
-                }
+    private fun checkAvailableModes(
+        features: List<String>,
+        status: SdkFeatureStatus
+    ): List<ImitoCameraMode> {
+        val modes = mutableListOf<ImitoCameraMode>()
 
-
-                if (availableFeatures.contains(SdkFeature.FRONTAL_CAMERA.featureName)) {
-                    isEnabled =
-                        sdkFeaturesStatus.isFrontalCameraSupported ?: false
-                    if (wasLicenseIncorrect) {
-                        isEnabled = true
-                    }
-                    woundGeniusSDK.configure(
-                        isFrontCameraUsageAllowed = isEnabled
-                    )
-
-                } else {
-                    woundGeniusSDK.configure(
-                        isFrontCameraUsageAllowed = false
-                    )
-                }
-
-                activity?.let {
-                    val isOnlyPortrait =
-                        isSupportPortraitOnly(it)
-                    if (isOnlyPortrait) {
-                        woundGeniusSDK.configure(isLandScapeSupported = false)
-                        onConfigurationChange(it)
-                    } else {
-                        if (woundGeniusSDK.getIsLandscapeSupported() && (sdkFeaturesStatus.isLandScapeSupported || it.requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_FULL_USER)) {
-                            woundGeniusSDK.configure(isLandScapeSupported = true)
-                            onConfigurationChange(it)
-                        } else {
-                            woundGeniusSDK.configure(isLandScapeSupported = false)
-                            onConfigurationChange(it)
-                        }
-                    }
-                }
-
-                if (availableFeatures.isNotEmpty()) {
-                    wasLicenseIncorrect = false
-                }
+        val checkMode = { feature: SdkFeature, mode: ImitoCameraMode ->
+            val isAllowedByLicense = features.contains(feature.featureName)
+            val isEnabledInStatus = status.availableModes?.contains(mode) == true
+            if (isAllowedByLicense && (wasLicenseIncorrect || isEnabledInStatus)) {
+                modes.add(mode)
             }
         }
+
+        checkMode(SdkFeature.VIDEO_CAPTURING, ImitoCameraMode.VIDEO_MODE)
+        checkMode(SdkFeature.PHOTO_CAPTURING, ImitoCameraMode.PHOTO_MODE)
+        checkMode(SdkFeature.MARKER_MEASUREMENT_CAPTURING, ImitoCameraMode.MARKER_DETECT_MODE)
+        checkMode(SdkFeature.RULER_MEASUREMENT_CAPTURING, ImitoCameraMode.MANUAL_MEASURE_MODE)
+
+        return modes
     }
 
     override fun onResume() {
@@ -608,21 +515,23 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
             var primaryButtonColor: Int? = null
             var textColor: Int? = null
 
-            backgroundColor = woundGeniusSDK.getLightBackgroundColor()?.let {
+            backgroundColor = woundGeniusSDK.getConfiguration().lightBackgroundColor?.let {
                 context?.getColor(
                     it.toInt()
                 )
             } ?: context?.getColor(
                 R.color.sample_app_background
             )
-            primaryButtonColor = woundGeniusSDK.getPrimaryButtonColor()?.let {
+
+            primaryButtonColor = woundGeniusSDK.getConfiguration().primaryButtonColor?.let {
                 context?.getColor(
                     it.toInt()
                 )
             } ?: context?.getColor(
                 R.color.sample_app_button_color
             )
-            textColor = woundGeniusSDK.getTextColor()?.let {
+
+            textColor = woundGeniusSDK.getConfiguration().textColor?.let {
                 context?.getColor(
                     it.toInt()
                 )
@@ -648,9 +557,8 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
     }
 
     private fun setAssessmentChartData(assessmentList: List<SampleAssessmentEntity>) {
-//        binding.lineChartV.updateChartData(assessmentList)
 
-        val chartList = ArrayList<LineChartData>()
+        var chartList = ArrayList<LineChartData>()
 
         if (assessmentList.isNotEmpty()) {
             assessmentList.forEach { assessment ->
@@ -685,126 +593,21 @@ class HomeScreenFragment : AbsFragment<HomeScreenViewModel>() {
                 }
             }
         }
-        val isOnlyOneDate = chartList.filter { it.timeStamp != null }.sortedBy { it.timeStamp }
-            .all { it.timeStamp == assessmentList.firstOrNull()?.timestamp }
-        createLineChart(chartList, isOnlyOneDate)
+
+        binding.chartWGCV.setData(chartList)
     }
 
-    private fun createLineChart(
-        chartLineData: List<LineChartData>,
-        isOnlyOneDate: Boolean
-    ) {
-        binding.apply {
-            if (lineChart.data != null) {
-                lineChart.data.clearValues()
-                lineChart.data.notifyDataChanged()
-                lineChart.notifyDataSetChanged()
-                lineChart.invalidate()
-                lineChart.zoomToCenter(0f, 0f)
-            }
 
-            lineChart.axisRight.isEnabled = false
-            lineChart.description.isEnabled = false
-            lineChart.setDrawGridBackground(false)
-            lineChart.legend.isEnabled = false
-
-            lineChart.xAxis.apply {
-                isEnabled = false
-                position = XAxis.XAxisPosition.BOTTOM
-                isGranularityEnabled = true
-                setDrawLabels(true)
-                setDrawAxisLine(true)
-                setDrawGridLines(false) //hide vertical lines X
-                enableGridDashedLine(10f, 10f, 0f)
-                textSize = 12f
-            }
-            lineChart.axisLeft.apply {
-                isEnabled = true
-                isGranularityEnabled = true
-                setDrawTopYLabelEntry(true)
-                setDrawLabels(true)
-                setDrawAxisLine(true)
-                setDrawGridLines(true)
-                setDrawGridLinesBehindData(false)
-                textSize = 12f
-            }
-
-            lineChart.setTouchEnabled(false)
-            lineChart.onChartGestureListener
-            lineChart.isScaleXEnabled = true
-            lineChart.isScaleYEnabled = false
-            lineChart.setPinchZoom(false)
-            lineChart.isDoubleTapToZoomEnabled = true
-            lineChart.isDragDecelerationEnabled = false
-            lineChart.setExtraOffsets(5f, 5f, 5f, 5f)
-
-            if (chartLineData.isNotEmpty()) {
-                listEntry = ArrayList()
-
-                val sortedChartData = chartLineData.sortedWith(compareBy { it.timeStamp })
-                val firstAssessmentDot = sortedChartData.firstOrNull()
-                var multiplier = 0
-
-                sortedChartData.forEach {
-                    if (it.timeStamp != null) {
-                        val entry = if (isOnlyOneDate
-                            && it.timeStamp.toFloat() == firstAssessmentDot?.timeStamp?.toFloat()
-                        ) {
-                            multiplier += 100000
-                            Entry(
-                                (it.timeStamp - firstAssessmentDot.timeStamp).toFloat() + multiplier,
-                                it.area,
-                                it.timeStamp + multiplier
-                            )
-                        } else {
-                            Entry(
-                                (it.timeStamp - (firstAssessmentDot?.timeStamp ?: 0)).toFloat(),
-                                it.area,
-                                it.timeStamp
-                            )
-                        }
-                        listEntry.add(entry)
-                    }
-                }
-
-                val last = listEntry.last()
-                val first = listEntry.first()
-                lineChart.xAxis.axisMaximum = last.x
-                lineChart.xAxis.axisMinimum = first.x
-
-                val lineDataSet = LineDataSet(listEntry, "A")
-
-                lineDataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
-                // draw selection line as dashed
-                lineDataSet.enableDashedHighlightLine(10f, 5f, 0f)
-                lineDataSet.highLightColor = Color.BLACK
-                lineDataSet.color = Color.RED
-                lineDataSet.setDrawValues(true)
-                lineDataSet.valueTextSize = 10f
-                lineDataSet.setDrawCircles(true)
-                lineDataSet.setDrawCircleHole(false)
-                lineDataSet.setCircleColor(Color.RED)
-                lineDataSet.circleRadius = 3f
-
-                lineDataSet.lineWidth = 1.5f
-                val dataSets = ArrayList<ILineDataSet>()
-                dataSets.add(lineDataSet)
-
-                val lineData = LineData(dataSets)
-                lineChart.data = lineData
-                lineChart.invalidate()
-            } else {
-                val lineData = LineData()
-                lineChart.data = lineData
-                lineChart.invalidate()
-            }
-        }
-    }
-
+    /**
+     * Durable, app-owned directory for captured media. Lives under [Context.getFilesDir] (NOT the
+     * cache dir) so it survives OS cache eviction.
+     */
+    private fun mediaDir(): File =
+        File(requireContext().filesDir, MEDIA_DIR_NAME).apply { mkdirs() }
 
     companion object {
 
-        private const val PREVIEW = "preview"
+        private const val MEDIA_DIR_NAME = "media"
 
         fun newInstance() = HomeScreenFragment()
     }

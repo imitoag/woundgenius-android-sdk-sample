@@ -1026,13 +1026,13 @@
     "Precisa de ajuda?"
   </string>
   <string name="WOUND_GENIUS_SDK_NEED_HELP_DIALOG_description">
-    "Toque aqui para conferir o guia rápido sobre o uso de marcadores de calibração. Não tem marcadores? Experimente o modo Régua."
+    "Toque aqui para conferir o guia rápido sobre o uso dos Marcadores de Calibração. Não tem marcadores? Experimente o modo Régua."
   </string>
   <string name="WOUND_GENIUS_SDK_ONBOARDING_DIALOG_title">
     "Início rápido"
   </string>
   <string name="WOUND_GENIUS_SDK_ONBOARDING_DIALOG_description">
-    "Coloque o marcador de calibração próximo à ferida, alinhe o dispositivo de acordo e segure-o com firmeza para capturar. Fique de olho na sobreposição verde para melhorar a detecção da ferida."
+    "Posicione o marcador próximo à ferida, alinhe o dispositivo e segure firme. Siga o contorno verde para melhorar a detecção."
   </string>
   <string name="WOUND_GENIUS_SDK_ONBOARDING_DIALOG_replay_video">
     "Repetir o vídeo"
@@ -1172,4 +1172,10 @@
   <string name="WOUND_GENIUS_SDK_TWO_WEEKS"/>
   <string name="WOUND_GENIUS_SDK_MONTH"/>
   <string name="WOUND_GENIUS_SDK_YEAR"/>
+  <string name="WOUND_GENIUS_SDK_ONBOARDING_DIALOG_watch_video">
+    "Assistir ao vídeo"
+  </string>
+  <string name="WOUND_GENIUS_SDK_NO_OPEN_WOUND_DETECTED_TRACE_MANUALLY">
+    "Nenhuma ferida aberta detectada. Tire outra foto ou adicione as medidas traçando manualmente o contorno da ferida com o dedo."
+  </string>
 </resources>

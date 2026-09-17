@@ -61,7 +61,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <io.imito.woundgenius.sdk.ui.view.scrollingpagerindicator.ScrollingPagerIndicator
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/emptyMediaPlaceholderACIV"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:src="@drawable/ic_forms_document"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/regularImageACIV"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <io.imito.woundgenius.sdk.internal.ui.view.scrollingpagerindicator.ScrollingPagerIndicator
                 android:id="@+id/indicatorSPI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -164,31 +185,31 @@
                             app:layout_constraintTop_toBottomOf="@+id/areaACTV" />
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/circumferenceACTV"
+                            android:id="@+id/maxDepthACTV"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
                             android:layout_marginTop="15dp"
                             android:layout_marginEnd="20dp"
                             android:layout_marginBottom="15dp"
-                            android:text="@string/WOUND_GENIUS_SDK_CIRCUMFERENCE"
+                            android:text="@string/WOUND_GENIUS_SDK_MAX_DEPTH"
                             android:textColor="@color/sample_app_text_color"
                             android:textSize="17sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/totalCircumferenceValueACTV"
+                            app:layout_constraintEnd_toStartOf="@+id/maxDepthValueACTV"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/totalAreaValueDividerV" />
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/totalCircumferenceValueACTV"
+                            android:id="@+id/maxDepthValueACTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="15dp"
                             android:textColor="@color/sample_app_measurement_value_text_color"
                             android:textSize="17sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/circumferenceACTV"
+                            app:layout_constraintBottom_toBottomOf="@+id/maxDepthACTV"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/circumferenceACTV"
+                            app:layout_constraintTop_toTopOf="@+id/maxDepthACTV"
                             tools:text="34.1 cm" />
 
 
